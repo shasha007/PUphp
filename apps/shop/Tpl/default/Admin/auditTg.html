@@ -1,0 +1,80 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+        <div class="form2">
+            <dl class="lineD">
+                <dt>商品名称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    {$name}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>市场参考价：<span style="color: #F00">*</span></dt>
+                <dd>
+                    {$price}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>起拍价：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <span style="color: #F00;font-size:20px">{$sprice}</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>最低价：<span style="color: #F00">*</span></dt>
+                <dd><span style="color: #F00;font-size:20px">{$eprice}</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>最低价需要人数：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <span style="color: #F00;font-size:20px">{$eprice_attended}</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>结束时间：<span style="color: #F00">*</span></dt>
+                <dd><span style="color: #F00;font-size:20px">{$eday}</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>商品详细内容：</dt>
+                <dd>
+                    {$content|htmlspecialchars_decode}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>缩略图：</dt>
+                <dd>
+                    <if condition="$pic">
+                        <img id="thumb" src="{$pic|tsMakeThumbUp=###,80,80}">
+                    </if>
+                </dd>
+            </dl>
+            <?php if($imgs):?>
+            <dl class="lineD">
+                <dt>展示图：</dt>
+                <dd>
+                    <div class="prov_thumblist">
+                        <ul>
+                            <volist name="imgs" id="vo">
+                                <li class="prov_link" id="img{$i}">
+                                <div class="prov_thumb"><img src="{$vo|tsMakeThumbUp=###,80,80}" alt="" /></div>
+                                </li>
+                            </volist>
+                        </ul></div>
+                    &nbsp;
+                </dd>
+            </dl>
+            <?php endif;?>
+            <div class="page_btm">
+            <form action="{:U('shop/Admin/doAuditTg')}" method="post">
+                <input type="hidden" name="id" value="{$id}" />
+                <input type="submit" class="btn_b" value="确认上架" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{:U('/Admin/editTg', array('id'=>$id))}" class="btn_a">编辑该商品</a>
+            </form>
+            </div>
+        </div>
+</div>
+<include file="_footer" />

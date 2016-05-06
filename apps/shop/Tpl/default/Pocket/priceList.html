@@ -1,0 +1,78 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>学校</th>
+                <th>借款金额</th>
+                <th>还款分期</th>
+                <th>分期金额</th>
+                <th>借款原因</th>
+                <th>下单时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.school}</td>
+                    <td>{$vo.price}</td>
+                    <td>{$vo.staging}</td>
+                    <td>{$vo.stagPrice}</td>
+                    <td>{$vo.reasonId}</td>
+                    <td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <if condition="$vo['status'] eq 0">待审核
+                        <elseif condition="$vo['status'] eq 1"/>审核通过，待放款
+                        <elseif condition="$vo['status'] eq 2" />驳回
+                        <elseif condition="$vo['status'] eq 3" />还款中
+                        <else />订单完成
+                        </if>
+                    </td>
+                    <td>
+                        <a href="javascript:;" onclick="edit('{$vo['id']}')">查看用户详情</a>
+                        <if condition="$vo['status'] eq 0">
+                            <a href="__URL__&act=doPriceOrder&id={$vo.id}&m=1" onclick="return confirm('确认该订单审核成功，待放款？')">通过审核</a>
+                            <a href="__URL__&act=editPriceOrder&id={$vo.id}">驳回</a>
+                        <elseif condition="$vo['status'] eq 1"/>
+                            <a href="__URL__&act=doPriceOrder&id={$vo.id}&m=2" onclick="return confirm('确认钱已发放，用户还款中？')">已借款</a>
+                        <elseif condition="$vo['status'] eq 3" />
+                            <a href="__URL__&act=doPriceOrder&id={$vo.id}&m=3" onclick="return confirm('确认钱已还清？')">订单完成</a>
+                        </if>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+
+    </div>
+</div>
+<script>
+function edit(id)
+{
+    ui.box.load('__URL__&act=priceUserInfo&id='+id,{title:'详情'});
+}
+
+</script>
+<include file="_footer" />

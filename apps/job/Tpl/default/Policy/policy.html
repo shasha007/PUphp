@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>地方政策--创就业--Pocketuni</title>
+<link href="../Public/css/job.css" type="text/css" rel="stylesheet" />
+<link href="../Public/css/students.css" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+</head>
+
+<body>
+<include file="__THEME__/_holder_2014" />
+<div class="bg_job">
+ <div class="main_job">
+<include file="../Public/top" />
+  <div class="job_banner"><img src="../Public/images/bg_policy.jpg" alt="地方政策" /></div>
+  <div class="pool_menu mt50 tcenter f14">   
+    <ul>
+     <li class="cur"><a href="{:U('job/Policy/policy')}">地方政策</a></li>
+     <li><a href="{:U('job/Policy/policy_map1')}">就业地图</a></li>
+     <li><a href="{:U('job/Policy/policy_map')}">创业地图</a></li>
+     <li><a href="http://jxjy.cdeledu.com/cdel_jxjy/gusuwx.shtml">创业网校</a></li>
+    </ul>   
+  </div>
+  <div class="clear"></div>
+  <div class="policy_area lh24 mt10">所属区域：<select name="city">
+  <volist name="citys" id="vo" >
+      <option value="{$vo.cityID}" <?php if($vo['city'] == '苏州市'){echo 'selected';}?>>{$vo.city}</option>
+  </volist>
+  </select></div>
+  <div class="policy_list mt20">
+    <ul>
+    <volist name="policyList['data']" id="vo" key="key">
+      <div class="policy_list_date lh18 tcenter mt5  fw"><?php echo date('Y',$vo['ctime']);?><br /><?php echo date('m.d',$vo['ctime']);?></div>
+      <div class="policy_list_title c3 ml20 b f14 mt5"><a href="{:U('job/Policy/policy_desc')}&id={$vo.id}">{$vo.title}</a></div>
+      <div class="policy_list_desc ml20 mt5"><a href="{:U('job/Policy/policy_desc')}&id={$vo.id}">{$vo['content'] | msubstr=0,70,'utf-8',true}</a></div>
+    </volist>
+
+    </ul>
+    <div class="job_page">{$policyList['html']}</div> 
+   </div>
+ </div>
+</div>
+
+
+<include file="__THEME__/footer" />
+</body>
+</html>

@@ -1,0 +1,45 @@
+<div style="width:1000px;overflow-y:scroll;height:500px;">
+    <center><div class="b cRed f18px">{$title}</div></center>
+    <include file="_details" />
+    <div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="clear">
+        {$webconfig.cradit_name}： <input type="text" name="note" value="{$credit}" size="10" <?php if($canEdit):?>onkeyup="clearNoNum(this)"<?php else:?> readonly="true"<?php endif;?>/>
+        <input type="button" class="btn_a" onclick="dofinish({$id})" value="审核通过" />&nbsp;&nbsp;
+        <input type="button" class="btn_a" onclick="del({$id})" value="驳回" />
+    </div>
+</div>
+<script type="text/javascript">
+var cname  = "<?php echo $webconfig['cradit_name'] ?>";
+function dofinish(id) {
+    var note = $('input[name="note"]').val().replace(/(^\s*)|(\s*$)/g, "");
+    var reg1 = /^\d+(\d*|\.|\.\d|\.\d\d)$/;
+    if(note<=0||note>200||!reg1.test(note)){
+        alert('请输入不大于200的数字，可带2位小数');
+        $('input[name="note"]').focus();
+        return;
+    }
+    if(confirm('确定审核通过，发放'+note+cname+'?')){
+      $.post(U('event/AdminCredit/doAuditEcApply'),{id:id,note:note},function(res){
+        var json =$.parseJSON(res);
+        if (json.status ==0) {
+            ui.error(json.info);
+        }else{
+            ui.box.close();
+            ui.success( "操作成功" );
+            $('#list_'+id).remove();
+            var finishCount = $('#finishCount').html();
+            finishCount = finishCount -1;
+            $('#finishCount').html(finishCount)
+      }
+
+      });
+    }
+}
+ function del(id){
+        ui.box.close();
+        if(id=='' || id==0){
+            ui.error("请选择要驳回的申请");
+            return false;
+        }
+        ui.box.load(U('event/AdminCredit/rejectApply') + '&id=' + id,{title:'驳回申请'});
+    }
+</script>

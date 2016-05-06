@@ -1,0 +1,76 @@
+<!--
+Created by huqiwen on 16/4/20.
+describe : 活动新闻 
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>{$title}</title>
+</head>
+<style>
+    *{
+        margin: 0;
+    }
+    html {
+        -webkit-user-select: none
+    }
+    body {
+        font-size: 16px;
+        color: #3e3e3e;
+        font-family:"Helvetica Neue",Helvetica,STHeiTi,sans-serif;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+
+    .EventNews-article{
+         max-width: 640px;
+         /*margin: 0 15px;*/
+
+    }
+    .EventNews-header{
+        padding: 0 15px;
+        background: #efefef;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+    .EventNews-header >h2{
+        padding: 10px 0 0;
+    }
+    .EventNews-times{
+        padding: 5px 0;
+        font-size: 18px;
+    }
+    .EventNews-article >section{
+        margin: 5px 15px;
+        line-height: 20px;
+    }
+
+</style>
+<body>
+<article class="EventNews-article">
+    <header class="EventNews-header">
+        <h2>
+            {$title}
+        </h2>
+
+        <p class="EventNews-times">
+            {$cTime|date='Y年m月d日 H:i',###}
+        </p>
+    </header>
+    <section>
+        {$newContent}
+    </section>
+
+</article>
+<script>
+    window.onload = function()
+    {
+        Android.setActionBarMenuImage("{$title}",'' ,'');
+    } ;
+</script>
+</body>
+</html>

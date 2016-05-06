@@ -1,0 +1,35 @@
+<include file="../Teacher/_header" />
+<style>
+    .tan{border: 1px solid #ccc;background: #fff;position: fixed;left:50%;top: 50%;margin-left: -100px;margin-top: -130px;display: none;}
+    .tan input{width:50px;}
+</style>
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2">
+        <form method="post" action="{:U('event/Available/doConfig')}" enctype="multipart/form-data">
+            <dl class="lineD adx">
+                <dt>PU账号UID：</dt>
+                <dd>
+                    <input type="text" name="uid" value="{$config.uid}" >
+                </dd>
+            </dl>
+            <dl class="lineD adx">
+                <dt>手机号码：</dt>
+                <dd>
+                    <input type="text" name="mobile" value="{$config.mobile}" >
+                </dd>
+            </dl>
+            <dl class="lineD adx">
+                <dt><span class="cRed">备注：</span></dt>
+                <dd>
+                    <span class="cRed">该页面是不可逆的，仅能填写一次，请认证核对填写内容后再提交！</span>
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </form>
+    </div>
+</div>
+<include file="_footer" />

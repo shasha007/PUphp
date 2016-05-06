@@ -1,0 +1,73 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <include file="../Public/_tab" />
+  <div class="Toolbar_inbox">
+    <a href="{:U('client/Index/addApp')}" class="btn_a"><span>添加APP</span></a>
+    <a href="javascript:void(0);" class="btn_a" onclick="deleteApp();"><span>删除APP</span></a>
+    <div class="page right">{$html}</div>
+  </div>
+  <div class="form2">
+  	<form method="post" action="{:U('client/Index/doAddApp')}" enctype="multipart/form-data">
+      <div style="background-color:#E6E9ED;padding:10px 0px">
+      <dl class="">
+        <dt><span>*</span>APP CODE：</dt>
+        <dd>
+          <input type="text" name="code" value="{$code}" />
+        </dd>
+      </dl>
+        <dl class="">
+          <dt><span>*</span>APP图标：</dt>
+          <dd>
+            <if condition="$ico">
+              <img alt="{$name}" src="{:PIC_URL}/data/uploads/{$ico}" />
+              <input name="ico" type="hidden" value="{$ico}" />
+              <br />
+              <br />
+            </if>
+            <input name="pic" type="file" /> 建议图片86x*86px
+          </dd>
+        </dl>
+        <dl class="">
+          <dt><span>*</span>APP名称：</dt>
+          <dd>
+            <input type="text" name="name" value="{$name}" />
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt><span style="color: #F00">*</span>APP描述：</dt>
+          <dd>
+            <textarea name="desc" cols="40" rows="2">{$desc}</textarea>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt><span style="color: #F00">*</span>APP类型：</dt>
+          <dd>
+            <select name="type">
+              <option value="1">原生</option>
+              <option value="2">H5</option>
+            </select>
+          </dd>
+        </dl>
+        <dl class="">
+          <dt><span>*</span>APP URL地址：</dt>
+          <dd>
+            <input type="text" name="url" value="{$url}" />
+          </dd>
+        </dl>
+        <dl class="">
+          <dt><span>*</span>APP PKG地址：</dt>
+          <dd>
+            <input type="text" name="pkg" value="{$pkg}" />
+          </dd>
+        </dl>
+      </div>
+      <div class="page_btm">
+        <if condition="$id != 0">
+          <input type="hidden" name="id" value="{$id}" />
+        </if>
+        <input type="submit" class="btn_b" value="确定" />
+      </div>
+    </form>
+  </div>
+</div>
+<include file="../Public/_footer" />

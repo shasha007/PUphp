@@ -1,0 +1,85 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+	<include file="userTab" />
+	<hr>
+    <div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=wallet">
+			姓名：<input name="realname" type="text" value="{$Think.post.realname}">&nbsp;&nbsp;
+			身份证号：<input type="text" value="{$Think.post.ctfid}" name="ctfid" />&nbsp;&nbsp;
+			状态：<select name="status">
+				<option value="all">--请选择--</option>
+				<?php foreach($status as $k=>$item):?>
+				<option value="<?php echo $k;?>" <?php if($k == $_POST['status']):?>selected<?php endif;?>><?php echo $item;?></option>
+				<?php endforeach;?>
+			</select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+		<span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>用户ID</th>
+                <th>姓名</th>
+				<th>学号</th>
+                <th>身份证号</th>
+				<th>总额度</th>
+				<th>可用额度</th>
+				<th>免息额度</th>
+				<th>扑币余额</th>
+				<th>免风控金额</th>
+                <th>银行卡信息</th>
+				<th>状态</th>
+				<th>操作</th>
+            </tr>
+			<?php foreach($data as $item):?>
+			<tr overstyle='on' id="list_<?php echo $item['uid'];?>">
+					<td><?php echo $item['uid'];?></td>
+					<td><?php echo $item['realname'];?></td>
+					<td><?php echo array_shift(explode('@',$item['email']));?></td>
+					<td><?php echo $item['ctfid'];?></td>
+					<td>￥<?php echo number_format($item['all_amount'],2);?> <a href="javascript:changeAllAmount({$item['uid']});">修改</a></td>
+					<td>￥<?php echo number_format($item['usable_amount'],2);?></td>
+					<td>￥<?php echo number_format($item['free_amount'],2);?> <a href="javascript:changeFreeAmount({$item['uid']});">修改</a></td>
+					<td>￥<?php echo number_format(bcadd( $item['pmoney'],$item['umoney'])/100,2);?></td>
+					<td>￥<?php echo number_format($item['free_risk'],2);?> <a href="javascript:changeFreeRiskAmount({$item['uid']});">修改</a></td>
+					<td>
+						<?php foreach($item['banks'] as $bank):?>
+						<?php echo $bank['bank'];?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $bank['card_no'];?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $bank['mobile'];?><?php if($bank['status'] == 0):?><span class="cRed">(此卡已解绑)</span><?php endif;?><br/>
+						<?php endforeach;?>
+					</td>
+					<td><?php echo get_credit_status($item['status']);?></td>
+					<td>
+                        <a href="javascript:void(0);" onclick="setUserStatus('{$item.uid}')">黑白名单</a>
+					</td>
+			</tr>
+			<?php endforeach;?>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+function changeAllAmount(uid,amount){
+	var url = '<?php echo U('pufinance/Admin/changeAllAmount'); ?>'+'&uid='+uid;
+    ui.box.load(url,{title:'总额度'});
+}
+function changeFreeAmount(uid){
+	var url = '<?php echo U('pufinance/Admin/changeFreeAmount'); ?>'+'&uid='+uid;
+    ui.box.load(url,{title:'免息额度'});
+}
+function changeFreeRiskAmount(uid){
+	var url = '<?php echo U('pufinance/Admin/changeFreeRiskAmount'); ?>'+'&uid='+uid;
+    ui.box.load(url,{title:'风控金额'});
+}
+function setUserStatus(uid) {
+    var url = "{:U('pufinance/Admin/setUserStatus')}&uid=" + uid;
+    ui.box.load(url,{title:'设置黑白名单'});
+}
+</script>
+<include file="../Public/footer" />

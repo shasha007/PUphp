@@ -1,0 +1,47 @@
+<include file="_header" />
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">梦想记录</div>
+            <div class="consumer_records">
+                <div class="inquiry">
+                </div>
+                <div class="goodlist mt10">
+                    <ul class="c_r_link">
+                        <li class="gl_title">
+                            <div class="gl_thumb">商品图片</div>
+                            <div class="gl_name">商品名称</div>
+                            <div class="gl_status">状态</div>
+                            <div class="gl_people">参与人次</div>
+                            <div class="gl_do">操作</div>
+                        </li>
+                        <?php if(empty($data)):?>
+                        <!--无列表显示-->
+                            <li class="notFound">查无梦想记录</li>
+                        <?php else:?>
+                        <!--有列表显示-->
+                            <volist name="data" id='vo'>
+                                <li>
+<div class="gl_thumb gl_pic"><a href="{:U('shop/Yg/detail',array('id'=>$vo['product_id']))}"><img src="{$vo['product']['pic']|tsMakeThumbUp=###,70,70}" alt="" /></a></div>
+<div class="gl_name"><a href="{:U('shop/Yg/detail',array('id'=>$vo['product_id']))}"><span class="c1">(第{$vo['yg']['times']}期)</span>{$vo['product']['name']}</a></div>
+<div class="gl_status">
+    <?php if($vo['yg']['win']):?>
+    <span class="m_color2">已开奖</span><br />获得者：{$vo['yg']['win']|getUserRealName}</br>{$vo['yg']['win']|tsGetSchoolByUid0}
+    <?php else:?>
+    <span class="m_color3">正在进行...</span><br /><a href="{:U('shop/Yg/detail',array('id'=>$vo['product_id']))}">追加梦想次数</a>
+    <?php endif;?>
+</div>
+<div class="gl_people">{$vo.buyNum}次</div>
+<div class="gl_do"><a href="{:U('shop/Myshop/ygBuy',array('id'=>$vo['product_id']))}">查看详情</a></div>
+                    </li>
+                </volist>
+            <?php endif;?>
+                    </ul>
+                    <div class="page">{$html}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="../Public/_footer" />

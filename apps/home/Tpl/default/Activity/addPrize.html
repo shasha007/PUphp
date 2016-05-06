@@ -1,0 +1,49 @@
+<include file="_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+<script>
+    $(document).ready(function(){
+        setTimeout('loadEditor("content")',100);
+    });
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <form action="{:U('home/Activity/addPrize')}" enctype="multipart/form-data" method="post" onsubmit="return check();">
+        <input type="hidden" name="id" value="{$id}" />
+        <div class="form2">
+            <dl class="lineD">
+                <dt>名称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="name" type="text" value="{$data.name}" size="130">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>价格：<span style="color: #F00">*</span></dt>
+                <dd><input name="price" type="text" value="{$data.price}" size="130"></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>奖品图片：<span style="color: #F00">*</span></dt>
+                <dd><input type="file" name="img"><img src="{$data.pic_m}" width="100" height="100"></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>描述：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <textarea id='desc' name="desc" style="width:300px;height:100px;border:1px solid #ccc;" onKeyUp="gbcount(this,100);">{$data.desc}</textarea>
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+<include file="_footer" />
+<include file="__THEME__/comm/_datepicker" />

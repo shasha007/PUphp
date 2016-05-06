@@ -1,0 +1,39 @@
+<include file="_header" />
+<div class="hd_c">
+<div class="jf_c_left">
+    <div class="hd_publish">
+        <center><div class="publish_note red b">【选择发起活动范围】</div></center>
+        <div class="clear"></div>
+        <div class="publish_btn" style="height: auto;">
+            <ul>
+
+                <!-- 默认 -->
+                <li><a href="{:U('event/School/addEvent')}">发起本校活动</a></li>
+
+                <?php if($can_prov):?>
+                    <li><a href="{:U('event/School/addProv')}">发起全省活动</a></li>
+                <?php endif;?>
+
+                <?php if($can_pu):?>
+                    <li><a href="{:U('event/School/addPu')}">发起PU活动</a></li>
+                <?php endif;?>
+
+                <volist name="esList" id="vo">
+                    <?php if($tuan === 1):?>
+                    <li><a href="{:U('event/School/addProv',array('es_type'=>$vo['id']))}">发起{$vo.title}活动</a></li>
+                    <?php elseif($tuan === 0):?>
+                    <li><a href="{:U('event/School/addEvent',array('es_type'=>$vo['id']))}">发起{$vo.title}活动</a></li>
+                    <?php endif;?>
+                </volist>
+
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

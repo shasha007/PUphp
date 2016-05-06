@@ -1,0 +1,23 @@
+<volist name="list" id="vo">
+<div class="tip_box">
+    <div class="tip_box_title" id="courseName{$vo.id}">{$vo.courseName}</div>
+    <div class="tip_box_teacher">{$vo.teacher}</div>
+    <div class="tip_box_time">从第{$vo.begin}周到第{$vo.end}周</div>
+    <div class="tip_box_list">
+        <ul>
+            <li>
+                <volist name="vo['ops']" id="ops">
+                    <div class="tip_box_list_time">
+                        {$occurs[$ops['occur']]} {$weekdays[$ops['weekday']]} 第{$ops['from']+1}-{$ops['to']+1}节
+                    </div>
+                    <div class="tip_box_list_add">{$ops.addr}&nbsp;</div>
+                </volist>
+            </li>
+        </ul>
+    </div>
+    <div class="tip_box_btn">
+        <a href="{:U('kc/Index/edit',array('id'=>$vo['id']))}">编辑</a>
+        <a href="javascript:void(0)" onclick="delKc({$vo.id})">删除</a>
+    </div>
+</div>
+</volist>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+<title>中奖记录</title>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta name="author" content="pocketuni.net"/>
+<meta name="revisit-after" content="1 days"/>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="../Public/css/style.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body style="background:#ebecee;">
+<div class="bg">
+ <div class="record">
+  <ul>
+  <volist name="data" id='vo'>
+   <li>
+    <div class="record_time">中奖时间：{$vo.ctime}</div>
+    <div class="record_desc">
+     <div class="record_title">奖品名称：{$vo.prizename}</div>
+     </div>
+    <div class="record_time ">状态：<span class="record_green">
+<if condition="($vo['get_uid'] gt 0) "> 已发放
+<else /> 未发放</a>
+</if>
+</span></div>
+   </li>
+   </volist>
+  </ul>
+ </div>
+
+
+  </div>
+ </div>
+</body>
+</html>

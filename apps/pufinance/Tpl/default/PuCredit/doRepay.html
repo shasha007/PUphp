@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>支付</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=001" rel="stylesheet">
+    <link rel="stylesheet" href="../Public/css/style.css" />
+    <script src="../Public/js/mainScript.js"></script>
+    <script>
+        setActionBar('支付', '', '');
+    </script>
+</head>
+<body bgcolor="#F3F1EE">
+<if condition="isset($amount)">
+    <div class="w-general w-addWidth">支付还款额：{$amount}元</div>
+<else />
+    <div class="w-tap w-addWidth">订单已经生成,请在2小时内完成支付</div>
+    <div class="w-general w-addWidth">应付PU币：1500元</div>
+</if>
+
+<ul class="w-payType w-addWidth">
+    <li data-checked="false" data-disabled="{$money_dis}" method="money">
+        <img src="../Public/img/pub.png">
+        <span>PU币  余额 {$money}</span>
+        <div><img src="../Public/img/gou.png"></div>
+    </li>
+    <li data-checked="false" data-disabled="{$pucredit_dis}" method="pucredit">
+        <img src="../Public/img/puj.png">
+        <span>{$Think.lang.finance_name}  可用额度 {$pucredit}</span>
+        <div><img src="../Public/img/gou.png"></div>
+    </li>
+    <li data-checked="false" data-disabled="false" method="alipay">
+        <img src="../Public/img/zfb.png">
+        <span>支付宝</span>
+        <div><img src="../Public/img/gou.png"></div>
+    </li>
+    <li data-checked="false" data-disabled="false" method="wechat">
+        <img src="../Public/img/wx.png">
+        <span>微信</span>
+        <div><img src="../Public/img/gou.png"></div>
+    </li>
+</ul>
+<button class="w-payBtn" ui-sref="repaySuccess">支付</button>
+<div id="loading" style="display: none;">
+    <div class="h-background"></div>
+    <div class="h-loading">
+        <div class="h-animate"></div>
+    </div>
+</div>
+<div class="h-PU-show ">
+    <div class="modal-header">
+
+        <button type="button" class="close">
+            &times;
+        </button>
+        <h4 class="modal-title text-center h-color-5504" id="myModalLabel">
+            请输入支付密码
+        </h4>
+    </div>
+    <div class="modal-body text-center">
+        <h2>&yen; &emsp13;<i class="h-show-num"></i></h2>
+    </div>
+    <div class="modal-footer ">
+        <div class="h-repayGeneral h-set">
+            <ul data-pw="" data-inputable="true" id="password">
+                <li id="pwd-1"></li>
+                <li id="pwd-2"></li>
+                <li id="pwd-3"></li>
+                <li id="pwd-4"></li>
+                <li id="pwd-5"></li>
+                <li id="pwd-6"></li>
+            </ul>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!--虚拟键盘-->
+<table class="keyboard" id="keyboard" style="bottom: -225px;">
+    <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>0</td>
+        <td data-delete="true">删除</td>
+    </tr>
+</table>
+<div class="h-back-cover"></div>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../Public/js/pay.js"></script>
+<script type="text/javascript">
+
+    $(function() {
+        var amount = {$amount};
+        var checkedStageIds = '{$checkedStageIds}';
+        $('li[data-disabled="false"]').each(function () {
+            $(this).click(function () {
+                $('li[data-disabled="false"]').attr('data-checked', false).find('div img').css('display', 'none');
+                $(this).attr('data-checked', true).find('div img').css('display', 'block');
+            });
+        });
+        $('.w-payBtn').click(function () {
+            var _this = this;
+            var $checked = $('li[data-checked="true"]');
+            if ($checked.length == 0) {
+                alert('请选择支付方式');
+                return false;
+            }
+            var method = $checked.attr('method');
+            var data = {'method' : method, 'amount' : amount, 'checkedStageIds' : checkedStageIds};
+            switch (method) {
+                case 'money':
+                case 'pucredit':
+                    $.pay(amount, data, function (data) {
+                        loading(true);
+                        $.post('{:U("pufinance/PuCredit/submitPay")}', data, function(result) {
+                            if (result.status) {
+                                location.href = '{:U("pufinance/PuCredit/submitPayOk")}';
+                            } else {
+                                alert(result.info);
+                                loading(false);
+                                $('.h-PU-show .close').click();
+                                return false;
+                            }
+                        }, 'json');
+                    });
+
+                    break;
+                case 'wechat':
+                    loading(true);
+                    $.post('{:U("pufinance/PuCredit/submitPay")}', data, function(result) {
+                        if (result.status) {
+                            if (result.info == 'ok') {
+                                location.href = '{:U("pufinance/PuCredit/submitPayOk")}';
+                                return;
+                            }
+                            var data = result.data;
+                            Android.WXpay(data.appid, data.mch_id, data.prepay_id, data.nonce_str, data.timestamp, data.order_sign);
+                        } else {
+                            loading(false);
+                            alert(result.info);
+                            return false;
+                        }
+                    }, 'json');
+                    break;
+                case 'alipay':
+                    loading(true);
+                    $.post('{:U("pufinance/PuCredit/submitPay")}', data, function(result) {
+                        if (result.status) {
+                            if (result.info == 'ok') {
+                                location.href = '{:U("pufinance/PuCredit/submitPayOk")}';
+                                return;
+                            }
+                            Android.aliPay(result.data.pay_sn, '1d', result.data.notify_url, '{$Think.lang.finance_name}还款', '{$Think.lang.finance_name}还款', amount);
+                        } else {
+                            loading(false);
+                            alert(result.info);
+                            return false;
+                        }
+                    }, 'json');
+                    break;
+            }
+        });
+    });
+
+    function tradeStatus(type, tradeNumber) {
+        var time = 5;
+        var settime = setInterval(function () {
+            time--;
+            $.post('{:U("pufinance/PuCredit/checkTradeStatus")}', {'type' : type, 'trade_no' : tradeNumber}, function (result) {
+                if (result.status) {
+                    location.href = '{:U("pufinance/PuCredit/submitPayOk")}';
+                }
+            });
+            if (time <= 0) {
+                clearInterval(settime);
+                location.href = '{:U("pufinance/PuCredit/submitPayOk")}';
+            }
+        }, 1000);
+    }
+
+    // 支付结果调用
+    function payResult(type, tradeNumber, code, message) {
+        if (type == 0) { // 支付宝
+            if (code == 9000) { // 成功
+                tradeStatus(type, tradeNumber);
+            } else if (code == 6001) { // 用户中途取消
+                loading(false);
+            } else {
+                alert(message);
+            }
+        } else if (type == 1) { // 微信
+            if (code == 0) { // 成功
+                tradeStatus(type, tradeNumber);
+            } else if (code == -2) { // 用户取消
+                loading(false);
+            } else {
+                alert('支付失败');
+            }
+        }
+    }
+</script>
+</body>
+</html>

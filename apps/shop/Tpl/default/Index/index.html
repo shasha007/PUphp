@@ -1,0 +1,99 @@
+<include file="../Public/_header" />
+<div class="m_left mt10">
+    <div class="m_sub">
+        <div class="m_left_menu m_bule f16 fw">1F 一元梦想</div>
+        <div class="m_more m_bule"><a href="{:U('shop/Yg/index')}">更多 >></a></div>
+        <div class="m_sub1_list center">
+            <ul>
+                <volist name="yg.data" id="vo">
+                <li <?php if($i==3)echo ' class="b_n"';?>>
+                    <div class="m_sub1_thumb"><a href="{:U('shop/Yg/detail',array('id'=>$vo['id']))}">
+                            <img src="{$vo.pic|tsMakeThumbUp=###,160,160}" alt="" /></a></div>
+                    <div class="m_sub1_name b m_bule"><a href="{:U('shop/Yg/detail',array('id'=>$vo['id']))}">{$vo.name}</a></div>
+                    <div class="m_sub1_price">梦想金：<span class="m_color1">￥{$vo.price}</span></div>
+                    <div class="m_sub1_count">总需：{$vo.need_attended}人次  剩余：<span class="m_color2"><?php echo $vo['need_attended']-$vo['has_attended'];?></span>次</div>
+                    <div class="m_sub1_btn b"><a href="{:U('shop/Yg/detail',array('id'=>$vo['id']))}">立即一元梦想</a></div>
+                    <?php if($vo['eday']!='0000-00-00'):?>
+                    <div class="m_sub1_count m_color2 b mt10">开奖时间：{$vo.eday} 03:00</div>
+                    <?php endif;?>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+    <?php if(1==0):?>
+    <div class="m_sub mt10">
+        <div class="m_left_menu m2 m_red f16 fw">2F 众志成城</div>
+        <div class="m_more m_red"><a href="{:U('shop/Tg/index')}">更多 >></a></div>
+        <div class="m_sub2_list center">
+            <ul>
+                <volist name="tg" id="vo">
+                <li <?php if($i==3)echo ' class="b_n"';?>>
+                    <div class="m_sub1_thumb">
+                        <a href="{:U('shop/Tg/detail',array('id'=>$vo['id']))}">
+                            <img src="{$vo.pic|tsMakeThumbUp=###,160,160}" alt="" />
+                            <p class="timeDown showbar" >预售中：剩余{$vo.eday|tgRestTime}</p>
+                        </a></div>
+                    <div class="m_sub1_name b m_red"><a href="{:U('shop/Tg/detail',array('id'=>$vo['id']))}">{$vo.name}</a></div>
+                    <div class="m_sub1_price">已售<span class="m_bule">{$vo.has_attended}</span>件，当前价：<span class="m_color1"><?php echo $vo['cprice']/100?> PU币</span></div>
+                    <div class="m_sub2_count count1 mt10">
+                        <table width="234" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="m_red">
+                                <td>满1人</td>
+                                <td>每+1人减</td>
+                                <td>满{$vo.eprice_attended}人</td>
+                            </tr>
+                            <tr class="m_color1">
+                                <td>{$vo.sprice}</td>
+                                <td><?php echo $vo['dec']/100?></td>
+                                <td>{$vo.eprice}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="f14 m_sub2_dj mt10 fw">定金：{$vo.pay} </div>
+                    <div class="m_sub2_btn mt10"><a href="{:U('shop/Tg/detail',array('id'=>$vo['id']))}">立即预定</a></div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+    <?php endif;?>
+</div>
+<div class="m_right mt10">
+    <div class="m_r_menu f14 fw">历届成功乐购</div>
+    <div class="m_r_list">
+        <ul>
+            <volist name="win" id="vo">
+                <li>
+                    <div class="m_r_pic"> <a href="{$vo.link}">
+                            <div class="m_r_thumb"><img src="{$vo.pic|tsMakeThumbUp=###,75,75}" /></div>
+                            <div class="{$vo.ico}"></div>
+                        </a> </div>
+                    <div class="m_r_infor">
+                        <div class="m_r_title b"><a href="{$vo.link}">{$vo.name}</a></div>
+                        <div class="m_r_price">成交价：{$vo.price}PU币</div>
+                        <div class="m_r_buyer">获得者：{$vo.realname}</div>
+                        <div class="m_r_buyer">所属学校：{$vo.school}</div>
+                    </div>
+                </li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<?php if($showYd): ?>
+<script>
+    var curr = 1;
+    $(document).ready(function(){
+        ui.box.show('<div class="lg_guide" onclick="showNext();"><img id="yd" src="../Public/images/lg_1.jpg" alt="" /></div>',{title:'乐购商城',closeable:false});
+    })
+    function showNext(){
+        curr += 1;
+        if(curr<=3){
+            $('#yd').attr('src','../Public/images/lg_'+curr+'.jpg');
+        }else{
+            ui.box.close();
+        }
+    }
+</script>
+<?php endif; ?>
+<include file="../Public/_footer" />

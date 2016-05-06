@@ -1,0 +1,34 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<include file="__THEME__/editor" />
+<script>
+	function checkform(v_form){
+		if(checkPostContent(v_form.content.value) == 0) {
+			v_form.content.focus();
+			//ui.error('内容不能为空');
+			//return false;
+		}
+		return true;
+	}
+        </script>
+<!--发帖页面-->
+<div class="st_f_menu f14 b mt20 ml20">编辑回复     <a href="JavaScript:window.history.back()">&lt;&lt;返回上一页</a></div>
+  <form method="post" action="{:U('event/GroupTopic/editPost',array('gid'=>$gid))}" onsubmit="return checkform(this)" >
+<div class="st_f_text ml50 mt10" style="overflow:hidden;*zoom:1">
+    <span style="height:200px; vertical-align:top">内容：</span> 
+    <textarea name="content" cols="" rows="" class="st_textarea" id="content">{$post.content}</textarea>
+</div>
+<div class="clear"></div>
+  <input type="hidden" name="editsubmit" value="do" >              
+			  <input type="hidden" value="{$gid}" name="gid">
+			  <input type="hidden" value="{$post.id}" name="pid">	
+<div class="st_f_tj mt20"><input name="st_fb" type="submit" class="st_f_btn" value="修改" /></div>
+</form>
+</div>
+<script>
+$(document).ready(function(){
+    setTimeout('loadEditor("content")',500);
+});
+</script>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

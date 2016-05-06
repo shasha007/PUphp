@@ -1,0 +1,11 @@
+<include file="_header" />
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="m_wel f14 b center">您好，<span class="m_color1">{$user.realname}</span> 欢迎您！</div>
+        <div class="m_over center mt20">您的账户余额：<span class="m_color2 fw f14"><?php echo($user['money']/100)?></span> PU币
+            <span class="m_bule b f14"><a href="{:U('home/Account/recharge')}">立即充值 >></a></span></div>
+        <div class="m_address center mt20 f14"><a href="{:U('shop/Myshop/address')}">收货地址管理</a></div>
+    </div>
+</div>
+<include file="../Public/_footer" />

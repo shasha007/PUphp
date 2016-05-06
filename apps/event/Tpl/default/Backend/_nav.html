@@ -1,0 +1,26 @@
+<div class="intro_menu">
+    <ul>
+        <li <eq name="ACTION_NAME" value="index">class="i10"</eq>
+            <eq name="ACTION_NAME" value="edit">class="i10"</eq>>
+            <a href="{:U('/Backend/index',array('id'=>$id,'uid'=>$uid))}"><span>活动</span></a></li>
+        <li <eq name="ACTION_NAME" value="member">class="i10"</eq>
+            <eq name="ACTION_NAME" value="editUser">class="i10"</eq>
+            <eq name="ACTION_NAME" value="editMemberImg">class="i10"</eq>
+            <eq name="ACTION_NAME" value="memberFlash">class="i10"</eq>
+            <eq name="ACTION_NAME" value="memberMultiPhoto">class="i10"</eq>
+            <eq name="ACTION_NAME" value="memberImg">class="i10"</eq>>
+            <a href="{:U('/Backend/member',array('id'=>$id))}"><span>成员</span></a></li>
+        <li <eq name="ACTION_NAME" value="memberAudit">class="i10"</eq>><a href="{:U('/Backend/memberAudit',array('id'=>$id))}"><span>成员审核</span></a></li>
+        <li <eq name="ACTION_NAME" value="newsEdit">class="i10"</eq>
+            <eq name="ACTION_NAME" value="newsList">class="i10"</eq>>
+            <a href="{:U('/Backend/newsList',array('id'=>$id))}"><span>新闻</span></a></li>
+        <li <eq name="ACTION_NAME" value="flash">class="i10"</eq>><a href="{:U('/Backend/flash',array('id'=>$id))}"><span>视频</span></a></li>
+        <li <eq name="ACTION_NAME" value="photo">class="i10"</eq>
+            <eq name="ACTION_NAME" value="editPhoto">class="i10"</eq>
+            <eq name="ACTION_NAME" value="multiPhoto">class="i10"</eq>>
+            <a href="{:U('/Backend/photo',array('id'=>$id))}"><span>图片</span></a></li>
+        <li <eq name="ACTION_NAME" value="orga">class="i10"</eq>
+            <eq name="ACTION_NAME" value="editOrga">class="i10"</eq>>
+            <a href="{:U('/Backend/orga',array('id'=>$id))}"><span>组织单位</span></a></li>
+    </ul>
+</div>

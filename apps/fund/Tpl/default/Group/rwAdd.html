@@ -1,0 +1,116 @@
+<link href="../Public/css/fund_admin.css" rel="stylesheet" type="text/css" />
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <include file="_rw_tab" />
+    </div>
+    <div class="list">
+        <form ENCTYPE="multipart/form-data" action="__URL__&act=doAddRw" method="post" id='form' onsubmit="return check();">
+            <input type="hidden" name='id' value="{$id}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="200px;">*任务名称：</td>
+                    <td><input type="text" id='title' name='title' value="{$title}"> 如：发传单</td>
+                </tr>
+                <tr>
+                    <td>*任务奖金：</td>
+                    <td><input type="text" id='needMoney' name='needMoney' value="{$needMoney}"> 元</td>
+                </tr>
+                <tr>
+                    <td>*开始时间：</td>
+                    <td>
+                        <input type="text" name='stime'  id='stime' value="<?php if($stime):echo date('Y-m-d H:i:s',$stime);endif;?>" class="p_input2 ctime" onfocus="rcalendar(this,'full');" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>*截止申领日期：</td>
+                    <td>
+                        <input type="text" name='applyTime'  id='applyTime' value="<?php if($applyTime):echo date('Y-m-d H:i:s',$applyTime);endif;?>" class="p_input2 ctime" onfocus="rcalendar(this,'full');" />
+                    </td>
+                </tr>
+                <include file="__THEME__/comm/showInArea" />
+                <tr id="addArea">
+                    <td>*公司名称：</td>
+                    <td><input type="text" id='company' name='company' value="{$company}"></td>
+                </tr>
+
+                <tr>
+                    <td>*公司logo：</td>
+                    <td>
+                        <div class="prov_thumblist"><ul id="uploaded_photos1">
+                            <?php if(isset($attachId) && $attachId>0):?>
+                            <li id="img1" class="prov_link">
+                            <div class="prov_thumb">
+                            <img style="width:60px;height:60px;" alt="" src="{$attachId|getImgAttach=###,100,100}">
+                            </div>
+                            <br/>
+                            <span>
+                            <a onclick="delImg(1,1)" href="javascript:void(0)">删除</a>
+                            </span>
+                            </li>
+                            <?php endif;?>
+                        </ul></div>
+                        <input type="button" value="上传图标" onclick="openUploadImg(1);"> (尺寸为正方形1:1)
+                    </td>
+                </tr>
+                <tr>
+                    <td>描述</td>
+                    <td>规则与要求：<textarea id="content" name="content" style="width:700px;height:350px">{$content}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="page_btm"><input class="btn_b" type="submit" value='确认'></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<include file="_footer" />
+<include file="__THEME__/comm/kindeditor" />
+<include file="__THEME__/comm/_datepicker" />
+<include file="__THEME__/comm/_upload_file" />
+<script type="text/javascript">
+var imgCount = [0,<?php if($attachId):?>1<?php else:?>0<?php endif;?>];
+var imgMax = [0,1];
+var thumbSizeW = [0,100];
+var thumbSizeH = [0,100];
+var showW = [0,60];
+var showH = [0,60];
+var imgId = 0;
+var attach_type = 'fund_rw';
+    function check() {
+        if (!$('#title').val()) {
+            ui.error("任务名称不能为空");
+            return false;
+        }
+        if (!$('#needMoney').val()) {
+            ui.error("任务奖金不能为空");
+            return false;
+        }
+        var ctime = $('#stime').val();
+        if (!ctime) {
+            ui.error("任务开始时间不能为空");
+            return false;
+        }
+        var endtime = $('#applyTime').val();
+        if (!endtime) {
+            ui.error("截止申领日期不能为空");
+            return false;
+        }
+        if (endtime > ctime) {
+            ui.error("截止申领日期不能大于任务开始时间");
+            return false;
+        }
+        if (!$('#company').val()) {
+            ui.error("公司名称不能为空");
+            return false;
+        }
+        if(imgCount[1]<=0){
+            ui.error("请上传公司logo");
+            return false;
+        }
+        return true;
+    }
+</script>

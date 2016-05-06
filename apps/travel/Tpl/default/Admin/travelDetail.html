@@ -1,0 +1,68 @@
+<include file="_header" />
+
+<script>
+    
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要删除的景点介绍");
+                return false;
+            }
+            if( confirm("是否删除景点介绍？") ){
+                $.post( '__URL__&act=delDetail',{gid:id},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个景点介绍成功,己放入回收站" );
+                        var id_list = id.split( ',' );
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove();
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功,己放入回收站" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        }
+    }
+    var c = null;
+</script>
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="{:U('travel/Admin/detailEdit',array('travelId'=>$obj['id']))}" class="btn_a"><span>添加景点介绍</span></a>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>标题</th>
+                <th>发布时间</th>
+                <th>操作</th>
+            </tr>
+            <neq name="id" value="">
+                <tr id="list_{$id}">
+                    <td>{$id}</td>
+                    <td>{$title}</td>
+                    <td>{$cTime|friendlyDate}</td>
+                    <td>
+                        <a href="{:U('travel/Admin/detailEdit', array('nid'=>$id,'travelId'=>$obj['id']))}">编辑</a>
+                        <a href="javascript:void(0);" onclick="c.del({$id})">删除</a>
+                    </td>
+                </tr>
+                </neq>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    var c = new ctrl();
+</script>
+<include file="_footer" />

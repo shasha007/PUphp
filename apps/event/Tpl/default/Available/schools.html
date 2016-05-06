@@ -1,0 +1,134 @@
+<include file="../Teacher/_header" />
+<script>
+    var sid = {$editSid};
+    function selectSchool(){
+        var typevalue = $("#current").val();
+        ui.box.load(U('event/School/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择学校',noCheck:'yes'});
+    }
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        &nbsp;&nbsp;&nbsp;&nbsp;{$data.title}&nbsp;&nbsp;<a style="cursor: pointer;float: right; padding-right: 50px;" onclick="javascript:history.go(-1);"><<返回</a>
+    </div>
+  <!-------- 搜索用户 -------->
+
+
+  <!-------- 用户列表 -------->
+
+  <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+        <th class="line_l">学校</th>
+        <th class="line_l">是否阅读</th>
+        <th class="line_l">是否填写回执</th>
+        <?php if(isTuanRole($school['id']) && $rights['can_admin']):?>
+            <th class="line_1">操作</th>
+        <?php endif;?>
+        </tr>
+        <volist id="vo" name="list.data">
+            <tr overstyle='on' id="user_{$vo['uid']}">
+            <td>{$vo.sid|tsGetSchoolNameById}</td>
+            <td><?php if ($vo['status'] == 1) {echo '<p style="color:#F00">已经阅读</p>';}else{echo '<p>还没阅读</p>';} ?></td>
+            <td><?php if ($vo['isReply'] == 1) {echo '<a style="color:#F00" href="'.U('event/Available/reply','sid='.$vo['sid'].'&pushId='.$vo['pushId']).'">已经填写回执</a>';}else{echo '<p>还没填写回执</p>';} ?></td>
+            <?php if(isTuanRole($school['id']) && $rights['can_admin']):?>
+                <td><a href="{:U('event/Available/OASendMessage',array('id'=>$vo['pushId'],'sid'=>$vo['sid']))}">短信通知</a></td>
+            <?php endif;?>
+            </tr>
+        </volist>
+  </table>
+  </div>
+
+  <div class="Toolbar_inbox">
+      <span>共{$list.totalRows}条记录</span>
+      <div class="page right">{$list.html}</div>
+  </div>
+</div>
+
+<script>
+
+    $(".dell").click(function(){
+        if (confirm("确定需要删除改文件？")) {
+            return true ;
+        };
+        return false ;
+    })
+
+
+
+    function editYearNote(uid){
+        ui.box.load( '{:U('event/User/editYearNote')}' + '&uid=' + uid,{title:'学期总评分'});
+    }
+    //删除用户
+    function deleteUser(uid) {
+            uid = uid ? uid : getChecked();
+            uid = uid.toString();
+            if(uid == '' || !confirm('删除成功后将无法恢复，确认继续？')) return false;
+
+            $.post("{:U('event/User/doDeleteUser')}", {uid:uid}, function(res){
+                    if(res == '1') {
+                            uid = uid.split(',');
+                            for(i = 0; i < uid.length; i++) {
+                                    $('#user_'+uid[i]).remove();
+                            }
+                            ui.success('操作成功');
+                    }else {
+                            ui.error('无权操作');
+                    }
+            });
+    }
+
+
+    //搜索用户
+    var isSearchHidden = <neq name="type" value="searchUser">1<else/>0</neq>;
+    function searchUser() {
+            if(isSearchHidden == 1) {
+                    $("#searchUser_div").slideDown("fast");
+                    $(".searchUser_action").html("搜索完毕");
+                    isSearchHidden = 0;
+            }else {
+                    $("#searchUser_div").slideUp("fast");
+                    $(".searchUser_action").html("搜索用户");
+                    isSearchHidden = 1;
+            }
+    }
+
+    function folder(type, _this) {
+            $('#search_'+type).slideToggle('fast');
+            if ($(_this).html() == '展开') {
+                    $(_this).html('收起');
+            }else {
+                    $(_this).html('展开');
+            }
+
+    }
+    $(function(){
+        var orderKey = "<?php echo $orderKey;?>";
+        var orderType = "<?php echo $orderType;?>";
+        if(orderKey != ''){
+            $('#order_'+orderKey).addClass('order_'+orderType);
+        }
+        $('.list_order').hover(
+            function(){
+                if($(this).hasClass('order_asc')){
+                    $(this).removeClass("order_asc");
+                    $(this).addClass("order_desc");
+                }else if($(this).hasClass('order_desc')){
+                    $(this).removeClass("order_desc");
+                    $(this).addClass("order_asc");
+                }
+            }
+        );
+        $('.list_order').click(
+            function(){
+                if($(this).hasClass('order_desc')){
+                    window.location.href = "{:U('event/User/index')}&orderKey=jy_year_note&orderType=desc";
+                }else{
+                    window.location.href = "{:U('event/User/index')}&orderKey=jy_year_note&orderType=asc";
+                }
+            }
+        );
+    });
+</script>
+
+<include file="../Teacher/_footer" />

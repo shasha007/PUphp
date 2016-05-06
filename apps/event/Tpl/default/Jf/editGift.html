@@ -1,0 +1,66 @@
+<include file="../Teacher/_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+<script>
+    $(document).ready(function(){
+        loadEditor("content");
+    });
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"><eq name="type" value="edit">编辑物品<else/>添加物品</eq></div>
+    <eq name="type" value="add">
+    <form action="{:U('event/Jf/doAddGift')}" enctype="multipart/form-data" method="post">
+    <else/>
+    <form action="{:U('event/Jf/doEditGift')}" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="id" value="{$id}" />
+    </eq>
+        <div class="form2">
+            <dl class="lineD">
+                <dt>物品名称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="title" type="text" value="{$title}" size="80">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>所需积分：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="cost" type="text" value="{$cost}">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>物品数量：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="number" type="text" value="{$number}">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>详细说明：</dt>
+                <dd>
+                    <textarea name="content" id="content" style="width:700px;height:200px">{$content}</textarea>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>图片：</dt>
+                <dd>
+                    <if condition="$path">
+                        <img src="{$path||getThumb1=###,80,80}">
+                    </if>
+                    <input name="upfile" type="file" size="40"/><span class="cGray2">（尺寸为125*125，支持格式jpg,jpeg,png,gif。用于商城列表图片）</span>
+                </dd>
+            </dl>
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+<include file="../Teacher/_footer" />

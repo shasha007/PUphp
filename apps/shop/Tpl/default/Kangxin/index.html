@@ -1,0 +1,109 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <div class="list">
+        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+            <form method='post' action="{:U('shop/Kangxin/kxLoanDetail')}">
+                <td>1. <input type="submit" value='导出'></td>
+                <td>放款明细查询&nbsp;&nbsp;&nbsp;&nbsp;
+                开始时间<input size="10"  type='text' name='stime' value="">结束时间<input size="10"  type='text' name='etime' value="">格式2014-12-01</td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('shop/Kangxin/kxRepaymentDetail')}">
+                <td>2. <input type="submit" value='导出'></td>
+                <td>还款明细查询&nbsp;&nbsp;&nbsp;&nbsp;
+                开始时间<input size="10"  type='text' name='stime' value="">结束时间<input size="10"  type='text' name='etime' value="">格式2014-12-01</td>
+            </form>
+            </tr>
+            <tr>
+            <if condition="$mark eq 1">
+            <form method='post' action="{:U('shop/Kangxin/allApplyInfo')}">
+                <td>3. <input type="submit" value='导出'></td>
+                <td>学校办卡明细查询&nbsp;&nbsp;&nbsp;&nbsp;
+                    学校<select name="school_id" id="school" >
+                        <option value="0">全部</option>
+                        <foreach name="school" item="vo">
+                            <option value="{$vo.id}">{$vo.title}</option>
+                        </foreach>
+                    </select>
+                开始时间<input size="10"  type='text' name='stime' value="">结束时间<input size="10"  type='text' name='etime' value="">格式2014-12-01</td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('shop/Kangxin/allApply')}">
+                <td>4. <input type="submit" value='导出'></td>
+                <td>办卡成功明细查询&nbsp;&nbsp;&nbsp;&nbsp;
+                    状态<select name="status">
+                            <option value="2">办卡成功</option>
+                            <option value="3">办卡失败</option>
+                    </select>
+                    </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('shop/Kangxin/cationCardInfo')}">
+                <td>5. <input type="submit" value='导出'></td>
+                <td>办卡问题查询&nbsp;&nbsp;&nbsp;&nbsp;
+                    状态<select name="mark">
+                            <option value="1">手机号码不匹配</option>
+                            <option value="2">风控被驳回</option>
+                            <option value="3">本四专三</option>
+                            <option value="4">自行注册</option>
+                    </select>
+                    </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('shop/Kangxin/allFinanceList')}">
+                <td>6. <input type="submit" value='导出'></td>
+                <td>所有订单导出
+                    </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('shop/Kangxin/statusList')}">
+                <td>7. <input type="submit" value='导出'></td>
+                <td>状态<input size="10"  type='text' name='status' value="">
+                    </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('shop/Kangxin/financeRepayList')}">
+                <td>8. <input type="submit" value='导出'></td>
+                <td>还款查询&nbsp;&nbsp;&nbsp;&nbsp;
+                    借款类型<select name="mark">
+                            <option value="1">一千元免息</option>
+                            <option value="2">非免息</option>
+                    </select>
+                    </td>
+            </form>
+            </tr>
+
+            <tr>
+            <form method='post' action="{:U('shop/Kangxin/jinNongData')}">
+                <td>9. <input type="submit" value='导出'></td>
+                <td>康欣放款数据导出&nbsp;&nbsp;&nbsp;&nbsp;
+                开始时间<input size="10"  type='text' name='stime' value="">结束时间<input size="10"  type='text' name='etime' value="">格式2014-12-01</td>
+            </form>
+            </tr>
+
+            <tr>
+            <form method='post' action="{:U('shop/Kangxin/jinNongReData')}">
+                <td>10. <input type="submit" value='导出'></td>
+                <td>康欣扣款数据导出&nbsp;&nbsp;&nbsp;&nbsp;
+                开始时间<input size="10"  type='text' name='stime' value="">结束时间<input size="10"  type='text' name='etime' value="">格式2014-12-01</td>
+            </form>
+            </tr>
+          
+            </if>
+        </table>
+    </div>
+    </div>
+<include file="__THEME__/comm/_datepicker" />
+<script type="text/javascript">
+
+</script>
+<include file="_footer" />

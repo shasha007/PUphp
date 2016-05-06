@@ -1,0 +1,26 @@
+<include file="_header" />
+<style>
+    .tan{border: 1px solid #ccc;background: #fff;position: fixed;left:50%;top: 50%;margin-left: -100px;margin-top: -130px;display: none;}
+    .tan input{width:50px;}
+    .time{width:100%;height:40px;line-height: 40px;background: #D2DBEA;margin-bottom: 10px;}
+    .time span{color: red;}
+</style>
+<div class="so_main">
+    <include file="_tab" />
+    <div class='time'>已使用：<span class='hasuse'>{$fund.hasUse}</span> 余额：<span class="last">{$fund.last}</span></div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" onclick='addFund();'class="btn_a"><span<?php if($menu2==1):?> class="cRed"<?php endif;?>>添加基金</span></a>
+        <a href="__URL__&act=fundlist&cid=all" class="btn_a"><span<?php if($menu2==2):?> class="cRed"<?php endif;?>>基金管理</span></a>
+        <a href="__URL__&act=fundlist&cid=wait" class="btn_a"><span<?php if($menu2==3):?> class="cRed"<?php endif;?>>待发放</span></a>
+        <a href="__URL__&act=fundlist&cid=have" class="btn_a"><span<?php if($menu2==4):?> class="cRed"<?php endif;?>>已发放</span></a>
+    </div>
+{$inner}
+<include file="_footer" />
+<script>
+    function addFund(){
+       ui.box.load('__URL__&act=addFund',{title:'添加基金'});
+    }
+</script>
+<include file="__THEME__/comm/_datepicker" />

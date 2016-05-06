@@ -1,0 +1,102 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <form action="{:U('/Admin/doEditPartner')}" enctype="multipart/form-data" method="post" onsubmit="return check();">
+        <input type="hidden" name="id" value="{$id}" />
+        <div class="form2">
+            <dl class="lineD">
+                <dt>网站名称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="title" type="text" value="{$title}">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>网站链接：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="url" type="text" value="{$url}" size="80">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>排序：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="display_order" type="text" value="{$display_order}">
+                    <span class="cGray2">(大于0的整数。越小排序越靠前)</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>缩略图上传：</dt>
+                <dd>
+                    <if condition="$pic">
+                        <img id="thumb" src="{$pic|tsMakeThumbUp=###,150,50}">
+                    </if>
+                    <input name="upfile" type="file" size="40"/><span class="cGray2">（尺寸为150*50，大小2M，支持格式jpg,jpeg,png,gif。用于列表图片）</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>客户端类型：</dt>
+                <dd>
+                    <select name="type"  onChange="changeType(this.value)">
+                        <option value="1" <eq name="type" value="1">selected</eq>>html</option>
+                        <option value="2" <eq name="type" value="2">selected</eq>>apk</option>
+                    </select>
+                </dd>
+            </dl>
+            <div id="html">
+            <dl class="lineD">
+                <dt>手机版网址：</dt>
+                <dd>
+                    <input name="wap_url" type="text" value="{$wap_url}" size="80">
+                </dd>
+            </dl>
+            </div>
+            <div id="apk">
+            <dl class="lineD">
+                <dt>包名：</dt>
+                <dd>
+                    <input name="apk_name" type="text" value="{$apk_name}">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>apk下载地址：</dt>
+                <dd>
+                    <input name="apk_url" type="text" value="{$apk_url}" size="80">
+                </dd>
+            </dl>
+            </div>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+function check(){
+    if(!$( 'input[name="title"]' ).val()){
+        ui.error("网站名称不能为空");
+        return false;
+    }
+    if(!$( 'input[name="url"]' ).val()){
+        ui.error("网站链接不能为空");
+        return false;
+    }
+    if(!$( 'input[name="display_order"]' ).val()){
+        ui.error("排序不能为空");
+        return false;
+    }
+    return true;
+}
+function changeType(v){
+    if(v==1){
+        $('#html').show();
+        $('#apk').hide();
+    }else{
+        $('#apk').show();
+        $('#html').hide();
+    }
+}
+$(function(){
+    changeType($("select[name='type']").val());
+});
+</script>
+<include file="_footer" />

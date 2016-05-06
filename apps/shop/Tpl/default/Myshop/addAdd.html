@@ -1,0 +1,48 @@
+<script type="text/javascript" src="../Public/js/ajaxAdd.js?2"></script>
+<div class="d_add">
+    <ul>
+        <li>
+            <div class="d_add_n">所在地区：</div>
+            <div class="d_add_desc">
+                <input id="city" name="city" type="text" class="d_add_input w350" /><span class="m_color2">*</span> (省、市、区)
+            </div>
+        </li>
+        <li>
+            <div class="d_add_n">街道地址：</div>
+            <div class="d_add_desc">
+                <input id="shipAddress" name="shipAddress" type="text" class="d_add_input w350" /><span class="m_color2">*</span> (不需要重复填写省、市、区)
+            </div>
+        </li>
+        <li>
+            <div class="d_add_n">邮政编码：</div>
+            <div class="d_add_desc">
+                <input id="shipZip" name="shipZip" type="text" class="d_add_input" maxLength="20"/>
+                <span class="m_color2">*</span> <a href="http://alexa.ip138.com/post/Search.aspx" target="_blank">邮编查询</a>
+            </div>
+        </li>
+        <li>
+            <div class="d_add_n">收货人：</div>
+            <div class="d_add_desc">
+                <input id="shipName" name="shipName" type="text" class="d_add_input"  maxLength="10"/>
+                <span class="m_color2">*</span>
+            </div>
+        </li>
+        <li>
+            <div class="d_add_n">手机号码：</div>
+            <div class="d_add_desc">
+                <input id="shipMobile" name="shipMobile" type="text" class="d_add_input"  maxLength="11"/>
+                <span class="m_color2">*</span>
+            </div>
+        </li>
+        <li>
+            <div class="d_add_n">固定电话：</div>
+            <div class="d_add_desc">
+                <input id="shipTel" name="shipTel" type="text" class="d_add_input"  maxLength="20"/>
+            </div>
+        </li>
+    </ul>
+    <div class="d_add_b">
+        <input id="setOrderAddress" type="button" value="保存" class="d_add_b1 b" onclick="setAdd();"/>
+        <input type="button" value="取消" class="d_add_b2" onclick="ui.box.close();"/>
+    </div>
+</div>

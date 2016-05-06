@@ -1,0 +1,71 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th width="30%">商品名称</th>
+                <th>剩余数量</th>
+                <th>状态</th>
+                <th>已使用数量</th>
+                <th>类别</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo['name']}</td>
+                    <td>{$vo.num}</td>
+                    <td><?php if($vo['num']>0){echo '<span class="cGreen">进行中</span>';}else{echo '<span class="cRed">已结束</span>';}?></td>
+                    <td>{$vo.usedNum}</td>
+                    <td><?php echo $types[$vo['type']]?></td>
+                    <td>
+                        <a href="{:U('home/Lucky/editLucky', array('id'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:void(0)" onclick="pass({$vo.id})">通过</a>
+                        <?php if($vo['usedNum']==0):?>
+                        <a href="javascript:void(0)" onclick="reject({$vo.id})">驳回</a>
+                        <?php endif;?>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+</div>
+<script>
+function reject(id){
+    if(confirm('您确定驳回并删除该奖品？')) {
+        $.post( U('home/Lucky/reject'),{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                $('#list_'+id).remove();
+            }
+        });
+    }
+}
+
+function pass(id){
+    if(confirm('确定通过!')){
+        $.post( U('home/Lucky/pass'),{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                $('#list_'+id).remove();
+            }
+        });
+    }
+}
+</script>
+<include file="_footer" />

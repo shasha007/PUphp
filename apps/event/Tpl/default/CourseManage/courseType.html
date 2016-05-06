@@ -1,0 +1,84 @@
+<include file="../CoursePass/_header" />
+<style type="text/css">
+    th  { font:bold 12px/17px Arial;text-align:left;padding:4px;border-bottom:1px solid #333;}
+    .ed { background:#669;color:#fff;}
+</style>
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0)" class="btn_a"onclick="addType()"><span>添加课程分类</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="del()"><span>删除课程分类</span></a>
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th width="25%" >ID</th>
+                <th>分类名称</th>
+                <th>操作</th>
+
+            </tr>
+            <volist name="type_list" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td id="{$vo.id}" class="jun">{$vo.name}</td>
+                    <td><a href="javascript:void(0);" onclick="del({$vo['id']})">删除</a></td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $(".jun").dblclick(function(){
+            var inval=$(this).html();
+            var id=$(this).attr("id");
+            if(!$('#edit'+id).val()){
+            $(this).html("<input id='edit"+id+"'name='' value='"+inval+"'>");
+            }
+           $("#edit"+id).die().live("blur",function(){
+              });
+            $("#edit"+id).focus().live("blur",function(){
+                var editval=$(this).val();
+                $(this).parent('td').html(editval);
+                $.post("{:U('event/CourseManage/editType')}",{id:id,val:editval});
+            });
+        });
+    });
+  
+  
+    function del(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            alert('请选择要删除的课程分类！');return false;
+        }
+        if( confirm("是否删除课程分类？") ){
+            $.post( '__URL__&act=doDeleteType',{id:id},function(text ){
+                if( text == 1 ){
+                    ui.success( "删除多个课程分类成功" );
+                    var id_list = id.split( ',' );
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#list_'+id_list[j]).remove();
+                    }
+                }else if( text == 2 ){
+                    ui.success( "删除成功" );
+                    $('#list_'+id).remove();
+                }else{
+                    ui.error( "删除失败" );
+                }
+            });
+        }
+    }
+            
+    function addType(){
+        ui.box.load('__URL__&act=addType',{title:'添加分类'});
+    }
+</script>
+<include file="../CoursePass/_footer" />

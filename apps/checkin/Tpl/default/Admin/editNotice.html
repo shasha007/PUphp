@@ -1,0 +1,42 @@
+<include file="_header" />
+<include file="__THEME__/comm/kindeditor" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>公告</div>
+    <div class="form2">
+        <form action="{:U('/Admin/doEditNotice')}" enctype="multipart/form-data" method="post">
+            <if condition="$obj">
+                <input name="id" value="{$obj.id}" type="hidden">
+            </if>
+            <table cellpadding=3 cellspacing=3>
+                <tr>
+                    <td align="right"><span style="color: #F00">*</span>标题：</td>
+                    <td align="left"><input type="text" size="50" name="title" maxlength="50" value="{$obj.title}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><span style="color: #F00">*</span>副标题：</td>
+                    <td align="left"><input type="text" size="30" maxlength="2" name="front" maxlength="20" value="{$obj.front}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">公告分类：</td>
+                    <td align="left">
+                        <select name="cid">
+                            <option value="1"   <php>if($obj['cid']==1) { </php>selected="selected"  <php> }</php>>公告</option>
+                            <option value="2"  <php>if($obj['cid']==2) { </php>selected="selected"  <php> }</php>  >活动</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">详细：</td>
+                    <td align="left"><textarea name="content" id="content" style="width:780px;height:200px">{$obj.content}</textarea></td>
+                </tr>
+            </table>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定">
+            </div>
+        </form>
+    </div>
+</div>
+<include file="_footer" />

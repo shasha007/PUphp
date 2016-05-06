@@ -1,0 +1,44 @@
+<include file="_header" />
+<div class="so_main">
+    <form method="post" style="padding:10px">
+        用户ID：<input type="text" value="{$_POST['userId']}" name="userId">
+        时间 从：<input name="sday" type="text" value="{$_POST['sday']}" onfocus="rcalendar(this,'full');" />
+        到：<input name="eday" type="text" value="{$_POST['eday']}" onfocus="rcalendar(this,'full');" />
+        <input class="btn_b" type="submit" value="搜索">
+    </form>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录， 共送PU币<?php echo $totalRows*2; ?>.00</span>
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;"></th>
+                <th class="line_l">用户ID</th>
+                <th class="line_l">姓名</th>
+                <th class="line_l">学校</th>
+                <th class="line_l">充值金额</th>
+                <th class="line_l">赠送金额</th>
+                <th class="line_l">时间</th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' id="{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" value="{$vo.id}"></td>
+                    <td>{$vo.uid}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.sid|tsGetSchoolName}</td>
+                    <td>{$vo.pay}</td>
+                    <td>{$vo.gift}</td>
+                    <td>{$vo.ctime|friendlyDate}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录， 共送PU币<?php echo $totalRows*2; ?>.00</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="__THEME__/comm/_datepicker" />
+
+<include file="_footer" />

@@ -1,0 +1,277 @@
+<include file="_header" />
+<div class="so_main">
+    <div id="editTpl_div">
+        <div class="page_tit">编辑广告</div>
+        <div class="form2">
+        	<if condition="($allowOpt == true) ">
+            <form method="post" action="{:U('home/Ad/doEditAd')}" enctype="multipart/form-data">
+            </if>
+                <input type='hidden' name="id" value="{$id}">
+                <dl class="lineD">
+                    <dt>标题：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="title" type="text" value="{$title}">
+                    </dd>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>位置：<span class="red">*</span></dt>
+                    <dd>
+                        <select name="place" onChange="adPlace(this)" >
+                            <option value="0" <eq name="place" value="0">selected</eq> >登录前中间</option>
+                            <option value="1" <eq name="place" value="1">selected</eq> >登录前左下</option>
+                            <option value="2" <eq name="place" value="2">selected</eq> >登录后中间</option>
+                            <option value="3"  <eq name="place" value="3">selected</eq>>登录后左下</option>
+                            <option value="4" <eq name="place" value="4">selected</eq> >课件广告</option>
+                            <option  value="5" <eq name="place" value="5">selected</eq> >客户端首页</option>
+                            <option  value="6" <eq name="place" value="6">selected</eq> >客户端活动页</option>
+                            <option  value="7" <eq name="place" value="7">selected</eq> >客户端部落页</option>
+                            <option  value="8" <eq name="place" value="8">selected</eq> >客户端好友页</option>
+                            <option  value="9" <eq name="place" value="9">selected</eq> >客户端应用页</option>
+                            <option  value="10" <eq name="place" value="10">selected</eq> >客户端更多页</option>
+                            <option  value="11" <eq name="place" value="11">selected</eq> >客户端全屏</option>
+                            <option  value="12" <eq name="place" value="12">selected</eq> >客户端摇一摇</option>
+                            <option  value="13" <eq name="place" value="13">selected</eq> >客户端新鲜事</option>
+                            <option  value="14" <eq name="place" value="14">selected</eq> >客户端首页(5.0)</option>
+                            <option  value="15" <eq name="place" value="15">selected</eq> >客户端校园页</option>
+                            <option value="16" <eq name="place" value="16">selected</eq>  >Ta秀秀场页</option>
+                            <option value="17" <eq name="place" value="17">selected</eq> >部落排行</option>
+                        </select>
+                         <span class="cGray2">(选择登录前中间，登录前左下位置时，广告类型不能选择CPC类型)</span>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>类型：<span class="red">*</span></dt>
+                    <dd>
+                        <select name="type" onChange="adType(this)">
+                            <option value="0"   <eq name="type" value="0">selected</eq> >VIEW</option>
+                            <option value="1"  <eq name="type" value="1">selected</eq> >CPC</option>
+                        </select>
+                    </dd>
+                </dl>
+                <neq name='area' value="">
+                <volist name="area" id="area">
+                    <dl class="lineD  adx" id="jun">
+                        <dt>投放地区：</dt>
+                        <dd>
+                            <select name="area[]" onChange="getSchools(this)">
+                                <option value="0" >全部</option>
+                                <volist name="citys" id="vo">
+                                    <option value="{$vo['id']}" <eq name="vo['id']" value="$area['areaId']">selected</eq> >{$vo.short} {$vo.city}</option>
+                                </volist>
+                            </select>
+                            <span >
+                                学校
+                                <input  type='checkbox' onclick="checkAll(this,{$area['areaId']})" value=''/>全部
+                                <volist name="area['school']" id="school">
+                                    <input name="schools{$area['areaId']}[]" type='checkbox' value="{$school['id']}" <php>if(in_array($school['id'],$sids))echo 'checked' </php>>{$school.title}
+                                </volist>
+                            </span>
+                        </dd>
+                    </dl>
+                </volist>
+                <else/>
+                <dl class="lineD  adx" id="jun">
+                    <dt>添加投放地区：</dt>
+                    <dd>
+                        <select name="area[]" onChange="getSchools(this)">
+                            <option value="0" >全部</option>
+                            <volist name="citys" id="vo">
+                                <option value="{$vo['id']}" >{$vo.short} {$vo.city}</option>
+                            </volist>
+                        </select>
+                        <span style="display:none;">
+                            学校
+                        </span>
+                    </dd>
+                </dl>
+                </neq>
+                <if condition="($allowOpt == true) ">
+                <dl class="lineD adx">
+                    <dt>添加投放地区：</dt>
+                    <dd>
+                        <a href="javascript:void(0);" onclick="add();">添加</a>
+                    </dd>
+                </dl>
+                </if>
+                <dl class="lineD adx">
+                    <dt>投放年级：<span class="red">*</span></dt>
+                    <dd>
+                    <input name="years[]" type='checkbox' value="0"  <php>if($year==0)echo 'checked'</php>   onclick="checkYearAll(this);"/>全部
+                    <?php $yearsArr=explode(',',$year);  ?>
+                    <volist name="years" id="vo">
+                        <input name="years[]" type='checkbox' value="{$vo}" <php>if(in_array($vo,$yearsArr)||$year==0)echo 'checked' </php>  />{$vo}级
+                    </volist>
+                    </dd>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>上架时间段：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="sTime" type="text" id="sTime" onfocus="rcalendar(this,'full');" size="20" value="{$sTime|date='Y-m-d H:i',###}" readonly/>  -
+                        <input name="eTime" type="text" id="eTime" onfocus="rcalendar(this,'full');" size="20" value="{$eTime|date='Y-m-d H:i',###}" readonly />
+                    </dd>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>上传图片：<span class="red">*</span></dt>
+                    <dd>
+                    <if condition="$coverId">
+                        <img src="{$coverId|getImgAttach=###,100,100,'f'}">
+                    </if>
+                    <if condition="($allowOpt == true) ">
+                    <input name="cover" type="file" />
+                    </if>
+                    </br>
+                    <span class="cGray2">客户端除了 （应用页、摇一摇、客户端首页(5.0)） 为1080*520 和 （全屏）为640*1136，其他统一为1080*176,
+                        <br/>网站登录前568*265，登录后690*200，课件中间978*120</span>
+                    </dd>
+                </dl>
+                <dl class="lineD jun"  style="display:none;">
+                    <dt>点击价：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="price" type="text"  size="12" value="{$price}"/><span class="cGray2">(最小0.01PU币)</span>
+                    </dd>
+                </dl>
+                <dl class="lineD jun" style="display:none;" >
+                    <dt>资金库：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="fund" type="text"  size="12" value="{$fund}"/><span class="cGray2">(最小0.01PU币)</span>
+                    </dd>
+                </dl>
+                <dl class="lineD jump">
+                    <dt>客户端跳转：</dt>
+                    <dd>
+                         <select name="jump" >
+                            <option value="1" <eq name="jump" value="1">selected</eq> >外部</option>
+                            <option value="2" <eq name="jump" value="2">selected</eq> >游戏</option>
+                            <option value="3"  <eq name="jump" value="3">selected</eq>>活动</option>
+                            <option value="4" <eq name="jump" value="4">selected</eq> >部落</option>
+                            <option  value="5" <eq name="jump" value="5">selected</eq> >官方公告</option>
+                            <option  value="6" <eq name="jump" value="6">selected</eq> >旅游</option>
+                            <option  value="7" <eq name="jump" value="7">selected</eq> >摇一摇</option>
+                            <option  value="8" <eq name="jump" value="8">selected</eq> >扑基金</option>
+                            <option  value="9" <eq name="jump" value="9">selected</eq> >扑满</option>
+                            <option  value="10" <eq name="jump" value="10">selected</eq> >TA秀</option>
+                            <option  value="11" <eq name="jump" value="11">selected</eq> >TA秀秀场</option>
+                            <option value="12" <eq name="jump" value="11">selected</eq> >话题列表</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>广告地址：<span class="red">*</span></dt>
+                    <dd>
+                        最靓军装填：7<br/>
+                        <input name="url" type="text"  size="30" value="{$url}"/><span class="cGray2">以http://开头 如跳转到内部活动、部落、话题列表等，填活动ID、部落ID、话题ID</span>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>优先级别：</dt>
+                    <dd>
+                        <input name="level" type="text"  size="15" value="{$level}"/><span class="cGray2">（此处填写正整数,数字越小优先级越高。默认0）</span>
+                    </dd>
+                </dl>
+
+
+            <if condition="($allowOpt == true) ">
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+            </if>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getSchools(obj){
+        var span = $(obj).siblings('span');
+        if($(obj).val()==0){
+            span.hide();
+            return false;
+        }
+        span.show();
+        span.empty();
+        var cityId=$(obj).val();
+        $.get( U('home/Ad/school') ,{cityId:cityId},function(data) {
+            var json=  $.parseJSON(data);
+            var string = "<input  type='checkbox' onclick='checkAll(this,"+cityId+")' value=''/>全部";
+            $.each(json, function(k,v)
+            {
+                string += "&nbsp;&nbsp;<input name='schools"+cityId+"[]' type='checkbox' value='"+v.id+"'>"+v.title;
+            });
+            span.append(string);
+
+        });
+    }
+
+    function add(){
+        var obj = $('#jun').clone(true).insertAfter("#jun");
+        $(obj).find("option:selected").attr('selected','');
+        $(obj).find('span').hide();
+    }
+
+
+    function checkAll(o,cityId){
+        if( o.checked == true ){
+            $('input[name="schools'+cityId+'[]"]').attr('checked','true');
+        }else{
+            $('input[name="schools'+cityId+'[]"]').removeAttr('checked');
+        }
+    }
+
+    function checkYearAll(o){
+        if( o.checked == true ){
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+    }
+
+        function adType(obj){
+        if(obj.value==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+    }
+
+        function adPlace(obj){
+        if(obj.value==0||obj.value==1){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+             $('input[name="years[]"]').removeAttr('checked');
+        }
+
+             if(obj.value<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    }
+
+
+     $(function(){
+        if($("select[name='type']").val()==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+        if($("select[name='place']").val()==1||$("select[name='place']").val()==0){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+        }
+
+         if($("select[name='place']").val()<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    });
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<include file="_footer" />

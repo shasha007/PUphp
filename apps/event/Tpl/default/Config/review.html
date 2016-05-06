@@ -1,0 +1,96 @@
+<link href="../Public/css/x_hd1.css?150728" type="text/css" rel="stylesheet" />
+<div style="width:1000px;overflow-y:scroll;height:500px;">
+    <center><div class="intro_c_zt red b">【{$title}】</div></center>
+    <div class="publish_f">
+            <div class="second_class">
+                <?php if($desc):?>
+                    <div class="s_ctitle"><span class="b">申请要求：</span><span class="red">{$desc|nl2p}</span></div>
+                <?php endif;?>
+                <div class="s_ctitle"><span class="b">▶ 名称：</span><span class="s_cddd">（15字以内，显示于第二课堂成绩单上）</span><span class="red">*</span></div>
+                <div class="s_ctitle"><input name="title" id="title" type="text" class="s_cinput" maxlength="15" /></div>
+                <div class="s_chr"></div>
+                <div class="s_ctitle"><span class="b">▶ 实践或获奖时间：</span><span class="s_cddd">（上半学期：02月15-08月15，下半学期：08月16-02月14）</span><span class="red">*</span></div>
+                <div class="s_ctitle">
+                    <select name="stime" id="stime" class="s_cselect">
+                        <option value="0" selected>--请选时间--</option>
+                        <?php $ny=date('Y');$day = date('m-d'); for($i=1;$i<=4;$i++):?>
+                            <?php if($i>1 || $day>'08-16'):?>
+                            <option value="{$ny}1">{$ny} 下半学期</option>
+                            <?php endif;?>
+                            <?php if($i>1 || $day>'02-15'):?>
+                            <option value="{$ny}0">{$ny} 上半学期</option>
+                            <?php endif;?>
+                        <?php $ny-=1;?>
+                        <?php endfor;?>
+                    </select>
+                </div>
+                <div class="s_chr"></div>
+                <volist name="inputs" id='v'>
+                    <div class="s_ctitle">
+                        <span class="b">▶ {$v.title}：</span>
+                        <?php if($v['desc']):?><span class="s_cddd">({$v.desc})</span><?php endif;?>
+                        <?php if($v['must']):?><span class="red">*</span><?php endif;?>
+                    </div>
+                    <div class="s_ctitle">
+                        <?php if($v['type']==1):?>
+<input name="in{$v.id}" id="in{$v.id}" type="text" class="s_cinput <?php if($v['must']):?>must<?php endif;?>"/>
+                        <?php elseif($v['type']==2):?>
+<textarea name="in{$v.id}" id="in{$v.id}" rows="5" cols="60" class="s_ctextarea <?php if($v['must']):?>must<?php endif;?>"></textarea>
+                        <?php elseif($v['type']==4):?>
+                            <div id="uploaded_files" class="must"></div>
+                            <input type="button" onclick="openUploadFile();" value="上传文件" class="s_upbtn"/>
+                            <span class="s_cddd">（支持格式jpg,gif,png,jpeg,bmp,zip,rar,doc,xls,ppt,docx,xlsx,pptx,pdf）</span>
+                        <?php elseif($v['type']==3):?>
+                            <?php $radio=1; foreach($v['opt'] as $q=>$w):?>
+                                <label class="s_cradio">
+                                    <input note="{$w['1']}" type="radio" value="{$q}" name="in{$v.id}" <?php if($q==0):?>checked<?php endif;?>/>
+                                    <span class="s_cradio_text">{$w['0']}</span>
+                                </label>
+                            <?php if($radio%3==0):?><br/><?php endif;?>
+                            <?php $radio++; endforeach;?>
+                        <?php endif;?>
+                    </div>
+                    <div class="s_chr"></div>
+                </volist>
+                <div class="s_ctitle">
+                    <span class="b">▶ 审核人：</span><span class="red">*</span>
+                    <?php if(!$audit):?>
+                        <span class="red">尚未分配审核人，学生无法申请</span>
+                    <?php else:?>
+                    <select class="s_cselect" name="sid1" id="sid1">
+                        <option value="-1" selected>请选择提交院系</option>
+                        <?php foreach($audit as $v):?>
+                        <option value="{$v.sid1}">{$v.sName}</option>
+                        <?php endforeach;?>
+                    </select>
+                    <select class="s_cselect" name="audit" id="audit">
+                        <option value="0" selected>请先选择提交院系</option>
+                    </select>
+                    <?php endif;?>
+                </div>
+                <div class="s_chr"></div>
+                <div class="s_cbtn"><input type="button" class="p_btn2 mt10" value="关闭预览" onclick="javascript:ui.box.close()"/></div>
+            </div>
+    </div>
+</div>
+<script  type="text/javascript">
+    $(function(){
+        $('#sid1').bind('change', selectAuditor);
+    });
+    function selectAuditor(){
+        var sid1 = $(this).val();
+        if($(this).val()!='-1'){
+            $.get(U('event/EcApply2/ajaxAuditor') ,{sid1:sid1},function(data) {
+                var option = "<option value=''>--此院系暂无审核人员--</option>";
+                if(data!=0){
+                    var option = "<option value=''>--请选择审核人--</option>";
+                    var obj=  $.parseJSON(data);
+                    $.each(obj, function(k, v){
+                        option += "<option value=\"" + v['uid'] + "\">" + v['realname']+ "</option>";
+                    });
+                }
+                $("#audit").html(option);
+            });
+        }
+    }
+</script>

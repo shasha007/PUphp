@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+   	 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../Public/css/bag.css" />
+		<style type="text/css">
+		.row {margin-left: 0px;margin-right: 0px;}
+		p {margin-bottom: 0px;}
+		#bg {display: none;position: absolute;top: 0%;left: 0%;width: 100%;height: 100%;background-color: black;z-index: 1001;-moz-opacity: 0.7;opacity: .70;filter: alpha(opacity=70);}
+		#show img {position: absolute;z-index: 1002;width: 30%;left: 60%;top: 5%;display: none;}
+	</style>
+	</head>
+	<body>
+		<div class="head">
+			<img src="../Public/img/logo.png">
+			<span>PU口袋校园</span>
+			<button id="btn-download">下载客户端</button>
+		</div>
+		<div id="bg"></div>
+		<div id="show" class="">
+			<img src="http://pic.pocketuni.net/data/sys_pic/event/arrows.png" class="img-responsive">
+		</div>
+		<div class="continer">
+			<p class="title">{$Think.lang.finance_name}又给我提额啦！</p>
+			<!--<p class="time">09-07 14:25</p>-->
+			<img src="../Public/img/dh.png" />
+			<p class="textMidd title">{$Think.lang.finance_name}简介</p>
+			<p class="textMidd textColor">{$Think.lang.finance_name}是什么?</p>
+			<p class="textMidd textSmall">{$Think.lang.finance_name}是为在校大学生量身定制的一款</p>
+			<p class="textMidd textSmall">成长服务类产品,</p>
+			<p class="textMidd textSmall">在线激活即给予一定的初始额度,</p>
+			<p class="textMidd textSmall">并根据大学生在校期间的表现,不定期给予</p>
+			<p class="textMidd textSmall">信用提额。</p>
+			<p class="textMidd textSmall">{$Think.lang.finance_name}不但满足了大学生在校期间的</p>
+			<p class="textMidd textSmall">校园生活基本要求,</p>
+			<p class="textMidd textSmall">也为大学生步入社会打下坚实的信用基础。</p>
+			<p class="textMidd textColor title">{$Think.lang.finance_name}的优势</p>
+			<p class="textMidd textSmall">(你有，我有！我有,你有？)</p>
+			<p class="textMidd textSmall">安全性高-大学生成长服务平台</p>
+			<p class="textMidd textSmall">灵活性大-任务金额</p>
+			<p class="textMidd textSmall">200元循环额度-<b>全额免息</b></p>
+			<p class="textMidd textSmall">{$Think.lang.finance_name}免息:借8.88元1期=还8.88元1期</p>
+			<p class="textMidd textSmall">{$Think.lang.finance_name}只玩真的,不玩虚的!</p>
+			<p class="textMidd textColor title">如何找到{$Think.lang.finance_name}?</p>
+			<img src="../Public/img/ydt.png">
+		</div>
+		<div class="foot">
+			<img src="../Public/img/ewmbg.png">
+			<p>想要查看更多?快来关注公众号吧~</p>
+		</div>
+	</body>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript">
+		function isWeiXin() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+				return true;
+			} else if (ua.match(/Weibo/i) == 'weibo') {
+				return true;
+			} else if(ua.match(/QQ/i) == 'qq'){
+				return true;
+			}else {
+				return false;
+			}
+		}
+		function isInstalled() {
+			window.location = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.xyhui';
+		}
+		$(function(){
+			var bodyheight = parseInt($(document).height());
+			var scrheight = parseInt(window.screen.availHeight);
+			if (isWeiXin()) {
+				if (bodyheight < scrheight) {
+					$("#bg").css("height", scrheight + "px");
+				} else {
+					$("#bg").css("height", bodyheight + "px");
+				}
+			} else {}
+			
+			$("#btn-download").click(function() {
+				if (isWeiXin()) {
+					$("#bg").show();
+					$("#show img").show();
+				} else {
+					isInstalled();
+				}
+			});
+			$("#bg").click(function() {
+				$("#bg").hide();
+				$("#show img").hide();
+			});
+		});
+	</script>
+</html>

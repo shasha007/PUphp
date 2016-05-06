@@ -1,0 +1,68 @@
+<?php if($areas):?>
+<?php foreach($areas as $k=>$v):?>
+<tr id="area">
+    <?php if($k==0):?>
+    <td><span class="red">*</span></td>
+    <td id="areaAdd">显示于学校：<?php if(!$check_province){echo '<a href="javascript:void(0);" onclick="addArea();" class="cBlue">[增加投放地区]</a>' ;}?></td>
+    <?php else:?>
+    <td></td>
+    <td id="areaAdd"><a href="javascript:void(0);" onclick="delArea(this);" class="cRed">[删除此地区]</a></td>
+    <?php endif;?>
+    <td></td>
+    <td>
+        <?php if($check_province){echo '<input type="hidden" name="prov[]" value="'.$check_province.'">' ;}?>
+        <select name="prov[]" onChange="changeProv(this)" <?php if($check_province){echo 'disabled' ;}?>>
+            <option value="0" >-全国-</option>
+            <volist name="provs" id="vo">
+                <option value="{$vo['id']}" <?php if($v['prov']==$vo['id']):?>selected<?php endif;?>>{$vo.title}</option>
+            </volist>
+        </select>
+        <?php if($v['citys']):?>
+        <select name="city[]" onChange="getSchools(this)">
+            <option value="0" >-全省-</option>
+            <volist name="v.citys" id="citys">
+                <option value="{$citys['id']}" <?php if($v['city']==$citys['id']):?>selected<?php endif;?>>{$citys.city}</option>
+            </volist>
+        </select>
+        <?php else:?>
+        <select name="city[]" onChange="getSchools(this)" style="display:none;"></select>
+        <?php endif;?>
+        <?php if($v['schools']):?>
+        <span>
+            <input name="schools{$v['city']}[]"  type='checkbox' onclick="checkAllSchool(this, {$v['city']})" value='0'
+                   <?php if(in_array(0,$v['sids'])):?> checked<?php endif;?> />全部
+                   <volist name="v['schools']" id="schools">
+                &nbsp;&nbsp;<input name="schools{$v['city']}[]" type='checkbox' value="{$schools.id}" 
+                                   <?php if(in_array($schools['id'],$v['sids'])):?> checked<?php endif;?> />{$schools.title}
+            </volist>
+        </span>
+        <?php else:?>
+        <span style="display:none;"></span>
+        <?php endif;?>
+    </td>
+</tr>
+<?php endforeach;?>
+<?php else:?>
+<tr id="area">
+    <td><span class="red">*</span></td>
+    <td id="areaAdd">显示于学校：<?php if(!$check_province){echo '<a href="javascript:void(0);" onclick="addArea();" class="cBlue">[增加投放地区]</a>' ;}?></td>
+    <td></td>
+    <td>
+        <?php if($check_province){echo '<input type="hidden" name="prov[]" value="'.$check_province.'">' ;}?>
+        <select name="prov[]" onChange="changeProv(this)" <?php if($check_province){echo 'disabled' ;}?>>
+            <option value="0" >-全国-</option>
+            <volist name="provs" id="vo">
+                <option value="{$vo['id']}"<?php if($vo['id']===$check_province){echo 'selected="selected"' ;}?> >{$vo.title}</option>
+            </volist>
+        </select>
+        <select name="city[]" onChange="getSchools(this)" <?php if(!$check_province){echo 'style="display:none;"' ;}?>>
+            <option value="0" >-全省-</option>
+            <volist name="citys" id="vo">
+                <option value="{$vo['id']}" >{$vo.city}</option>
+            </volist>
+        </select>
+        <span style="display:none;"></span>
+    </td>
+</tr>
+<?php endif;?>
+<script type="text/javascript" src="__PUBLIC__/js/showInArea.js"></script>

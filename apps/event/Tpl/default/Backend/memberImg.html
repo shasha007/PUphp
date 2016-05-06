@@ -1,0 +1,43 @@
+<include file="_header" />
+<div class="intro_c">
+    <div class="member_menu b">{$member.realname} <eq name="$member['sex']" value="1">男<else/>女</eq> {$member['sid']|tsGetSchoolTitle}</div>
+    <div class="member_tab">
+        <a href="{:U('event/Backend/editMemberImg',array('id'=>$eventId, 'uid'=>$member['id']))}" class="btn_a"><span>添加照片</span></a>
+        <a href="{:U('event/Backend/memberMultiPhoto',array('id'=>$eventId, 'uid'=>$member['id']))}" class="btn_a"><span>批量添加照片</span></a>
+        <a href="javascript:delPhoto({$eventId});" class="btn_a"><span>删除照片</span></a>
+    </div>
+    <div class="member_list1">
+        <form>
+            <table width="956" border="0" cellspacing="0" cellpadding="0">
+                <tr class="member_tr1">
+                    <td width="30"><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0"></td>
+                    <td width="50">ID</td>
+                    <td width="150">照片</td>
+                    <td width="400">标题</td>
+                    <td width="139">发布时间</td>
+                    <td width="100">操作</td>
+                </tr>
+                <volist name="data" id='vo'>
+                <tr class="member_tr3" id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>
+                        <a href="{:U('/Front/details',array('id'=>$vo['eventId'],'img'=>$vo['id']))}" target="_blank" title="{$vo.title}">
+                        <img src="{$vo.path|getThumb=###,80,80}"></a>
+                    </td>
+                    <td>{$vo.title|getShort=###,127,'…'}</td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td>
+                        <a href="{:U('event/Backend/editMemberImg',array('id'=>$eventId,'gid'=>$vo['id'], 'uid'=>$member['id']))}" >编辑</a>
+                        <a href="javascript:delPhoto({$eventId},{$vo['id']});" >删除</a>
+                    </td>
+                </tr>
+                </volist>
+            </table>
+        </form>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+
+
+<include file="_footer" />

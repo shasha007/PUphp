@@ -1,0 +1,176 @@
+<include file="_header" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/js/ztree/zTreeStyle.css" />
+<div class="hd_c_top">
+    <div class="menu">
+      <ul class="first-menu" id="menu">
+        <li class="first-menu-li i8"><a href="{:U('/Index/addEvent')}">发布活动</a></li>
+      </ul>
+    </div>
+
+    <div class="hd_c_publish"><a href="{:U('/Index/addEvent')}">发起活动</a></div>
+  </div>
+  <div class="hd_c">
+<div class="hd_c_left">
+    <div class="p_back"><a href="{:U('/Index/index')}">返回活动首页</a></div>
+    <div class="publish">
+        <form method="post" action="{:U('event/Index/doAddEvent')}"  enctype="multipart/form-data" onsubmit="return check();">
+            <table width="600" border="0" cellspacing="0" cellpadding="0" class="editEvent">
+                <tr>
+                    <td width="15"><span class="red">*</span></td>
+                    <td width="80">活动名称：</td>
+                    <td width="10"></td>
+                    <td width="495"><input name="title" id="title" type="text" class="p_input1" maxlength="20"/></td>
+                </tr>
+               <tr>
+                    <td width="15"><span class="red">*</span></td>
+                    <td width="80">活动简介：</td>
+                    <td width="10"></td>
+                    <td width="495">
+<textarea id='textarea' name="description" style="width:300px;height:100px;border:1px solid #ccc;" onKeyUp="gbcount(this,200);"></textarea>
+<span  id='remain' style='color:green;'>200</span><span style='color:green;'>/200字</span>
+
+</td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>发起学校：</td>
+                    <td></td>
+                    <td>
+                        <select name="sid" id="sid" class="text">
+                            <?php foreach($addSchool as $value){ ?>
+                                <option value="{$value.id}">{$value.title}</option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>显示于学校：</td>
+                    <td></td>
+                    <td>
+                        <input type="hidden" name="showSids" id="showSids"/>
+                        <input type="button" class="p_btn" value="选择学校" onclick="selectSchool();"/>
+                    </td>
+                </tr>
+                <script type="text/javascript">
+                function selectSchool(){
+                    var typevalue = $("#showSids").val();
+                    ui.box.load(U('event/Index/school')+'&selected='+typevalue,{title:'选择学校',noCheck:'yes'});
+                }
+                </script>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动地点：</td>
+                    <td></td>
+                    <td><input name="address" id="address" type="text" class="p_input2" maxlength="30"/></td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动分类：</td>
+                    <td></td>
+                    <td>
+                        <select name="typeId" id="type" class="text" onchange="changeType(this)">
+                        <option value="0" selected>请选择活动分类</option>
+                        <?php foreach($type as $k=>$cate): ?>
+                        <option value="{$k}" pid="<?php if($cate['pid']>0):?>{$cate.pid}<?php else:?>{$k}<?php endif?>"
+                                banner="{$cate.banner}">{$cate.name}</option>
+                        <?php endforeach; ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>参加费用：</td>
+                    <td></td>
+                    <td>
+                        <select name="cost" class="p_select">
+                            <option value="0" selected="selected">免费</option>
+                            <option value="1">AA制</option>
+                            <option value="2">50元以下</option>
+                            <option value="3">50-200元</option>
+                            <option value="4">200-500元</option>
+                            <option value="5">500-1000元</option>
+                            <option value="6">1000元以上</option>
+                        </select> 费用说明：<input name="costExplain" type="text" class="p_input2"  maxlength="30"/></td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动时间</td>
+                    <td></td>
+                    <td>
+                        <input name="sTime" id="sTime" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly/>
+                        --
+                        <input name="eTime" id="eTime" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>截止报名：</td>
+                    <td></td>
+                    <td><input name="deadline" id="deadline" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly/></td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动人数：</td>
+                    <td></td>
+                    <td><input name="limitCount" id="limitCount" type="text" class="p_input3" onKeyUp="this.value=this.value.replace(/\D/g,'')" maxlength="5" value="0"/>
+                        <span class="cGray2">活动人数上限</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>联系方式：</td>
+                    <td></td>
+                    <td><input name="contact" id="contact" type="text" class="p_input1" maxlength="30"/> <span class="cGray2">如：张小姐，1346665XXXX </span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>活动选项：</td>
+                    <td></td>
+                    <td>
+                        <label><input type="checkbox" name="allow" id="allow" value="1" /> 参加活动需审批</label>
+                        <label><input type="checkbox" name="need_tel" id="need_tel" value="1" /> 报名活动需填写联系电话</label>
+                        <label><input type="checkbox" name="isTicket" id="isTicket" value="1" /> 打开投票功能</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>活动图标：</td>
+                    <td></td>
+                    <td><input type="file" name="cover"> <span class="cGray2">（尺寸为125*125，支持格式jpg,jpeg,png,gif。用于活动列表图片）</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>活动海报：</td>
+                    <td></td>
+                    <td><input type="file" name="logo"><span class="cGray2">（尺寸为1500*357，支持格式jpg,jpeg,png,gif。显示活动首页顶部。如果没有，可根据活动分类选择下面一款推荐的默认海报）</span></td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>推荐海报：<br/><input type="button" value="取消选择" onclick="clearRadio()"/></td>
+                    <td></td>
+                    <td id="bannerImg">请先选择【活动分类】</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" class="p_btn2" value="发起活动" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<script>
+    $(function(){
+        changeType('#type');
+    });
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.core-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.excheck-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.exedit-3.5.min.js" ></script>
+<include file="__THEME__/comm/_datepicker" />
+<script  type="text/javascript" src="../Public/js/editEvent.js?20151211" ></script>
+<include file="_footer" />

@@ -1,0 +1,177 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+	<include file="userTab" />
+	<hr>
+    <div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=index">
+			<!--用户UID：<input type="number" min="1" value="{$Think.post.uid}" name="uid" />&nbsp;&nbsp;-->
+            姓名：<input name="realname" type="text" value="{$Think.post.realname}">&nbsp;&nbsp;
+			身份证号：<input type="text" value="{$Think.post.ctfid}" name="ctfid" />&nbsp;&nbsp;
+			<!--学号：<input type="text" value="{$Think.post.stuNo}" name="stuNo" />
+			<br/>
+			诚信值：<input type="number" max="100" min="0" value="{$Think.post.minCx}" name="minCx" /> - <input type="number" value="{$Think.post.maxCx}" name="maxCx"  max="100" min="0" />
+			<br/>
+			区　域：<select name="province" id="province">
+				<option value="all">--请选择省份--</option>
+				<?php echo $provinces_option;?>
+			</select> - <select name="city" id="city">
+				<option value="all">--请选择城市--</option>
+				<?php echo $citys_option;?>
+			</select>
+			<br/>-->
+			学　校：<select name="school" id="school">
+				<option value="all">--请选择学校--</option>
+				<?php echo $schools_option;?>
+			</select> <!--- 
+			<select name="yx" id="yx">
+				<option value="all">--请选择院系--</option>
+				<?php echo $xys_option;?>
+			</select>
+			<br/>
+			年　级：<input type="number" name="year" value="{$Think.post.year}" min="0" /><span style="color:red;">例如:15</span>-->
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+		<span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>用户UID</th>
+                <th>姓名</th>
+                <th>身份证号</th>
+				<th>学号</th>
+				<th>学分</th>
+				<th>诚信值</th>
+                <th>区域</th>
+                <th>学校</th>
+                <th>院系</th>
+                <th>年级</th>
+                <th>学历</th>
+                <th>推荐人</th>
+                <th>操作</th>
+            </tr>
+			<?php foreach($data as $item):?>
+			<tr overstyle='on' id="list_<?php echo $item['uid'];?>">
+					<td><input type="checkbox" name="checkbox" value="<?php echo $item['uid'];?>"></td>
+					<td><?php echo $item['uid'];?></td>
+					<td><?php echo $item['realname'];?></td>
+					<td><?php echo $item['ctfid'];?></td>
+					<td><?php echo array_shift(explode('@',$item['uemail']));?></td>
+					<td><?php echo $item['score'];?></td>
+					<td><?php echo get_eracity_value($item['attend'],$item['total']);?></td>
+					<td><?php echo $item['pname'].' '.$item['city'];?></td>
+					<td><?php echo $item['sname'];?></td>
+					<td><?php echo get_info_by_sid($item['sid1']);?></td>
+					<td><?php echo $item['year'];?></td>
+					<td><?=$item['tj_year'] == 3 ? '专科' : '本科'?></td>
+					<td><?php echo $item['recommend_realname'];?></td>
+					<td>
+						<a href="<?php echo U('pufinance/Admin/userDetail',array('uid'=>$item['uid']))?>">查看详情</a> |
+						<a href="<?php echo U('pufinance/Admin/wallet',array('uid'=>$item['uid']))?>">钱包</a> |
+						<a href="<?php echo U('pufinance/Admin/userEdit',array('uid'=>$item['uid']))?>">编辑</a> |
+						<a href="javascript:deleteUser(<?php echo $item['uid']; ?>)">删除</a>
+					</td>
+			</tr> 
+			<?php endforeach;?>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+		<a href="javascript:void(0);" class="btn_a" onclick="deleteUser();"><span>删除用户</span></a>
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+	//获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked:not("#checkbox_handle")'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+	function deleteUser(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            alert('请选择要删除的用户！');return false;
+        }
+		
+        if( confirm("是否删除用户？") ){
+            $.post( '/index.php?app=pufinance&mod=Admin&act=deleteUserByAjax',{id:id},function(text ){
+                if( text == 1 ){
+                    ui.success( "删除多个用户成功" );
+                    var id_list = id.split( ',' );
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#list_'+id_list[j]).remove();
+                    }
+                }else if( text == 2 ){
+                    ui.success( "删除成功" );
+                    $('#list_'+id).remove();
+                }else{
+                    ui.error( "删除失败" );
+                }
+            });
+        }
+    }
+	
+	$(function(){
+		//城市列表
+		/*$('#province').change(function(){
+			var id = $(this).val();
+			$('#city option:gt(0)').remove();
+			if(id === 'all'){
+				return;
+			}
+			$.post(
+				'<?php echo U('pufinance/Admin/getCitys');?>',
+				{id:id},
+				function(res){
+					if(res.code === 1){
+						$('#city').append(res.options);
+					}
+				},
+				'json'
+			);
+		});
+		
+		//学院列表
+		$('#school').change(function(){
+			var id = $(this).val();
+			$('#yx option:gt(0)').remove();
+			if(id === 'all'){
+				return;
+			}
+			$.post(
+				'<?php echo U('pufinance/Admin/getDepartments');?>',
+				{id:id},
+				function(res){
+					if(res.code === 1){
+						$('#yx').append(res.options);
+					}
+				},
+				'json'
+			);
+		});*/
+	});
+
+</script>
+<include file="../Public/footer" />

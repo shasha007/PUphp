@@ -1,0 +1,14 @@
+<div class="page_tit">部落基金</div>
+<div class="tit_tab">
+    <ul>
+        <li><a <eq name="menu" value="1">class="on"</eq>
+                href="__URL__&act=cyList">创业基金</a></li>
+         <li><a <eq name="menu" value="2">class="on"</eq>
+                href="__URL__&act=rwApply&status=1">任务基金</a></li>
+    </ul>
+</div>
+<?php if($menu==1):?>
+<div>流程：1、前台【申请创业基金】填写提交表单 2、后台审核 3、发放金额</div>
+<?php elseif($menu==2):?>
+<div>流程：1、后台【添加任务】 2、前台部落主席申领 3、后台【申领管理】审核 4、后台验收发放金额</div>
+<?php endif;?>

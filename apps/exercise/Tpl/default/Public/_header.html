@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>PocketUni-题库</title>
+<link href="../Public/css/exam.css" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var APPNAME         =   '{$ts._app}';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        setInterval(showTime, 1000);
+        function showTime(){
+            var today = new Date();
+            var weekday=new Array(7)
+            weekday[0]="星期日"
+            weekday[1]="星期一"
+            weekday[2]="星期二"
+            weekday[3]="星期三"
+            weekday[4]="星期四"
+            weekday[5]="星期五"
+            weekday[6]="星期六"
+            var y=today.getFullYear()+"年";
+            var month=today.getMonth()+1+"月";
+            var td=today.getDate()+"日";
+            var d=weekday[today.getDay()];
+            var h=today.getHours();
+            var m=today.getMinutes();
+            var s=today.getSeconds();
+            $('#time').text(y+month+td+' '+d+' '+h+':'+m+':'+s);
+        }
+    })
+</script>
+</head>
+<style type="text/css">
+    .main{padding-top: 0px;}
+</style>
+<body>
+    <include file="__THEME__/_holder_2014" />
+    <div class="bg">
+        <div class="main">
+        <div class="exam_header">
+            <div class="exam_logo"><a href="{:U('/Index/index')}"><img src="../Public/images/pu_logo.png" alt="PocketUni题库"  /></a></div>
+            <div class="exam_menu b">PocketUni在线答题系统</div>
+            <div class="exam_time" id="time"></div>
+        </div>

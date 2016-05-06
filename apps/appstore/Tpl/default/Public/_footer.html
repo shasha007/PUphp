@@ -1,0 +1,28 @@
+				<div class="clearfix"></div>
+			<div class="">
+			    <dl class="index_dev">
+			        <dt>热门合作方</dt>
+
+			<volist name="linklist" id="vo">
+			<dd><table><tbody><tr><td>
+				<php>echo get_link($vo['img'], $vo['url'], 'width="100"');</php>
+				</td></tr></tbody></table>
+			</dd>
+			</volist>
+
+			    </dl>
+			<div class="clearfix"></div>
+			</div>
+
+		</div>		 <!--content-->
+        <div class="c_footer">
+
+<div class="c_footercon1 center">
+ <div class="footerLine"></div>
+    <include file="__THEME__/_footer_icp" />
+</div>
+</div>
+{:Addons::hook('public_footer')}
+	</div>
+</body>
+</html>

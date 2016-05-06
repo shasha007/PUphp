@@ -1,0 +1,58 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+    <include file="userTab" />
+    <form action="{:U('pufinance/Admin/doUserEdit')}" method="post">
+        <input type="hidden" name="uid" value="{$info.uid}">
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="200px">用户ID</td>
+                <td>{$info.uid}</td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td><input name="realname" type="text" value="{$info.realname}" size="50"></td>
+            </tr>
+            <tr>
+                <td>身份证号</td>
+                <td><input name="ctfid" type="text" value="{$info.ctfid}" size="50"></td>
+            </tr>
+            <tr>
+                <td>学校职务</td>
+                <td><input name="position" type="text" value="{$info.position}" size="50"></td>
+            </tr>
+            <tr>
+                <td>民族</td>
+                <td><input name="ethnic" type="text" value="{$info.ethnic}" size="50"></td>
+            </tr>
+            <tr>
+                <td>QQ/微信</td>
+                <td><input name="imid" type="text" value="{$info.imid}" size="50"></td>
+            </tr>
+            <tr>
+                <td>备用手机号</td>
+                <td><input name="mobile" type="text" value="{$info.mobile}" size="50"></td>
+            </tr>
+            <tr>
+                <td>常用邮箱</td>
+                <td><input name="email" type="text" value="{$info.email}" size="50"></td>
+            </tr>
+            <tr>
+                <td>地址</td>
+                <td><input name="address" type="text" value="{$info.address}" size="50"></td>
+            </tr>
+            <tr>
+                <td>备注</td>
+                <td>
+                    <textarea name="remark" style="width:400px;height:200px">{$info.remark}</textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+        <div class="page_btm">
+            <input type="submit" class="btn_b" value="提 交" />
+        </div>
+    </form>
+</div>
+<include file="../Public/footer" />

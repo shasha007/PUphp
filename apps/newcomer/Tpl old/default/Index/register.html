@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>校邮汇迎新-加入校邮汇</title>
+<link href="../Public/css/style.css" rel="stylesheet" type="text/css" />
+<!--[if IE]> 
+<link rel="stylesheet" type="text/css" href="../Public/css/ie.css" /> 
+<![endif]-->
+<script type="text/javascript" src="../Public/js/jquery.js"></script>
+<script type="text/javascript" src="../Public/js/jquery.validator.reg.js"></script>
+<script type="text/javascript" src="../Public/js/json2select.js"></script>
+</head>
+
+<body>
+	<div class="view_header">	
+		<div class="menu-wrapper">	
+		<div class="menu">
+	        <a class="menu1" href="{:U('newcomer/Index/index')}"></a>
+	        <a class="menu2" href="{:U('newcomer/Index/news',array('c'=>1))}"></a>
+	        <a class="menu3" href="{:U('newcomer/Index/news',array('c'=>2))}"></a>
+	        <a class="menu4" href="{:U('newcomer/Index/news',array('c'=>3))}"></a>
+	    </div>
+		</div>
+	</div>
+<div class="view_banner">
+    <div class="view_banner01"></div>
+    <div class="view_banner02"></div>
+</div>
+<div class="view_content">
+    <div class="register">
+    <div class="register_box reg_box">
+        <div class="title">注册校邮汇账号</div>        
+          <form action="{:U('newcomer/Index/doRegister')}" method="post" id="regform" name="reg">	
+	        <ul class="form_list">
+              <li class="form_li">
+                <div class="reg_li_1">登录邮箱：</div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:150px;" value="" name="email" require="true" datatype="email|ajax" url="{:U('home/Public/isEmailAvailable')}" msg="请填有效邮箱地址，以完成注册|邮箱已被占用"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_email" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_email" style="display:none;"> <img src="../Public/images/error.png" id="error_email" /> </div>
+                </div>
+              </li>
+              <li class="form_li">
+                <div class="reg_li_1">登录密码：</div>
+                <div class="reg_li_2">
+                  <input type="password" class="text35" style="width:150px;" name="password" id="password" require="true" value="" datatype="limit"  min="6" max="16" msg="密码由6-16个字符组成"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_password"  style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_password" style="display:none;"> <img src="../Public/images/error.png" id="error_password" /> </div>
+                </div>
+              </li>
+              <li class="form_li">
+                <div class="reg_li_1">确认密码：</div>
+                <div class="reg_li_2">
+                  <input type="password" class="text35" style="width:150px;" name="repassword" require="true" value="" datatype="repeat|limit"  min="6" max="16" to="password" msg="两次输入的密码须一样|密码由6-16个字符组成"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_repassword"  style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="r error_repassword" style="display:none;"> <img src="../Public/images/error.png" id="error_repassword" /> </div>
+                </div>
+              </li>
+              <li class="form_li">
+                <div class="reg_li_1">真实姓名：</div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:150px;" value="" name="nickname" min="3" max="10" maxLength="10" require="true" datatype="require|ajax" url="{:U('home/Public/isValidNickName')}"  msg="重要！请填写用户名"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_nickname" style="display:none;"><span class="ico_cue_ok"></span></div>
+                  <div class="error_nickname" style="display:none;"><img src="../Public/images/error.png" id="error_nickname" /></div>
+                </div>
+              </li>
+              <li class="form_li">
+     				<div class="reg_li_1">性别：</div>
+                  <div class="reg_li_2">
+                      <label><input name="sex" type="radio" value="1"  checked /> 男</label> &nbsp;&nbsp;&nbsp;
+                      <label><input name="sex" type="radio" value="0" /> 女</label>
+                  </div>
+                  <div class="reg_li_3">
+                  </div>
+              </li>
+              <li class="form_li">
+                  <div class="reg_li_1">学校院系：</div>
+                  <div class="reg_li_2" id="pid">
+                  </div>
+     				<div class="reg_li_3">    
+                  </div>
+              </li>
+              <li class="form_li">
+                <div class="reg_li_1">学号：</div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:150px;" value="" name="intro[newcomer_studentno]" maxLength="16" require="true" value="" datatype="limit"  min="1" max="16"  msg="重要！请填写学号" ref="studentno"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_studentno" style="display:none;"><span class="ico_cue_ok"></span></div>
+                  <div class="error_studentno" style="display:none;"><img src="../Public/images/error.png" id="error_studentno"></div>
+                </div>
+              </li>
+
+              <eq name="register_verify_on" value="1">
+              <li class="form_li">
+                <div class="reg_li_1">验证码：</div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:100px;" name="verify" require="true" value="" datatype="require"  msg="验证码不能为空"/>
+                  <a href="javascript:void(0);" onclick="changeverify()"><img src="{:U('home/public/verify')}" id="verifyimg" alt="换一张" /></a> </div>
+                <div class="reg_li_3">
+                  <div id="success_verify"  style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="r error_verify" style="display:none;"><img src="../Public/images/error.png" id="error_verify" /></div>
+                </div>
+              </li>
+              </eq>
+              <li class="form_li">
+                <div style="text-align:center"> 
+                <if condition="$_SERVER['HTTP_REFERER']">
+                    <input type="hidden" name="HTTP_REFERER" value="{$_SERVER['HTTP_REFERER']}">
+                </if>				
+				<a class="reg_submit" style="display:block;margin:0 auto;border:1px" href="javascript:void(0)" onclick="javascript:$('#regform').submit();">&nbsp</a>
+				<div style="font-size:12px;margin-top:10px">
+				已有校邮汇账号，<a class="login_link" href="{:U('home/Public/login')}">点击登陆</a>
+				</div>
+                </div>
+              </li>
+            </ul>
+      </form>
+      </div>
+    </div>
+    <div class="content_box">
+        <div class="pics">
+			<php>foreach( $photos['data'] as $d ){</php>	
+            <div class="pic">
+				<a href="{:U('newcomer/Index/news',array(id=>$d['document_id']))}"><img src="{$d['icon']|get_document_url}" /></a>
+			</div>
+			<php>}</php>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+	<div class="footer_box">
+        <div class="copyright">
+        	校邮汇版权所有 苏ICP证050725号
+			<script src="http://s13.cnzz.com/stat.php?id=2602838&web_id=2602838&show=pic" language="JavaScript"></script>
+        </div>
+        <div class="menu">
+            <a href="{:U('home/Public/document',array(id=>1))}" target="_blank">常见问题</a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="{:U('home/Public/document',array(id=>2))}" target="_blank">关于校邮汇</a>
+        </div>
+        <div class="clearfix"></div>
+	</div>
+</div>
+
+ <script type="text/javascript">
+ $(document).ready(function(){	
+	
+	$('#regform').checkForm();
+	var category_json = {:getCategorySelect(0)};
+	$("#pid").json2select(category_json,'','cid');
+ });
+</script>
+
+</body>
+</html>

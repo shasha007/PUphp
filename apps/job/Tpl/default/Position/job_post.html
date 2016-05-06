@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>职位描述--创就业--Pocketuni</title>
+<link href="../Public/css/job.css" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+</head>
+
+<body>
+ <include file="__THEME__/_holder_2014" />   
+<div class="bg_job">
+ <div class="main_job">
+<include file="../Public/top" />
+  <div class="c_job">
+   <div class="job_posthead mt10">
+    <div class="job_postlogo"><img src="{$cInfo.logo_pics}" /><</div>
+    <div class="job_postinfor">
+     <div class="job_postname f18 b">{$pInfo.positionname}</div>
+     <div class="job_postcname f14 b">{$cInfo.fullname}</div>
+     <div class="clear"></div>
+     <div class="job_postrequirebg"></div>
+     <div class="clear"></div>
+     <div class="job_postrequire b f16">
+      <ul>
+       <li>薪资:{$pInfo['salary'] | monthlySalary}</li>
+       <li>地区:{$pInfo['workarea'] | getAreaName}</li>
+       <li>类型:{$pInfo['positiontype'] | positiontype}</li>
+       <li>学历:{$pInfo['education'] | getEducation}</li>
+      </ul></div>
+     <div class="mt10 job_postrequire1 f14">招聘人数：{$pInfo.number}人&nbsp;&nbsp;&nbsp;&nbsp; 性别：{$pInfo['sex'] | getjobSex}</div>
+     <div class="job_postrequire1 f14">发布时间：{$pInfo['ctime'] | friendlyDate}</div>
+     <div class="job_postbtn1 b f14">
+      <ul>
+       <li><a href="#">立即申请</a></li>
+       <li><a href="#">收藏</a></li>
+<!--已申请和取消收藏按钮样式-->       
+<!--       <li class="i1">已申请</li>
+       <li class="i2"><a href="#">取消收藏</a></li>-->
+      </ul>
+     </div>
+    </div>
+    
+   </div>
+   <div class="job_pleft">
+    <div class="job_plefttitle b f16">职位描述</div>
+    <div class="job_pleftdesc">
+    {$pInfo.jobdescrpition}
+    </div>
+    <div class="job_plefttitle mt10 b f16">公司介绍</div>
+    <div class="job_pleftdesc">
+     {$cInfo.introduction}
+    </div>
+<!--    <div class="job_pleftbtn b f14"><a href="#">立即申请</a></div>
+    <div class="job_pleftbtn b f14 ibtn">已申请</div>-->
+   </div>
+   <div class="job_pright">
+    <div class="job_prkey">
+     <span class="b f14">领域：</span>{$cInfo['industrycategory_a'] | getsIndustryName}<br />
+     <span class="b f14">规模：</span>{$cInfo['scale'] | scale}<br />
+     <span class="b f14">性质：</span>{$cInfo['type'] | type}
+    </div>
+    <div class="job_pradd">
+     <span class="b">公司主页：</span>{$cInfo.homePage}<br />
+     <span class="b">公司地址：</span>{$cInfo.address}<br />
+     <span class="b">联系电话：</span>{$cInfo.telephone_areacode}-{$cInfo.telephone}<br />
+     <span class="b">E-mail：</span>{$cInfo.getresume_email}
+    </div>
+<!--    <div class="job_prmenu f16 b">相似职位</div>-->
+<!--    <div class="job_prlist">
+     <ul>
+      <li>
+       <div class="job_prlogo"><a href="#"><img src="images/thumb.jpg" /></a></div>
+       <div class="job_prdesc">
+        <div class="job_prd1 f14"><a href="#">动画设计</a></div>
+        <div class="job_prd2">2k-5k</div>
+        <div class="job_prd3">互联网 IT</div>
+       </div>
+      </li>
+      <li>
+       <div class="job_prlogo"><a href="#"><img src="../Public/images/thumb.jpg" /></a></div>
+       <div class="job_prdesc">
+        <div class="job_prd1 f14"><a href="#">动画设计动画设计动画设计动画设计动画设计</a></div>
+        <div class="job_prd2">2k-5k</div>
+        <div class="job_prd3">互联网 IT</div>
+       </div>
+      </li>
+      <li>
+       <div class="job_prlogo"><a href="#"><img src="../Public/images/thumb.jpg" /></a></div>
+       <div class="job_prdesc">
+        <div class="job_prd1 f14"><a href="#">动画设计动画设计动画设计动画设计动画设计</a></div>
+        <div class="job_prd2">2k-5k</div>
+        <div class="job_prd3">互联网 IT</div>
+       </div>
+      </li>
+     </ul>
+    </div>-->
+   </div>
+  </div>
+ </div>
+</div>
+
+
+<include file="__THEME__/footer" />
+</body>
+</html>

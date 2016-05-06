@@ -1,0 +1,95 @@
+<include file="../Public/_header" />
+
+
+<div class="content clearfix under-suggest">
+	
+
+			<div class="right_box mt10">
+				<div class="right_boxtitle">
+				  <p>
+					
+					<php>if($cid<0) { 
+						if(isset($keyword)) { 
+							echo "搜索: ".$keyword;
+						} else {
+							echo "我的课件";
+						}						
+					</php>
+					<php> } else {
+						if($cid>0) { </php>
+					{$cid|getCategoryName}
+					<php> } </php>	
+							
+					<php> if($cid1>0) { </php>
+					- {$cid1|getCategoryName}
+					<php> } }</php>
+					
+					
+					 共<strong class="pin_num">{$documents.totalRows}</strong>个结果
+					
+					</p>
+					
+					
+				</div>
+				<div class="right_boxwrapper">
+								
+				<ul class="main_page">
+					
+				<volist name="documents.data" id="vo">	
+                <li class="hot_doc" id="list_{$vo['id']}">
+					<div class="first">
+						<em class="icon {$vo.extension}"></em>
+						<span><a href="{:U('document/Index/doc',array(id=>$vo['id'],uid=>$vo['userId']))}">{$vo.name}</a>
+						<php>
+						if(isset($admin)) {
+						</php>	
+						 [ <a href="javascript:void(0);" onclick="del({$vo['id']})">删除</a> ]
+						<php> } </php>						
+						</span>
+					</div>
+					<div class="second">
+						<div class="category2">分类: 
+						<php>if($vo['cid0']>0) { </php>
+						{$vo['cid0']|getCategoryName}
+						<php> } </php>			
+						<php>if($vo['cid1']>0) { </php>
+						- {$vo['cid1']|getCategoryName}
+						<php> } </php>
+						</div>
+						<div class="user">上传人:<space uid="vo.userId">{uname}</space></div>
+						<div class="time">{$vo.mTime|friendlyDate}</a></div>
+						<div class="download">下载量: {$vo.downloadCount}</a></div>
+					</div>
+				</li>
+				</volist>
+				
+                </ul>	
+                
+				<div class="page">{$documents.html}</div>
+
+				</div>
+			</div>
+                            
+                
+</div>
+<php>
+if(isset($admin)) {
+</php>
+<script>
+function del(id) {
+	var id = id.toString();
+	if( confirm("是否删除课件？") ){
+	  $.post( "{:U('document/Index/del',array(uid=>$vo['userId']))}",{id:id},function(text ){
+		  if( text == 1 ){
+			  alert( "删除成功" );
+			  $('#list_'+id).remove();
+		  }else{
+			  alert( "删除失败" );
+		  }
+	  });
+	}
+	
+}
+</script>
+<php> } </php>
+<include file="../Public/_footer" />

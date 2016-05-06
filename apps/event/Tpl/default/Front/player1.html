@@ -1,0 +1,69 @@
+<include file="_header1" />
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_person.gif" alt="" /> {$topMsg} 可以投票。每个评比可投10票，投满10票生效
+        <span class="cRed">票数每5分钟刷新</span>
+    </div>
+    <div class="news_back"><a href="{:U('event/Index/sj')}"><<其它评比</a> &nbsp; <a target="_blank" href="{:U('event/Front/help3',array('id'=>$eventId))}">投票帮助</a></div>
+    <?php if(isset($keyword)):?>
+    <div class="person_search">搜索“<span class="red b">{$keyword}</span>”的相关结果</div>
+    <?php endif;?>
+    <div class="person_list">
+        <ul>
+            <volist name="data" id='vo'>
+            <li>
+                  <a href="{:U('/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id']))}" title="{$vo.title}">
+              <div class="person_list_photo">
+                      <img src="{$imgs[$vo['id']]['attachId']|getImgAttach=###,163,204,'c'}"  alt="" /></div>
+              <div class="person_list_prov b c3">{$vo.sid|tsGetSchoolName}</div>
+              <div class="person_list_prov">{$vo.title}</div>
+              </a>
+              <div class="person_list_prov"><span class="red">{$vo.ticket}</span>票</div>
+              <span id="vote_{$vo.id}">
+              <?php if($sjVote==2): ?>
+                    <div class="person_list_vote i4">投票未开始</div>
+              <?php elseif($sjVote==3):?>
+                    <div class="person_list_vote i4">投票已结束</div>
+              <?php else:?>
+                    <?php if($vo['voted']): ?>
+                        <div class="person_list_vote i4">您已投票</div>
+                    <?php else:?>
+                        <div class="person_list_vote" onclick='post_vote({$eventId},{$vo.id})'>投TA一票</div>
+                    <?php endif; ?>
+              <?php endif; ?>
+              </span>
+            </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<script>
+    var mid = {$mid};
+    var restCount = {$restCount};
+    function post_vote(id,pid){
+        if(mid==0){
+            ui.error('请先登录！');
+            return;
+        }
+        if(restCount==0){
+            ui.error('您已投满了10票! 每人每评选最多投10票！');
+            return;
+        }
+        if(confirm('限投10票，且必须投满才生效。您还有【'+restCount+'】票。确定要投票?')){
+        $.post(U('event/Front/vote1'),{id:id,pid:pid},function(txt){
+            json = $.parseJSON(txt);;
+            if( json.status == 1 ){
+                ui.success( json.info );
+                setTimeout(function(){location.reload();},1500);
+            }else if( json.status == 2 ){
+                restCount -= 1;
+                $('#vote_'+pid).html('<div class="person_list_vote i4">您已投票</div>');
+                ui.success( json.info );
+            }else{
+                ui.error( json.info );
+            }
+        });
+    }
+}
+</script>
+<include file="_footer" />

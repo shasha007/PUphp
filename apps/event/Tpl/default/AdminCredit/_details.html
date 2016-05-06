@@ -1,0 +1,52 @@
+    <dl>
+        <dt class="left alR b clear" style="width:70px;"> 申请人：</dt>
+        <dd class="left alL">{$realname} {$sid1|tsGetSchoolName}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:70px;"> 申请类别：</dt>
+        <dd class="left alL">{$type|getEcTypeName=###,$school['id']}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:70px;"> 名称：</dt>
+        <dd class="left alL">{$title}</dd>
+    </dl>
+<?php if($zusatz): ?>
+    <?php foreach($zusatz as $opt):?>
+        <dl>
+            <dt class="left alR b clear" style="width:280px;"> {$opt.title}：</dt>
+            <dd class="left alL">{$opt['select']['title']}
+            <?php if($opt['select']['input']):?>{$zs_name}<?php endif;?>
+            <?php if($opt['select']['tc']):?> ({$opt['select']['tc']})<?php else:?>(实践学时：{$opt['select']['credit']})<?php endif;?></dd>
+        </dl>
+    <?php endforeach;?>
+    <dl>
+        <dt class="left alR b clear" style="width:280px;"> 总实践学时：</dt>
+        <dd class="left alL">{$credit}</dd>
+    </dl>
+<?php endif;?>
+    <?php if($description): ?>
+    <dl>
+        <dt class="left alR b clear" style="width:70px;"> 相关说明：</dt>
+        <dd class="left alL">{$description|nl2p}</dd>
+    </dl>
+    <?php endif;?>
+    <?php if($imgs): ?>
+    <dl style="margin:10px 10px 5px;" class="clear">
+        <dt class="left alR b" style="width:70px;"> 相关图片：</dt>
+        <dd class="left alL">
+            <?php foreach($imgs as $vo): ?>
+            <a href="{$vo|get_photo_url}" target="_blank"><img src="{$vo|getThumb=###,90,125}" alt="" /></a>&nbsp;&nbsp;
+            <?php endforeach; ?>
+        </dd>
+    </dl>
+    <?php endif;?>
+    <?php if($attachs): ?>
+    <dl style="margin:10px 10px 50px;" class="clear">
+        <dt class="left alR b" style="width:70px;"> 相关文件：</dt>
+        <dd class="left alL">
+            <?php foreach($attachs as $vo): ?>
+                {$vo|getAttachHtml2}&nbsp;&nbsp;
+            <?php endforeach; ?>
+        </dd>
+    </dl>
+    <?php endif;?>

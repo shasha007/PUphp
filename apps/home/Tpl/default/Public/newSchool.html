@@ -1,0 +1,46 @@
+<div class="school_c">
+
+
+    <div class="school_college jun">
+        <ul>
+            <volist name="school" id="vo">
+                <li><a href="#" val="{$vo.a}">{$vo.t}</a></li>
+            </volist>
+        </ul>
+    </div>
+    <div class="school_college" id="subschool" >
+        <ul>
+
+        </ul>
+    </div>
+
+        <div class="school_close"><input name="close" type="button" value="关闭" class="school_btn" onclick="javascript:ui.box.close();" /></div>
+
+</div>
+<script>
+    $(function(){
+        $('.jun ul li a ').click(function(){
+            //var s=subUrl.lastIndexOf('=');
+            var sid=$(this).attr('val');
+            //subUrl=subUrl.substr(0,s+1);
+
+            $('.jun ul li a').removeClass()
+            $(this).addClass('school1');
+            $.post(U('home/Public/ajaxNewSchool'), { sid: sid},
+            function(data){
+                var json= $.parseJSON(data);
+                //$('#subschool ul').html('');
+                newUrl = subUrl.replace('xxx',sid);
+                var str ="<li><a href='"+newUrl+"'>全部</a></li>";
+                $.each(json,function(i,v){
+                    newUrl = subUrl.replace('xxx',v.a);
+                    str+="<li><a href='"+newUrl+"'>"+v.t+"</a></li>";
+                });
+                $('#subschool ul').html(str);
+                //$('#subschool ul').append(str);
+
+            });
+
+        });
+    })
+</script>

@@ -1,0 +1,52 @@
+<include file="../Teacher/_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+<script>
+    $(document).ready(function(){
+        loadEditor("content");
+    });
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"> 打印证书配置</div>
+    <form method="post" action="{:U('event/config/doPrintconfig')}">
+        <div class="form2">
+            <dl class="lineD">
+                <dt>标 题：</dt>
+                <dd>
+                    <input name="title" type="text" value="{$print_title}" size="60">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>描述：</dt>
+                <dd>
+                    <textarea name="content" id="content" style="width:700px;height:200px">{$print_content}</textarea>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>证书可在几天内领取：</dt>
+                <dd>
+                    <input name="print_day" type="text" value="{$print_day}"> <span>0-255天</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>证书领取地点：</dt>
+                <dd>
+                    <input name="print_address" type="text" value="{$print_address}" size="60">
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<include file="../Teacher/_footer" />

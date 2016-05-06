@@ -1,0 +1,61 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    海选选手->上传至决赛选手，不用再次上传选手照片、视频、简介
+    <br/>1.关联 2.海选活动管理页【投票选手】 3.勾选哪些选手需【推荐至上级活动】
+    <div class="Toolbar_inbox">
+        <form action="__URL__&act=recommList" method="post">
+        <div class="page right">{$html}</div>
+        <a href="javascript:addRecomm();" class="btn_a"><span>添加关联活动</span></a>
+        <a href="javascript:delRecomm();" class="btn_a"><span>删除关联活动</span></a>
+            &nbsp;海选活动ID：<input name="eventId" type="text" value="{$eventId}">
+            决赛活动ID：<input name="provId" type="text" value="{$provId}">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>海选活动</th>
+                <th>决赛活动</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>ID: {$vo.eventId}<br/>{$vo.eventId|getEventName}</td>
+                    <td>ID: {$vo.provId}<br/>{$vo.provId|getEventName}</td>
+                    <td>
+                        <a href="javascript:delRecomm('{$vo.id}');" >删除</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <form action="__URL__&act=recommList" method="post">
+        <div class="page right">{$html}</div>
+        <a href="javascript:addRecomm();" class="btn_a"><span>添加关联活动</span></a>
+        <a href="javascript:delRecomm();" class="btn_a"><span>删除关联活动</span></a>
+            &nbsp;海选活动ID：<input name="eventId" type="text" value="{$eventId}">
+            决赛活动ID：<input name="provId" type="text" value="{$provId}">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+</div>
+<script>
+    function addRecomm(){
+        ui.box.load('__URL__&act=addRecomm',{title:'添加关联活动'});
+    }
+    function delRecomm(id){
+        delList(U('event/Admin/delRecomm'),id);
+    }
+</script>
+<include file="_footer" />

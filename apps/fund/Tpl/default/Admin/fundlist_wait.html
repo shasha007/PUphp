@@ -1,0 +1,204 @@
+<div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>学校</th>
+                <th>活动名称</th>
+                <th>发起人</th>
+                <th>申请金额</th>
+                <th>发放金额</th>
+                <th>申请时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.sid}</td>
+                    <td>{$vo.eventName}</td>
+                    <td>{$vo.uid}</td>
+                    <td>{$vo.fund}</td>
+                    <td>{$vo.audltFund}</td>
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="detail({$vo.id});">详情</a>
+                        <a href="javascript:void(0);" onclick="send({$vo.id});">发放</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+<div class="list tan" id="send">
+    <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th colspan="2">审核<input type="hidden"></th>
+        </tr>
+        <tr>
+            <td>活动:</td>
+            <td></td>
+
+        </tr>
+         <tr>
+            <td>范围:</td>
+            <td></td>
+
+        </tr>
+         <tr>
+            <td>承办金额:</td>
+            <td></td>
+
+        </tr>
+         <tr>
+            <td>核准金额:</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>实际发放:</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td> <a href="javascript:void(0);" onclick='through();' >发放</a>
+            <td><a href="javascript:void(0);" onclick='doclose();'>取消</a></td>
+        </tr>
+
+    </table>
+</div>
+<div class="list tan" id="detail">
+    <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th colspan="2">详情<input type="hidden"></th>
+        </tr>
+        <tr>
+            <td>活动名称:</td>
+            <td></td>
+
+        </tr>
+         <tr>
+            <td>申请人:</td>
+            <td></td>
+
+        </tr>
+         <tr>
+            <td>职位:</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>电话:</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>qq:</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>支付宝账号:</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>部落外联负责人姓名及电话:</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>活动范围:</td>
+            <td></td>
+
+        </tr>
+       <tr>
+            <td>预计报名:</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>预计签到:</td>
+            <td></td>
+
+        </tr>
+         <tr>
+            <td>申请金额:</td>
+            <td></td>
+
+        </tr>
+         <tr>
+            <td>核准金额:</td>
+            <td></td>
+
+        </tr>
+
+        <tr>
+             <td colspan="2"><a href="javascript:void(0);" onclick='doclose();'>Ok</a></td>
+        </tr>
+
+    </table>
+</div>
+<script>
+    function detail(id){
+        var id = id;
+        $.post( '__URL__&act=fund_detailAjax',{id:id},function(json){
+            if(json){
+                var obj = JSON.parse(json);
+               $('#detail').find('tr').eq(1).find('td').eq(1).html(obj.eventName);
+               $('#detail').find('tr').eq(2).find('td').eq(1).html(obj.uid);
+               $('#detail').find('tr').eq(3).find('td').eq(1).html(obj.position);
+               $('#detail').find('tr').eq(4).find('td').eq(1).html(obj.telephone);
+               $('#detail').find('tr').eq(5).find('td').eq(1).html(obj.qq);
+               $('#detail').find('tr').eq(6).find('td').eq(1).html(obj.alipayAccount);
+               $('#detail').find('tr').eq(7).find('td').eq(1).html(obj.responsibleInfo);
+               $('#detail').find('tr').eq(8).find('td').eq(1).html(obj.range);
+               $('#detail').find('tr').eq(9).find('td').eq(1).html(obj.eRegistration);
+               $('#detail').find('tr').eq(10).find('td').eq(1).html(obj.eSign);
+               $('#detail').find('tr').eq(11).find('td').eq(1).html(obj.fund);
+               $('#detail').find('tr').eq(12).find('td').eq(1).html(obj.audltFund);
+               $('#detail').css('display','block');
+            }
+        });
+
+    }
+    function doclose(){
+        $('#send').css('display','none');
+        $('#detail').css('display','none');
+    }
+
+    function send(id){
+         var id = id;
+        $.post( '__URL__&act=fund_detailAjax',{id:id},function(json){
+            if(json){
+                var obj = JSON.parse(json);
+               $('#send').find('tr').eq(0).find('input:hidden').val(id);
+               $('#send').find('tr').eq(1).find('td').eq(1).html(obj.eventName);
+               $('#send').find('tr').eq(2).find('td').eq(1).html(obj.range);
+               $('#send').find('tr').eq(3).find('td').eq(1).html(obj.fund);
+               $('#send').find('tr').eq(4).find('td').eq(1).html(obj.audltFund);
+               $('#send').find('tr').eq(5).find('td').eq(1).html(obj.audltFund);
+               $('#send').css('display','block');
+            }
+        });
+
+
+    }
+
+    function through(){
+        var id = $('#send').find('tr').eq(0).find('input:hidden').val();
+          $.post( '__URL__&act=fund_send_throughAjax',{id:id},function(json){
+            if(json){
+                var obj = JSON.parse(json);
+                $('.time .hasuse').html(obj.hasUse);
+                $('.time .last').html(obj.last);
+                $('#list_'+id).remove();
+                doclose();
+                ui.success('操作成功');
+            }
+        });
+
+    }
+</script>

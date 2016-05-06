@@ -1,0 +1,148 @@
+<include file="_header" />
+<script type="text/javascript" src="__PUBLIC__/js/kindeditor/kindeditor.js"></script>
+<form method="post" action="{:U('event/Sjsq/doAddT2')}" enctype="multipart/form-data">
+<div class="prov_ftitle p_c3 b f14">优秀团队申报 (十佳团队评比)</div>
+<div class="prov_back prov_link"><a href="{:U('event/Sjsq/index/')}">返回</a></div>
+<div class="clear"></div>
+<div class="prov_fcon mt10">
+    <ul>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 院系：</div>
+            <div class="prov_fcon_d"><input name="sid1" type="text" class="prov_input" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 团队名称：</div>
+            <div class="prov_fcon_d"><input name="title" type="text" placeholder="请输入团队名称" class="prov_input" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 实践项目名称：</div>
+            <div class="prov_fcon_d"><input name="title2" type="text" placeholder="请输入实践项目名称" class="prov_input" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 团队成员：</div>
+            <div class="prov_fcon_d">
+                <textarea name="zusatz" cols="" rows="" placeholder="请输入团队成员" class="prov_tarea"></textarea>
+            </div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 是否参加十佳团队在线投票评比：</div>
+            <div class="prov_fcon_d" id="top">
+                <input type="radio" value="1" name="isTop" checked="checked" />是
+                <input type="radio" value="0" name="isTop" />否
+            </div>
+        </li>
+        <li id="jianjian">
+            <div class="prov_fcon_t"><span class="p_red">*</span> 团队简介：<br />(不超过200字)</div>
+            <div class="prov_fcon_d">
+                <textarea name="description" cols="" rows="" placeholder="团队简介" class="prov_tarea"></textarea>
+            </div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 总结材料：<br />(不超过1000字)&nbsp;</div>
+            <div class="prov_fcon_d"><textarea name="content" id="content" cols="" rows="" placeholder="请输入总结材料" class="prov_tarea"></textarea></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 图片上传：</div>
+            <div class="prov_fcon_d prov_link"><input type="button" onclick="openUpload();" value="添加图片"/></div>
+        </li>
+        <li>
+            <div class="prov_thumblist">
+                <ul id="uploaded_photos">
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="prov_fcon_t">视频上传：</div>
+            <div class="prov_fcon_d prov_link"><input type="button" onclick="openFlash();" value="添加视频"/>
+                <div id="uploaded_flash"></div>
+            </div>
+        </li>
+        <li class="prov_fcon_b"><input type="button" value="提 交" onclick="submitForm(this.form);" class="prov_btn" /></li>
+    </ul>
+</div>
+</form>
+
+<script type="text/javascript" src="/public/js/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/public/js/swfupload/swfupload.queue.js"></script>
+<script type="text/javascript" src="/public/js/swfupload/fileprogress.js"></script>
+<script type="text/javascript" src="/public/js/swfupload/handlers.js"></script>
+<script>
+$(function(){
+    E=KISSY.Editor( "content" );
+    $("#top :radio").change(function() {     //id 为season行内radio值变化函数
+        var season = $("input[name='isTop']:checked").val();           // 获取当前选中radio的值
+        if (season == 0) {
+            $("#jianjian").hide();        //  将下拉列表disable掉
+        }else {
+            $("#jianjian").show();
+        }
+
+    });
+});
+function checkform(v_form){
+    var sid = v_form.sid1.value;
+    if(sid == 0) {
+            v_form.sid1.focus();
+            ui.error('请输入院系');
+            return false;
+    }
+    var titleLength = getLength(v_form.title.value);
+    if(titleLength == 0) {
+            v_form.title.focus();
+            ui.error('团队名称不能为空');
+            return false;
+    }
+    if(titleLength > 100) {
+            v_form.title.focus();
+            ui.error('团队名称不能超过100个字');
+            return false;
+    }
+    var title2Length = getLength(v_form.title2.value);
+    if(title2Length == 0) {
+            v_form.title2.focus();
+            ui.error('实践项目名称不能为空');
+            return false;
+    }
+    if(title2Length > 100) {
+            v_form.title2.focus();
+            ui.error('实践项目名称不能超过100个字');
+            return false;
+    }
+    var zusatzLength = getLength(v_form.zusatz.value);
+    if(zusatzLength == 0) {
+            v_form.zusatz.focus();
+            ui.error('团队成员不能为空');
+            return false;
+    }
+    var season = $("input[name='isTop']:checked").val();
+    if(season != 0){
+        var desLength = getLength(v_form.description.value);
+        if(desLength == 0) {
+                v_form.description.focus();
+                ui.error('团队简介不能为空');
+                return false;
+        }
+        if(desLength > 230) {
+                v_form.description.focus();
+                ui.error('团队简介不能超过200个字');
+                return false;
+        }
+    }
+    var contentLength = tsStripTagsLength(v_form.content.value);
+    if(contentLength == 0) {
+            ui.error('总结材料不能为空');
+            return false;
+    }
+    if(contentLength > 1150) {
+            ui.error('总结材料不能超过1000个字');
+            return false;
+    }
+    var imgLength = getLength($('#uploaded_photos').html());
+    if(imgLength == 0) {
+            ui.error('请上传图片');
+            return false;
+    }
+    return true;
+}
+</script>
+<include file="_footer" />

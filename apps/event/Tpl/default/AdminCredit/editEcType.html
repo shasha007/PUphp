@@ -1,0 +1,44 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <form action="{:U('event/AdminCredit/doEditEcType')}" enctype="multipart/form-data" method="post" onsubmit="return check();">
+        <input type="hidden" name="id" value="{$id}" />
+        <div class="form2">
+            <dl class="lineD">
+                <dt>类别名称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="title" type="text" value="{$title}" size="70">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>申请要求：</dt>
+                <dd>
+                    <textarea name="description"  rows="5" cols="60">{$description}</textarea>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>所需材料：</dt>
+                <dd>
+                    <label><input name="need_text" type="checkbox" value="1" <?php if($need_text)echo 'checked'?>/> 相关说明</label>
+                    <label><input name="img" type="checkbox" value="1" <?php if($img)echo 'checked'?>/> 上传图片</label>
+                    <label><input name="attach" type="checkbox" value="1" <?php if($attach)echo 'checked'?>/> 上传附件</label>
+                </dd>
+            </dl>
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+function check(){
+    if(!$( 'input[name="title"]' ).val()){
+        ui.error("类别名称不能为空");
+        return false;
+    }
+    return true;
+}
+</script>
+<include file="_footer" />

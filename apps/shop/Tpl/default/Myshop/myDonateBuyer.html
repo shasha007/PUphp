@@ -1,0 +1,65 @@
+<include file="_header" />
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">我购买的</div>
+            <div class="consumer_records1">
+                <div class="good_menu center">
+                    <ul>
+                        <li class="g374">爱心商品</li>
+                        <li>价格</li>
+                        <li>卖家姓名</li>
+                        <li>联系电话</li>
+                    </ul>
+                </div>
+                <div class="good_list1">
+                    <ul>
+                        <?php if(empty($data)):?>
+                        <li class="notFound">亲，还没有购买记录</li>
+                        <?php else:?>
+                        <volist name="data" id='vo'>
+                            <li>
+                                <div class="good_list1_infor c_r_link">
+                                    <ul class="center">
+                                        <li class="g374">
+                                            <div class="good_list1_thumb"><a href="{:U('shop/Donate/detail',array('id'=>$vo['id']))}"><img src="{$vo['pic']|tsMakeThumbUp=###,70,70}" alt="" /></a></div>
+                                            <div class="good_list1_name">
+                                                <a href="{:U('shop/Donate/detail',array('id'=>$vo['id']))}">{$vo['title']}</a></div>
+                                        </li>
+                                        <li>{$vo.price}元</li>
+                                        <li>
+                                            {$vo.contact}
+                                        </li>
+                                        <li>
+                                            {$vo.mobile}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </volist>
+                        <?php endif;?>
+                    </ul>
+                    <div class="page">{$html}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function del(id){
+        if(confirm('确定要删除该物品')) {
+            $.post("{:U('shop/Myshop/myDonateDel')}",{id:id},function(res){
+                var json = $.parseJSON(res);
+                if(json.status==1) {
+                    ui.success('删除成功');
+                    location.reload();
+                }else {
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+ 
+</script>
+<include file="../Public/_footer" />

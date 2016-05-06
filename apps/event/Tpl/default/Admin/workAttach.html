@@ -1,0 +1,87 @@
+<include file="_header" />
+
+  <script type="text/javascript" charset="utf-8">
+  </script>
+
+<div class="so_main">
+  <include file="_tab" />
+
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="deleteFile()"><span>删除记录和文件</span></a>
+    </div>
+
+    <div class="list">
+        <table id="event_list" width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th class="line_l">ID</th>
+            <th class="line_l">UID</th>
+            <th class="line_l">用户名</th>
+            <th class="line_l">附件名称</th>
+            <th class="line_l">附件大小</th>
+            <th class="line_l">扩展名</th>
+            <th class="line_l">上传时间</th>
+            <th class="line_l">保存路径 [ 根目录/data/uploads/ ]</th>
+            <th class="line_l">操作</th>
+          </tr>
+          <volist id="vo" name="data">
+              <tr overstyle='on' id="attach_{$vo['id']}">
+                <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                <td>{$vo.id}</td>
+                <td>{$vo.uid}</td>
+                <td>{$vo.uid|getUserRealName}</td>
+                <td><a href="{:PIC_URL}/data/uploads/{$vo.fileurl}" target="_blank">{$vo.name}</a></td>
+                <php>$vo['filesize'] = round($vo['filesize']/1000,2);</php>
+                <td>{$vo.filesize} K</td>
+                <td>{$vo.filetype}</td>
+                <td>{$vo.ctime|friendlyDate}</td>
+                <td>.../{$vo.fileurl}</td>
+                <td>
+                    <a href="javascript:void(0);" onclick="deleteFile('{$vo.id}')">删除记录和文件</a>
+                </td>
+              </tr>
+          </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="deleteFile()"><span>删除记录和文件</span></a>
+    </div>
+
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+    function deleteFile(ids) {
+        var length = 0;
+    	if(ids) {
+            length = 1;
+        }else {
+            ids    = getChecked();
+            length = ids.length;
+            ids    = ids.toString();
+        }
+        if(ids=='') {
+            ui.error('请先选择一个附件');
+            return ;
+        }
+        if(confirm('您将删除'+length+'条记录及其文件，删除后无法恢复，确定继续？')) {
+            $.post("{:U('event/Admin/delWorkAttach')}",{ids:ids},function(res){
+                if(res == 1) {
+                    ui.success('删除成功');
+                    removeItem(ids);
+                }else {
+                    ui.error('删除失败');
+                }
+            });
+        }
+    }
+    function removeItem(ids) {
+    	ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#attach_'+ids[i]).remove();
+        }
+    }
+</script>

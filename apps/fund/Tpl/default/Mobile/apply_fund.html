@@ -1,0 +1,74 @@
+<include file="_header" />
+<div class="bg">
+    <div class="main mt10">
+        <?php if($msg):?>
+        <div class="f_bidcon_title b mt10 fund_key i2">（{$msg}）</div>
+        <?php endif;?>
+        <div class="rule_enter"><a href="http://pocketuni.net/apps/zt/fund_rule_a.html">申请规则</a></div>
+        <form onsubmit="return fund_apply();" method="POST" action="__URL__&act=doapplyFund">
+        <div class="mb50">
+            <div class="fund_key">活动<span class="fund_red">*</span></div>
+            <div class="fund_key"><select id="eventId" name="eventId" class="fund_select">
+                    <option value="0">-请选择活动-</option>
+                    <?php foreach($events as $v): ?>
+                    <option value="{$v.id}">{$v.title}</option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="fund_key">职位<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" id="position" class="fund_input" name="position" placeholder="如：学生会主席"></div>
+            <div class="fund_key">电话<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" id="telephone" class="fund_input" name="telephone"></div>
+            <div class="fund_key">QQ</div>
+            <div class="fund_key"><input type="text" class="fund_input" name="qq"></div>
+            <div class="fund_key">支付宝账号<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" id="alipayAccount" class="fund_input" name="alipayAccount"></div>
+            <div class="fund_key">部落外联负责人姓名及电话</div>
+            <div class="fund_key"><input type="text" class="fund_input" name="responsibleInfo"></div>
+            <div class="fund_key">活动范围</div>
+            <div class="fund_key">
+                <select name="range" class="fund_select">
+                    <option value="1">校级</option>
+                    <option value="2">院级</option>
+                    <option value="3">团支部</option>
+                    <option value="4">其他</option>
+                </select></div>
+            <div class="fund_key">预计报名（人）</div>
+            <div class="fund_key"><input type="text" name="eRegistration" class="fund_input" placeholder="例：50人"></div>
+            <div class="fund_key">预计签到（人）</div>
+            <div class="fund_key"><input type="text" class="fund_input" name="eSign" placeholder="例：50人"></div>
+            <div class="fund_key">申请金额<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" id="money" name="fund" class="fund_input" placeholder="校级0~1000元"></div>
+            <div class="fund_key i1">校级【0-1000】元，院级【0-500】元，团支部【0-200】元，其他请自行填写</div>
+            </div>
+            <div class="fund_btnline">
+                <input name="tj1" type="submit" class="fund_fullbtn b f14" value="确认申请">
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    //提交JS验证
+    function fund_apply(){
+        var isTrue = true;
+        var formId = ['#eventId','#position','#telephone','#alipayAccount','#money'];
+        var formError = ['请选择活动','请填写职位','请填写电话','请填写支付宝账号','请填写申请金额'];
+        $.each(formId,function(i,v) {
+            var checkInput = $(v).val();
+            if(v!='#eventId'){
+                checkInput = checkInput.length;
+            }
+            if(checkInput ==0){
+                isTrue = false;
+                alert(formError[i]);
+                $(v).focus();
+                return false;
+            }
+        });
+        if(isTrue){
+            return true;
+        }
+        return false;
+    }
+</script>
+<include file="_footer" />

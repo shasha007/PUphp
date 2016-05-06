@@ -1,0 +1,17 @@
+<include file="_header" />
+
+<div class="hd_c">
+    <div class="task_desc">
+        <div class="news_back"><a href="javascript:history.back( -1 )">&lt;&lt;返回上一页</a>
+            &nbsp;&nbsp;&nbsp;<a href="{:U('event/School/newsList')}">[新闻列表]</a></div>
+        <div class="clear"></div>
+        <div class="task_title f14 b">{$app.title}</div>
+        <div class="task_note">发布者：<space uid="app.uid" class="null" target="_blank">{realname}</space>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  发布时间：{$app.cTime|friendlyDate}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  浏览量：{$app.readCount}次</div>
+        <div class="task_text news1">{$app.content}</div>
+    </div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

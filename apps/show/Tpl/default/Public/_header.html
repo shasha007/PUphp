@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>独show星动力</title>
+<link href="../Public/css/style.css" type="text/css" rel="stylesheet" />
+<link href="../Public/js/jquery.tooltip.css" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+<script type="text/javascript" src="../Public/js/jquery.tooltip.pack.js"></script>
+
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+
+<script type="text/javascript">
+$(function(){
+        //提示代码,showBody是分隔标识符，如果元素不需要提示请给该元素+上class="impLink"
+	$("*[title]").not($(".impLink")).tooltip({showURL:false,delay:400,showBody:"  |  ",track:true});
+})
+</script>
+<script type="text/javascript" src="../Public/js/jquery.KinSlideshow-1.2.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#KinSlideshow").KinSlideshow();
+})
+</script>
+</head>
+
+<body>
+<include file="__THEME__/_holder" />
+    <div class="bg">
+        <div class="main">
+            <div class="show_header">
+                <div class="header_menu"><a href="{:U('show/index')}">首   页</a> &nbsp;丨&nbsp;
+                    <a href="{:U('show/news/')}">新闻中心</a> &nbsp;丨&nbsp;
+                    <a href="{:U('show/player/')}">人气排行</a> &nbsp;丨&nbsp;
+                    <a href="{:U('show/index/video')}">精彩掠影</a> &nbsp;丨&nbsp;
+                    <a href="{:U('show/index/photo')}">现场花絮</a></div>
+            </div>
+            <form action="{:U('show/player/')}" method="post">
+                <div class="header_search">
+                    <input name="keyword" type="text" class="header_search_input" maxlength="10"
+                           onfocus="this.value=''" value="<?php if(isset($keyword)){echo $keyword;}else{echo '输入参赛选手姓名';}?>" />
+                    <input type="submit" value="" class="header_search_btn" />
+                </div>
+            </form>
+            <div class="content">

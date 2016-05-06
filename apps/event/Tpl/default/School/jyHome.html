@@ -1,0 +1,54 @@
+<include file="_header" />
+
+<div class="hd_c">
+    <div class="hd_c_left">
+        <include file="_searchSimp" />
+        <div class="hd_submenu color4 f14 b">全省菁英活动</div>
+        <div class="hd_more h24"><a href="{:U('event/School/board', array('cat'=>'jy'))}">更多>></a></div>
+        <div class="hd_list">
+            <ul>
+                <volist name="top1" id="vo">
+                <?php $cntTop=count($top1)?>
+                <li <?php if($cntTop<3||$i>2)echo' class="b_n"'?>>
+                    <div class="hd_l_thumb">
+                        <a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">
+                            <img width="125px" height="125px" src="{$vo['coverId']|getCover}" /></a>
+                    </div>
+                    <div class="hd_l_infor">
+                        <div class="hd_l_title b f14 h24"><a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a></div>
+                        <div class="hd_l_desc">时间：<?php echo date('Y-m-d H:i', $vo['sTime'])?></div>
+                        <div class="hd_l_desc link">归属组织：<a>{$vo.sid|getEventOrga}</a></div>
+                        <div class="hd_l_desc">分类：{$category[$vo['typeId']]}</div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+        <?php if($top2):?>
+        <div class="hd_submenu i13 color4 f14 b">优秀活动看板</div>
+        <div class="hd_more h24"><a href="{:U('event/School/board', array('cat'=>'kb'))}">更多>></a></div>
+        <div class="clear"></div>
+        <div class="hd_list b_n">
+            <ul>
+                <volist name="yx" id="vo">
+                <li>
+                    <div class="hd_l_thumb">
+                        <a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">
+                            <img width="125px" height="125px" src="{$vo['coverId']|getCover}" /></a>
+                    </div>
+                    <div class="hd_l_infor">
+                        <div class="hd_l_title b f14 h24"><a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a></div>
+                        <div class="hd_l_desc">时间：<?php echo date('Y-m-d H:i', $vo['sTime'])?></div>
+                        <div class="hd_l_desc link">归属组织：<a>{$vo.sid|getEventOrga}</a></div>
+                        <div class="hd_l_desc">分类：{$category[$vo['typeId']]}</div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+        <?php endif;?>
+    </div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

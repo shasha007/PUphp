@@ -1,0 +1,34 @@
+.h-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    opacity: 0.3;
+    z-index: 99;
+}
+.h-loading {
+    position: fixed;
+    top: 30%;
+    left: 20%;
+    width: 60%;
+    z-index: 100;
+}
+
+.h-animate {
+    width: 188px;
+    height: 300px;
+    margin:  0 auto;
+    background: url("../images/gif.png") repeat-y;
+    -webkit-animation: standby 0.8s steps(8) infinite;
+    animation: standby 0.8s steps(8) infinite;
+}
+@-webkit-keyframes standby {
+    from {
+        background-position: 0 0px;
+    }
+    to {
+        background-position: -1504px 0px;
+    }
+}

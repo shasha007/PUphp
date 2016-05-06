@@ -1,0 +1,4 @@
+#
+# ThinkSNS - Event changelog.txt
+#
+****** Event Build 1000001 ******

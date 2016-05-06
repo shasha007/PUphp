@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <link href="../Public/css/integrity.css" rel="stylesheet">
+    <script src="../Public/js/jquery-2.1.1.min.js"></script>
+    <script src="../Public/js/bootstrap.min.js"></script>
+    <title>诚信值</title>
+    <script>
+        $(function(){
+            var nameh = parseInt( $(".event-name").height()+"") ;
+            var pointh = parseInt( $(".event-point").height()+"");
+            var imgh = parseInt( $(".event-img img").height()+"");
+            if((imgh>=pointh)&&(imgh>=nameh)){
+                $(".event-name").css("padding-top",((imgh-nameh)/2)+"px");
+                $(".event-point").css("padding-top",((imgh-nameh)/2)+"px");
+            };
+/*            var uid = Android.getUid();
+            $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+                if(data.status == 2)
+                {
+                    window.location.reload();
+                }
+            },'json');*/
+        });
+    </script>
+</head>
+
+<body>
+<header class="integrity-header">
+    <p>
+        当前的诚信值
+    </p>
+    <p>{$cs}</p>
+    <p>规则：诚信值是通过学生参加活动的签到率来计算的，规则如下：诚信值=总签到数/活动总完结数
+        ；如：你共参加10场活动，实际签到5场，你的诚信值则为5/10=50%</p>
+</header>
+<div class="integrity-num clearfix">
+<div class="integrity-total">
+    <p class="integrity-title">参加活动总数</p>
+    <p class="event-num"><?php echo $cx['total']?$cx['total']:0 ?></p>
+</div>
+    <div class="integrity-signed">
+        <p class="integrity-title">活动总签到数</p>
+        <p class="event-num"><?php echo $cx['attend']?$cx['attend']:0 ?></p>
+    </div>
+</div>
+<div class="integrity-list">
+<ul>
+    <?php  foreach($event as $k=>$v){  ?>
+        <li class="to-event" data-eventid="{$v.eventId}">
+            <!--跳转活动-->
+            <a class="row">
+                <div class="col-xs-3 event-img">
+                    <img class="img-responsive" onerror="this.src='/apps/wap/Tpl/default/Public/images/img_default.png'" src="<?php  echo $v['pic'] ; ?>">
+                </div>
+                <div class="col-xs-6 event-name">
+                    <p><?php  echo $v['title']; ?></p>
+                    <p class="small color-eee"><?php  echo $v['time']; ?></p>
+                </div>
+                <?php  if($v['status']=='2'){  ?>
+                    <div class="col-xs-3 event-point pull-right">
+                        <p>已签到</p>
+                    </div>
+                <?php  }else{  ?>
+                    <div class="col-xs-3 event-point pull-right">
+                        <p>未签到</p>
+                    </div>
+                <?php  }  ?>
+           </a>
+        </li>
+    <?php  }  ?>
+</ul>
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $(".to-event").click(function () {
+            var id = $(this).data("eventid")+ "";
+            try{
+                Android.openInternalPage("eventDetails", "", "", id, "", "", "");
+            }catch (e) {
+                setTimeout(function () {
+                    Android.openInternalPage("eventDetails", "", "", id, "", "", "");
+                },50);
+            }
+        });
+    })
+</script>

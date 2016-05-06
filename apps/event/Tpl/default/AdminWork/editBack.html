@@ -1,0 +1,44 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+        <center>
+        <a href="{:U('event/AdminWork/worklist',array('id'=>$work['id']))}">【此作业所有提交】</a>
+        <?php if($prev):?>
+         | <a href="{:U('event/AdminWork/editBack',array('id'=>$prev))}">【<<此作业上一个提交】</a>
+        <?php endif;?>
+        <?php if($next):?>
+         | <a href="{:U('event/AdminWork/editBack',array('id'=>$next))}">【此作业下一个提交>>】</a>
+        <?php endif;?>
+        <div class="page_tit">{$work.title}</div>
+        <div style="width:800px;overflow:hidden">{$work.description}</div>
+        </center>
+    </div>
+    <div class="form2" style="padding-bottom: 10px">
+        <center>
+            <div>提交人：<space uid="workback.uid" class="null" target="_blank">{realname}</space>
+                &nbsp;&nbsp;&nbsp;提交时间：{$workback.cTime|friendlyDate}
+                </div>
+            <div id="noteShow" class="page_tit" <?php if($workback['status']==1):?>style="display:none"<?php endif;?>>
+                 分数：{$workback.note} <input onclick="$('#noteShow').hide();$('#noteEdit').show();" type="button" value="修改"/></div>
+            <div id="noteEdit" class="page_tit" <?php if($workback['status']==2):?>style="display:none"<?php endif;?>>
+                <form  method="post">
+                <span style="color: #F00;">未评分</span> 分数：
+                <input id="note" name="note" type="text" value="{$workback.note}" size="5"/>
+                <input type="submit" value="提交"/>
+                </form>
+            </div>
+        </center>
+    </div>
+    <div class="form2" style="padding-bottom: 10px">
+        <center>
+        <div>附件：
+            <volist name="attach" id='vo'>
+                <a href="{:PIC_URL}/data/uploads/{$vo.fileurl}">{$vo.name}</a>&nbsp;&nbsp;&nbsp;
+            </volist>
+        </div>
+        <div id="quotes" class="admin_content">{$workback.content|htmlspecialchars_decode}</div>
+        </center>
+    </div>
+</div>
+<include file="_footer" />

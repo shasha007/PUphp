@@ -1,0 +1,79 @@
+<div class="pf">
+    <div class="pf_list">
+        <ul>
+            <li>
+                <div class="pf_list_title">集中学习阶段各项考核分数</div>
+                <div class="pf_sublist">
+                    <ul>
+                        <?php for($i=0;$i<6;$i++): ?>
+                            <?php $vo = $list[$i]; ?>
+                        <li>
+                            <div class="pf_sublist_title">{$vo[0]}：</div>
+                            <div class="pf_sublist_input"><input id="in_{$i}" type="text" class="pf_input" value="{$notes[$i]}"/></div>
+                            <div class="pf_sublist_desc">最大<span id="max_{$i}">{$vo[1]}</span>分</div>
+                        </li>
+                        <?php endfor;?>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <div class="pf_list_title">自主学习阶段各项考核分数</div>
+                <div class="pf_sublist">
+                    <ul>
+                        <?php for($i=6;$i<12;$i++): ?>
+                            <?php $vo = $list[$i]; ?>
+                        <li>
+                            <div class="pf_sublist_title">{$vo[0]}：</div>
+                            <div class="pf_sublist_input"><input id="in_{$i}" type="text" class="pf_input" value="{$notes[$i]}" /></div>
+                            <div class="pf_sublist_desc">最大<span id="max_{$i}">{$vo[1]}</span>分</div>
+                        </li>
+                        <?php endfor;?>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="page_btm clear">
+        <input type="button" value="确定" class="btn_b" onclick="checkNote();">
+    </div>
+</div>
+<script type="text/javascript">
+    var uid = {$uid};
+    function checkNote(){
+        var isOk = true;
+        var row = '';
+        for (var j=0;j<12;j++){
+            o = $('#in_'+j);
+            inp = o.val();
+            if(inp){
+                inp = parseInt(o.val());
+            }else{
+                inp = 0;
+            }
+            if(j==0){
+                row = inp;
+            }else{
+                row = row+','+inp;
+            }
+            maxInp = parseInt($('#max_'+j).html());
+            if (inp==0 || inp > maxInp){
+                o.attr('class','pf_input_error');
+                isOk = false;
+            }else{
+                o.attr('class','pf_input');
+            }
+        }
+        if(isOk){
+            $.post( '{:U('event/User/doEditYearNote')}',{uid:uid,row:row},function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else{
+                    ui.success('修改成功');
+                    ui.box.close();
+                    $('#note_'+uid).html(json.info);
+                }
+            });
+        }
+    }
+</script>

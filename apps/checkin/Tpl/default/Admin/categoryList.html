@@ -1,0 +1,63 @@
+<include file="_header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.8.6.custom.min.js"></script>
+<div class="so_main"><include file="_tab" />
+
+    
+<div class="form2" style="clear:both">
+	<form method="post" id="basic_setting" name="form" action="{:U('/Admin/addCategory')}">
+		<dl class="lineD">
+			<dt>分类名称：</dt>
+			<dd>
+				<input type="text" name="title" id="title" value="">
+			</dd>
+			<dt>开始时间：</dt>
+			<dd>
+				<input type="text" name="start_time" id="start_time" value="">
+			</dd>
+			<dt>结束时间：</dt>
+			<dd>
+				<input type="text" name="end_time" id="end_time" value="">
+			</dd>
+			<dt></dt>
+			<dd>
+				<input class="btn_b" type="submit" value="保存">
+			</dd>
+		</dl>
+	</form>
+</div>
+
+<div class="list">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th class="line_l">ID</th>
+		<th class="line_l">分类名称</th>
+		<th class="line_l">开始时间</th>
+		<th class="line_l">结束时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist name="data" id="vo">
+	<tr>
+		<td>{$vo['id']}</td>
+		<td>{$vo['title']}</td>
+		<td>{$vo['start_time']|date='Y-m-d',###}</td>
+		<td>{$vo['end_time']|date='Y-m-d',###}</td>
+		<td>
+			<a href="<?php echo U('checkin/Admin/categoryList',array('id'=>$vo['id'])) ?>">修改</a>
+			<a href="<?php echo U('checkin/Admin/deleteCatetory',array('id'=>$vo['id'])) ?>" class="delete-btn">删除</a>
+		</td>
+	</tr>
+	</volist>
+</table>
+</div>
+</div>
+<script type="text/javascript">
+	(function($){
+		$('.delete-btn').click(function(){
+			if (confirm('您确定要删除该记录？删除后无法找回')){
+				return true;
+			}
+			return false;
+		})
+	})(jQuery);
+</script>
+<include file="_footer" />

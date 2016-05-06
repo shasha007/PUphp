@@ -1,0 +1,44 @@
+<include file="_header" />
+  <div id="container" class="so_main">
+    <include file="_tab" />
+    <form action="{:U('/Admin/addTiku')}" enctype="multipart/form-data" method="post">
+      <div class="form2 no_line">
+        <dl class="lineD">
+          <dt>
+          	选择文件：
+          </dt>
+          <dd>
+            <input name="files[]" type="file">
+          </dd>
+          <dd>
+            <input type="submit" class="btn_b" value="确定" />
+          </dd>
+        </dl>
+      </div>
+    </form>
+
+
+<pre>
+
+	导入说明
+	1.excel里把列的顺序调整为 题目,类别,正确答案，选择a,选择b,选择c... 见excel表说明
+	2.将excel表里英文的 , " , 替换为中文 ，“
+          CTRL+F调出查找替换对话框，选择替换
+          查找中输入  ：按住ALT ，小键盘输入 10 ,然后松开ALT
+          按替换
+	3.导出为逗号分隔的csv
+	4.csv编码格式为utf8 （可以用notepad++修改 格式->转为 UTF-8 编码格式 保存）
+        5.选择文件->确定
+
+
+	excel表说明
+	1. 标题   例：太阳是什么颜色的？   黄河之水（）上来
+	2. 类别   1,2,3 或者 选择，判断，填空
+	3. 正确答案 选择题（1,2,3,4或者a,b,c,d） 判断题（0,1 或者 对,错） 填空(天上)
+	4. 选择a 红色
+	5. 选择b 绿色
+        ......
+</pre>
+
+  </div>
+<include file="_footer" />

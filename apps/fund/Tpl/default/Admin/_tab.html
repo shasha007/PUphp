@@ -1,0 +1,22 @@
+<div class="page_tit">{$ts['app']['app_alias']}</div>
+<div class="tit_tab">
+    <ul>
+        <li><a <eq name="ACTION_NAME" value="index">class="on"</eq>
+                href="__URL__&act=index">主办活动管理</a></li>
+         <li><a <eq name="menu" value="2">class="on"</eq>
+                href="__URL__&act=activitylist">承办活动管理</a></li>
+         <li><a <eq name="ACTION_NAME" value="fundlist">class="on"</eq>
+                href="__URL__&act=fundlist">基金管理</a></li>
+        <li><a <eq name="ACTION_NAME" value="config">class="on"</eq>
+            href="__URL__&act=config">活动基金配置</a></li>
+    </ul>
+</div>
+<?php if(ACTION_NAME=='index'):?>
+<div>流程：1、前台【我要申请】选择活动，提交表单 2、后台审核，核准金额 3、【基金管理】财务发放金额</div>
+<?php elseif($menu==2):?>
+<div>流程：1、后台【添加承办活动】 2、前台部落承办 3、后台【承办管理】审核，核准金额 4、学生提交完结活动 5、承办活动后台完结</div>
+<?php elseif(ACTION_NAME=='fundlist'):?>
+<div>流程：1、后台【添加基金】 2、后台【发放】基金申请</div>
+<?php elseif(ACTION_NAME=='config'):?>
+<div style="color:red;">说明：用来控制客户端在发布活动之后是否可以有申请活动基金申请的快捷入口！</div>
+<?php endif;?>

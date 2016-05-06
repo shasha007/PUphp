@@ -1,0 +1,227 @@
+html{
+    height: 100%;
+}
+body {
+    height: 100%;
+    font-size: 16px;
+    color: #3e3e3e;
+    background-color: #f2f1ee;
+}
+
+.dis-header {
+    margin-top: 8px;
+    padding-bottom: 8px;
+    color: #3e3e3e;
+    background-color: #fff;
+}
+
+.dis-header-l {
+    width: 15%;
+    float: left;
+    margin-top: 8px;
+}
+
+.dis-header-r {
+    width: 80%;
+    float: left;
+    margin-top: 8px;
+    margin-left: 5%;
+}
+
+.dis-header-r p:nth-child(2) {
+    font-size: 12px;
+    color: #888;
+}
+
+.dis-event {
+    margin-top: 8px;
+    border-bottom: 1px solid #efefef;
+    background-color: #fff;
+}
+
+.dis-event-tit {
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.dis-event-tit div:nth-child(3) {
+    margin-top: 3px;
+    font-size: 12px;
+    color: #888;
+}
+
+.dis-event-tit img {
+    width: 15px;
+    padding-top: 2px;
+}
+
+.dis-event-tit div {
+    padding: 10px 0;
+}
+
+.dis-event-tit div:nth-child(2) {
+    margin-top: 3px;
+    margin-left: 3%;
+}
+
+.dis-event-con {
+    width: 30%;
+    float: left;
+    margin-right: 5%;
+}
+
+.dis-event-lun div:nth-child(3) {
+    margin-right: 0%;
+}
+
+.dis-caption {
+    text-align: center;
+    margin-top: 3px;
+}
+
+.dis-caption p:nth-child(2) {
+    font-size: 12px;
+    color: #888;
+}
+
+.slide {
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+
+.carousel-indicators {
+    bottom: 0;
+}
+
+.carousel-indicators li {
+    border: 1px solid #ccc;
+}
+
+.carousel-indicators .active {
+    background-color: #ccc;
+}
+
+.add-friend {
+    width: 70%;
+    height: 25px;
+    margin: 0 15%;
+    line-height: 25px;
+    font-size: 12px;
+    text-align: center;
+    color: #ea5504;
+    border: 1px solid #ea5504;
+    border-radius: 5px;
+}
+
+.dis-person {
+    padding-bottom: 5px;
+}
+
+.dis-person-con {
+    width: 22%;
+    float: left;
+    margin: 10px 4% 0 0;
+    font-size: 14px;
+    text-align: center;
+    overflow: hidden;
+}
+.dis-person-con img{
+    width: 80%;
+    margin-left: 10%;
+}
+.dis-person div:nth-child(4) {
+    margin-right: 0;
+}
+
+.dis-list {
+    margin-top: 10px;
+    background-color: #fff;
+}
+
+.dis-list-con img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+.dis-list-con {
+    padding: 8px 15px;
+}
+
+.dis-list-con div:nth-child(2), .dis-list-con div:nth-child(3) {
+    margin-top: 10px;
+}
+
+.dis-list-con div:nth-child(3) {
+    width: 55%;
+    font-size: 14px;
+    color: #888;
+}
+
+.dis-list li {
+    border-bottom: 1px solid #efefef;
+}
+
+.dis-person-name {
+    height: 22px;
+    line-height: 25px;
+    overflow: hidden;
+}
+
+.dis-person-school {
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+}
+
+a {
+    color: #888;
+}
+.dialog-show{
+    width: 30%;
+    float: left;
+}
+.dialog-show img{
+    width: 70%;
+    margin-left: 15%;
+    border-radius: 100%;
+}
+.modal-body div:nth-child(1), .modal-body div:nth-child(2){
+    margin-right: 5%;
+}
+.dialog-show p{
+    margin-top: 10px;
+    height: 20px;
+    font-size: 14px;
+    line-height: 20px;
+    overflow: hidden;
+    text-align: center;
+}
+/*.modal{*/
+/*top:inherit;*/
+/*}*/
+.modal-dialog {
+    position: absolute;
+    margin: 1%;
+    top: 30%;
+    width: 98%;
+}
+.modal-header .close{
+    margin-top: -10px;
+}
+.modal-content{
+    border-radius: 5px;
+}
+a{
+    display: block;
+}
+a:link,a:visited,a:hover,a:active {
+    color:#888;
+}
+p{
+    line-height: 26px;
+    height: 26px;
+    overflow: hidden;
+}
+.pinganwifi{
+    display: none;
+}

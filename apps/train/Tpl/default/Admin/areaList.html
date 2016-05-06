@@ -1,0 +1,163 @@
+<include file="_header" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/js/ztree/zTreeStyle.css" />
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.core-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.excheck-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.exedit-3.5.min.js" ></script>
+<div class="so_main">
+    <include file="_tab" />
+  <!-------- 用户列表 -------->
+	<style type="text/css">
+.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+	</style>
+        <div style="padding:10px 50px;float: left">
+        <a id="addParent" href="#" title="增加城市" onclick="return false;">增加省份</a>
+        <ul id="treeDemo" class="ztree"></ul>
+        <div id="checked"></div>
+        </div>
+</div>
+<SCRIPT type="text/javascript">
+    <!--
+    var setting = {
+        view: {
+            addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom,
+            selectedMulti: false
+        },
+        edit: {
+            enable: true,
+            editNameSelectAll: true,
+            //showRemoveBtn: showRemoveBtn,
+            showRemoveBtn: false,
+            showRenameBtn: showRenameBtn,
+            drag: {
+                isCopy: false,
+                isMove: false
+            }
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+            beforeEditName: beforeEditName,
+            beforeRemove: beforeRemove,
+            beforeRename: beforeRename,
+            onRemove: onRemove,
+            onRename: onRename
+        }
+    };
+
+    var zNodes = {$tree};
+    var log, className = "dark";
+    function beforeEditName(treeId, treeNode) {
+        className = (className === "dark" ? "":"dark");
+        //showLog("[  beforeEditName ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.selectNode(treeNode);
+        return confirm("进入 -- " + treeNode.name + " 的编辑状态吗？");
+    }
+    function beforeRemove(treeId, treeNode) {
+        className = (className === "dark" ? "":"dark");
+        //showLog("[  beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.selectNode(treeNode);
+        return confirm("确认删除 -- " + treeNode.name + " 吗？它的下属将统统删除");
+    }
+    function onRemove(e, treeId, treeNode) {
+        $.post( '__URL__&act=delSchool',{id:treeNode.id},function( txt ){});
+        showLog("[ 删除 ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+    }
+    function beforeRename(treeId, treeNode, newName) {
+        className = (className === "dark" ? "":"dark");
+        //showLog("[  beforeRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+        if (newName.length == 0) {
+            alert("名称不能为空.");
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            setTimeout(function(){zTree.editName(treeNode)}, 10);
+            return false;
+        }
+        return true;
+    }
+    function onRename(e, treeId, treeNode) {
+        $.post( '__URL__&act=renameProvince',{id:treeNode.id,title:treeNode.name},function( res ){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                setTimeout(function(){zTree.editName(treeNode)}, 10);
+            }else{
+                showLog("[ 重命名 ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+            }
+        });
+    }
+    function showRemoveBtn(treeId, treeNode) {
+        return true;
+    }
+    function showRenameBtn(treeId, treeNode) {
+        return true;
+    }
+    function showLog(str) {
+        if (!log) log = $("#log");
+        log.append("<li class='"+className+"'>"+str+"</li>");
+        if(log.children("li").length > 8) {
+            log.get(0).removeChild(log.children("li")[0]);
+        }
+    }
+
+    var newCount = 1;
+    function addHoverDom(treeId, treeNode) {
+            var sObj = $("#" + treeNode.tId + "_span");
+            if (treeNode.editNameFlag || $("#addBtn_"+treeNode.id).length>0) return;
+            var addStr = "<span class='button add' id='addBtn_" + treeNode.id
+                + "' title='新增' onfocus='this.blur();'></span>";
+            sObj.after(addStr);
+            var btn = $("#addBtn_"+treeNode.id);
+            if (btn) btn.bind("click", function(){
+                if(confirm("确定要在 ["+treeNode.name+"] 下新增城市？")){
+                    $.post( '__URL__&act=addProvince',{pid:treeNode.id,title:"新增" + (newCount)},function( res ){
+                        var json =$.parseJSON(res);
+                        if( json.status == 1 ){
+                            showLog("[ 新增 ]&nbsp;&nbsp;&nbsp;&nbsp; " + "新增" + (newCount));
+                            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                            newTreeNode = zTree.addNodes(treeNode, {id:json.info, pId:treeNode.id, name:"新增" + (newCount++)});
+                            zTree.editName(newTreeNode[0]);
+                        }else{
+                            ui.error( json.info );
+                        }
+                    });
+                }
+                return false;
+            });
+    };
+    function removeHoverDom(treeId, treeNode) {
+        $("#addBtn_"+treeNode.id).unbind().remove();
+    };
+    function selectAll() {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.setting.edit.editNameSelectAll =  $("#selectAll").attr("checked");
+    }
+    function add() {
+        if(confirm("确定要在 [最上层] 新增省份？")){
+            $.post( '__URL__&act=addProvince',{pid:0,title:"新增省份" + (newCount)},function( txt ){
+                json = eval('('+txt+')');
+                if( json.status == 1 ){
+                    showLog("[ 新增 ]&nbsp;&nbsp;&nbsp;&nbsp; " + "新增省份" + (newCount));
+                    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                    treeNode = zTree.addNodes(null, {id:json.info, pId:0, isParent:true, name:"新增省份" + (newCount++)});
+                    zTree.editName(treeNode[0]);
+                }else{
+                    ui.error( json.info );
+                }
+            });
+        }
+    };
+    $(document).ready(function(){
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        $("#addParent").bind("click", add);
+        $("#selectAll").bind("click", selectAll);
+    });
+    //-->
+</SCRIPT>
+
+<include file="../Public/_footer" />

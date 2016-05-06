@@ -1,0 +1,62 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <div class="Toolbar_inbox">
+      <span>共{$totalRows}条记录</span>
+	<a href="{:U('event/AdminCredit/editEcType')}" class="btn_a"><span>添加申请类别</span></a>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <th style="width:30px;">
+              <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0" />
+              <label for="checkbox"></label>
+          </th>
+          <th class="line_l">ID</th>
+          <th class="line_l">类别</th>
+          <th class="line_l">审核权限人数
+              <a href="{:U('event/AdminCredit/ecUser')}">[所有审核人列表]</a></th>
+          <th class="line_l">操作</th>
+        </tr>
+        <volist id="vo" name="data">
+            <tr overstyle='on' id="list_{$vo['id']}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.audit}
+                        <a href="{:U('event/AdminCredit/ecUser', array('type'=>$vo['id']))}" title="">
+                            <?php if($vo['audit']==0):?><span class="cRed">[尚未分配审核人]</span>
+                            <?php else:?>[管理审核人]
+                            <?php endif;?>
+                        </a>
+
+                    </td>
+                    <td>
+                        <a href="{:U('event/AdminCredit/editEcType', array('id'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:void(0)" onclick="delEcType({$vo.id})">删除</a>
+                    </td>
+                </tr>
+        </volist>
+  </table>
+  </div>
+  <div class="Toolbar_inbox">
+	<span>共{$totalRows}条记录</span>
+	<a href="{:U('event/AdminCredit/editEcType')}" class="btn_a"><span>添加申请类别</span></a>
+  </div>
+</div>
+<script type="text/javascript">
+function delEcType(id){
+    if(confirm("是否删除申请类别?")){
+        $.post( U('event/AdminCredit/delEcType'),{id:id},function(text){
+            var json =$.parseJSON(text);
+            if( json.status == 1 ){
+                ui.success( json.info );
+                $('#list_'+id).remove();
+            }else{
+                ui.error( json.info );
+            }
+        });
+    }
+}
+</script>
+<include file="../Teacher/_footer" />

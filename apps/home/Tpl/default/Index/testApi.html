@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>测试对接</title>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+</head>
+<style>
+.bg{ width:100%; float:left; background:#fff; font-size:12px;}
+.main{ width:1000px; margin:auto; height:auto;}
+.con{ width:100%; background:#eee; float:left; height:auto;}
+.left{ float:left; width:40%; padding:0 5%; }
+.right{ float:left; width:50%; }
+.left_con{ float:left; width:100%; margin:10px auto;}
+.select_style{border:1px solid #dedede; height:30px; line-height:30px; border-radius:3px; padding:0 5px; width:350px;}
+.input_style{ border:1px solid #dedede; height:30px; line-height:30px; border-radius:3px; padding:0 5px; width:340px;}
+.btn_style{ width:100px; height:30px; line-height:30px; text-align:center; background:#f04e26; border-radius:3px; border:none; cursor:pointer; color:#fff;}
+.btn_style1{ width:100px; height:30px; line-height:30px; text-align:center; background:#f04e26; border-radius:3px; border:none; cursor:pointer; color:#fff;}
+.textarea_style{ width:80%; border:1px solid #dedede; padding:5px; line-height:24px; height:120px;}
+</style>
+<body>
+ <div class="bg">
+  <div class="main">
+   <div class="con">
+   <div class="left">
+   <div class="left_con">
+    <select name="select" class="select_style" id = 'cname'>
+     <option>请选择接口名</option>
+     <php>foreach($api as $key => $val){</php>
+     	<option>{$key}</option>
+     <php>}</php>
+    </select>
+    </div>
+    <div class="left_con">
+    	<select name="select" class="select_style" id = 'mname'>
+     		<option>请选择方法名</option>
+    	</select>
+    <!-- <input name="text" type="text" class="input_style" placeholder="请输入相关接口类名" /><br><br>
+    <input name="text" type="text" class="input_style" placeholder="请输入相关该接口方法名" /><br><br>
+    <input name="text" type="text" class="input_style" placeholder="请输入该方法所需参数以&分开" /> -->
+    <input name="text" type="hidden"  class = 'api' value = {$api} />
+    <input name="text" type="hidden"  class = 'uid' value = {$uid} />
+    <input name="text" type="hidden"  class = 'oauth_token' value = {$oauth_token} />
+    <input name="text" type="hidden"  class = 'oauth_token_secret' value = {$oauth_token_secret} />
+    </div>
+    
+    <div class="left_con" id = 'params'>
+    	
+    </div>
+    
+    <div class="left_con">
+    <input name="tj" type="submit"  value="提交" class="btn_style"/>
+    <a href="http://test.xyhui.lo/index.php?app=home&mod=Public&act=logout">退出</a>
+    </div>
+   </div>
+   <div class="right">
+   <div class="left_con">
+   	<textarea name="con" cols="" rows="" class="textarea_style" placeholder="此处为内容区"></textarea>
+   </div>
+   </div>
+   </div>
+  </div>
+ </div>
+</body>
+<script type = 'text/javascript'>
+	//通过类名动态加载方法名
+	$('#cname').on('change',function(){
+		var html = '';
+		var $cname = $('#cname').val();
+		var url = "{:U('home/Index/testApi')}";
+		$.get( url,{type:'getmethod',cname:$cname},function(data){
+			console.log(data)
+			html += '<option>请选择方法名</option>';
+			$.each(data.data,function(i,row){
+				html += '<option>'+i+'</option>';
+			});
+			$('#mname').html('');
+			$('#mname').append(html);
+		},'json');			
+	});
+	//通过方法名动态加载参数
+	$('#mname').on('change',function(){
+		var html = '';
+		var $cname = $('#cname').val();
+		var $mname = $('#mname').val();
+		var url = "{:U('home/Index/testApi')}";
+		$.get( url,{type:'getparams',cname:$cname,mname:$mname},function(data){
+			$('#params').html('');
+			$.each(data.data,function(i,row){
+				html += '<input name="'+i+'" type="text" class="input_style" value = "'+row+'"/><br>请输入'+i+'参数的值,默认是'+row+'<br>';
+			})
+			$('#params').html(html);
+		},'json')
+	})
+	
+	
+	//提交申请接口获得数据
+	$('.btn_style').on('click',function(){
+		var $val = '';
+		var flag = true;
+		var $url = 'index.php';
+		var $app = 'api';
+		var $mod = $('#cname').val();
+		var $act = $('#mname').val();
+		var url = "{:U('home/Index/testApi')}";
+		var $oauth_token = $('.oauth_token').val();
+		var $oauth_token_secret = $('.oauth_token_secret').val();
+		var $params = '';            //全局变量参数
+		if(flag){
+			flag = false;
+			$.get( url,{type:'getparams',cname:$mod,mname:$act},function(data){
+				console.log(data);
+				$.each(data.data,function(i,row){
+					var param = $('input[name="'+i+'"]').val();
+					$params += i+'='+param+'&';
+				})
+				//$('#params').html(html);
+				$params += 'app='+$app+'&mod='+$mod+'&act='+$act+'&oauth_token='+$oauth_token+'&oauth_token_secret='+$oauth_token_secret;
+			},'json')
+			
+		}
+		setTimeout(function(){
+			if(!flag){
+			$.get($url,$params,function(data){
+				$.each(data,function(i,row){
+					$val += i+'=>\n\t';
+					$.each(row,function(j,vo){
+						$val += j+'=>'+vo+'\n\t';
+					})
+					$val = $val.substring(0,$val.length-1);
+				})
+				$('.textarea_style').html($val);
+				},'json');
+			}
+		},500)
+	});
+	
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+

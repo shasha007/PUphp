@@ -1,0 +1,38 @@
+驳回原因:  <br/>
+<textarea  style='width:200px;height:100px;' id='rej'></textarea>
+<div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="alR">
+    <input type="button" class="btn_a" onclick="doDel(0)"  value="打回修改" />
+    <input type="button" class="btn_a" onclick="doDel(1)" value="驳回并删除" />
+</div>
+<script type="text/javascript">
+    function doDel(del){
+        var id={$id};
+        var rej=$('#rej').val();
+        if(!rej){
+            ui.error('请填写驳回原因');
+        }else{
+            //提交修改
+            $.post("{:U('event/CourseManage/doDismissed')}", {id:id,reject:rej,del:del}, function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else if(json.status==1){
+                    ui.error(json.info);
+                }else if(json.status==2){
+                    ui.success(json.info);
+                    ui.box.close();
+                    $('#list_'+id).remove();
+                    $('#sub').remove();
+                    updateNum();
+                }
+            });
+        }
+    }
+    function updateNum() {
+        var auditCount = $('#auditCount').html();
+        auditCount = auditCount -1;
+        $('#auditCount').html(auditCount)
+    }
+
+
+</script>

@@ -1,0 +1,37 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/excel.js"></script>
+<div class="so_main">
+    <div class="page_tit">导入学校</div>
+    <include file="../Public/_school_tab" />
+    <div class="form2">
+        <dl class="lineD">
+            <dt>提示：</dt>
+            <dd class="cRed">请上传excel表格，格式【学校，省份，城市，域名，几年制】。第一行必须是【学校，省份，城市，域名，几年制】这5格</dd>
+        </dl>
+        <form id="check" method="post" action="__URL__&act=checkAddSchool" enctype="multipart/form-data">
+            <dl class="lineD">
+                <dt>第一步上传附件：</dt>
+                <dd>
+                    <input type="file" id="file" name="file"/>
+                    <input type="button" class="btn_b" onclick="checkExcel()" value="检查" />
+
+                </dd>
+            </dl>
+        </form>
+        <form id="doit" method="post" action="__URL__&act=doAddSchool">
+        <dl class="lineD" style="display:none" id='step2'>
+            <dt>第二步：</dt>
+            <dd>
+                <input type="hidden" id="reason"  value="1"/>
+                <input type="hidden" id="tmpFile" name="filePath" value=""/>
+                <input type="button" class="btn_b" onclick="doit()" value="提交" />
+            </dd>
+        </dl>
+        </form>
+        <dl class="lineD">
+            <dt>结果：</dt>
+            <dd id="res"></dd>
+        </dl>
+    </div>
+</div>
+<include file="../Public/_footer" />

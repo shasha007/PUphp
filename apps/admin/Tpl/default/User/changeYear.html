@@ -1,0 +1,17 @@
+<form action="{:U('admin/User/doChangeYear',array('id'=>$_GET['id']))}" method="post">
+    <table cellpadding=10 cellspacing=3>
+        <tr>
+            <td align="right">几年制 <span style="color: #F00">*</span></td>
+            <td align="left">
+                <select name="tj_year">
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <input type="submit" class="btn_b" value="确定">
+        <input type="button" class="btn_b" onclick="javascript:ui.box.close();" value="取消">
+    </div>
+</form>

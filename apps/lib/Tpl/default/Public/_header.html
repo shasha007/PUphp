@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>PocketUni-图书馆数字化平台</title>
+<link href="../Public/css/x_tsg.css" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+</head>
+
+<body>
+<include file="__THEME__/_holder_2014" />
+<div class="bg">
+ <div class="main">
+  <div class="tsg">
+   <div class="tsg_logo"><a href=""><img src="../Public/images/pu_logo.png?t=2" alt="图书馆数字化平台" /></a></div>
+   <form>
+      <div class="tsg_search">
+       <input name="tsg" type="text" class="tsg_search_input" />
+       <input name="search" type="submit" class="tsg_search_btn" value="搜 索" />
+      </div>
+     </form>
+     <div class="clear"></div>
+     <div class="tsg_menu">
+      <ul class="b">
+       <li class="i"><a href="#">学校首页</a></li>
+       <li><a href="#">馆长信箱</a></li>
+       <li><a href="#">网站地图</a></li>
+      </ul>
+      <div class="tsg_time"></div>
+     </div>
+     <div class="tsg_content">

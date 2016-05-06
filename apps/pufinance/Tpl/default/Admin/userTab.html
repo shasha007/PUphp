@@ -1,0 +1,27 @@
+<div class="Toolbar_inbox">
+	<a href="<?php echo U('pufinance/Admin/index');?>" class="btn_a"><span <?php if(in_array(ACTION_NAME, array('index','userDetail'))):?>class="cRed"<?php endif;?>>用户资料</span></a>
+	<a href="<?php echo U('pufinance/Admin/wallet');?>" class="btn_a"><span <?php if(ACTION_NAME == 'wallet'):?>class="cRed"<?php endif;?>>钱包</span></a>
+	<a href="<?php echo U('pufinance/Admin/record');?>" class="btn_a"><span <?php if(in_array(ACTION_NAME,array('record','transaction'))):?>class="cRed"<?php endif;?>>交易记录</span></a>
+	<?php if(in_array(ACTION_NAME,array('record','transaction'))):?>
+	<span style="float:right;">切换到：<select name="type" id="type">
+		<option <?php if(ACTION_NAME == 'record'):?>selected<?php endif;?> value="1">{$Think.lang.finance_name}交易</option>
+		<option <?php if(ACTION_NAME == 'transaction'):?>selected<?php endif;?> value="2">PU币交易</option>
+	</select>
+	</span>
+	<script type="text/javascript">
+		$(function(){
+			$("#type").change(function(){
+				var type = $(this).val();
+				switch(type){
+					case '1':
+						window.location.href='<?php echo U('pufinance/Admin/record');?>';
+						break;
+					case '2':
+						window.location.href = '<?php echo U('pufinance/Admin/transaction',array('type'=>1));?>';
+						break;
+				}
+			});
+		});
+	</script>
+	<?php endif;?>
+</div>

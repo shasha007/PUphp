@@ -1,0 +1,49 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <include file="_ectab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <span>共{$totalRows}条记录</span>
+        <a href="javascript:void(0)" onclick="addAuditor()" class="btn_a"><span>添加审核人</span></a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l">UID</th>
+                <th class="line_l">姓名</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist name="data" id="vo">
+                <tr overstyle='on' id="list_{$vo.uid}">
+                    <td>{$vo.uid}</td>
+                    <td><a href="{:U('event/User/editUser', array('uid'=>$vo['uid']))}">{$vo.realname} ({$vo.sid1Name})</a></td>
+                    <td><a href="javascript:void(0)" onclick="delEcAuditor({$vo.uid})">删除</a></td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+    function addAuditor(){
+        ui.box.load('__URL__&act=addEcAuditor',{title:'分配审核权限'});
+    }
+    function delEcAuditor(uid){
+        if(confirm("是否删除该审核权限?")){
+            $.post('__URL__&act=delEcAuditor',{uid:uid},function(text){
+                var json =$.parseJSON(text);
+                if( json.status == 1 ){
+                    ui.success( json.info );
+                    $('#list_'+uid).remove();
+                }else{
+                    ui.error( json.info );
+                }
+            });
+        }
+    }
+</script>
+<include file="../Teacher/_footer" />

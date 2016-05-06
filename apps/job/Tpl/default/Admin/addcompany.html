@@ -1,0 +1,134 @@
+<div class="list">
+    <form action='__URL__&act=goverAddCompany' method ="POST">
+            <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>公司全称</td>      
+        <td><input type="text" name="fullname">*</td>
+    </tr>
+    <tr>
+        <td>公司Logo</td>      
+        <td>   
+            <div class="prov_thumblist"><ul id="uploaded_photos1"></ul></div>
+            <input type="button" value="上传图标" onclick="openUploadImg(1);"> (尺寸为150*150)
+        *</td>
+    </tr>
+    <tr>
+        <td>公司类型</td>      
+        <td><select name="type">
+                  <volist name='type' id='vo' key='key'>
+                       <option value="{$key-1}">--{$vo}</option>
+                  </volist>
+            </select>*</td>
+    </tr>
+    <tr>
+        <td>行业类别1</td>      
+        <td>
+            <select name="industrycategory_a">
+                <option value="0">-----please-----</option>
+                 <volist name='indus' id='vo' key='key'>
+                    <option value="{$vo.industry_id}" disabled="false">{$vo.industryname}</option>
+                    <?php $ch = $vo['child'];?>
+                    <volist name='ch' id='v' key='k'>
+                       <option value="{$v.industry_id}">--{$v.industryname}</option>
+                   </volist>
+                </volist>        
+            </select>
+        *</td>
+    </tr>
+    <tr>
+        <td>行业类别2</td>      
+        <td>
+             <select name="industrycategory_b">
+                 <option value="0">-----please-----</option>
+                 <volist name='indus' id='vo' key='key'>
+                    <option value="{$vo.industry_id}" disabled="false">{$vo.industryname}</option>
+                    <?php $ch = $vo['child'];?>
+                    <volist name='ch' id='v' key='k'>
+                       <option value="{$v.industry_id}">--{$v.industryname}</option>
+                   </volist>
+                </volist>        
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>公司规模</td>      
+        <td>
+            <select name="scale">
+                <volist name='scale' id='vo' key='key'>
+                    <option value="{$key-1}">{$vo}</option>
+                </volist>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>地址</td>      
+        <td><input type="text" name="address"></td>
+    </tr>
+    <tr>
+        <td>主页</td>      
+        <td><input type="text" name="homepage"></td>
+    </tr>
+    <tr>
+        <td>城市</td>      
+        <td>
+            <select name="city">
+                <option value="0">-----please-----</option>
+                <volist name='city' id='vo' key='key'>
+                    <option value="{$vo.id}">{$vo.city}</option>
+                </volist>
+            </select>
+        *</td>
+    </tr>
+    <tr>
+        <td>联系人:</td>      
+        <td><input type="text" name="contact"></td>
+    </tr>
+    <tr>
+        <td>联系人电话:</td>      
+        <td>区<input type="text" name="telephone_areacode">号<input type="text" name="telephone"></td>
+    </tr>
+    <tr>
+        <td>email</td>      
+        <td><input type="text" name="contact_email"></td>
+    </tr>
+    <tr>
+        <td>公司简介</td>      
+        <td>
+            <div class="c1"><textarea id="content" name="introduction" style="height:350px;"></textarea></div>
+        </td>
+    </tr>
+     <tr>
+        <td>创始人</td>      
+        <td><input type="text" name="founder_name"></td>
+    </tr>
+     <tr>
+        <td>照片</td>      
+        <td>
+             <div class="prov_thumblist"><ul id="uploaded_photos2"></ul></div>
+            <input type="button" value="上传图标" onclick="openUploadImg(2);"> (尺寸为100*100)
+        </td>
+    </tr>
+     <tr>
+        <td>个人简介</td>      
+          <td><textarea  name="founder_info"></textarea></td>
+    </tr>
+
+    <tr>
+        <td><div class="c1" style="height:30px;"><input type="submit" class="btn_b" value="OK" /></div></td>      
+        <td></td>
+    </tr>
+    </table>
+    </form>
+</div>
+<script>
+
+var imgCount = [0,0,0];
+var imgMax = [0,1,1];
+var thumbSizeW = [0,100,100];
+var thumbSizeH = [0,100,100];
+var showW = [0,100,100];
+var showH = [0,100,100];
+var imgId = 0;
+var attach_type = 'job';
+</script>
+<include file="__THEME__/comm/_upload_file" />

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <!-- QQ登录 -->
+        <meta property="qc:admins" content="61701556566401633636375" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>旅游 - PocketUni</title>
+        <link rel="shortcut icon" href="__THEME__/favicon.ico" />
+        <meta property="wb:webmaster" content="a4bee774a4fe89c7" />
+        <meta name="keywords" content="旅游" />
+        <meta name="description" content="旅游" />
+        <script>
+            var _UID_   = <php> echo (int) $uid;</php>;
+            var _MID_   = <php> echo (int) $mid;</php>;
+            var _ROOT_  = '__ROOT__';
+            var _THEME_ = '__THEME__';
+            var _PUBLIC_ = '__PUBLIC__';
+            var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+            var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+            var $CONFIG = {};
+            $CONFIG['uid'] = _UID_;
+            $CONFIG['mid'] = _MID_;
+            $CONFIG['root_path'] =_ROOT_;
+            $CONFIG['theme_path'] = _THEME_;
+            $CONFIG['public_path'] = _PUBLIC_;
+            $CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+            $CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+            var bgerr;
+            try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+        </script>
+        <include file="__THEME__/comm/_main" />
+        <link href="../Public/css/tour.css?20141010" rel="stylesheet" type="text/css" />
+        <include file="__THEME__/comm/_app" />
+    </head>
+
+    <body>
+        <include file="__THEME__/_holder_2014" />
+        <div class="bg">
+    <div class="main">
+        <div class="tour_topic"><img src="../Public/images/t_top.jpg" /></div>
+        <div class="tour_search mt10 p10">
+           <neq name="uid" value="">
+         <div class="tour_my f14 b"><a href="{:U('travel/Index/myRoute')}">我的旅游</a></div>
+           </neq>
+            <div class="t_s_class"><span class="b">分类：</span>
+               <span <?php if($_SESSION['route_searchCat']['cat']=='')echo' class="s1 b"';?>> <a
+                        href="{:U('travel/Index/index', array('cat'=>'all'))}">全部</a></span>
+                <volist name="cat" id="vo">
+               <span <?php if($_SESSION['route_searchCat']['cat']==$vo['id'])echo' class="s1 b"';?>> <a
+                        href="{:U('travel/Index/index', array('cat'=>$vo['id']))}">{$vo.name}</a></span>
+                </volist>
+            </div>
+            <div class="t_s_city"><span class="b">城市：</span>
+                <span <?php if($_SESSION['route_searchArea']['area']=='')echo' class="s1 b"';?>> <a
+                        href="{:U('travel/Index/index', array('area'=>'all'))}">全部</a></span>
+                <volist name="area" id="vo">
+               <span <?php if($_SESSION['route_searchArea']['area']==$vo['id'])echo' class="s1 b"';?>> <a
+                        href="{:U('travel/Index/index', array('area'=>$vo['id']))}">{$vo.name}</a></span>
+                </volist>
+            </div>
+            <div class="t_s_city"><span class="s1 b"><a href="{:U('travel/Index/partner')}">更多旅游推荐</a></span></div>
+            <div class="t_s_btn mt10 ">
+               <form  action="{:U('travel/Index/index')}" method="post">
+                <input name="title" type="text" placeholder="输入关键字"  value="{$searchTitle}" class="t_s_input f14 fw" />
+                <input name="search" type="submit" value="搜 索" class="t_s_b f14 fw" />
+                 </form>
+            </div>
+        </div>

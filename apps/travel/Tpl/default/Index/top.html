@@ -1,0 +1,77 @@
+<include file="_header" />
+<div class="tour_left">
+    <div class="tour_desc mt10 p10">
+        <div class="tour_d_name fw mt5">{$title}</div>
+        <div class="tour_d_thumb mt10"><img src="{$coverId|getImgAttach=###,300,220,'f'}" /></div>
+        <div class="tour_d_infor f14 mt5">
+            <ul>
+                <li>参加人数：{$joinCount}&nbsp; &nbsp; 剩余名额：{$limitCount}</li>
+                <li>景点类别：{$catId|getCat}</li>
+                <li>景点城市：{$areaId|getArea}</li>
+                <li>景点地址：{$address}</li>
+                <li>活动时间：<?php echo date('Y-m-d', $sTime) . " 至 " . date('Y-m-d ', $eTime) ?></li>
+                <li>截止报名时间：<?php echo date('Y-m-d H:i', $deadline) ?></li>
+                <li>联系人：{$contact}</li>
+            </ul>
+        </div>
+        <div id="down" class="tour_d_price">
+            <ul>
+
+                <if   condition="$eTime lt time()"  >
+                    <li>
+                        <div class="tour_d_p_btn1 b"></div>
+                        <div class="tour_d_price_count f16 b">￥{$cost}</div>
+                    </li>
+
+                    <elseif  condition="$joined "/>
+                    <li>
+                        <div class="tour_d_p_btn1 tbtn3 b"></div>
+                        <div class="tour_d_price_count f16 b">
+                             <if condition="$joined eq 1"  >
+                            ￥{$cost}
+                            <else/>
+                             ￥{$cost2}
+                             </if>
+                        </div>
+                    </li>
+                    <elseif  condition="$deadline lt time()"/>
+                    <li>
+                        <div class="tour_d_p_btn1 tbtn4 b"></div>
+                        <div class="tour_d_price_count f16 b">￥{$cost}</div>
+                    </li>
+                    <elseif condition="$limitCount lt 1"/>
+                    <li>
+                        <div class="tour_d_p_btn1 tbtn2 b"></div>
+                        <div class="tour_d_price_count f16 b">￥{$cost}</div>
+                    </li>
+                    <else/>
+                    <li>
+                        <div class="tour_d_p_text">费用包含：{$costExplain}</div>
+                        <div class="tour_d_p_btn b f14"><a href="{:U('travel/Index/join', array('type'=>1,'tid'=>$id))}">我要参加</a></div>
+                        <div class="tour_d_price_count f16 b">￥{$cost}</div>
+                    </li>
+                    <gt name="cost2" value="0">
+                    <li>
+                        <div class="tour_d_p_text">费用包含：{$costExplain2}</div>
+                        <div class="tour_d_p_btn b f14"><a href="{:U('travel/Index/join', array('type'=>2,'tid'=>$id))}">我要参加</a></div>
+                        <div class="tour_d_price_count f16 b">￥{$cost2}</div>
+                    </li>
+                    </gt>
+                </if>
+
+
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <div class="tour_d_jj mt20">
+            简介：{$description}
+        </div>
+    </div>
+    <div class="tour_d_text mt10">
+        <div class="tour_d_menu f14 b">
+            <ul>
+                <li  <eq name="ACTION_NAME" value="route">class="t_cur"</eq>  ><a href="{:U('travel/Index/route', array('id'=>$id))}#down">景点介绍</a></li>
+                <li <eq name="ACTION_NAME" value="member">class="t_cur"</eq> ><a href="{:U('travel/Index/member', array('id'=>$id))}#down">参加成员</a></li>
+                <li <eq name="ACTION_NAME" value="comment">class="t_cur"</eq>  > <a href="{:U('travel/Index/comment', array('id'=>$id))}#down">景点评论</a></li>
+            </ul>
+        </div>

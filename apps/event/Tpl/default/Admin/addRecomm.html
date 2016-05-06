@@ -1,0 +1,36 @@
+<div style="width:300px;margin:10px auto 20px auto;">
+    <br />
+    海选活动ID：<input id="eventId" class="txt" value ="" />
+    <br /> <br />
+    决赛活动ID：<input id="provId" class="txt" value ="" />
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="editType($( '#eventId' ).val(), $( '#provId' ).val())" value="确定" />
+</div>
+<script>
+function editType(eventId,provId){
+  if(getLength(eventId.replace(/\s+/g,"")) == 0){
+	 alert("海选活动ID不能为空");
+	 return false;
+  }
+  if(getLength(provId.replace(/\s+/g,"")) == 0){
+	 alert("决赛活动ID不能为空");
+	 return false;
+  }
+  if(eventId==provId) {
+    alert("2个活动不可相同");
+    return false;
+  }
+
+$.post( '__URL__&act=doAddRecomm',{eventId:eventId,provId:provId},function( text ){
+    var json =$.parseJSON(text);
+    if( json.status == 1 ){
+        ui.box.close();
+        ui.success('添加成功');
+        window.location.reload(true);
+    }else{
+        ui.error( json.info );
+    }
+  });
+}
+</script>

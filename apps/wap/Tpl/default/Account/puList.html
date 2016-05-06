@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <link href="../Public/css/PU_currency.css?v=20160126" rel="stylesheet">
+    <script src="../Public/js/jquery-2.1.1.min.js"></script>
+    <script src="../Public/js/bootstrap.min.js"></script>
+    <script src="../Public/js/publicjs.js"></script>
+    <title>PU币充值明细</title>
+    <style>
+    </style>
+    <script>
+        settitle('PU币明细', '', '');
+        $(function () {
+            var uid = Android.getUid();
+            $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+                if(data.status == 2)
+                {
+                    window.location.reload();
+                }
+            },'json');
+        });
+    </script>
+</head>
+<body>
+<if condition="!empty($list)">
+<div class="swiper-container container">
+<div class="swiper-wrapper">
+<div class="swiper-slide">
+<ul class="pu-de-list">
+<foreach name="list" item="vo">
+<li>
+<a class="clearfix pu-de-li">
+<div class="list-left pull-left">
+{$vo.typeName}
+</div>
+<div class="list-right pull-right <?php if($vo['type']==1){echo 'in';}elseif($vo['type']==0){echo 'out' ;} ?>">
+<?php if($vo['type']==1)echo '+'.$vo['logMoney']; ?>
+<?php if($vo['type']==0)echo '-'.$vo['logMoney']; ?>
+</div>
+<div class="list-date pull-left clearfix">
+<?php echo date("Y-m-d",$vo['ctime']); ?>
+</div>
+</a>
+</li>
+</foreach>
+</ul>
+</div>
+</div>
+</div>
+<else />
+<!--无明细时显示-->
+<div class="none_error">
+<img class="img-responsive" src="../Public/images/none_error.png">
+<p>暂无任何明细，快用PU币去购买吧</p>
+</div>
+</if>
+
+
+</body>
+</html>
+<script>
+    var  ready = false;
+    var loadingShow = false;
+    var page = 2;
+    var loadingStr = '<div class="spinner"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
+    var noneStr = '<div class="nonestr">没有记录</div>';
+    $(window).scroll(function(){
+        var document = window.document;
+        var top = document.body.scrollTop || document.documentElement.scrollTop
+                || 0;
+        top += document.documentElement.clientHeight;
+        var height = document.documentElement.scrollHeight;
+        if (height - top < 100) {
+            if (!loadingShow) {
+                $(".pu-de-list").append(loadingStr);
+                loadingShow = true;
+                getAjaxNews();
+            }
+        }
+
+    });
+
+    function getAjaxNews() {
+        setTimeout(function () {
+            //删除loading提示
+            $.ajax({
+                url: 'index.php?app=wap&mod=Account&act=ajaxRechargeList',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    page: page
+                },
+                error: function () {
+                },
+                success: function (data) {
+                    if (data.status != '0') {
+                        loadingShow = false;
+                        var htmlstr = buildHtml(data.data);
+                        $(".spinner").remove();
+                        $(".pu-de-list").append(htmlstr);
+                        //处理图片
+                        dopicerror();
+                        page++;
+                    } else {
+                        $(".spinner").remove();
+                        $(".pu-de-list").append(noneStr);
+                    }
+                }
+            });
+        }, 1000);
+    }
+
+
+    function buildHtml(items) {
+        if (items.length > 0) {
+            var html = '';
+            for (i = 0; i < items.length; i++) {
+                html += '<li>';
+                html += '<a class="clearfix pu-de-li">';
+                html += '<div class="list-left pull-left">';
+                html += items[i].typeName;
+                html += '</div>';
+                html += '<div class="list-right pull-right ">';
+                if (items[i].type == 1) {
+                    html += '+' + items[i].logMoney;
+                }
+                else {
+                    html += '-' + items[i].logMoney;
+                }
+                html += '</div>';
+                html += '<div class="list-date pull-left clearfix">';
+                html += items[i].ctime;
+                html += '</div>';
+                html += '</a>';
+                html += '</li>';
+            }
+            return html;
+        }
+
+    }
+</script>

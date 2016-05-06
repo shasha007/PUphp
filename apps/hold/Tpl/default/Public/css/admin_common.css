@@ -1,0 +1,7 @@
+@charset "utf-8";
+.order_desc {
+    background: url("../images/s_desc.png") no-repeat scroll right 2px transparent; padding-right: 10px;
+}
+.order_asc {
+    background: url("../images/s_asc.png") no-repeat scroll right 2px transparent; padding-right: 10px;
+}

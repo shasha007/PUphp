@@ -1,0 +1,71 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="../Public/js/laydate/laydate.js"></script>
+<div class="so_main">
+    <include file="../Public/trafficTabs" />
+    <include file="tabs" />
+    <div class="form2">
+          <form method="post" action="{:U('pufinance/TrafficAdmin/doAddOperator')}" enctype="multipart/form-data">
+        <div style="background-color:#E6E9ED;padding:10px 0px">
+        <dl class="">
+          <dt><span>*</span>运营商名称：</dt>
+          <dd>
+            <select name="name">
+                <option value="移动">移动</option>
+                <option value="电信">电信</option>
+                <option value="联通">联通</option>
+            </select>
+          </dd>
+        </dl>
+          <dl class="">
+            <dt><span>*</span>使用范围：</dt>
+            <dd>
+                <select name="area">
+                    <option value="全国">全国</option>
+                </select>
+            </dd>
+          </dl>
+          <dl class="">
+            <dt><span>*</span>流量有效期：</dt>
+            <dd>
+                <select name="term">
+                    <option value="当月有效">当月有效</option>
+                </select>
+            </dd>
+          </dl>
+          <dl class="lineD">
+            <dt><span style="color: #F00">*</span>生效时间：</dt>
+            <dd>
+                <select name="commence">
+                    <option value="立即生效">立即生效</option>
+                </select>
+            </dd>
+          </dl>
+        <dl class="lineD">
+            <dt><span style="color: #F00">*</span>当月限充次数：</dt>
+            <dd>
+              <input name="limit" type="text" value="{$limit}"  />
+            </dd>
+          </dl>
+          <dl class="lineD">
+            <dt><span style="color: #F00">*</span>当月限充次数描述：</dt>
+            <dd>
+              <textarea name="limitDesc" cols="40" rows="2">{$limitDesc}</textarea>
+            </dd>
+          </dl>
+          <dl class="">
+            <dt><span>*</span>支持用户：</dt>
+            <dd>
+              <textarea name="desc" cols="40" rows="2">{$desc}</textarea>
+            </dd>
+          </dl>
+        </div>
+        <div class="page_btm">
+          <if condition="$id != 0">
+            <input type="hidden" name="id" value="{$id}" />
+          </if>
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+      </form>
+    </div>
+</div>
+<include file="../Public/_footer" />

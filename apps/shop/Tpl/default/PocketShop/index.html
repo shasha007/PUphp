@@ -1,0 +1,193 @@
+<include file="_header" />
+<div class="kdl_mobile_page">
+ <div class="kdl_mobile_header">
+  <div class="kdl_m_header f14 bold tcenter">
+    <a href="{:U('shop/PocketShop/bankPrice')}"><li>口袋金</li></a>
+    <a href="{:U('shop/PocketShop/index')}"><li class="cur">分期商城</li></a>
+  </div>
+  <a href="{:U('shop/PocketShop/myList')}"><div class="kdl_dd"></div></a>
+  <!--<a href="{:U('shop/PocketShop/myList')}"><div class="kdl_dd"></div></a>-->
+  </div>
+  <div class="clear"></div>
+  <div class="m_search_bg m_mt50">
+    <div class="m_search">
+      <form method="post" action="{:U('shop/PocketShop/index')}">
+      <input name="name" class="m_input" type="text" value="{$name}" id="myin" placeholder="请输入商品名">
+      </form>
+    </div>
+  </div>
+  <if condition="$logoList">
+  <div class="swipe1">
+				<ul id="slider1">
+					<foreach name="logoList" item="val">
+                                        <li><a href="{$val.path}"><img src="{$val.pic|tsMakeThumbUp=###,750,240,'f'}" alt="" /></a></li>
+                                        </foreach>
+				</ul>
+				<div id="pagenavi1">
+					<foreach name="logoList" item="vo">
+                                            <a href="javascript:void(0);">{$i}</a>
+                                        </foreach>
+				</div>
+			</div>
+</if>
+
+  <div  class="m_kind">
+   <ul>
+    <a href="__URL__&act=sortList&cid=2">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_moblie.png" /></div>
+     <div class="m_kind_title">手机</div>
+    </li>
+    </a>
+    <a href="__URL__&act=sortList&cid=3">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_computer.png" /></div>
+     <div class="m_kind_title">电脑/平板</div>
+    </li>
+    </a>
+    <a href="__URL__&act=sortList&cid=8">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_digital.png"/></div>
+     <div class="m_kind_title">潮流数码</div>
+    </li>
+    </a>
+    <a href="__URL__&act=sortList&cid=22">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_photo.png" /></div>
+     <div class="m_kind_title">摄影摄像</div>
+    </li>
+    </a>
+    <a href="__URL__&act=sortList&cid=20">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_beauty.png" /></div>
+     <div class="m_kind_title">美容护肤</div>
+    </li>
+    </a>
+    <a href="__URL__&act=sortList&cid=14">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_dear.png" /></div>
+     <div class="m_kind_title">奢侈品</div>
+    </li>
+    </a>
+    <a href="__URL__&act=sortList&cid=21">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_cloth.png" /></div>
+     <div class="m_kind_title">服饰鞋包</div>
+    </li>
+    </a>
+
+    <a href="__URL__&act=sortList&cid=24">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_sport.png" /></div>
+     <div class="m_kind_title">户外运动</div>
+    </li>
+    </a>
+    <a href="__URL__&act=sortList&cid=23">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_tour.png" /></div>
+     <div class="m_kind_title">旅游</div>
+    </li>
+    </a>
+    <a href="__URL__&act=sortList&cid=1">
+    <li>
+     <div class="m_kind_thumb"><img src="../Public/images/m_mall/icon_train.png"/></div>
+     <div class="m_kind_title">教育培训</div>
+    </li>
+    </a>
+   </ul>
+  </div>
+  <div class="clear"></div>
+  <div class="main">
+  <if condition="$list neq null">
+  <foreach item="vo" name="list">
+<a class="list_item" href="{:U('shop/PocketShop/detail')}&id={$vo.id}">
+<div class="m_img_wap"> <img class="m_img" src="{$vo.pic|tsMakeThumbUp=###,200,200,'c'}"> </div>
+<div class="m_info">
+  <h3>{$vo.name}</h3>
+  <div class="m_key">{$vo.desc|htmlspecialchars_decode}</div>
+  <div class="m_price">￥{$vo.price}<?php if($vo['market']!=0){ ?></div>
+  <div class="m_price1" style="font-weight:normal;">市场价：<span style="text-decoration:line-through;">￥{$vo.market}</span><?php }?></div>
+  <?php if($vo['lowest'] && $vo['num'] && ($vo['isHot']==0)){ ?><div class="m_c_infor_price">月供：￥<span class="m_color1 bold">{$vo.lowest}</span><span style="margin:0 5px;">x</span>{$vo.num}期</div><?php }?>
+  <?php if($vo['isHot']){ ?><div class="m_c_infor_price">库存：{$vo.stock}</div><?php }?>
+</div>
+</a>
+  </foreach>
+  <else />
+  没有符合条件的商品
+  </if>
+</div>
+</div>
+<script type="text/javascript">
+var isPmUser = {$isPmUser};
+$(function(){
+    if(!isPmUser){
+        alert('亲们，目前扑满版块仅对苏州开放，其它城市暂不支持购买哦，请亲们耐心等待！');
+    }
+});
+  $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        if (scrollTop + windowHeight == scrollHeight) {
+            var m = $('.list_item').length;
+            var title = $('#myin').val();
+            //alert(m);
+            $.post('__URL__&act=ajaxPocket',{n:m,name:title},function(data){
+                //alert(data);
+                if(data==0){
+
+                }else{
+                    var html = '';
+                    for(var i=0;i<data.length;i++){
+			html += '<a class="list_item" href="{:U('shop/PocketShop/detail')}&id='+data[i]['id']+'">';
+                        html += '<div class="m_img_wap">';
+                        html += '<img class="m_img" src="'+data[i]['pic']+'"/></div>';
+                        html += '<div class="m_info">';
+                        html += '<h3>'+ data[i]['name']+'</h3>';
+                        html += '<div class="m_key">'+data[i]['desc']+'</div>';
+                        html += '<div class="m_price">￥'+data[i]['price']+'</div>';
+                        if(data[i]['market']!=0){
+                            html += '<div class="m_price1" style="font-weight:normal;">市场价：<span style="text-decoration:line-through;">￥'+data[i]['market']+'</span></div>';
+                        }
+                        if(data[i]['lowest']>0 &&(data[i]['num']>0) && data[i]['isHot']==0){
+                            html += '<div class="m_c_infor_price">月供：￥<span class="m_color1 bold">'+data[i]['lowest']+'</span><span style="margin:0 5px;">x</span>'+data[i]['num']+'期</div>';
+                        }
+                        html += '</div></a>';
+                    }
+                }
+                $(".main").append(html);
+            },'json');
+      //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+        }
+    });
+
+    </script>
+
+
+<script type="text/javascript" src="../Public/js/touchslider.dev.js"></script>
+<?php if($logoList){?>
+<script type="text/javascript">
+
+var active=0,
+as = document.getElementById('pagenavi1').getElementsByTagName('a');
+
+for(var i=0;i<as.length;i++){
+	(function(){
+		var j=i;
+		as[i].onclick=function(){
+			t2.slide1(j);
+			return false;
+		}
+	})();
+}
+
+//var t1=new TouchScroll({id:'wrapper','width':5,'opacity':0.7,color:'#555',minLength:20});
+
+var t2=new TouchSlider({id:'slider1', speed:600, timeout:6000, before:function(index){
+		as[active].className='';
+		active=index;
+		as[active].className='active';
+	}});
+</script>
+<?php }?>
+<include file="_footer" />

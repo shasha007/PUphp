@@ -1,0 +1,21 @@
+<include file="../Teacher/_header" />
+<div id="container" class="so_main">
+    <div class="page_tit"> 欢迎使用校方活动管理平台</div>
+    <div class="form2">
+<pre>
+    （一）用户
+     1. 用户身份 分为 校领导，院系领导，年级领导和专业领导。能够分别查看，添加，修改本校，院，系，班的学生情况
+     2. 用户权限 分为 活动管理，兑换管理，由超级管理员分配
+</pre>
+     <?php if($school['id'] == 505):?>
+     <div style="color:#F00;padding-left: 30px;">
+         系统更新：<br/>
+         【2013.7.18】 超管微博管理功能上线<br/>
+         【2013.7.24】 发布新闻，发布作业功能上线（请超级管理员分配权限）<br/>
+         【2013.7.29】 超级管理员增加【用户管理】【学期总评分】功能<br/>
+         【2013.8.2】 超级管理员增加【调查问卷】功能
+     </div>
+     <?php endif;?>
+    </div>
+</div>
+<include file="../Teacher/_footer" />

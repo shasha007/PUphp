@@ -1,0 +1,101 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0;padding: 0;}
+body { background: #fff; color: #666;  font-size: 14px;font-family: arial;}
+html, body {font-family:Helvetica, sans-serif;	-webkit-text-size-adjust:none}
+* {margin:0;padding:0}
+table {border-collapse:collapse;border-spacing:0;}
+h1, h2, h3, h4, h5, h6 {font-size:100%}
+ul, ol, li {list-style:none;}
+em, i {	font-style:normal}
+img {border:0}
+input, img {vertical-align:middle}
+a {	color:#000;text-decoration:none}
+input,button,select,textarea{ outline:none;}
+.clear{ clear:both;}
+.f18{ font-size:18px;}
+.f16{ font-size:16px;}
+.f14{ font-size:14px;}
+.tcenter{ text-align:center;}
+.bold{ font-weight:bold;}
+.m_color1{ color:#ff6d6d;}
+
+
+.noscroll {	position:absolute; width:100%;height:100%;overflow:hidden}
+.app-dom {width:100%}
+.clearfix:after {display:block;content:'';clear:both;visibility:hidden}
+.hidden {display:none;}
+
+
+.kdl_mobile_page {position:relative;min-width:320px;	overflow:hidden;background-color:#fff;font-size:12px;font-family:'Heiti SC'}
+/*.kdl_mobile_header {position:fixed;	top:0;left:0;width:100%;z-index:10000}*/
+.kdl_mobile_header {width:100%; line-height:40px; height:40px; color:#333; position:relative; padding:5px 0;}
+.kdl_dd{background:url(../images/m_icon.png) no-repeat 0 0; right:15px; margin-top:-36px; position:absolute; z-index:9999; width:24px; height:32px; display:block;}
+/*商城列表页*/
+.m_search_bg{ width:100%; background:#f9f9f9; padding:10px 0;}
+.m_search{ width:84%; margin:0 7%; border:1px solid #dedfe0; border-radius:5px; background:#fff; height:38px; line-height:38px; padding:0 1%;}
+.m_input{ border:none; margin:0 10px 0 0;  height:34px; line-height:34px; width:85%;padding-left:35px; background:url(../images/m_icon.png) no-repeat 10px -48px;}
+.m_menu{ width:100%; float:left; }
+.m_menu ul{ width:100%; float:left;}
+.m_menu li{ width:50%; height:36px; line-height:36px; float:left;border-top:4px solid #fff;padding-bottom:10px;}
+.m_menu li.cur{ border-top:4px solid #ff6d6d; color:#ff6d6d; background:#fffbfb; }
+.m_menu li.cur a{ color:#ff6d6d; width:50%; height:36px;}
+.m_menu li.cur a:hover{ color:#ff6d6d; text-decoration:none;}
+/*.m_list{ width:100%;}
+.m_list ul{ width:100%}
+.m_list li{ border-top:1px dashed #eee; margin-top:10px; padding:10px 2%;}
+.m_list_thumb{ float:left; width:25%;}
+.m_list_thumb img{ height: auto; width: auto\9; width:100%; }
+.m_list_infor{ width:60%; line-height:160%; float:left; margin-left:20px;}
+.m_list_title{ width:100%;}
+.m_list_key{}
+.m_list_price{}
+.m_list_fq{}*/
+
+.list_item {display:block;position:relative;overflow:hidden;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:127px; border-top:1px dashed #eee;  padding:10px 0 8px 0;}
+.m_img_wap {position:relative;width:124px;	height:124px}
+.m_img {max-width:100%;max-height:100%;position:absolute; padding-left:10px;background-color:#f7f7f7;top:50%;left:50%;-webkit-transform:translate3d(-50%, -50%, 0);transform:translate3d(-50%, -50%, 0);opacity:1;	-webkit-transition:opacity .5s ease-in;transition:opacity .5s ease-in}
+.m_img_wap img[data-ks-lazyload] {opacity:0}
+.m_info {-webkit-box-flex:1;-ms-flex:1;-webkit-flex:1;	flex:1;	margin-left:19px;padding-right:9px;}
+.m_info h3 {font-size:14px;line-height:16px;color:#444;height:26px; line-height:26px;overflow:hidden;padding-top:3px}
+.m_key {line-height:12px;margin-top:9px; color:#777;}
+.m_price {font-size:16px;line-height:16px;font-weight:bold;color:#DD2727;margin-top:9px}
+.m_fq{font-size:14px;line-height:16px;margin-top:9px; color:#668;}
+
+/*分类商品*/
+.m_sort{ width:90%; padding:0 5%; height:50px; font-family:"微软雅黑"; line-height:50px; border-top:1px solid #dedede;}
+a.m_sort{ color:#555; background:#f9f9f9;}
+a:hover.m_sort{ color:#ff7f7f; background:#fff;}
+.m_back{ background:url(../images/m_icon.png) no-repeat 0 -100px; left:10px; margin-top:-36px; position:absolute; z-index:9999; width:17px; height:32px; display:block;}
+
+
+
+
+@media screen and (max-width:320px) {
+.srp .tile_box .tile_item .ti_info {
+	padding:6px
+}
+.srp .tile_box .tile_item .ti_info .tii_price .tii_sold {
+	margin-left:6px
+}
+}
+@media (-webkit-min-device-pixel-ratio:2) {
+.ks-ios8 .srp .list_box .list_item .li_info {
+	border-width:.5px
+}
+}
+@media (-webkit-min-device-pixel-ratio:3) {
+.ks-ios8 .srp .list_box .list_item .li_info {
+	border-width:.7px
+}
+}
+@media (-webkit-min-device-pixel-ratio:2) {
+.ks-ios8 .srp .shop_more hr {
+	border-width:.5px
+}
+}
+@media (-webkit-min-device-pixel-ratio:3) {
+.ks-ios8 .srp .shop_more hr {
+	border-width:.7px
+}
+}

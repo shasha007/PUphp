@@ -1,0 +1,53 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/tg2.js"></script>
+<div class="m_dream mt10">
+    <div class="m_d_menu1 m_red f16 fw mt10">众志成城</div>
+    <div class="m_dd_step center">
+        <ul>
+            <li class="tg">第一步：提交订单</li>
+            <li class="arrow2"></li>
+            <li class="tg">第二步：支付定金</li>
+            <li class="arrow3"></li>
+            <li class="cur third">第三步：支付尾款(团购结束7天内)</li>
+            <li class="arrow1"></li>
+            <li class="tg">第四步：等待发货</li>
+        </ul>
+    </div>
+    <div class="m_dd_con mt10">
+        <input id="order_id" value="{$order_id}" type="hidden"/>
+        <input id="pay" value="{$topay}" type="hidden"/>
+        <div class="m_dd_con_title">
+            <ul>
+                <li class="m_name1">商品名称</li>
+                <li class="tg">单价（PU币）</li>
+                <li class="tg">数量</li>
+                <li class="tg">总计（PU币）</li>
+            </ul>
+        </div>
+        <div class="m_dd_con_desc">
+            <div class="m_dd_con_name1 m_bule"><a href="{:U('shop/Tg/detail',array('id'=>$product['id']))}">{$product['name']}</a></div>
+            <div class="m_dd_con_p1 tg"><?php echo $product['cprice']/100?></div>
+            <div class="m_dd_con_count count3 m_color2">{$buyNum}</div>
+            <div class="m_dd_con_total1 tg">
+                <span class="m_dd_con_dj pay">已付定金</span>
+                <span class="m_dd_con_money"><?php echo sprintf('%.2f', $vorMoney/100)?>&nbsp;</span>
+                <span class="m_dd_con_dj pay">尾款</span>
+                <span class="m_dd_con_money"><?php echo sprintf('%.2f', $topay/100)?></span>
+            </div>
+        </div>
+        <div class="m_dd_con_price">本次订单总需支付：PU币<span class="fw m_color1 f18"> <?php echo sprintf('%.2f', $topay/100)?></span></div>
+    </div>
+    <div class="m_dd_over mt10">
+        <div class="m_dd_over1 ">
+            您的账户余额为：PU币 <span class="m_color3 f16 fw b"><?php echo($user['money']/100)?></span>
+            <span style="padding-left:50px;"><a href="{:U('home/Account/recharge')}">>>点此充值<<</a></span>
+        </div>
+            使用账户余额支付：PU币 <span class="m_color2 fw f14"><?php echo sprintf('%.2f', $topay/100)?></span>
+    </div>
+    <div class="m_btnlist mt20">
+        <ul>
+            <li><input type="button" value="" class="m_payment" onclick="payment2({$user['money']});" /></li>
+        </ul>
+    </div>
+</div>
+<include file="../Public/_footer" />

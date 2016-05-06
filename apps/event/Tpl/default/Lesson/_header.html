@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>大学生职业规划课程</title>
+        <link rel="shortcut icon" href="__THEME__/favicon.ico" />
+        <include file="__THEME__/comm/_main" />
+        <link href="../Public/css/x_kc.css?130823" type="text/css" rel="stylesheet" />
+        <link href="__THEME__/form.css" rel="stylesheet" type="text/css" />
+        <include file="__THEME__/comm/_app" />
+        <script type="text/javascript" src="__PUBLIC__/js/jquery.nav.js"></script>
+                <script>
+                    var _UID_   = '{$uid}';
+                    var _MID_   = '{$mid}';
+                    var _ROOT_  = '__ROOT__';
+                    var _THEME_ = '__THEME__';
+                    var _PUBLIC_ = '__PUBLIC__';
+                    var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+                    var _LANG_SET_ = '{:LANG_SET}';
+                    var $CONFIG = {};
+                    $CONFIG['uid'] = '{$uid}';
+                    $CONFIG['mid'] = '{$mid}';
+                    $CONFIG['root_path'] = '__ROOT__';
+                    $CONFIG['theme_path'] = '__THEME__';
+                    $CONFIG['public_path'] = '__PUBLIC__';
+                    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+                    $CONFIG['lang'] = '{:LANG_SET}';
+                    document.execCommand("BackgroundImageCache", false, true);
+                </script>
+    </head>
+    <body>
+    <include file="__THEME__/_holder_course_2014" />
+        <div class="bg">
+            <div class="main">
+                <div class="kc_header">
+                    <div class="kc_header_title"><img src="../Public/images/top_kc.jpg" alt="苏州大学学生职业生涯规划课程投放平台" /></div>
+                </div>
+                <div class="clear"></div>
+                <script type="text/javascript">
+                    $(function(){
+                        $('#menu li').hover(function(){
+                            $(this).children('ul').stop(true,true).show('fast');
+                        },function(){
+                            $(this).children('ul').stop(true,true).hide('fast');
+                        });
+                    });
+                </script>
+                <div class="hd_c_top">
+                    <div class="menu l_30 f_14 f_w b">
+                        <ul id="menu" class="first-menu ">
+                            <li class="first-menu-li <eq name='ACTION_NAME' value='board'>i8</eq>
+                                        <eq name='MODULE_NAME' value='LessonMember'>i8</eq>
+                                        <eq name='ACTION_NAME' value='addCourse'>i8</eq>
+                                        <eq name='MODULE_NAME' value='LessonManage'>i8</eq>" ><a href="{:U('event/Lesson/board',array('cat'=>'all'))}">课程</a>
+                                <ul class="second-menu">
+                                    <li class="second-menu-li i9"><a href="{:U('event/Lesson/board',array('cat'=>'launch'))}">我发起的课程</a></li>
+                                    <li class="second-menu-li i9"><a href="{:U('event/Lesson/board',array('cat'=>'join'))}">我参与的课程</a></li>
+                                </ul>
+                            </li>
+                            <li class="first-menu-li  <eq name='ACTION_NAME' value='boardActive'>i8</eq>
+                                <eq name='MODULE_NAME' value='LessonActiveMember'>i8</eq>
+                                <eq name='ACTION_NAME' value='addCourseActive'>i8</eq>
+                                <eq name='MODULE_NAME' value='LessonActive'>i8</eq>"  ><a href="{:U('event/Lesson/boardActive',array('cat'=>'all'))}">课程活动</a>
+                                <ul class="second-menu">
+                                    <li class="second-menu-li i9"><a href="{:U('event/Lesson/boardActive',array('cat'=>'launch'))}">我发起的课程活动</a></li>
+                                    <li class="second-menu-li i9"><a href="{:U('event/Lesson/boardActive',array('cat'=>'join'))}">我参与的课程活动</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                    <?php if($rights['canAdd']): ?>
+                    <div class="hd_c_publish"><a href="{:U('event/Lesson/add')}">发起课程/课程活动</a></div>
+                    <?php endif; ?>
+                </div>

@@ -1,0 +1,195 @@
+<include file="_header" />
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+
+$(function(){
+    $( "select[name='sorder']" ).val("{$sorder}");
+    $( "select[name='eorder']" ).val("{$eorder}");
+    $( "select[name='limit']" ).val("{$limit}");
+});
+
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        if($(n).val()>0)ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+//搜索用户
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchBlog() {
+    if(isSearchHidden == 1) {
+        $("#searchBlog_div").slideDown("fast");
+        $(".searchBlog_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchBlog_div").slideUp("fast");
+        $(".searchBlog_action").html("搜索微博");
+        isSearchHidden = 1;
+    }
+}
+
+var ctrl = function(name){
+    this.elements = document.getElementsByName('id[]');
+    this.length = this.elements.length;
+}
+ctrl.prototype = {
+    reverse:function(){
+    for(i=0;i<this.length;i++){
+        this.elements[i].checked= !this.elements[i].checked;
+    }
+    },
+all:function(){
+for(i=0;i<this.length;i++){
+  this.elements[i].checked = true;
+}
+},
+unAll:function(){
+  for(i=0;i<this.length;i++){
+    this.elements[i].checked = false;
+  }
+},
+toggle:function(obj){
+   this[obj.checked ? 'all' : 'unAll']();
+ },
+del:function(id,uid){
+	var id = id ? id : getChecked();
+	id = id.toString();
+	if(id=='' || id==0) return;
+	if( confirm("是否删除配置") ){
+	  $.post( "{:U('home/Themes/deletePlace')}",{dotype:'del',id:id,uid:uid},function(text ){
+	      if( text == 1 ){
+			  var id_list = id.split( ',' );   
+			  for (var j=0 ; j< id_list.length ; j++   ){
+				  $('#weibo_list_'+id_list[j]).remove(); 
+			  }
+	    	  ui.success( "删除成功" );
+	      }else{
+	    	  ui.error( "删除失败" );
+	      }
+	  });
+	}
+},
+edit:function(id,act){
+  if( act == 'recommend' ){
+      v= "推荐";
+      v2 = "取消推荐";
+      act2 = 'cancel';
+    
+  }else{
+      v = "取消推荐";
+      v2 = "推荐";
+      act2 = 'recommend';
+  }
+if( confirm( '是否'+v ) ){
+  $.post('__URL__&act=doChangeIsHot',{id:id,type:act},function( text ){
+          if( text == 1 ){
+          ui.success( "操作成功" );
+          $( '#button'+id ).val( v2 );
+          location.reload();
+          //$('#button'+id).click(function() "c.edit"+id+",'"+act2+"')")
+       }else{
+       
+        ui.error( "设置失败" );
+       }
+ });
+}
+}
+}
+var c = null;
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    
+    <div id="searchBlog_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="form2">
+    </div>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$list.html}</div>
+        <!-- <a href="javascript:void(0);" class="btn_a" onclick="searchBlog();">
+            <span class="searchBlog_action"><neq name="isSearch" value="1">搜索微博<else/>搜索完毕</neq></span>
+        </a> -->
+    </div>
+  
+    <div class="list">
+        <table id="blog_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+  		    <th style="width:30px;">
+  		        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+  		        <label for="checkbox"></label>
+  		    </th>
+  		    <th class="line_l">话题ID</th>
+  		    <th class="line_l">显示位置</th>
+            <th class="line_l">操作</th>
+        </tr>
+        <volist id="vo" name="list">      
+	      	<tr overstyle='on' id="weibo_list_{$vo.id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		        <td><a href="javescript:;" target="_blank">{$vo.themes_id}</a></td>
+		        <td>{$vo.place} </td>
+		        <td>
+              <a href="javascript:void(0)" onclick="c.del({$vo.id})">删除</a>
+            </td>
+	      	</tr>
+		    </volist>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$list.html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+var c = new ctrl('id[]');
+    function isTop(weibo_id,flag)
+    {
+        $.post('{:U("home/Themes/weiboSave")}',
+                {weibo_id:weibo_id,flag:flag},
+                function(data)
+                {
+                    if(data.status == 0)
+                    {
+                        ui.success( data.msg );
+                        location.reload();
+                    }
+                    else
+                    {
+                        ui.error( data.msg );
+                    }
+                },
+                'json'
+        );
+    }
+</script>
+<include file="_footer" />

@@ -1,0 +1,103 @@
+<include file="_header" />
+<include file="__THEME__/comm/_datepicker" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>图片</th>
+                <th width="30%">商品名称</th>
+                <th>已抢购人数</th>
+                <th>总需人数</th>
+                <th>期数</th>
+                <th>强制开奖时间<br/>(早上10点统一开奖)</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><img width="30" height="30" src="{$vo.pic|tsMakeThumbUp=###,30,30,'f'}"/></td>
+                    <td><a href="{:U('/Yg/detail', array('id'=>$vo['id']))}" target="_blank">{$vo['name']}</a></td>
+                    <td>{$vo.has_attended}</td>
+                    <td>{$vo.need_attended}</td>
+                    <td>{$vo.times}</td>
+                    <td><?php if($vo['eday']!='0000-00-00'):?>{$vo.eday}<?php endif;?>
+                        <a href="javascript:changeTime('{$vo.id}','{$vo.etime}')">[修改]</a>
+                    </td>
+                <td>
+                    <?php if($vo['has_attended']==0):?>
+                        <a href="javascript:endYg('{$vo.id}')">删除</a>
+                    <?php else:?>
+                        <a href="javascript:cancelYg('{$vo.id}')">下架退款</a>
+                    <?php endif;?>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script>
+var g_eday = null;
+function changeTime(id,time){
+    g_eday = id;
+    var txt = '<input id="etime" type="text" value="" onfocus="rcalendar(this,'+"'dateonly'"+');" readonly/><p>'+
+            '<input type="button" name="addTransport" class="btn btn-blue" value="保 存" id="addTransport" onclick="send()"/></p>';
+    ui.box.show(txt,{title:'修改开奖时间',closeable:true})
+}
+function send(){
+    var newDay = $("#etime").val();
+    $.post( '__URL__&act=changeEday',{id:g_eday,eday:newDay},function(res){
+        var json =$.parseJSON(res);
+        if (json.status ==0) {
+            ui.error(json.info);
+        }else{
+            ui.success(json.info);
+            ui.box.close();
+            setTimeout(function(){location.reload();},1500);
+        }
+    });
+}
+function endYg(id){
+    if(confirm('没人参与抢购，确定删除？')){
+        $.post( '__URL__&act=deleteYg',{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                setTimeout(function(){location.reload();},1500);
+            }
+        });
+    }
+}
+function cancelYg(id){
+    if(confirm('下架商品，已购买的自动退还货款？')){
+        $.post( '__URL__&act=cancelYg',{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                setTimeout(function(){location.reload();},1500);
+            }
+        });
+    }
+}
+</script>
+<include file="_footer" />

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>绑定银行卡</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+    <script src="../Public/js/mainScript.js"></script>
+    <script>
+        setActionBar('绑定银行卡', '', '');
+    </script>
+</head>
+<body bgcolor="#F3F1EE">
+<form id="bind-form" action="{:U('pufinance/Bankcard/doBindBankcard')}" method="post">
+    <div class="w-repayGeneral w-bind w-autofocus"><i>姓名：</i><input name="realname" type="text"></div>
+    <div class="w-repayGeneral w-bind w-autofocus"><i>身份证号：</i><input name="ctfid" type="number"></div>
+    <div class="w-repayGeneral w-bind">
+        <div class="w-idArea" id="idArea"><input type="file" accept="image/*" capture="camera" id="upload-ctfidimg"><span>+</span></div>
+        <p>请上传本人真实身份证正面照片。我们会对您的信息进行保密保证,该信息仅作为申请借款使用。</p>
+    </div>
+    <div class="w-repayGeneral w-bind">
+        <i style="line-height: 39px;">银行名称：</i>
+        <p class="w-simulate">
+            <strong>选择银行</strong>
+            <select name="bank_id">
+                <option value="0">选择银行</option>
+                <volist name="banks" id="bank">
+                    <option value="{$bank.id}" invest="{$invests[$bank['invest_id']]['name']}">{$bank.bank_name}</option>
+                </volist>
+            </select>
+        </p>
+
+    </div>
+    <div class="w-repayGeneral w-bind w-autofocus"><i>银行卡号：</i><input name="card_no" type="number"></div>
+    <div class="w-repayGeneral w-bind">
+        <i style="line-height: 39px;">银行卡归属地：</i>
+        <p class="w-simulate" style="width: 30%">
+            <strong>选择城市</strong>
+            <select name="city_id" id="city_id">
+            </select>
+        </p>
+        <p class="w-simulate" style="width: 30%">
+            <strong>选择省份</strong>
+            <select name="province_id" id="province_id">
+                <option value="0">选择省份</option>
+                <volist name="provinces" id="province">
+                    <option value="{$province.id}">{$province.title}</option>
+                </volist>
+            </select>
+        </p>
+
+    </div>
+    <div class="w-repayGeneral w-bind w-autofocus"><i>预留手机号：</i><input name="mobile" type="number"></div>
+    <div class="w-repayGeneral w-bind w-b-testing">
+        <i>验证码：</i>
+        <input name="captcha" type="number">
+        <button id="getcaptcha" type="button">获取短信验证码</button>
+    </div>
+    <div class="w-repayGeneral w-bind w-send" id="sendTip" style="display: none;">
+        该信息由 <span></span> 发送
+    </div>
+    <a href="javascript:void(0);" class="w-submit">下一步</a>
+</form>
+
+<div id="loading" style="display: none;">
+    <div class="h-background"></div>
+    <div class="h-loading">
+        <div class="h-animate"></div>
+    </div>
+</div>
+<div class="w-transparent" onclick="$(this).hide();">
+    <div class="w-alert">提示信息</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../Public/js/generalScript.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.min.js"></script>
+
+<script type="text/javascript">
+
+    $(function() {
+        $('.w-autofocus').click(function () {
+            $(this).children('input').focus();
+        });
+
+        $('#upload-ctfidimg').change(function () {
+            var $id = $('#idArea');
+            var file = this.files[0];
+            if(!/image\/\w+/.test(file.type)){
+                alertMsg("请确保文件为图像类型");
+                return false;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                alertMsg("图片大小不能超过5M！");
+                return false;
+            }
+            $('#loading').show();
+            // FormData 对象
+            var formData = new FormData();
+            formData.append("file", file);                           // 文件对象
+            $.ajax({
+                url: '{:U("pufinance/Bankcard/uploadCtfid")}' ,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function (result) {
+                    $('#loading').hide();
+                    if (result.status) {
+                        var read=new FileReader();
+                        read.readAsDataURL(file);
+                        read.onload=function(e){
+                            if ($id.find('img').length == 0) {
+                                $id.append('<img>');
+                            }
+                            var $img = $id.find('img');
+                            $img.attr('src', this.result);
+                        }
+                    } else {
+                        alertMsg(result.info);
+                        return false;
+                    }
+                }
+            });
+
+        });
+        // 选择省份
+        $('#province_id').change(function () {
+            var $selected = $(this).find("option:selected");
+            var proid = $selected.val();
+            var _this = this;
+            if (proid) {
+                var html = '<option value="0">选择城市</option>';
+                $.post("{:U('pufinance/Bankcard/getCitys')}", {'province_id' : proid}, function (result) {
+                    if (result.status) {
+                        $.each(result.data, function (i, n) {
+                            html += '<option value="' + n.id + '">' + n.city + '</option>';
+                        });
+                        $('#city_id').prev('strong').html('选择城市');
+                        $('#city_id').html(html);
+                        $(_this).prev('strong').html($selected.text());
+                    }
+                }, 'json');
+            }
+        });
+        // 选择城市
+        $('#city_id').change(function () {
+            var $selected = $(this).find("option:selected");
+            $(this).prev('strong').html($selected.text());
+        });
+
+        $(':input[name="bank_id"]').change(function() {
+            var $selected = $(this).find("option:selected");
+            $(this).prev('strong').html($selected.text());
+            var text = $selected.attr('invest');
+            if (text == '康欣') {
+                text = '江苏金农';
+            }
+            $('#sendTip').show().find('span').text(text);
+        });
+
+        var validator = $('#bind-form').validate({
+            invalidHandler : function(form, valid) {
+                $.each(valid.invalid, function(k, val) {
+                    alert(val);
+                    return false;
+                });
+            },
+            errorPlacement: function(error, element) {
+//                alert(error.html());
+                return false;
+            },
+            //focusInvalid: false,
+            onfocusout: false,
+            onkeyup: false,
+            onsubmit : false,
+            ignore: "",
+
+            rules : {
+                realname : {
+                    required : true
+                },
+                ctfid : {
+                    required : true
+                },
+                bank_id : {
+                    required : true
+                },
+                card_no : {
+                    required : true
+                },
+                province_id : {
+                    required : true
+                },
+                city_id : {
+                    required : true
+                },
+                mobile : {
+                    required : true
+                }
+            },
+            messages : {
+                realname : {
+                    required : '请输入真实姓名'
+                },
+                ctfid : {
+                    required : '请输入身份证号'
+                },
+                bank_id : {
+                    required : '请选择银行'
+                },
+                card_no : {
+                    required : '请输入银行卡号'
+                },
+                province_id : {
+                    required : '请选择省份'
+                },
+                city_id : {
+                    required : '请选择城市'
+                },
+                mobile : {
+                    required : '请输入银行预留手机号码'
+                }
+            }
+        });
+
+        $('#getcaptcha').click(function() {
+            var _this = this;
+            if (validator.form()) {
+                $('#loading').show();
+                $(this).prop('disabled', true).css({color:'#e0e0e0'});
+                $.post('{:U("pufinance/Bankcard/sendBankCaptcha")}', $('#bind-form').serialize(), function(result) {
+                    $('#loading').hide();
+                    if (result.status) {
+                        alert('短信验证码已发送至您的预留手机号');
+                        var time = 60;
+                        $(_this).text(time + '秒后重新发送');
+                        var settime = setInterval(function() {
+                            time--;
+                            $(_this).text(time + '秒后重新发送');
+                            if (time <= 0) {
+                                clearInterval(settime);
+                                $(_this).prop('disabled', false).css({color:'#888'}).text('重新发送');
+                            }
+                        }, 1000);
+                    } else {
+                        alert(result.info);
+                        $(_this).prop('disabled', false).css({color:'#888'});
+                    }
+                }, 'json');
+            }
+        });
+
+        // 提交表单
+        $('.w-submit').click(function() {
+            if (validator.form()) {
+                var captcha = $(':input[name="captcha"]').val();
+                if (captcha == '') {
+                    alert('请输入短信验证码');
+                    return false;
+                }
+                $.post('{:U("pufinance/Bankcard/doBindBankcard")}', $('#bind-form').serialize(), function(result) {
+                    if (result.status) {
+//                        alert('恭喜您，银行卡绑定成功');
+                        if (result.data.url) {
+                            location.href = result.data.url;
+                        } else {
+                            location.href = '{:U("pufinance/Bankcard/index")}';
+                        }
+                    } else {
+                        alert(result.info);
+                    }
+                }, 'json');
+            }
+        });
+
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<include file="_header" />
+
+<div class="hd_c">
+    <div class="hd_n_list">
+        <ul>
+            <volist name="data" id='vo'>
+            <li>
+                <div class="hd_n_title b f14 h24"><a href="{:U('event/School/news', array('id'=>$vo['id']))}" title="{$vo.title}">{$vo.title}</a></div>
+                <div class="hd_n_date h24">{$vo.cTime|friendlyDate}</div>
+                <div class="hd_n_desc"><a href="{:U('event/School/news', array('id'=>$vo['id']))}" title="{$vo.title}">{$vo.content|text|getShort=###,170,'…'}</a></div>
+            </li>
+            </volist>
+        </ul>
+        <div class="page">{$html}</div>
+    </div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

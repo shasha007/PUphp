@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+</head>
+<body bgcolor="#F3F1EE">
+	<?php foreach($lists as $item):?>
+	<?php if($item['is_receive'] == 1):?>
+	<div class="w-bagGeneral" data-isGet="1">
+		<div class="w-generalMonth">
+			<span><?php echo $item['month'];?></span><i>月</i>
+		</div>
+		<div>
+			<p class="type-title">提升<?php if($item['type'] == 1):?>免息<?php else:?>总<?php endif;?>额度</p>
+			<p class="type-amount"><?php echo $item['amount'];?></p>
+		</div>
+		<p>
+			<!--<img src="../Public/img/delete.png">-->
+			<button>已领取</button>
+		</p>
+		<img src="../Public/img/111.png">
+	</div>
+	<?php else:?>
+	<div class="w-bagGeneral" data-isGet="0">
+		<div class="w-generalMonth">
+			<span><?php echo $item['month'];?></span><i>月</i>
+		</div>
+		<div>
+			<p class="type-title">提升<?php if($item['type'] == 1):?>免息<?php else:?>总<?php endif;?>额度</p>
+			<p class="type-amount"><?php echo $item['amount'];?></p>
+		</div>
+		<p>
+			<img src="../Public/img/delete.png" style="filter:alpha(opacity=0);opacity:0;">
+			<button class="w-select" data-id="<?php echo $item['id'];?>">领取</button>
+		</p>
+		<img src="../Public/img/111.png">
+	</div>
+	<?php endif;?>
+	<?php endforeach;?>
+	
+	<!--透明遮罩层-->
+	<div class="w-transparent">
+		<div>
+			<i>你已成功领取！</i>
+			<p>
+				<span><a style="color:#666" href="<?php echo U('pufinance/PuCredit/index');?>">查看额度</a></span>
+				<span><a style="color:#666" href="javascript:void(0)" id="share">分享</a></span>
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript">
+	
+	console.log({'isMobile':'<?php echo isMobile();?>'});
+		$(function(){
+			$('.w-select').click(function(){
+				var id = $(this).data('id');
+				var that = $(this);
+				$.post('<?php echo U('pufinance/UserPackage/receive');?>',{id:id},function(res){
+					if(res.code == 1){
+						that.html('已领取');
+						that.removeClass();
+						that.css('display','none');
+						that.parent().parent().attr('data-isGet','1');
+						that.parent().find('img').remove();
+						that.parent().parent().find('img').css('display','block');
+						$('div.w-transparent').css('display','block');
+						$('#share').click(function(){
+							var content = '{$Think.lang.finance_name}又给我提额了！你呢？';
+							var url = '<?php echo U('pufinance/userPackage/share');?>';
+							var imageUrl = '../Public/img/share_userpackage.jpg';
+							Android.share(content+' '+url, content, url, imageUrl);
+						});
+					}else{
+						alert(res.msg);
+						window.location.reload();
+					}
+				},'json');
+			});
+		});
+	</script>
+</body>
+<script type="text/javascript" src="../Public/js/puBag.js" ></script>
+<script type="text/javascript" src="../Public/js/mainScript.js" ></script>
+<script type="text/javascript">
+    setActionBar('提额包', '', '');
+</script>
+</html>

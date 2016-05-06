@@ -1,0 +1,3171 @@
+﻿/*公共*/
+.h-color-red {
+    color: #d33107 !important;
+}
+
+.h-big {
+    font-size: 18px !important;
+}
+
+.h-color-5504 {
+    color: #ea5504 !important;
+}
+
+.h-public-header {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.h-public-header div {
+    min-width: 20px;
+    min-height: 20px;
+    line-height: 40px;
+}
+
+.h-public-header img {
+    width: 20px;
+    height: 20px;
+    margin: 10px 0;
+}
+
+.h-public-header div:nth-child(1), .h-public-header div:nth-child(3) {
+    width: 20%;
+    padding: 0 15px;
+    float: left;
+    text-align: right;
+    color: #ea5504;
+}
+
+.h-public-header div:nth-child(2) {
+    text-align: center;
+    width: 60%;
+    float: left;
+}
+
+/*分期商城*/
+.h-fqsc {
+    /*margin-top: 10px;*/
+    background-color: #fff;
+}
+
+.h-fqsc header {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #f3f1ee;
+}
+
+.h-fqsc-con {
+    border-bottom: 1px solid #f3f1ee;
+}
+
+.h-fqsc-con div {
+    height: 83px;
+    margin: 8px auto;
+    overflow: hidden;
+}
+
+.h-fqsc-con-l {
+
+}
+
+.h-fqsc-con-l img {
+    width: 65px;
+    height: 65px;
+}
+
+.h-fqsc-con-c {
+    width: 50%;
+    margin-left: 10px !important;
+    font-size: 14px;
+    color: #888;
+}
+
+.h-fqsc-con-r {
+    width: 23%;
+    text-align: right;
+}
+
+.h-fqsc-con-r p:nth-child(2) {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.h-fqsc-foot {
+    border-bottom: 1px solid #f3f1ee;
+}
+
+.h-fqsc-foot div:nth-child(1) {
+    padding-bottom: 10px;
+}
+
+.h-fqsc-foot p {
+    float: right;
+    margin: 3px auto;
+    clear: both;
+}
+
+.h-fqsc-foot p:nth-child(1) {
+   float: left!important;
+}
+.h-fqsc-foot p:nth-child(n+2) {
+    color: #888;
+}
+
+.h-pu-grey {
+    width: 70px;
+    height: 30px;
+    margin: -3px 0;
+    line-height: 30px;
+    color: #ccc;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+/*pu金*/
+.h-puj {
+    margin-top: 10px;
+    height: 32px;
+    background: #fff;
+}
+
+.h-puj div {
+    width: 20%;
+    height: 32px;
+    float: left;
+    line-height: 32px;
+    text-align: center;
+    border-top: 1px solid #efefef;
+    border-right: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
+}
+
+.h-puj-on {
+    color: #ea5504 !important;
+    border-bottom: 1px solid #ea5504 !important;
+}
+
+.h-pujin-pu {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #efefef;
+    align-items: center;/*垂直居中*/
+    justify-content: center;
+}
+
+.h-pujin-pu > div > img {
+    height: 50px;
+}
+
+.h-pujin-pu > p {
+    height: 60px;
+}
+
+.h-pujin-pu > div:nth-child(1){
+    text-align: left;
+    flex: 1;
+}
+
+.h-pujin-pu > div:nth-child(2) {
+    flex: 3;
+}
+.h-pujin-pu > div:nth-child(3){
+    flex: 2;
+    text-align: right;
+}
+
+.h-bank-card {
+    float: left;
+    width: 70% !important;
+    height: 70px !important;
+    margin: 0 auto;
+    color: #fff;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.h-bank-card img {
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin: 5px 0 0 5px;
+    border-radius: 100%;
+}
+
+.h-bank-card p:nth-child(2) {
+    margin-left: 1px;
+}
+
+.h-point {
+    display: block;
+    position: relative;
+    top: 15px;
+    left: 25px;
+    width: 8px;
+    height: 8px;
+    margin-right: 3px;
+    float: left;
+    background-color: #eee;
+    opacity: 0.8;
+    border-radius: 100%;
+}
+
+.h-bank-card i:nth-child(4n) {
+    margin-right: 10px;
+}
+
+.h-bank-card i:nth-last-child(1) {
+    display: block;
+    position: relative;
+    left: 25px;
+    float: left;
+}
+
+.h-pu-red {
+    width: 80px;
+    height: 30px;
+    margin: -3px 0;
+    line-height: 30px;
+    color: #ea5504;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ea5504;
+    border-radius: 15px;
+}
+
+.h-pu-yellow {
+    width: 80px;
+    height: 30px;
+    margin: -3px 0;
+    line-height: 30px;
+    color: #f69d08;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #f69d08;
+    border-radius: 15px;
+}
+
+.h-puj-button-zc,.h-puj-button-hk {
+    width: 80px;
+    height: 30px;
+    margin: 0px 0;
+    line-height: 30px;
+    color: #ea5504;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ea5504;
+    border-radius: 15px;
+}
+
+.h-puj-footer {
+    margin: 10px auto;
+}
+
+.h-puj-footer-pay {
+    margin-top: 5px;
+    padding: 0px !important;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.h-special-price {
+    font-size: 18px;
+    color: #3e3e3e;
+}
+
+/*充值?*/
+.h-top-up {
+    height: 100%;
+    padding: 30% 0;
+    text-align: center;
+    background-color: #fff;
+}
+
+.h-top-button {
+    width: 40%;
+    height: 40px;
+    margin: 10px auto;
+    font-size: 18px;
+    line-height: 40px;
+    color: #888;
+    border: 1px solid #888;
+    border-radius: 20px;
+}
+
+.h-top-up img {
+    width: 20%;
+    margin: 0px 40%;
+}
+
+.h-top-up p {
+    margin-top: 10px;
+}
+
+.h-top-up a, .h-top-up a:active, .h-top-up a:link, .h-top-up a:visited, .h-top-up a:hover {
+    display: inline;
+    color: #22b1e5;
+}
+
+/*.h-top-button {*/
+/*margin: 10px auto 0;*/
+/*background-color: #FFF;*/
+/*}*/
+
+.h-top-button div {
+    width: 30%;
+    height: 30px;
+    float: left;
+    margin: 3% auto;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.h-top-button div:nth-child(1) {
+    margin-right: 10%;
+    margin-left: 15%;
+    background-color: #f69d08;
+}
+
+.h-top-button div:nth-child(2) {
+    background-color: #ea5504;
+}
+
+/*储存卡详情*/
+/*.h-card-info {*/
+/*background-color: #fff;*/
+/*}*/
+.h-card-add {
+    /*width: 100%;*/
+    height: 45px;
+    padding: 0 15px;
+    margin: 10px 15px;
+    line-height: 40px;
+    color: #888;
+    text-align: center;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.h-card-add span {
+    font-size: 25px;
+}
+
+.h-card {
+    margin: 10px auto 0;
+    width: 100% !important;
+}
+
+.h-bank-card span {
+    float: left;
+    margin-left: 10px;
+}
+
+.h-card-m-x div {
+    font-size: 18px;
+    text-align: center;
+}
+
+.h-card-m-x div:nth-child(1) {
+    border-bottom: 1px solid #b7b7b5;
+}
+
+#h-card-manage > .modal-dialog {
+    position: absolute;
+    width: 96%;
+    margin: 0 2%;
+    bottom: 10px;
+}
+
+#h-card-remove > .modal-dialog ,#h-card-message > .modal-dialog{
+    position: absolute;
+    width: 96%;
+    margin: 0 2%;
+    top: 40%;
+}
+
+.h-card-m-r > .modal-header {
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.h-card-m-r > .modal-body {
+    width: 50%;
+    height: 60px;
+    float: left;
+    padding: 0 !important;
+    line-height: 60px;
+    text-align: center;
+
+}
+
+.h-card-m-r div:nth-child(2) {
+    border-right: 1px solid #efefef;
+}
+
+/*我的订单*/
+.h-span-down {
+
+}
+
+.h-header-select {
+    position: absolute;
+    display: none;
+    top: 40px;
+    left: 25%;
+    width: 50%;
+
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+}
+
+.h-header-select > p {
+    height: 30px;
+    margin: 5px;
+    padding: 0 5px;
+    line-height: 30px;
+}
+
+.h-header-select > p > a {
+    color: #fff ;
+}
+
+.h-header-select > .on {
+
+    background: #7f7f7f;
+    border-radius: 5px;
+}
+.h-header-select > .on > a {
+    color: #ea5504!important;
+}
+/*提现*/
+.h-withdraw {
+    /*padding: 0 15px;*/
+    margin: 10px 0;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.h-withdraw header {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #f3f1ee;
+}
+
+.h-withdraw-con {
+    border-bottom: 1px solid #f3f1ee;
+}
+
+.h-withdraw-con p:nth-child(1) {
+    padding: 5px 0;
+}
+
+.h-withdraw-con p:nth-child(2) {
+    padding: 10px 15px;
+}
+
+.h-withdraw-price {
+    font-size: 40px;
+}
+
+.h-withdraw-4 {
+    position: relative;
+    left: 1px;
+    top: -14px;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.h-withdraw-input {
+    width: 88%;
+    height: 40px;
+    /*float: left;*/
+    line-height: 40px;
+    font-size: 35px;
+    appearance: none;
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari 和 Chrome */
+    border: none;
+}
+
+.h-withdraw footer {
+    color: #888;
+}
+
+.h-withdraw footer span {
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+}
+
+.h-withdraw-tips {
+    padding: 2px 15px;
+    color: #888;
+}
+
+/*提现详情*/
+.h-withdraw-info {
+    margin-top: 10px;
+    background-color: #fff;
+}
+
+.h-withdraw-info li {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #f3f1ee;
+}
+
+.h-withdraw-info li div:nth-child(1) {
+    font-size: 14px;
+    color: #888;
+}
+
+.h-withdraw-info li div:nth-child(2) {
+    font-size: 16px;
+}
+
+.h-withdraw-info-btn {
+    width: 90%;
+    margin: 20px 5%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    background-color: #ea5504;
+    border-radius: 5px;
+    border: none;
+}
+
+/*选择银行卡*/
+.h-choose-bank {
+    padding: 0;
+    margin: 10px 15px;
+}
+
+.h-choose-card {
+    background-color: #fff;
+}
+
+.h-choose-card li {
+    height: 38px;
+    padding: 0;
+    line-height: 38px;
+    border-bottom: 1px solid #f3f1ee;
+}
+
+.h-bank-card div {
+    margin: 10px 15px;
+}
+
+.h-choose-card img {
+    height: 20px;
+    margin: 9px 0;
+}
+
+.h-new-card {
+    color: #3e3e3e;
+}
+
+.h-is-choose {
+    display: none;
+
+}
+
+/*填写信息*/
+.h-fill input {
+    width: 98%;
+    height: 30px;
+    float: right;
+    padding: 5px 15px;
+    margin: 5px auto;
+    line-height: 30px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+}
+
+.h-fill input::-webkit-input-placeholder { /* WebKit browsers */
+    color: #999;
+}
+
+.h-fill input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #999;
+}
+
+.h-fill input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #999;
+}
+
+.h-fill input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #999;
+}
+
+.h-fill-must {
+    position: relative;
+    top: 8px;
+    left: 15px;
+    margin-top: 8px;
+    color: #ea5504;
+}
+
+.h-fill li {
+    border-bottom: 1px solid #f3f1ee;
+    clear: both;
+}
+
+.h-fill div, .h-fill ul {
+    background-color: #fff;
+}
+
+.h-fill-getcode {
+    height: 40px;
+    padding: 0 10px;
+    line-height: 40px;
+    text-align: center;
+    border-left: 1px solid #f3f1ee;
+    border-right: 1px solid #f3f1ee;
+}
+
+/*和输入密码有关*/
+.h-repayGeneral {
+    width: 100%;
+    padding: 10px 15px;
+    background: #fff;
+
+    border: none;
+}
+
+.h-repayGeneral > div {
+    width: 100%;
+    overflow: hidden;
+}
+
+.h-repayGeneral > div > img {
+    width: 25px;
+    display: block;
+    float: left;
+    margin-top: 19.5px;
+}
+
+.keyboard {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background: #F3F1EE;
+    position: fixed;
+    bottom: -222px;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    z-index: 9999;
+}
+
+.keyboard tr {
+    width: 100%;
+    display: -moz-box;
+    display: -webkit-box;
+    margin-bottom: 1px;
+}
+
+.keyboard tr td {
+    padding: 15px 0;
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    display: block;
+    text-align: center;
+    background: #fff;
+    width: 33.3%;
+    font-size: 18px;
+}
+
+.keyboard tr td:first-child + td {
+    margin: 0 1px;
+}
+
+.h-setTips {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.h-setTips + .h-setTips {
+    color: #EA5504;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.h-set span {
+    float: left;
+    line-height: 30px;
+}
+
+.h-set ul {
+
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.h-set {
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.h-set ul li {
+    float: left;
+    margin: 0 auto;
+    width: 16.65%;
+    height: 40px;
+    font-size: 40px;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #F3F1EE;
+    border-left: none;
+}
+
+.h-set ul li:first-child {
+    border-left: 1px solid #F3F1EE;
+}
+
+.h-person-p {
+    margin: 20px 0;
+    font-size: 20px;
+    text-align: center;
+    color: #888;
+    background-color: #fff;
+    border: none;
+}
+
+.h-PU-show {
+
+    position: absolute;
+    display: none;
+    width: 96%;
+    left: 2%;
+    top: 20%;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 6px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    z-index: 9999;
+    -webkit-transition: all 0.2s;
+}
+
+.h-back-cover {
+    position: fixed;
+    display: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+    background-color: #000;
+    opacity: .5;
+    filter: alpha(opacity=50);
+    transition: opacity .15s linear;
+}
+
+.h-PU-show p {
+    margin: 5px auto;
+}
+
+.h-trash {
+    width: 22px;
+    margin-top: -6px;
+}
+
+/*PU金协议*/
+.h-gree-a{
+    margin: 5px 15px 0;
+
+}
+.h-gree-a p{
+    padding-bottom: 5px;
+}
+
+.h-gree-a  h3,.h-gree-c h3{
+    margin: 5px 0;
+    text-align: center;
+}
+.h-gree-table{
+    width: 100%;
+    margin: 5px 0;
+    border: 1px solid #000;
+    text-align: center;
+}
+.h-gree-table tr,.h-gree-table td,.h-gree-table th{
+    border: 1px solid #000;
+}
+.h-text-right{
+    text-align: right!important;
+}
+/*PU币充值*/
+.h-PuTop header {
+    margin-top: 5px;
+}
+
+.h-Pu-input {
+    height: 40px;
+    margin-top: 5px;
+    padding: 0 15px;
+    line-height: 40px;
+    background: #fff;
+}
+
+.h-Pu-input > input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+}
+
+.h-Pu-input > input::-webkit-input-placeholder { /* WebKit browsers */
+    color: #ccc;
+}
+
+.h-Pu-input > input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #ccc;
+}
+
+.h-Pu-input > input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #ccc;
+}
+
+.h-Pu-input > input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #ccc;
+}
+
+.h-PuTop-list {
+    height: 100%;
+    margin-top: 10px;
+    padding: 0 15px;
+    background: #fff;
+}
+
+.h-PuTop-list li {
+    width: 48%;
+    height: 40px;
+    float: left;
+    margin-top: 10px;
+    padding-left: 20%;
+    color: #ccc;
+    line-height: 40px;
+    background: #FFF url("../img/pubi.png") no-repeat 20%;
+    background-size: 20px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.h-PuTop-list li:nth-child(odd) {
+    margin-right: 4%;
+}
+
+.h-Pu-more {
+    width: 100%;
+    height: 45px;
+    margin: 10px 0;
+    background: #fff;
+}
+
+.h-Pu-more > input {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.h-Pu-more > input::-webkit-input-placeholder { /* WebKit browsers */
+    color: #ccc;
+    text-align: center;
+}
+
+.h-Pu-more > input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #ccc;
+    text-align: center;
+}
+
+.h-Pu-more > input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #ccc;
+    text-align: center;
+}
+
+.h-Pu-more > input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #ccc;
+    text-align: center;
+}
+
+.h-PuUp-btn {
+    margin: 15px 0;
+    padding: 15px 0;
+}
+
+.h-PuUp-btn > div {
+    width: 48%;
+    height: 45px;
+    float: left;
+    line-height: 45px;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.h-PuUp-btn > div:nth-child(1) {
+    background: #47ba7c;
+    margin-right: 4%;
+}
+
+.h-PuUp-btn > div:nth-child(2) {
+    background: #e47607;
+}
+
+.h-PuUp-on {
+    border: 1px solid #ea5504 !important;
+    color: #ea5504 !important;
+}
+
+/*PU币明细*/
+.h-detail {
+}
+
+.h-detail-header {
+    height: 100%;
+    background: #fff;
+}
+
+.h-detail-header > p {
+    padding-top: 30px;
+}
+
+.h-detail-header > p, .h-detail-header > h1 {
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.h-detail-header > .h-pu-red {
+    margin: 0 auto;
+}
+
+.h-detail-btn {
+    margin: 20px 0;
+}
+
+.h-detail-btn > div {
+    width: 30%;
+    height: 40px;
+    float: left;
+    color: #fff;
+    font-size: 18px;
+    line-height: 40px;
+    text-align: center;
+
+    border-radius: 5px;
+}
+
+.h-detail-btn > div:nth-child(1) {
+    margin: 0 4% 0 18%;
+
+    background: #dc4b4b;
+
+}
+
+.h-detail-btn > div:nth-child(2) {
+    background: #4bb8dc;
+}
+
+.h-detail-pu {
+    margin-top: 10px;
+}
+
+.h-detail-pu > header {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+}
+
+.h-detail-pu > header > div {
+    height: 40px;
+    float: left;
+    padding: 0 15px;
+    line-height: 40px;
+}
+
+.h-detail-pu > header > div:nth-child(1) {
+    width: 70%;
+
+}
+
+.h-detail-pu > header > div:nth-child(2) {
+    width: 30%;
+    text-align: right;
+}
+
+.h-detail-ul {
+    background: #fff;
+}
+
+.h-detail-ul > li {
+    display: flex;
+    height: 50px;
+    padding: 0 15px;
+    line-height: 50px;
+    overflow: hidden;
+}
+
+.h-detail-ul > li > div {
+    padding-right: 5px;
+}
+
+.h-detail-ul > li > div:nth-child(1) {
+    flex: 2;
+}
+
+.h-detail-ul > li > div:nth-child(2) {
+    flex: 1;
+    text-align: right;
+}
+
+.h-detail-ul > li > div:nth-child(3) {
+    flex: 1;
+    height: 30px;
+    margin-top: 10px;
+    padding-right: 0;
+    line-height: 30px;
+    text-align: center;
+    color: #dc4b4b;
+    border: 1px solid #9d9d9d;
+    border-radius: 5px;
+}
+/*loading 样式*/
+.h-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    opacity: 0.3;
+    z-index: 99;
+}
+.h-loading {
+    position: fixed;
+    top: 30%;
+    left: 20%;
+    width: 60%;
+    z-index: 100;
+}
+.h-animate {
+    width: 188px;
+    height: 300px;
+    margin: 0 auto;
+    background: url("../img/gif.png") repeat-y;
+    -webkit-animation: standby 0.8s steps(8) infinite;
+    animation: standby 0.8s steps(8) infinite;
+}
+@-webkit-keyframes standby {
+    from {
+        background-position: 0 0px;
+    }
+    to {
+        background-position: -1504px 0px;
+    }
+}
+
+
+/*公用样式*/
+/*公用样式*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    list-style: none;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    max-width: 640px;
+    margin: 0 auto;
+    font-size: 16px;
+    color: #3e3e3e;
+}
+
+img {
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+}
+
+button, input, textarea, select {
+    outline: medium;
+    box-shadow: none;
+}
+
+i, em {
+    font-style: normal;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+    display: none !important;
+}
+
+ng\:form {
+    display: block;
+}
+
+.ng-animate-start {
+    clip: rect(0, auto, auto, 0);
+    -ms-zoom: 1.0001;
+}
+
+.ng-animate-active {
+    clip: rect(-1px, auto, auto, 0);
+    -ms-zoom: 1;
+}
+
+/*公用样式 END*/
+.bgColor {
+    background: #F3F1EE;
+}
+
+.w-head {
+    width: 90%;
+    height: 40px;
+    padding: 0 5%;
+    text-align: center;
+    line-height: 40px;
+    background: #fff;
+    position: relative;
+}
+
+.w-head img {
+    position: absolute;
+    height: 15px;
+    left: 5%;
+    top: 12.5px
+}
+
+.w-general {
+    width: 90%;
+    padding: 15px 5%;
+    background: #fff;
+}
+
+.w-repay {
+    margin-top: 7px;
+}
+
+.w-repay p span {
+    color: #EA5504;
+    float: right;
+}
+
+.w-repay p:first-child {
+    margin-bottom: 20px;
+}
+
+.w-segment {
+    width: 100%;
+    height: 15px;
+    background: #f3f1ee;
+}
+
+img + .w-segment {
+    height: 7px;
+}
+
+.w-input input {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border: 1px solid #F3F1EE;
+    text-align: center;
+    color: #888;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    outline: none;
+    box-shadow: none;
+    font-size: 14px;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.w-input button {
+    width: 100%;
+    height: 40px;
+    border: none;
+    background: #EA5504;
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.w-tap {
+    width: 90%;
+    padding: 0px 5%;
+    line-height: 40px;
+    background: #f3e9bf;
+}
+
+.w-payType {
+    width: 90%;
+    height: auto;
+    overflow: hidden;
+    padding: 0px 5%;
+    background: #fff;
+    margin-top: 15px;
+}
+
+.w-payType li {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0;
+}
+
+.w-payType li img {
+    float: left;
+    height: 55px;
+}
+
+.w-payType li span {
+    display: block;
+    float: left;
+    line-height: 55px;
+    margin-left: 15px;
+}
+
+.w-payType li input {
+    float: right;
+    width: 15px;
+    height: 15px;
+    margin-top: 20px;
+}
+
+.w-payType li:last-child {
+    border: none;
+}
+
+.w-payType li div {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    float: right;
+    margin-top: 15px;
+}
+
+.w-payType li div img {
+    width: 20px;
+    height: 20px;
+    display: none;
+}
+
+
+
+.w-payBtn {
+    width: 90%;
+    height: 40px;
+    border-radius: 5px;
+    background: #EA5504;
+    border: none;
+    margin-left: 5%;
+    color: #fff;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+.w-successImg {
+    width: 40%;
+    display: block;
+    margin: 0% auto;
+    margin-top: 30%;
+    margin-bottom: 5%;
+}
+
+.w-successImg + p, .w-successImg + p + p {
+    text-align: center;
+}
+
+.w-successImg + p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.w-successImg + p + p a {
+    color: #EA5504;
+}
+
+.w-puOperat {
+    overflow: hidden;
+    position: relative;
+    background: #F3F1EE;
+    padding: 20px 0;
+}
+
+.w-circle {
+    width: 230px;
+    height: 230px;
+    background: #EA5504;
+    margin: 0 auto;
+    border-radius: 50%;
+    position: relative;
+}
+
+.w-pTop, .w-pTop div, .w-pBottom, .w-pBottom div {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+}
+
+.w-pTop, .w-pTop div {
+    clip: rect(0, auto, 115px, 0);
+    transform: rotateZ(50deg);
+}
+
+.w-pBottom, .w-pBottom div {
+    clip: rect(115px, auto, auto, 0);
+}
+
+#ptop {
+    background: #ffd5d5;
+}
+
+#pbottom {
+    background: #ffd5d5;
+}
+
+.w-limitInfo {
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-align: center;
+    font-size: 16px;
+    z-index: 100;
+}
+
+.w-limitInfo p {
+    margin-bottom: 10px;
+}
+
+.w-limitInfo p:first-child {
+    margin-top: 20px;
+}
+
+.w-limitInfo b {
+    color: #EA5504;
+    font-size: 25px;
+}
+
+.w-limitInfo span {
+    color: #888;
+}
+
+.w-limitInfo a {
+    width: 25%;
+    display: block;
+    padding: 3px 0;
+    border: 1px solid #EA5504;
+    text-align: center;
+    color: #EA5504;
+    border-radius: 12px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.w-limlitLink {
+    width: 100%;
+    display: table;
+    overflow: hidden;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.w-limlitLink a {
+    display: inline-block;
+    width: 30%;
+    height: 35px;
+    border-radius: 20px;
+    background: #EA5504;
+    color: #fff;
+    line-height: 35px;
+    margin: 0 3%;
+}
+
+.w-limlitLink a:first-child {
+    background: #fff;
+    color: #EA5504;
+}
+
+.w-indexGeneral {
+    width: 90%;
+    overflow: hidden;
+    padding: 15px 5%;
+
+}
+
+.w-indexGeneral span {
+    font-size: 14px;
+    color: #888;
+}
+
+.w-indexGeneral i {
+    float: right;
+}
+
+.w-indexGeneral i:after {
+    content: ">";
+    margin-left: 5px;
+}
+
+.w-puFooter{
+	width: 100%;
+	height:55px;
+	max-width: 640px;
+	bottom: 0;
+	border-top: 1px solid #F3F1EE;
+	display: box;
+	display: -webkit-box;
+}
+.w-puFooter li{
+	box-flex:1;
+	-webkit-box-flex: 1;
+	overflow: hidden;
+	text-align: center;
+	font-size: 14px;
+	color: #888;
+}
+
+.w-puFooter li img {
+    display: block;
+    height: 30px;
+    margin: 0px auto;
+    margin-top: 5px;
+}
+
+.w-puFooter li.w-select {
+    color: #EA5504;
+}
+
+.w-limitDiv {
+    width: 100%;
+    overflow: hidden;
+    display: -moz-box;
+    display: -webkit-box;
+}
+
+.w-limitDiv div {
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.w-limitDiv div + div {
+    border-left: 1px solid #ddd;
+}
+
+.w-limitDiv div p + p {
+    color: #EA5504;
+    margin-top: 5px;
+}
+
+.w-limitGeneral {
+    width: 90%;
+    overflow: hidden;
+    padding: 10px 5%;
+    background: #fff;
+    margin-bottom: 1px;
+}
+
+.w-limitGeneral span {
+    float: left;
+}
+
+.w-limitGeneral span i {
+    display: block;
+}
+
+.w-limitGeneral span i + i {
+    color: #888;
+    margin-top: 5px;
+}
+
+.w-limitGeneral > i {
+    float: right;
+    line-height: 37px;
+    color: #EA5504;
+}
+
+.w-month b {
+    line-height: 37px;
+}
+
+.w-month {
+    margin-top: 15px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.w-repayGeneral {
+    width: 90%;
+    padding: 10px 5%;
+    background: #fff;
+    margin-top: 1px;
+    margin-bottom: 16px;
+}
+
+.w-repayGeneral > div {
+    width: 100%;
+    overflow: hidden;
+}
+
+.w-repayGeneral > div > img {
+    width: 25px;
+    display: block;
+    float: left;
+    margin-top: 19.5px;
+    object-fit: cover;
+    -webkit-object-fit: cover;
+}
+
+.w-bank {
+    width: auto;
+    padding: 10px 5%;
+    overflow: hidden;
+    float: left;
+    background: #cb566a;
+    border-radius: 5px;
+    margin-left: 1%;
+}
+
+.w-bank img {
+    width: 20px;
+    float: left;
+    margin-top: -2px;
+}
+
+.w-bank p {
+    overflow: hidden;
+    color: #fff;
+}
+
+.w-bank p span {
+    float: left;
+    margin-left: 10px;
+}
+
+.w-bank p + p {
+    margin-top: 10px;
+}
+
+.w-bank p i {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background: #fff;
+    float: left;
+    opacity: 0.7;
+    margin-right: 3px;
+    margin-top: 6px;
+}
+
+.w-bank p em {
+    float: left;
+}
+
+.w-bankInfo {
+    float: right;
+    max-width: 35%;
+    height: 64px;
+    font-size: 12px;
+    position: relative;
+}
+
+.w-bankInfo p:first-child:before {
+    content: "借款: ";
+    display: block;
+}
+
+.w-bankInfo p:last-child:before {
+    content: "应还: ";
+    display: block;
+}
+
+.w-bankInfo p:last-child {
+    position: absolute;
+    margin-top: 0px;
+    color: #EA5504;
+}
+
+.w-sum {
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.w-sum span:last-child {
+    float: right;
+}
+
+.w-sum span:last-child:after {
+    content: ">";
+    color: #EA5504;
+    margin-left: 5px;
+}
+
+.w-wallet {
+    float: left;
+    margin-top: 5px;
+}
+
+.w-wallet img {
+    height: 55px;
+}
+
+.w-walletInfo {
+    float: right;
+    margin-top: 13px;
+}
+
+.w-walletInfo p:first-child:before {
+    content: "借款: ";
+}
+
+.w-walletInfo p:last-child:before {
+    content: "应还: ";
+}
+
+.w-walletInfo p:last-child {
+    margin-top: 5px;
+    color: #EA5504;
+}
+
+.w-proImg {
+    float: left;
+    width: 51%;
+    margin-left: 2%;
+}
+
+.w-proImg img {
+    width: 40%;
+    float: left;
+}
+
+.w-proImg p {
+    float: left;
+    width: 58%;
+    overflow: hidden;
+    margin-left: 2%;
+    margin-top: 5px;
+}
+
+.w-proInfo {
+    font-size: 14px;
+    float: right;
+}
+
+.w-proInfo p:first-child:before {
+    content: "借款: ";
+}
+
+.w-proInfo p:last-child:before {
+    content: "应还: ";
+}
+
+.w-proInfo p:last-child {
+    margin-top: 5px;
+    color: #EA5504;
+}
+
+.w-repayNext {
+    width: 90%;
+    overflow: hidden;
+    padding: 10px 5%;
+    background: #fff;
+    position: fixed;
+    bottom: 0;
+}
+
+.w-repayNext a {
+    display: block;
+    width: 46%;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 5px;
+    float: left;
+    border: 1px solid #ddd;
+    color: #3e3e3e;
+}
+
+.w-repayNext a span {
+    color: #EA5504;
+}
+
+.w-repayNext a + a {
+    float: right;
+}
+
+.w-shouldRepay {
+    padding: 15px 5%;
+}
+
+.w-shouldRepay > span {
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    color: #EA5504;
+    margin-top: 10px;
+}
+
+.w-shouldGeneral {
+    margin-bottom: 0;
+}
+
+.w-goRepay {
+    width: 90%;
+    display: block;
+    padding: 10px 0;
+    background: #EA5504;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.w-bagGeneral {
+    width: 90%;
+    overflow: hidden;
+    padding: 0px 5%;
+    margin-top: 10px;
+    position: relative;
+    background-color: #fff;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.w-bagGeneral > img {
+    position: absolute;
+    height: 100%;
+    right: 5%;
+    z-index: 0;
+}
+
+.w-bagGeneral .w-generalMonth {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: lightblue;
+    color: #fff;
+    margin: 10px 0;
+    position: relative;
+}
+
+.w-bagGeneral .w-generalMonth span {
+    font-size: 30px;
+    line-height: 58px;
+}
+
+.w-bagGeneral .w-generalMonth i {
+    font-size: 10px;
+    line-height: 58px;
+}
+
+.w-bagGeneral > div {
+    float: left;
+    width: 30%;
+    text-align: center;
+}
+
+.w-bagGeneral > div p:first-child {
+    margin: 15px 0 5px 0;
+}
+
+.w-bagGeneral > div p + p {
+    color: #EA5504;
+}
+
+.w-bagGeneral > p {
+    float: right;
+    width: 30%;
+    text-align: right;
+    position: relative;
+    z-index: 9;
+}
+
+.w-bagGeneral > p img {
+    width: 20%;
+    margin: 10px 0 5px 0;
+}
+
+.w-bagGeneral > p button {
+    width: 70%;
+    overflow: hidden;
+    padding: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    display: block;
+    background: none;
+    color: #888;
+    margin-left: 30%;
+    display: none;
+}
+
+.w-bagGeneral > p button.w-select {
+    background: #EA5504;
+    color: #fff;
+    border: none;
+}
+
+#getImg {
+    position: absolute;
+    height: 100%;
+}
+
+.w-transparent {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    top: 0;
+    color: #666;
+    display: none;
+    z-index: 99;
+}
+
+.w-transparent > div {
+    width: 70%;
+    background: #fff;
+    border-radius: 5px;
+    margin: 60% auto;
+}
+
+.w-transparent > div i {
+    display: block;
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 1px solid #F3F1EE;
+}
+
+.w-transparent > div p {
+    width: 100%;
+    overflow: hidden;
+    display: -moz-box;
+    display: -webkit-box;
+}
+
+.w-transparent > div p span {
+    width: 50%;
+    display: block;
+    padding: 15px 0;
+    text-align: center;
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.w-transparent > div p span:first-child {
+    border-right: 1px solid #F3F1EE;
+}
+
+.w-borrowing {
+    overflow: hidden;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.w-borrowing span {
+    width: 23%;
+    line-height: 39px;
+    float: left;
+}
+
+.w-borrowing input[type=text] {
+    width: 75%;
+    float: right;
+    padding: 10px 0;
+    text-align: center;
+    color: #888;
+    border-radius: 3px;
+    border: 1px solid #F3F1EE;
+    outline: none;
+}
+
+.w-borrowing .w-simulate, .w-bind .w-simulate {
+    width: 75%;
+    height: 37px;
+    border-radius: 3px;
+    border: 1px solid #F3F1EE;
+    float: right;
+    position: relative;
+    color: #888;
+    line-height: 37px;
+    text-align: center;
+}
+
+.w-bind .w-simulate {
+    width: 68%;
+}
+
+.w-simulate strong {
+    font-weight: 100;
+    font-size: 14px;
+}
+
+.w-simulate select {
+    width: 100%;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    opacity: 0;
+}
+
+.w-borrowingBorder {
+    border-top: 1px solid #F3F1EE;
+    padding: 15px 5%;
+}
+
+.w-borrowing select {
+    padding-left: 5%;
+}
+
+.w-testing input[type=text] {
+    width: 40%;
+    float: left;
+}
+
+.w-testing button {
+    width: 35%;
+    float: right;
+    padding: 10px 0;
+    text-align: center;
+    color: #888;
+    border-radius: 3px;
+    border: 1px solid #F3F1EE;
+    background: none;
+    color: #EA5504;
+}
+
+.w-borrowingBorder + div {
+    margin-top: 15px;
+}
+
+.w-borrowing i {
+    font-size: 14px;
+    float: left;
+    color: #EA5504;
+    margin-left: 5px;
+}
+
+.w-borrowing input[type=checkbox] {
+    float: left;
+}
+
+.w-borrowing i:before {
+    content: "同意";
+    color: #888;
+}
+
+.w-submit {
+    width: 90%;
+    display: block;
+    padding: 10px 0;
+    border-radius: 3px;
+    color: #fff;
+    background: #EA5504;
+    margin-left: 5%;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 40px;
+    border: none;
+}
+
+.w-borderBottom {
+    border-bottom: 1px solid #F3F1EE;
+}
+
+.w-applySuccessImg {
+    width: 30%;
+    display: block;
+    margin: 0% auto;
+    margin-top: 30%;
+}
+
+.w-applyP {
+    text-align: center;
+    margin-top: 10PX;
+}
+
+.w-applyP a {
+    color: #EA5504;
+}
+
+.w-applySuccessImg + .w-applyP {
+    font-size: 20px;
+}
+
+.w-viewBtn {
+    display: block;
+    width: 40%;
+    padding: 10px 0;
+    text-align: center;
+    border: 1px solid #F3F1EE;
+    border-radius: 15px;
+    color: #888;
+    margin: 20px auto;
+}
+
+.w-tips div {
+    margin-top: 40%;
+}
+
+.w-tips i {
+    border-bottom: none !important;
+}
+
+.w-tips div p span + span {
+    color: #EA5504;
+}
+
+.w-tips img {
+    display: block;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.w-tips div p {
+    border-top: 1px solid #F3F1EE;
+}
+
+.w-bind {
+    margin-bottom: 0;
+    overflow: hidden;
+}
+
+.w-idArea {
+    width: 55% !important;
+    height: 80px;
+    border: 1px solid #ccc;
+    float: left;
+    text-align: center;
+    line-height: 80px;
+    color: #ccc;
+    font-size: 40px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.w-idArea + P {
+    float: right;
+    width: 38%;
+    color: #ccc;
+    text-align: justify;
+    text-justify: inherit;
+    font-size: 14px;
+}
+
+.w-idArea input {
+    opacity: 0;
+    position: absolute;
+    left: 0px;
+    top: 40px;
+    z-index: 99;
+}
+
+.w-idArea img {
+    margin-top: 0 !important;
+    width: 100% !important;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 98;
+}
+
+.w-bind input {
+    font-size: 16px;
+    border: none;
+}
+
+.w-b-testing input {
+    width: 30% !important;
+    padding: 10px 0;
+}
+
+.w-bind button {
+    width: auto;
+    float: right;
+    padding: 10px 0;
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: #888;
+}
+
+.w-bind select {
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    color: #888;
+}
+
+.w-bind i {
+    color: #888;
+}
+
+.w-bind i:before {
+    content: "*";
+    color: #EA5504;
+    margin-right: 2px;
+}
+
+.w-setTips {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.w-setTips + .w-setTips {
+    color: #EA5504;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.w-set span {
+    float: left;
+    line-height: 30px;
+}
+
+.w-set ul {
+    float: left;
+    width: auto;
+    overflow: hidden;
+    position: relative;
+    margin-left: 8%;
+}
+
+.w-set {
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.w-set ul li {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #F3F1EE;
+    text-align: center;
+    line-height: 30px;
+    border-left: none;
+    float: left;
+    font-size: 25px;
+}
+
+.w-set ul li:first-child {
+    border-left: 1px solid #F3F1EE;
+}
+
+.keyboard {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background: #F3F1EE;
+    position: fixed;
+    bottom: -222px;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+}
+
+.keyboard tr {
+    width: 100%;
+    display: -moz-box;
+    display: -webkit-box;
+    margin-bottom: 1px;
+}
+
+.keyboard tr td {
+    padding: 15px 0;
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    display: block;
+    text-align: center;
+    background: #fff;
+    width: 33.3%;
+    font-size: 18px;
+}
+
+.keyboard tr td:first-child + td {
+    margin: 0 1px;
+}
+
+.w-changeGeneral {
+    width: 90%;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto;
+    border-bottom: 1px solid #F3F1EE;
+}
+
+.w-changeGeneral input {
+    border: none;
+    font-size: 16px;
+    color: #888;
+}
+
+.w-changeGeneral button {
+    padding: 5px 10px;
+    float: right;
+    background: #fff;
+    color: #EA5504;
+    border: 1px solid #F3F1EE;
+    margin-top: 11.5px;
+}
+
+.w-read {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.w-read input {
+    float: left;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ccc;
+    margin-top: 3px;
+}
+
+.w-read span {
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.w-read span a {
+    color: #EA5504;
+}
+
+.w-repayUl {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.w-repayUl li {
+    width: 90%;
+    padding: 10px 5%;
+    overflow: hidden;
+}
+
+.w-repayUl li.w-repayLi {
+    background: #fff;
+    border-bottom: 1px solid #F3F1EE;
+}
+
+.w-repayUl li img {
+    display: block;
+    float: left;
+    width: 8%;
+}
+
+.w-repayUl li div {
+    width: 89%;
+    float: right;
+}
+
+.w-repayUl li p {
+    overflow: hidden;
+    color: #888;
+}
+
+.w-repayUl li p span + span {
+    float: right;
+}
+
+.w-repayUl li p + p {
+    font-size: 14px;
+    color: #888;
+    margin-top: 10px;
+}
+
+.w-message {
+    padding: 10px 20px;
+}
+
+@media only screen and (min-width: 375px) {
+    .w-bank {
+        margin-left: 5%;
+    }
+
+    .w-bankInfo {
+        font-size: 14px;
+    }
+
+    .w-proInfo {
+        font-size: 14px;
+    }
+
+    .w-bagGeneral .w-generalMonth {
+        width: 80px;
+        height: 80px;
+    }
+
+    .w-bagGeneral .w-generalMonth span {
+        line-height: 80px;
+    }
+
+    .w-bagGeneral .w-generalMonth i {
+        line-height: 80px;
+    }
+}
+
+/*公用样式*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    list-style: none;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+button, input, textarea {
+    outline: medium;
+}
+
+i, em {
+    font-style: normal;
+}
+
+/*公用样式 END*/
+.header {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    background: #fff;
+    position: relative;
+}
+
+.header img {
+    height: 30%;
+    position: absolute;
+    top: 35%;
+}
+
+.header img {
+    left: 5%;
+}
+
+/*客服*/
+.L-custom div {
+    width: 25%;
+
+}
+
+.L-custom {
+    margin-top: 1px;
+}
+
+.L-custom span {
+    margin-left: 5%;
+}
+
+.L-APPuse {
+    float: left;
+    /*margin-left: 20px;*/
+    text-align: center;
+    border-right: 1px solid #F3F1EE;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.L-resetPassword {
+    float: left;
+    /*margin-left: 30px;*/
+    text-align: center;
+    border-right: 1px solid #F3F1EE;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.L-moneyCustom {
+    float: right;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.L-activityCustom {
+    float: left;
+    /*margin-left: 20px;*/
+    text-align: center;
+    border-right: 1px solid #F3F1EE;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.L-schoolService {
+    float: left;
+    /*margin-left: 30px;*/
+    text-align: center;
+    border-right: 1px solid #F3F1EE;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.L-bugAdvice {
+    float: right;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.L-APPuse2 {
+    float: left;
+    /*margin-left: 20px;*/
+    text-align: center;
+    border-right: 1px solid #F3F1EE;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.L-PUBank {
+    float: left;
+    /*margin-left: 30px;*/
+    text-align: center;
+    border-right: 1px solid #F3F1EE;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.L-workCustom {
+    float: right;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.L-onlineCustomTitle {
+    margin-left: 5%;
+}
+
+/*.L-onlineCustom{
+	margin-top: 5px;
+}*/
+.L-onlineCustom li:nth-child(2) {
+    margin-top: 0px;
+}
+
+.L-onlineCustom1 {
+    border-top: 1px solid #F3F1EE;
+    border-bottom: 1px solid #F3F1EE;
+}
+
+.L-custom li {
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+    font-size: 12px;
+    color: #3E3E3E;
+    margin-top: 15px;
+}
+
+.L-custom .L-onlineCustomTitle {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.L-custom img {
+    width: 40%;
+}
+
+.L-custom li:nth-child(1) {
+    margin-top: 1px;
+}
+
+.L-custom li:nth-child(2) {
+    border-bottom: 1px solid #F3F1EE;
+    /*margin-top: 15px;*/
+}
+
+.L-custom li:nth-child(3) {
+    margin-top: 0px;
+}
+
+.L-custom li:nth-child(5) {
+    margin-top: 0px;
+}
+
+.L-custom li > div {
+    /*border-top: 1px solid #F3F1EE;*/
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.L-custom p {
+    color: #888888;
+    margin-top: 2px;
+}
+
+.L-customTelphone span {
+    color: #888888;
+}
+
+.L-customTelphone i {
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.L-customTelphone li {
+    /*line-height: 20px;*/
+    border-top: 1px solid #F3F1EE;
+    line-height: 30px;
+}
+
+.L-customTelphone li:nth-child(2) {
+    margin-top: 0px;
+    border-bottom: hidden;
+}
+
+/*PU红包*/
+.PUheader p {
+    font-size: 12px;
+}
+
+.PUheader {
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    position: relative;
+    height: 40px;
+}
+
+.PUheader img {
+    left: 5%;
+    height: 40%;
+    position: absolute;
+    top: 35%;
+}
+
+.L-PUbanner {
+    position: relative;
+}
+
+.L-PUbanner img:first-child {
+    /*margin-top: 10px;*/
+    width: 100%;
+}
+
+.L-PUbanner img:last-child {
+    width: 20%;
+    position: absolute;
+    left: 40%;
+    bottom: -20%;
+}
+
+.L-hongbaoFrom {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.L-hongbaoFrom p:nth-child(1) {
+    font-size: 14px;
+}
+
+.L-hongbaoFrom p:nth-child(2) {
+    font-size: 14px;
+    color: #888888;
+    margin-top: 5px;
+}
+
+.L-hongbaoFrom p:nth-child(3) {
+    font-size: 35px;
+    color: #ea5504;
+    margin-top: 15px;
+}
+
+.L-hongbaoFrom p:nth-child(4) {
+    font-size: 14px;
+    margin-top: 25px;
+}
+
+.L-hongbaoFrom p:nth-child(5) {
+    font-size: 14px;
+    color: #888888;
+    margin-top: 5px;
+}
+
+.L-shou {
+    background-color: #fff;
+    margin-top: 30px;
+    padding: 10px;
+}
+
+.L-Photo {
+    float: left;
+    margin-left: 5%;
+    width: 10%;
+}
+
+.L-shou span {
+    float: left;
+    margin-left: 10px;
+}
+
+.L-shou i {
+    float: right;
+    margin-right: 5%;
+    font-size: 14px;
+}
+
+.L-PUsex {
+    margin-left: 5px;
+}
+
+.L-detaileback p:last-child {
+    margin-left: 18%;
+    color: #888888;
+    font-size: 12px;
+}
+
+/*PU红包-最佳手气*/
+.L-gradMemo {
+    background-color: #edeceb;
+    color: #888888;
+    margin-top: 50px;
+    padding: 2px;
+    width: 100%;
+}
+
+.L-gradremark {
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+.L-shou2 {
+    margin-top: 10px;
+}
+
+.L-shou2 span {
+    float: left;
+    margin-left: 10px;
+}
+
+.L-shou2 i {
+    float: right;
+    margin-right: 5%;
+}
+
+.L-shou2 {
+    background-color: #fff;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/*.L-shou2 ul li{
+	line-height: 20px;
+}*/
+.L-shou2 li:nth-child(1) {
+    margin-top: 1px;
+}
+
+.L-shou2 li:nth-child(2) {
+    margin-top: 20px;
+}
+
+.L-shou2 li:nth-child(3) {
+    margin-top: 20px;
+}
+
+.L-shou2 ul li {
+    border-bottom: 1px solid #F3F1EE;
+    line-height: 20px;
+}
+
+.L-kingpic img {
+    width: 18px;
+    /*margin-left: -10px;*/
+    /*margin-top: -2px;*/
+    position: absolute;
+    right: 80px;
+}
+
+.L-kingmemo {
+    font-size: 12px;
+    color: #f69d08;
+}
+
+.L-kingpic {
+    width: 30%;
+}
+
+/*发红包转钱*/
+.L-paySum {
+    background-color: white;
+    margin-top: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 10px;
+}
+
+.L-payMemo {
+    background-color: white;
+    margin-top: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 10px;
+}
+
+.L-paySum span {
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.L-paySum input {
+    margin-left: 10px;
+    height: 45px;
+    border: hidden;
+    width: 65%;
+    font-size: 16px;
+}
+
+.L-inbag button {
+    display: block;
+    width: 90%;
+    height: 39px;
+    border-radius: 10px;
+    background: #EA5504;
+    border: none;
+    color: #fff;
+    margin-left: 5%;
+    margin-top: 40px;
+    font-size: 18px;
+}
+
+.L-inbag {
+    height: 45px;
+}
+
+.L-payMemo input {
+    margin-left: 15px;
+    height: 45px;
+    width: 95%;
+    border: hidden;
+    font-size: 16px;
+}
+
+.L-payMoney {
+    text-align: center;
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: 35px;
+}
+
+.L-bagmemo {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #888888;
+}
+
+/*红包不超过200*/
+#L-bgPU {
+    display: none;
+    position: absolute;
+    top: 6%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 1001;
+    -moz-opacity: 0.7;
+    /*opacity:.70;*/
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+
+#L-memo {
+    display: none;
+    position: absolute;
+    top: 33px;
+    left: 0%;
+    width: 100%;
+    background-color: #f2a77e;
+    text-align: center;
+    color: #ea5504;
+    z-index: 1002;
+    overflow: auto;
+    height: 20px;
+    font-size: 12px;
+    padding-top: 2px;
+}
+
+/*红包*/
+.header span {
+    float: right;
+    font-size: 10px;
+    margin-right: 5%;
+}
+
+.L-geren button {
+    display: block;
+    width: 55%;
+    height: 45px;
+    border-radius: 10px;
+    background: #EA5504;
+    border: none;
+    color: #fff;
+    margin-left: 20%;
+    margin-top: 40px;
+    font-size: 18px;
+}
+
+.L-qunfa button {
+    display: block;
+    width: 55%;
+    height: 45px;
+    border-radius: 10px;
+    background: #EA5504;
+    border: none;
+    color: #fff;
+    margin-left: 20%;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+/*确认红包*/
+.L-confirmSum {
+    height: 80px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: -8px;
+}
+
+.L-confirmSum p:nth-child(1) {
+    margin-top: 20px;
+}
+
+.L-confirmSum p:nth-child(2) {
+    margin-top: 10px;
+    font-size: 25px;
+    color: #ea5504;
+}
+
+.L-getMoney li {
+    line-height: 50px;
+    background-color: #ffffff;
+    border-top: solid 1px #F3F1EE;
+}
+
+.L-getMoney li:nth-child(1) {
+    background-color: #ffffff;
+    color: #ea5504;
+}
+
+.L-getMoney li:nth-child(2) {
+    background-color: #F3F1EE;
+}
+
+.L-getMoney li:nth-child(1) span:nth-child(2) {
+    float: right;
+    margin-right: 5%;
+}
+
+.L-getMoney li span {
+    margin-left: 5%;
+}
+
+.L-getMoney li i {
+    float: right;
+    margin-right: 5%;
+    color: #888888;
+}
+
+/*我发出的红包*/
+.header i {
+    margin-left: 20px;
+    color: #ea5504;
+}
+
+.L-MyPhoto img {
+    width: 20%;
+    margin-left: 40%;
+    margin-top: 12%;
+}
+
+.L-hongbaoSend p:nth-child(1) {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.L-hongbaoSend p:nth-child(2) {
+    margin-top: 10px;
+    text-align: center;
+    color: #ea5504;
+    font-size: 35px;
+}
+
+.L-send {
+    margin-top: 10px;
+}
+
+.L-detailesend p:nth-child(1) span {
+    float: left;
+    margin-left: 10px;
+}
+
+.L-detailesend p:nth-child(2) span:nth-child(2) {
+    float: right;
+    margin-right: 6%;
+}
+
+.L-detailesend p:nth-child(2) span:nth-child(1) {
+    margin-left: 5px;
+}
+
+.L-send i {
+    float: right;
+    margin-right: 5%;
+}
+
+.L-send {
+    background-color: #fff;
+    margin-top: 10px;
+}
+
+.L-send ul li {
+    padding-top: 10px;
+    line-height: 20px;
+    padding-bottom: 10px;
+}
+
+.L-send ul li {
+    border-top: 1px solid #F3F1EE;
+}
+
+.L-detailesend p:last-child {
+    margin-left: 18%;
+    color: #888888;
+    font-size: 12px;
+}
+
+/*自助服务*/
+.L-modify {
+    background-color: #ffffff;
+}
+
+.L-modify div {
+    height: 40px;
+    border-top: solid 1px #F3F1EE;
+    padding-top: 20px;
+
+}
+
+.L-modify div span {
+    margin-left: 5%;
+}
+
+/*帮助*/
+.L-helpType{
+	width: 100%;
+	max-width: 630px;
+	height: auto;
+	overflow: hidden;
+	padding: 10px 5%;
+	background: #fff;
+	position: fixed;
+	bottom: 0;
+}
+.L-helpType button{
+	background-color: #fff;
+	width: 45%;
+	border-radius: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border: solid 1px #F3F1EE;
+}
+.L-helpType button:nth-child(2){
+	margin-left: 5%;
+}
+.mui-table-view li{
+	line-height: 30px;
+}
+.mui-table-view-cell:after{
+	background-color: #F3F1EE;
+	left: 0;
+}
+.mui-table-view:before{
+	background-color: #F3F1EE;
+}
+.mui-table-view:after{
+	background-color: #F3F1EE;
+}
+.mui-table-view-cell.mui-active{
+	background-color: #ea5504;
+	color: #ffffff;
+}
+.mui-collapse-content{
+	background-color: #f3f1ee;
+}
+.mui-table-view-cell.mui-collapse.mui-active>.mui-navigate-right:after, .mui-table-view-cell.mui-collapse.mui-active>.mui-push-right:after{
+    right: 15px;
+    content: '∨';
+    font-size: 12px;
+    color: #FFFFFF;
+}
+.mui-table-view-cell.mui-collapse>.mui-navigate-right:after, .mui-table-view-cell.mui-collapse>.mui-push-right:after{
+	content: '>';
+}
+
+/*填写信息*/
+.L-article input {
+    width: 50%;
+    margin-left: 5%;
+    height: 40px;
+    border: hidden;
+    font-size: 14px;
+}
+
+.L-article {
+    background-color: #ffffff;
+}
+
+.L-article span {
+    margin-left: 5%;
+    color: #ea5504;
+}
+
+.L-article i {
+    color: #888888;
+}
+
+/*苏州银行*/
+.bank-1 {
+    background-color: #98b538;
+}
+
+/*、招商银行*/
+.bank-17 {
+    background-color: #ca566b;
+}
+
+/*、工商银行*/
+.bank-6 {
+    background-color: #eb5c66;
+}
+
+/*、江苏银行*/
+.bank-2 {
+    background-color: #5b5f9d;
+}
+
+/*、交通银行*/
+.bank-3 {
+    background-color: #484a9c;
+}
+
+/*、中国银行*/
+.bank-4 {
+    background-color: #c4474b;
+}
+
+/*、农业银行*/
+.bank-5 {
+    background-color: #319581;
+}
+
+/*、北京银行*/
+.bank-7 {
+    background-color: #de3943;
+}
+
+/*、建设银行*/
+.bank-8 {
+    background-color: #315fa2;
+}
+
+/*、中信银行*/
+.bank-9 {
+    background-color: #dc303c;
+}
+
+/*、光大银行*/
+.bank-10 {
+    background-color: #d5c623;
+}
+
+/*、兴业银行*/
+.bank-11 {
+    background-color: #3f597d;
+}
+
+/*、民生银行*/
+.bank-12 {
+    background-color: #69ac7e;
+}
+
+/*、广发银行*/
+.bank-14 {
+    background-color: #ee4654;
+}
+
+/*、浦发银行*/
+.bank-15 {
+    background-color: #3176ab;
+}
+
+/*、上海银行*/
+.bank-16 {
+    background-color: #e4a400;
+}
+
+/*、平安银行*/
+.bank-13 {
+    background-color: #4daa54;
+}
+
+.bank-13 img {
+    border-radius: 0 !important;
+}
+

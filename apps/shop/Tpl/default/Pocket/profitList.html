@@ -1,0 +1,64 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Pocket/addProfit')}" class="btn_a"><span>添加利率</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>名称</th>
+                <th>3期利率</th>
+                <th>6期利率</th>
+                <th>9期利率</th>
+                <th>12期利率</th>
+                <th>15期利率</th>
+                <th>24期利率</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.interest.3}</td>
+                    <td>{$vo.interest.6}</td>
+                    <td>{$vo.interest.9}</td>
+                    <td>{$vo.interest.12}</td>
+                    <td>{$vo.interest.15}</td>
+                    <td>{$vo.interest.24}</td>
+                    <td>
+                        <a href="javascript:;" onclick="edit('{$vo['id']}')">查看完整利率信息</a>
+                        <a href="__URL__&act=addProfit&id={$vo.id}">修改</a>
+                        <a href="__URL__&act=delProfit&id={$vo.id}" onclick="return confirm('确认删除该组利率？')">删除</a>
+                        <!--<a href="__URL__&act=addStaging&gid={$vo.id}">添加口袋乐商品</a>-->
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Pocket/addProfit')}" class="btn_a"><span>添加利率</span></a>
+    </div>
+</div>
+<script>
+
+function edit(id)
+{
+    ui.box.load('__URL__&act=profitAll&id='+id,{title:'详情'});
+}
+</script>
+<include file="_footer" />

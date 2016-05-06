@@ -1,0 +1,73 @@
+<div class="form2" style='padding-bottom: 10px;'>
+ <form action='__URL__&act=index&cid=check' method="POST">
+    学校：<select name='school'>
+               <option value='0'>不限</option>
+               <volist name='slist' id='vo'>
+                   <option value='{$vo.id}'>{$vo.title}</option>
+               </volist>
+          </select>
+    <input type="submit" class="btn_b">
+ </form>
+    <br/>
+    <form action='__URL__&act=excelCheck' method="POST">
+        申请时间：<input size="20"  type='text' name='mon1' value=""> 至 <input size="20"  type='text' name='mon2' value="">格式2014-12-12
+        <input type="submit" value='excel导出'>
+    </form>
+</div>
+<div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>学校</th>
+                <th>活动名称</th>
+                <th>活动ID</th>
+                <th>活动时间</th>
+                <th>活动状态</th>
+                <th>发起人</th>
+                <th>状态</th>
+                <th>申请日期</th>
+                <th>审核人</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data['data']" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+              <td>{$vo.id}</td>
+                    <td>{$vo.sid}</td>
+                    <td><a href="{$vo.schoolUrl}" target="_blank">{$vo.eventName}</a></td>
+                    <td>{$vo.eventId}</td>
+                    <td>{$vo.sTime|date="Y-m-d H:i",###}至<br/>{$vo.eTime|date="Y-m-d H:i",###}</td>
+                    <td>
+                        <?php if($vo['school_audit'] == 0): ?>
+                        <span class="cBlue">待初级审核</span>
+                        <?php elseif($vo['school_audit'] == 1): ?>
+                        <span class="cRed">待终极审核</span>
+                        <?php elseif($vo['school_audit'] == 2): ?>
+                        <span class="cGreen">进行中...</span>
+                        <?php elseif($vo['school_audit'] == 3): ?>
+                        <span class="cRed">完结待审核</span>
+                        <?php elseif($vo['school_audit'] == 4): ?>
+                        <span class="cGreen">完结被驳回</span>
+                        <?php elseif($vo['school_audit'] == 5): ?>
+                        <span class="cGray2">已完结</span>
+                        <?php elseif($vo['school_audit'] == 6): ?>
+                        <span class="cGray2">活动被驳回</span>
+                        <?php endif;?>
+                    </td>
+                    <td>{$vo.uid}</td>
+                    <td>{$state[$vo['state']]}</td>        
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <td>{$vo.checker}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="detail({$vo.id});">查看</a>      
+                        <a href="javascript:void(0);" onclick="through({$vo.id});">通过</a>
+                        <a href="javascript:void(0);" onclick="reject({$vo.id});">驳回</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="../Public/js/jquery-2.1.1.min.js"></script>
+    <script src="../Public/js/bootstrap.min.js"></script>
+    <title>元宵节</title>
+    <style>
+        html {
+            font-size: 62.5%;
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+        img{max-width: 100%;height: auto}
+        a,
+        a:active,a:link,a:visited,a:hover {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: inherit;
+            border:none;
+            box-shadow:none;
+        }
+        .modal-dialog {
+            position: absolute;
+            width: auto;
+            margin: 10px;
+            bottom: 15%;
+        }
+        .question-index img{
+            position:fixed;
+            height:100%;
+            width: 100%;
+            z-index: 0;
+        }
+        .question-footer{
+            position: absolute;
+            width: 50%;
+            left: 25%;
+            bottom: 8%;
+            z-index: 1;
+        }
+        .question-button{
+            width: 100%;
+            height: 30px;
+            margin: 0 auto;
+            color: #000;
+            text-align: center;
+            line-height: 30px;
+            background-color: #fbd437;
+            box-shadow: 2px 2px 5px #9d9d9d;
+            border-radius: 3px;
+        }
+        .rule{
+            display: block;
+            margin: 0 auto;
+            padding-top: 10px;
+            text-decoration:  underline;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="question-index">
+    <img class="img-responsive" src="../Public/images/Asking/index.png">
+</div>
+<footer class="question-footer">
+<div class="question-button"><a href="question.html">开始游戏</a></div>
+<a class="rule">活动规则</a>
+</footer>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <img class="img-responsive" src="http://pic.pocketuni.net/data/sys_pic/lottery/rule.png">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(".rule").click(function () {
+        $('#myModal').modal('show');
+    })
+</script>

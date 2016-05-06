@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>游戏排行</title>
+<link href="apps/home/Tpl/default/Tj/ui/css/game.css?20150508" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="tit_tab"><ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul></div>
+<div class="bg">
+ <div class="main">
+  <div class="game_title"></div>
+  <div class="clear"></div>
+  <div class="game_list">
+   <ul>
+   <foreach name="list" item="val">
+       <if condition="$val.rank eq 1">
+    <li>
+     <div class="game_list_n1 i1"></div>
+     <div class="game_list_thumb"><img src="{$val.face}" alt="" /></div>
+     <div class="game_list_name">{$val.realname}</div>
+     <div class="game_list_score c_5">{$val.score}分</div>
+    </li>
+       </if>
+       <if condition="$val.rank eq 2">
+    <li>
+     <div class="game_list_n1 i2"></div>
+     <div class="game_list_thumb"><img src="{$val.face}" alt="" /></div>
+     <div class="game_list_name">{$val.realname}</div>
+     <div class="game_list_score c_5">{$val.score}分</div>
+    </li>
+       </if>
+       <if condition="$val.rank eq 3">
+    <li>
+     <div class="game_list_n1 i3"></div>
+     <div class="game_list_thumb"><img src="{$val.face}" alt="" /></div>
+     <div class="game_list_name">{$val.realname}</div>
+     <div class="game_list_score c_5">{$val.score}分</div>
+    </li>
+       </if>
+       <if condition="$val.rank gt 3">
+    <li class="ibg">
+     <div class="game_list_n1">{$val.rank}</div>
+     <div class="game_list_thumb"><img src="{$val.face}" alt="" /></div>
+     <div class="game_list_name">{$val.realname}</div>
+     <div class="game_list_score c_fff">{$val.score}分</div>
+    </li>
+       </if>
+       </foreach>
+   </ul>
+  </div>
+ </div>
+</div>
+    <div class="tit_tab"><ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul></div>
+</body>
+</html>

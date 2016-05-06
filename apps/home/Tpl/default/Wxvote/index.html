@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"/>
+<title>莫文蔚全球演唱会</title>
+<link href="__PUBLIC__/wxvote/css/pu_card.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+
+<div class="bg">
+ <div class="main mt20">
+  <div class="card_index"><img src="__PUBLIC__/wxvote/images/bg_123.jpg" />
+  </div>
+ <div class="card_index_infor">
+   <div class="card_index_grab"><!-- <a href="{:U('home/wxvote/uppic')}"> --><div><img src="__PUBLIC__/wxvote/images/qiang.png"/  id = 'qiang'></div></div>
+  <div class="card_index_intro"><a href="{:U('home/wxvote/introduce')}"><img src="__PUBLIC__/wxvote/images/intro1.png"/></a></div>
+  <div class="card_index_rank"><a href="{:U('home/wxvote/votesort')}"><img src="__PUBLIC__/wxvote/images/rank.png"/></a></div>  
+  </div>
+
+ </div>
+ 
+</div>
+
+<script>
+	$('#qiang').click(function(){
+		$.post("{:U('home/wxvote/judge')}",{},function(data){
+			if(data.data == 'success'){
+				window.location.href="index.php?app=home&mod=wxvote&act=uppic";
+			}else if(data.data == 'repeat'){
+				alert('你已经参加了活动,不能重复添加');
+
+			}else{
+								
+				if(confirm('你还不是pu卡用户,前往开通pu卡?')){
+					window.location.href="index.php?app=shop&mod=PocketShop&act=bankPrice";
+				}
+			}
+		},'json');
+	})
+	
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

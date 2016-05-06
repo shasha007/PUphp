@@ -1,0 +1,25 @@
+<div class="page_tit">学分认定管理</div>
+<div class="tit_tab">
+<ul>
+    <li><a <eq name="ACTION_NAME" value="index">class="on"</eq>
+            href="__URL__&act=index">待审核
+            <?php if($finishCount):?><strong style="color: #F00;">(<span  id="finishCount">{$finishCount}</span>)</strong><?php endif;?>
+            </a>
+    </li>
+    <li><a <eq name="ACTION_NAME" value="audited">class="on"</eq>
+            href="__URL__&act=audited">已通过</a></li>
+    <?php if($rights['can_admin']):?>
+    <li><a <eq name="ACTION_NAME" value="ecType">class="on"</eq>
+           <eq name="ACTION_NAME" value="editEcType">class="on"</eq>
+            href="__URL__&act=ecType">申请类别设置</a></li>
+    <?php endif;?>
+    <?php if($school['id']==480):?>
+        <li><a <eq name="ACTION_NAME" value="cjd">class="on"</eq>
+            href="__URL__&act=cjd">第二课堂成绩单</a></li>
+    <?php endif;?>
+    <?php if($school['id']==591):?>
+        <li><a <eq name="ACTION_NAME" value="wcl">class="on"</eq>
+            href="__URL__&act=wcl">查看完成率</a></li>
+    <?php endif;?>
+</ul>
+</div>

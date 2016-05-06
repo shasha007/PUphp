@@ -1,0 +1,226 @@
+<include file="../Public/_header" />
+
+
+<div class="content clearfix under-suggest">
+	
+			<div class="index_block_l">
+			    <div class="index_slide">
+				<div class="index_slide_title">推荐课件</div>
+			    <div class="slide-show">
+			<div class="slideshow-small-page lp"><a href="javascript:void(0);" id="slideshowPre" class="pre">pre</a></div>
+			
+			<div id="mainview" class="slideshow-large-container">
+
+                    
+<ul class="readbox">
+							
+							<volist name="recomdocuments" id="vo">
+								<li>
+									<a href="{:U('document/Index/doc',array(id=>$vo['id'],uid=>$vo['userId']))}"><img src="{$vo['cover']|get_cover}"></a>
+									<p><a href="{:U('document/Index/doc',array(id=>$vo['id'],uid=>$vo['userId']))}">{$vo.name}</a></p>
+								</li>
+							</volist>
+
+							
+							</ul>
+	
+		    </div>
+		    	
+			<div class="slideshow-small-page rp"><a href="javascript:void(0);" id="slideshowNext" class="next">next</a></div>
+			    <ul class="slideshow-small-list paging clearfix" style="display:none">
+				<volist name="recomdocuments" id="vo">
+					
+                <li rel="{$i}" class="<php>if($i==1) echo "current";</php>">{$i}</li>
+				<php>if($i*4>=count($recomdocuments)) break;</php>
+				</volist>
+				</ul>
+			</div>
+			    </div>
+			    <div class="ib_shadow"></div>
+                
+                
+			<div class="right_box mt10">
+				<div class="right_boxtitle">
+				  <p>热门课件</p>
+				</div>
+				<div class="right_boxwrapper">
+								
+				<ul class="main_page">
+					
+				<volist name="hotdocuments.data" id="vo">	
+                <li class="hot_doc ">
+			<div class="first">
+			<em class="icon {$vo.extension}"></em><span><a href="{:U('document/Index/doc',array(id=>$vo['id'],uid=>$vo['userId']))}">{$vo.name}</a></span>
+			</div>
+			<div class="second">
+			<div class="category">分类: 
+			<php>if($vo['cid0']>0) { </php>
+			{$vo['cid0']|getCategoryName}
+			<php> } </php>			
+			<php>if($vo['cid1']>0) { </php>
+			- {$vo['cid1']|getCategoryName}
+			<php> } </php>
+			</div>
+			<div class="user">上传人:<space uid="vo.userId">{uname}</space></div>
+			<div class="time">{$vo.mTime|friendlyDate}</a></div>
+			<div class="download">下载量: {$vo.downloadCount}</a></div>
+			</div>
+			
+				</li>
+				</volist>
+			
+                </ul>	
+                <div class="page">{$hotdocuments.html}</div>
+				</div>
+			</div>
+                            
+                
+			</div>
+			
+			<div class="index_block_r">
+            
+			<div class="upload_box">
+				<a href="{:U('document/Upload/index')}"></a>
+			</div>
+			
+			<div class="right_box">
+				<div class="right_boxtitle">
+				  <p>最新上传</p>
+				</div>
+				<div class="right_boxwrapper">
+								
+							<ul>
+								
+							<volist name="newdocuments" id="vo">	
+			                <li class="hot_doc">
+
+					<div class="first">
+						<em class="icon {$vo.extension}"></em><span><a href="{:U('document/Index/doc',array(id=>$vo['id'],uid=>$vo['userId']))}">{$vo.name}</a></span>
+					</div>
+					<div class="second">
+						<div class="user">上传人:<space uid="vo.userId">{uname}</space></div>
+						<div class="time">{$vo.mTime|friendlyDate}</a></div>
+					</div>
+							</li>
+							</volist>
+										
+			                </ul>
+                
+				</div>
+			</div>
+
+
+
+			<div class="right_box">
+				<div class="right_boxtitle">
+				  <p>课件达人</p>
+				</div>
+				<div class="right_boxwrapper">
+								
+							<ul class="olist">
+								
+							<volist name="users" id="vo">	
+			                <li class="hot_doc">
+						<div class="num icon{$i}"></div>
+						<div class="user"><space uid="vo.userId">{uname}</space></div>
+						<div class="time">{$vo.count}</a></div>
+							</li>
+							</volist>
+																														
+			                </ul>
+                
+				</div>
+			</div>
+            
+			</div>
+			
+			
+				
+			
+			
+			
+
+			
+						
+			<script>
+			$(document).ready(function () { 						
+			
+                //Get size of images, how many there are, then determin the size of the image reel.
+                var imageWidth = $("#mainview").width();
+                var imageSum = $(".readbox li").size()/4;
+                var imageReelWidth = imageWidth * imageSum;
+				//alert(imageWidth);
+
+                //Adjust the image reel to its new size
+                //$(".readbox").css({'width' : imageReelWidth});
+
+                //Paging + Slider Function
+                rotate = function(){
+                    var triggerID = $active.attr("rel") - 1; //Get number of times to slide
+                    var image_reelPosition = triggerID * imageWidth; //Determines the distance the image reel needs to slide
+
+                    $(".paging li").removeClass('current'); //Remove all active class
+                    $active.addClass('current'); //Add active class (the $active is declared in the rotateSwitch function)
+
+                    //Slider Animation
+                    $(".readbox").animate({
+                        left: -image_reelPosition
+                    }, 500 );
+
+                };
+
+                //Rotation + Timing Event
+                rotateSwitch = function(){
+                    play = setInterval(function(){ //Set timer - this will repeat itself every 3 seconds
+                        $active = $('.paging li.current').next();
+                        if ( $active.length === 0) { //If paging reaches the end...
+                            $active = $('.paging li:first'); //go back to first
+                        }
+                        rotate(); //Trigger the paging and slider function
+                    }, 3000); //Timer speed in milliseconds (3 seconds)
+                };
+
+                rotateSwitch(); //Run function on launch
+
+                //On Hover
+                $(".imagereal a").hover(function() {
+                    clearInterval(play); //Stop the rotation
+                }, function() {
+                    rotateSwitch(); //Resume rotation
+                });
+
+                //On Click
+                $(".paging li").click(function() {
+                    $active = $(this); //Activate the clicked paging
+                    //Reset Timer
+                    clearInterval(play); //Stop the rotation
+                    rotate(); //Trigger rotation immediately
+                    rotateSwitch(); // Resume rotation
+                    return false; //Prevent browser jump to link anchor
+                });
+                $("#slideshowPre").click(function() {
+                    $active = $('.paging li.current').prev();
+                    if ( $active.length === 0) { //If paging reaches the end...
+                        $active = $('.paging li:last'); //go back to first
+                    }
+                    //Reset Timer
+                    clearInterval(play); //Stop the rotation
+                    rotate(); //Trigger rotation immediately
+                    rotateSwitch(); // Resume rotation
+                    return false; //Prevent browser jump to link anchor
+                });
+                $("#slideshowNext").click(function() {
+                    $active = $('.paging li.current').next();
+                    if ( $active.length === 0) { //If paging reaches the end...
+                        $active = $('.paging li:first'); //go back to first
+                    }
+                    clearInterval(play); //Stop the rotation
+                    rotate(); //Trigger rotation immediately
+                    rotateSwitch(); // Resume rotation
+                    return false; //Prevent browser jump to link anchor
+                });	
+						
+			});
+			</script>
+
+<include file="../Public/_footer" />

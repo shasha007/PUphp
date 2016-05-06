@@ -1,0 +1,98 @@
+<include file="../Teacher/_header" />
+<script>
+var ctrl = function(){}
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                alert('请选择要删除的作业！');return false;
+            }
+            if( confirm("是否删除作业？") ){
+                $.post( '__URL__&act=doDeleteWork',{id:id},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个作业成功" );
+                        var id_list = id.split( ',' );
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove();
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        }
+    }
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+        <form method="post">
+            标题：<input name="title" type="text" value="{$title}">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('event/AdminWork/addWork')}" class="btn_a"><span>添加作业</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除作业</span></a>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>发布人</th>
+                <th>作业标题</th>
+                <th>提交 / 未评分人数</th>
+                <th>发布时间</th>
+                <th>截止时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><space uid="vo.uid" class="null" target="_blank">{realname}</space></td>
+                    <td><a href="{:U('event/AdminWork/worklist', array('id'=>$vo['id']))}">{$vo.title|getShort=###,30,'…'}</a></td>
+                    <td>{$vo.workback|tsConcatNum} /
+                        <?php $noNote=tsConcatNum($vo['workback'],1); ?>
+                        <?php if($noNote):?><strong style="color: #F00;">{$noNote}</strong></span>
+                        <?php else:?><span class="cGray2">0</span>
+                        <?php endif;?>
+                    </td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td><?php echo(date('Y-m-d H:i',$vo['eTime']));?></td>
+                    <td><?php if($vo['eTime']>time()):?><span class="cGreen">进行中...</span>
+                        <?php else:?><span class="cGray2">已截止</span>
+                        <?php endif;?>
+                    </td>
+                    <td>
+                        <a href="{:U('event/AdminWork/editWork', array('id'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('event/AdminWork/addWork')}" class="btn_a"><span>添加作业</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除作业</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+    var c = new ctrl();
+</script>
+<include file="_footer" />

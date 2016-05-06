@@ -1,0 +1,237 @@
+<!--
+Created by huqiwen on 16/4/19.
+describe : 
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/event.css?v=20160421" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=20160421" rel="stylesheet">
+    <title>本校热门活动</title>
+</head>
+<body>
+<nav class="h-scheve  clearfix">
+    <div onclick="show('1')">
+        <?php if($type){echo $types[$type]['name'] ;}else{echo '分类' ;}?>
+        <input type="hidden" id="type" value="{$type}">
+    </div>
+    <div onclick="show('2')" >
+        <?php if($sid){echo $faculty[$sid]['title'] ;}else{echo '归属组织' ;}?>
+        <input type="hidden" id="sid" value="{$sid}">
+    </div>
+    <div onclick="show('3')">
+        <?php
+            switch ($order) {
+                case 'start':
+                    echo '即将开始' ;
+                    break;
+                case 'hot':
+                    echo '最热' ;
+                    break;
+                case 'new':
+                    echo '最新' ;
+                    break;
+                default:
+                    echo '排序' ;
+                    break;
+            }
+        ?>         
+        <input type="hidden" id="order" value="{$order}">
+    </div>
+</nav>
+<div class="h-scheve-show1 clearfix">
+
+    <div class="h-show-1">
+        <header class="jump" data-type="type" data-id="0">
+            全部
+        </header>
+        <ul class="container">
+            <foreach name="types" item="v">
+                <li>
+                    <!-- <img class="img-responsive" src="../Public/images/img_default.png"> -->
+
+                    <p class="jump" data-type="type" data-id="{$key}">{$v.name}</p>
+                </li>
+            </foreach>
+        </ul>
+    </div>
+
+    <div class="h-show-2">
+        <header class="jump" data-type="sid" data-id="0" >全部</header>
+        <ul class="h-show-2">
+            <foreach name="faculty" item="v">
+                <li>
+                    <p class="jump" data-type="sid" data-id="{$key}" >{$v.title}</p>
+                </li>
+            </foreach>
+        </ul>
+    </div>
+
+    <div class="h-show-3">
+        <header class="jump" data-type="order" data-id="0">全部</header>
+        <ul class="h-show-3">
+            <li class="jump" data-type="order" data-id="start">
+                即将开始
+            </li>
+            <li class="jump" data-type="order" data-id="hot">
+                最热
+            </li>
+            <li class="jump" data-type="order" data-id="new">
+                最新
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="event-more-list white" style="margin-top: 40px">
+    <ul class="event-list">
+        <foreach name="list" item="vo">
+            <li class="to-event-d" data-eventid="{$vo.id}" >
+                <a class="container" >
+                    <div class="event-more-list-l">
+                        <img class="img-responsive"
+                             src="{$vo.cover}">
+                    </div>
+                    <div class="event-more-list-r to-event" data-eventid="">
+                        <div class="event-more-flag">
+                            <?php if(!empty($vo['isTop'])){echo '<span>'.$vo['isTop'].'</span>';} ?><?php if(!empty($vo['cName'])){echo '<span>'.$vo['cName'].'</span>';} ?><?php if(!empty($vo['isCredit'])){echo '<span>'.$vo['isCredit'].'</span>';} ?>
+                        </div>
+                        <p class="event-more-name">{$vo.title|trim=###}</p>
+
+                        <p class="event-more-school"><i class="glyphicon glyphicon-user">&emsp13;</i>{$vo.address}</p>
+
+                        <p class="event-more-time"><span class="glyphicon glyphicon-time">&emsp13;</span>{$vo.duration}</p>
+                    </div>
+                </a>
+            </li>
+        </foreach>
+    </ul>
+</div>
+<div id="h-back-cover" class="h-back-cover" onclick="show('all')">
+
+</div>
+<script src="../Public/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script>
+function  show(type){
+    if(type=='1'){
+        $('.h-show-1').show();
+        $('.h-show-2').hide();
+        $('.h-show-3').hide();
+        if($('.h-back-cover').css('dispaly','none')){
+            $('.h-back-cover').show();
+        }
+
+    }else if(type=='2'){
+        $('.h-show-2').show();
+        $('.h-show-1').hide();
+        $('.h-show-3').hide();
+        if($('.h-back-cover').css('dispaly','none')){
+            $('.h-back-cover').show();
+        }
+    }else if(type=='3'){
+        $('.h-show-3').show();
+        $('.h-show-2').hide();
+        $('.h-show-1').hide();
+        if($('.h-back-cover').css('dispaly','none')){
+            $('.h-back-cover').show();
+        }else{
+            $('.h-show-3').hide();
+            $('.h-back-cover').hide();
+        }
+    }else{
+        $('.h-show-3').hide();
+        $('.h-show-2').hide();
+        $('.h-show-1').hide();
+        $('.h-back-cover').hide();
+    }
+}
+
+
+$(".jump").click(function(){
+    var type = $(this).data("type") ;
+    var value = $(this).data("id") ;
+    $("#"+type).val(value) ;
+    jump() ;
+})
+function jump(){
+    var url = "{:U('wap/Event/hotSchoolEvent')}" ;
+    var type = $("#type").val() ;
+    var sid = $("#sid").val() ;
+    var order = $("#order").val() ;
+    if (type != 0 ) {
+        url = url+"&type="+type ;
+    };
+    if (sid != 0) {
+        url = url+"&sid="+sid ;
+    };
+    if (order != 0) {
+        url = url+"&order="+order ;
+    };
+    window.location = url ;
+}
+
+// 下拉刷新
+var  ready = false;
+var loadingShow = false;
+var page = 2;
+var loadingStr = '<div class="spinner"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
+var noneStr = '<div class="nonestr">没有记录</div>';
+$(window).scroll(function(){
+    var document = window.document;
+    var top = document.body.scrollTop || document.documentElement.scrollTop
+            || 0;
+    top += document.documentElement.clientHeight;
+    var height = document.documentElement.scrollHeight;
+    if (height - top < 100) {
+        if (!loadingShow) {
+            $(".event-list").append(loadingStr);
+            loadingShow = true;
+            getAjaxNews();
+        }
+    }
+});
+function getAjaxNews() {
+    setTimeout(function () {
+        //删除loading提示
+        $.ajax({
+            url: "{:U('wap/Event/hotSchoolEventAjax')}",
+            type: 'get',
+            data: {
+                order : '<?php echo $order ; ?>',
+                type: '<?php echo $type ; ?>',
+                sid: '<?php echo $sid ; ?>',
+                page: page,
+    },
+            success: function(data){
+                if (data==='0') {
+                    $(".spinner").remove();
+                    $(".event-list").append(noneStr);
+                }else{
+                    $(".event-list").append(data);
+                    $(".to-event-d").click(function () {
+                        var id = $(this).data("eventid")+"";
+                        Android.openInternalPage("eventDetails", "", "", id,"", "","");
+                    });
+                    $(".spinner").remove();
+                    page++;
+                    loadingShow = false;
+                    //处理图片
+                }
+            }});
+    }, 1000);
+}
+
+    $(document).ready(function () {
+        $(".to-event-d").click(function () {
+            var id = $(this).data("eventid")+"";
+            Android.openInternalPage("eventDetails", "", "", id,"", "","");
+        });
+    });
+</script>
+</body>
+</html>

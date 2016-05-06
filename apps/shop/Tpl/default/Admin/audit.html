@@ -1,0 +1,63 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+        <div class="form2">
+            <dl class="lineD">
+                <dt>商品名称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    {$name}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>所需参与人数：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <span style="color: #F00;font-size:20px">{$need_attended} <【特别注意核对此项】</span>
+
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>自动结束期数：<span style="color: #F00">*</span></dt>
+                <dd>{$over_times}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>商品详细内容：</dt>
+                <dd>
+                    {$content|htmlspecialchars_decode}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>缩略图：</dt>
+                <dd>
+                    <if condition="$pic">
+                        <img id="thumb" src="{$pic|tsMakeThumbUp=###,80,80}">
+                    </if>
+                </dd>
+            </dl>
+            <?php if($imgs):?>
+            <dl class="lineD">
+                <dt>展示图：</dt>
+                <dd>
+                    <div class="prov_thumblist"><ul id="uploaded_photos">
+                            <volist name="imgs" id="vo">
+                                <li class="prov_link" id="img{$i}">
+                                <div class="prov_thumb"><img src="{$vo|tsMakeThumbUp=###,80,80}" alt="" /></div>
+                                </li>
+                            </volist>
+                        </ul></div>
+                    &nbsp;
+                </dd>
+            </dl>
+            <?php endif;?>
+            <div class="page_btm">
+            <form action="{:U('shop/Admin/doAudit')}" method="post">
+                <input type="hidden" name="id" value="{$id}" />
+                <input type="submit" class="btn_b" value="确认上架" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{:U('/Admin/editYg', array('id'=>$id))}" class="btn_a">编辑该商品</a>
+            </form>
+            </div>
+        </div>
+</div>
+<include file="_footer" />

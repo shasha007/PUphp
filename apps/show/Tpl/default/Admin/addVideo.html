@@ -1,0 +1,37 @@
+<script type="text/javascript" src="../Public/js/video.js"></script>
+<form action="{:U('/Admin/doEditVideo')}" enctype="multipart/form-data" method="post">
+    <table cellpadding=3 cellspacing=3>
+    <tr>
+        <td align="right"><span style="color: #F00">*</span>标题：</td>
+        <td align="left"><input type="text" name="title" MaxLength= "15" value="{$video.title}" />
+        </td>
+    </tr>
+    <if condition="$video">
+    <tr>
+        <td align="right">图片：</td>
+        <td align="left">
+        	<img  width="100" height="100" src="{$video.path|realityImageURL}">
+        	<input name="id" value="{$video.id}" type="hidden">
+        </td>
+    </tr>
+    </if>
+    <tr>
+        <td align="right"><span style="color: #F00">*</span>预览图：</td>
+        <td align="left">
+        <input name="files[]" id="face" type="file"><br />
+        <span style="color:#666;font-size:10px;">建议图片大小：180像素x140像素</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right"><span style="color: #F00">*</span>视频网址:</td>
+        <td align="left">
+            <input size="50" type="text" name="link"
+                   value="<?php if(isset($video['link'])) {echo $video['link'];} else {echo '请输入如http://www.xxx.com/xxx.swf';}?>" onFocus="if(value=='请输入如http://www.xxx.com/xxx.swf'){this.value=''}" onBlur="if(!value){value=defaultValue;}" />
+        </td>
+    </tr>
+    </table>
+    <div >
+        <input type="submit" class="btn_b" value="确定">
+        <input type="button" class="btn_b" onclick="add_video()" value="添加" />
+    </div>
+</form>

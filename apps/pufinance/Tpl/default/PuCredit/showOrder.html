@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>分期详情</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+    <script src="../Public/js/mainScript.js"></script>
+    <script>
+        setActionBar('分期详情', '', '');
+    </script>
+</head>
+<body bgcolor="#F3F1EE">
+<div class="w-tap">多选表示可提前还款</div>
+<ul class="w-repayUl">
+    <volist name="last_list" id="vo">
+    <li class="w-repayLi">
+        <if condition="in_array($vo['id'], $_SESSION['checked_order'][$_GET['id']])">
+            <img data-checked="true" src="../Public/img/sel01.png" data-id="{$vo.id}">
+        <else />
+            <img data-checked="false" src="../Public/img/sel1.png" data-id="{$vo.id}">
+        </if>
+
+        <div>
+            <p>
+                <span>{$key}/{$stages}期</span>
+                <span>￥{$vo.last_amount}</span>
+            </p>
+            <p>
+                <span>{$vo.etime|date='Y-m-d', ###}</span>
+                <span>(本金{$vo.amount}+服务费{$vo.interest}
+                <gt name="vo.overdue" value="0">
+                    +逾期{$vo.overdue.all_last_overdue}
+                </gt>
+                    )</span>
+            </p>
+        </div>
+    </li>
+    </volist>
+
+    <volist name="repaid_list" id="vo">
+        <li>
+            <div>
+                <p>
+                    <span>{$key}/{$stages}期</span>
+                    <span>￥{$vo['amount'] + $vo['interest']}(含服务费{$vo['interest']})</span>
+                </p>
+                <p>
+                    <span>{$vo.etime|date='Y-m-d', ###}</span>
+                    <span>已还清</span>
+                </p>
+            </div>
+        </li>
+    </volist>
+
+</ul>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('.w-repayLi').click(function () {
+            if ($('.w-repayLi').find('img[data-checked="true"]').length == 1) {
+                alert('至少选择一期');
+                return false;
+            }
+            var $img = $(this).find('img');
+            if ($img.attr('data-checked') == 'true') {
+                $img.attr({
+                    'data-checked': false,
+                    'src' : '../Public/img/sel1.png'
+                });
+            } else {
+                $img.attr({
+                    'data-checked': true,
+                    'src' : '../Public/img/sel01.png'
+                });
+            }
+            var stageIds = new Array();
+            $('.w-repayLi').find('img[data-checked="true"]').each(function (i, n) {
+                stageIds.push($(n).attr('data-id'));
+            });
+//            if (stageIds.length > 0) {
+                $.get("{:U('pufinance/PuCredit/changeCheckedOrder', array('id' => $_GET['id']))}&stageids=" + stageIds.join(','));
+        });
+    });
+</script>
+</body>
+</html>

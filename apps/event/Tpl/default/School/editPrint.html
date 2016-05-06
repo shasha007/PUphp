@@ -1,0 +1,56 @@
+<include file="_header" />
+<?php if(!$orga):?>
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<?php endif;?>
+<div class="hd_c">
+    <div class="hd_print">
+        <eq name="type" value="add">
+            <form action="{:U('event/School/doAddPrint')}" method="post">
+        <else/>
+            <form action="{:U('event/School/doEditPrint')}" method="post">
+            <input type="hidden" name="id" value="{$id}" />
+        </eq>
+        <input type="hidden" name="is_orga" value="{$orga}" />
+        <neq name="orga" value="1">
+            <div class="hd_print_title">标 题：<input name="title" type="text" class="hd_print_input"  placeholder="请输入标题" value="{$title}"/></div>
+            <div class="hd_print_desc">描述：<br/>
+                <textarea name="content" id="content" style="width:550px;height:200px">{$content}</textarea></div>
+            <div class="clear"></div>
+        <else/>
+            <div class="hd_print_title">选择活动，提交后{$webconfig.print_day}天内至{$webconfig.print_address}领取</div>
+        </neq>
+        <div class="hd_print_tip1">
+            <div class="hd_print_tip1_title">选择活动</div>
+            <div class="hd_print_tip1_list">
+                <label><div class="hd_print_tip1_list_select b"><input type="checkbox"  onclick="checkAll(this)"/> 全部勾选</div></label>
+                <ul>
+                    <volist name="event" id='vo'>
+                        <label><li overstyle="on"><input name="checkbox[]" type="checkbox" value="{$vo.id}" <?php if(in_array($vo['id'],$eids))echo'checked'?>/> {$vo.title}</li></label>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="hd_print_list1_btn"><input type="submit" value="提 交" class="hd_print_btn2" /></div>
+        </form>
+    </div>
+
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<?php if(!$orga):?>
+<include file="__THEME__/editor" />
+<script>
+    $(document).ready(function(){
+        loadEditor("content");
+    });
+</script>
+<?php endif;?>
+<script type="text/javascript" src="__PUBLIC__/js/check.js"></script>
+<include file="_footer" />

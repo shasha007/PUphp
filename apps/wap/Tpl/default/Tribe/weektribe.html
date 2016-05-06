@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=20150107" rel="stylesheet">
+    <link href="../Public/css/tribe.css?v=2016002011" rel="stylesheet">
+    <link rel="stylesheet" href="../Public/css/swiper.min.css">
+    <link href="../Public/css/public_header.css" rel="stylesheet">
+    <title>本周部落之星</title>
+    <script>
+        $(function () {
+            var uid = Android.getUid();
+            $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+                if(data.status == 2)
+                {
+                    window.location.reload();
+                }
+            },'json');
+        });
+    </script>
+</head>
+<body>
+<!--弹出框-->
+<div class="modal fade" id="area-selection" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content selection-con">
+            <p id="selection-con-p1"><a>区域&emsp13;</a>
+                <span id="a1" class="selection-on" >全国</span>
+                <span id="a2">全省</span>
+                <span id="a3">全市</span>
+                <span id="a4" >本校</span>
+            </p>
+
+            <p id="selection-con-p2">
+                <a>区域&emsp13;</a>
+                <span id="s1" class="selection-on">全部</span>
+                <span id="s2">社团</span>
+                <span id="s3">团支部</span>
+                <span id="s4">学生部门</span>
+            </p>
+            <footer class="clearfix">
+                <button id="as-btn-o" class="btn-default btn">确定</button>
+                <button id="as-btn-c" class="btn-default btn">取消</button>
+            </footer>
+        </div>
+
+    </div>
+</div>
+
+<!--图片轮播-->
+<div class="swiper-container demo2 swiper-container-horizontal" id="lunbo">
+    <div class="swiper-wrapper" style="">
+        <foreach name="add" item="va" key="k">
+            <div class="swiper-slide ">
+                <a href="{$va.url}">
+                    <img class="img-responsive" data-src="{$va.cover}"
+                         src="{$va.cover}">
+                </a>
+            </div>
+        </foreach>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination swiper-pagination-clickable">
+        <foreach name="add" item="value" key="t">
+            <span class="swiper-pagination-bullet"></span>
+        </foreach>
+    </div>
+</div>
+<div class="tribe-list container">
+    <ul class="yiku">
+        <foreach name="weektrible" item="vo" key="i">
+            <li class="go-tribe" data-tribeid="{$vo.id}">
+                <!--跳转部落之心-->
+                <a class="container" style="display: block;">
+                    <div class="list-l pull-left">
+                        NO.<span class="big">{$i+1}</span>
+                    </div>
+                    <div class="list-c pull-left">
+                        <img src="{$vo.logo}" onerror="this.src='/apps/wap/Tpl/default/Public/images/img_default.png'">
+                    </div>
+                    <div class="list-c2 pull-left">
+                        <p class="list-hobbies">{$vo.cname0}</p>
+
+                        <p class="list-name">{$vo.name}</p>
+
+                        <p class="list-school"><span class="glyphicon glyphicon-home">&emsp13;</span>{$vo.schoolname}
+                            <span class="glyphicon glyphicon-user">&emsp13;</span>{$vo.membercount}</p>
+                    </div>
+                    <!-- <div class="list-r  pull-right">
+                        <span>{$vo.weekactiv_num}分</span></div> -->
+                </a>
+            </li>
+        </foreach>
+    </>
+</div>
+</body>
+</html>
+<script src="../Public/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script src="../Public/js/swiper.jquery.min.js"></script>
+<script>
+    var ready = false;
+    var loadingShow = false;
+    var page = 2;
+    var loadingStr = '<div class="spinner"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
+    var noneStr = '<div class="nonestr">没有记录</div>';
+    $(window).scroll(function () {
+        var document = window.document;
+        var top = document.body.scrollTop || document.documentElement.scrollTop
+                || 0;
+        top += document.documentElement.clientHeight;
+        var height = document.documentElement.scrollHeight;
+        if (height - top < 100) {
+            if (!loadingShow) {
+                $(".yiku").append(loadingStr);
+                loadingShow = true;
+                getAjaxNews();
+            }
+        }
+    });
+
+    function getAjaxNews() {
+        var a = $(".selection-on").eq(0).attr("id").substring(1);
+        var s = $(".selection-on").eq(1).attr("id").substring(1);
+        setTimeout(function () {
+            $.ajax({
+                url: 'index.php?app=wap&mod=Tribe&act=ajaxGetTribe',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    page: page,
+                    aid: a,
+                    sid: s
+                },
+                error: function () {
+                },
+                success: function (data) {
+                    if (data.status == '1') {
+                        var htmlstr = buildHtml(data.data, data.rank);
+                        loadingShow = false;
+                        $(".sponner").hide();
+                        $(".yiku").append(htmlstr);
+                        $(".spinner").remove();
+                        //处理图片
+                        color();
+                        dopicerror();
+                        page++;
+                    } else {
+                        $(".spinner").hide();
+                        $(".spinner").remove();
+                        $(".yiku").append(noneStr);
+                    }
+                }
+            });
+        }, 1000);
+    }
+    var swiper = new Swiper('.demo2', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        autoplay: 3000,    //可选选项，自动滑动
+        autoplayDisableOnInteraction: false,    //注意此参数，默认为true
+        loop: true,
+
+    });
+
+    $(function () {
+         dopicerror();
+        //隐藏安卓actionbar
+        try{
+            Android.setActionBarVisible(false);
+        }catch (e){
+            setTimeout(function () {
+                Android.setActionBarVisible(false);
+            },50);
+        }
+
+        settitle("本周部落之星","swich.png","openselect()");
+
+        color();
+        //选择区域事件
+        $("#selection-con-p1 span").each(function () {
+            $(this).click(function () {
+                $(this).siblings().removeClass("selection-on");
+                $(this).addClass("selection-on");
+            });
+        });
+        //选择区域事件
+        $("#selection-con-p2 span").each(function () {
+            $(this).click(function () {
+                $(this).siblings().removeClass("selection-on");
+                $(this).addClass("selection-on");
+            });
+        });
+        //取消按钮
+        $("#as-btn-c").click(function () {
+            $('#area-selection').modal('hide')
+
+        });
+        $("#as-btn-o").click(function () {
+            $('#area-selection').modal('hide');
+            //区域id
+            var a = $(".selection-on").eq(0).attr("id").substring(1);
+            var s = $(".selection-on").eq(1).attr("id").substring(1);
+            console.log(a+"    "+s)
+            page = 2;
+            $.ajax({
+                url: 'index.php?app=wap&mod=Tribe&act=ajaxGetTribe',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    page: 1,
+                    aid: a,
+                    sid: s
+                },
+                error: function () {
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.status == '1') {
+                        var htmlstr = buildHtml(data.data, data.rank);
+                        loadingShow = false;
+                        $(".sponner").hide();
+                        $(".yiku").html(htmlstr);
+                        $('.go-tribe').click(function(){
+                            var id = $(this).data("tribeid") + "";
+                            Android.openInternalPage("groupDetails", "", "", id, "", "", "");
+                        });
+                        $(".spinner").remove();
+                        //处理图片
+                        dopicerror();
+                        color();
+                    } else {
+                        $(".sponner").hide();
+                        $(".yiku").html(noneStr);
+                        $(".spinner").remove();
+                        loadingShow = true;
+                    }
+                }
+            });
+
+        });
+        $('.go-tribe').click(function(){
+            var id = $(this).data("tribeid") + "";
+            Android.openInternalPage("groupDetails", "", "", id, "", "", "");
+        });
+
+    })
+            function color() {
+            //排名颜色
+            var colors = ['#00b3ee', '#9c4755', '#0A5EA6', '#0a8f03', '#00AAFF'];
+            $(".list-l").each(function (i) {
+                t = random(0, 4);
+                $(this).css("color", colors[t]);
+            });
+        }
+        function random(min, max) {
+            return Math.floor(min + Math.random() * (max - min));
+        }
+        function buildHtml(items, rank) {
+            if (items.length > 0) {
+                var html = '';
+                var sum = 0;
+                for (i = 0; i < items.length; i++) {
+                    sum = rank + i;
+                    html += '<li class="clearfix go-tribe" data-tribeid="' + items[i].id + '">';
+                    html += '<div class="list-l pull-left">';
+                    html += 'NO.<span class="big">' + sum + '</span>';
+                    html += '</div>';
+                    html += '<div class="list-c pull-left">';
+                    html += '<img src="' + items[i].logo + '">';
+                    html += '</div>';
+                    html += '<div class="list-c2 pull-left">';
+                    html += '<p class="list-hobbies">' + items[i].cname0 + '</p>';
+                    html += '<p class="list-name">' + items[i].name + '</p>';
+                    html += '<p class="list-school"><span class="glyphicon glyphicon-home">&emsp13;</span>' + items[i].schoolname + '<span class="glyphicon glyphicon-user">&emsp13;</span>' + items[i].membercount + '</p>';
+                    html += '</div>';
+                    // html += '<div class="list-r  pull-right">';
+                    // html += '<span>' + items[i].weekactiv_num + '分</span></div>';
+                    html += '</li>';
+                }
+                return html;
+            }
+        }
+
+</script>
+<script src="../Public/js/publicjs.js?v=20160222"></script>

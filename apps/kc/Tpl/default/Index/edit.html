@@ -1,0 +1,90 @@
+<include file="../Public/_header" />
+
+<form id="newkcFrm">
+    <input type="hidden" name="id" value="{$kc.id}" />
+    <div class="add">
+    <div class="add_name"><input id="courseName" class="add_input" type="text" placeholder="请输入课程名" name="courseName" maxlength="20" value="{$kc.courseName}"></div>
+    <div class="add_teacher"><input type="text" class="add_input" id="teacher" name="teacher" placeholder="请输入授课老师姓名" maxlength="20" value="{$kc.teacher}"> 可选</div>
+    <div class="add_week">
+        起始周
+        <select onchange="if(parseInt(jQuery(this).next().val())<this.value)jQuery(this).next().val(this.value);"  name="begin" id="begin" class="sr2">
+            <?php for($i=1;$i<=25;$i++):?>
+                <option value="{$i}" <?php if($i==$kc['begin'])echo 'selected'?>>{$i}</option>
+            <?php endfor;?>
+        </select>
+        结束周
+        <select onchange="if(parseInt(jQuery(this).next().val())<this.value)jQuery(this).next().val(this.value);"  name="end" id="end" class="sr2">
+            <?php for($i=1;$i<=25;$i++):?>
+            <option value="{$i}" <?php if($i==$kc['end'])echo 'selected'?>>{$i}</option>
+            <?php endfor;?>
+        </select>
+    </div>
+    <div class="add_title">上课时间  <input type="button" value="添加时间" class="add_btn" onclick="addTime();" /></div>
+    <div id="addTime">
+        <volist name="opt" id="vo">
+        <div class="courseTimes">
+        <div class="add_week">
+            <select name="occurs[]" class="sr2 fl">
+                <option <?php if(0==$vo['occur'])echo 'selected'?> value="0">单周</option>
+                <option <?php if(1==$vo['occur'])echo 'selected'?> value="1">每周</option>
+                <option <?php if(2==$vo['occur'])echo 'selected'?> value="2">双周</option>
+            </select>
+            <select name="weekdays[]" class="sr2 fl">
+                <option value="1" <?php if(1==$vo['weekday'])echo 'selected'?>>周一</option>
+                <option value="2" <?php if(2==$vo['weekday'])echo 'selected'?>>周二</option>
+                <option value="3" <?php if(3==$vo['weekday'])echo 'selected'?>>周三</option>
+                <option value="4" <?php if(4==$vo['weekday'])echo 'selected'?>>周四</option>
+                <option value="5" <?php if(5==$vo['weekday'])echo 'selected'?>>周五</option>
+                <option value="6" <?php if(6==$vo['weekday'])echo 'selected'?>>周六</option>
+                <option value="0" <?php if(0==$vo['weekday'])echo 'selected'?>>周日</option>
+            </select>
+            <select name="froms[]" onchange="if(parseInt(jQuery(this).next().next().val())<this.value)jQuery(this).next().next().val(this.value);" class="sr2 fl">
+                <?php for($ci=0;$ci<=15;$ci++):?>
+                    <option value="{$ci}" <?php if($ci==$vo['from'])echo 'selected'?>>第{$ci+1}节</option>
+                <?php endfor;?>
+            </select>
+            <span class="fl">到</span>
+            <select name="tos[]" onchange="if(parseInt(jQuery(this).prev().prev().val())>this.value)jQuery(this).val(jQuery(this).prev().prev().val());" class="sr2 fl">
+                <?php for($ci=0;$ci<=15;$ci++):?>
+                    <option value="{$ci}" <?php if($ci==$vo['to'])echo 'selected'?>>第{$ci+1}节</option>
+                <?php endfor;?>
+            </select>
+            <span class="red"><a href="javascript:;" onclick="removeTime(this);">删除</a></span>
+        </div>
+        <div class="add_place"><input type="text" name="addrs[]" class="add_input" placeholder="请输入上课地点" maxlength="50" value="{$vo.addr}"> 可选</div>
+    </div>
+    </volist>
+</div>
+<div class="add_save"><input name="submit" type="button" value="保存" class="add_btn" onclick="saveCourse();" /></div>
+</div>
+</form>
+<script type="text/javascript">
+    function addTime(){
+        jQuery.get("{:U('kc/Index/timeAjax')}",function(data){
+            jQuery('#addTime').append(data);
+        });
+    }
+    function removeTime(o){
+        jQuery(o).parents(".courseTimes").eq(0).remove();
+    }
+    function saveCourse(){
+        if(jQuery("#courseName").val().replace(/^\s*|\s*$/g, "") == ""){
+            ui.error("请输入课程名");
+            return;
+        }
+        var data=jQuery('#newkcFrm').serialize();
+
+        jQuery.post("{:U('kc/Index/doEdit')}",data,function(d){
+            var json=eval('('+d+')');
+            if( json.status == 1 ){
+                ui.success(json.info);
+                setTimeout(function(){
+                    location.href=" {:U('kc/Index/index')}"},1500);
+            }else{
+                ui.error( json.info );
+            }
+        });
+    }
+</script>
+
+<include file="../Public/_footer" />

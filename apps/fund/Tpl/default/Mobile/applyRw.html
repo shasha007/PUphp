@@ -1,0 +1,14 @@
+<include file="_header" />
+<div class="bg">
+    <div class="main">
+        <div class="f_bidcon_title b mt10">{$title}</div>
+        <div class="f_bidcon_date f14">承办截止:{$applyTime|friendlyDate}</div>
+        <div class="f_bidcon_thumb"><img src="{$attachId|getImgAttach=###,250,250,'c'}"></div>
+        <div class="f_bidcon_desc mt10 f14">
+            活动时间：{$stime|friendlyDate}开始
+            {$content|htmlspecialchars_decode}
+        </div>
+        <div class="f_bidcon_btn b f16"><a href="__URL__&act=apply_rw&id={$id}">我要承办</a></div>
+    </div>
+</div>
+<include file="_footer" />

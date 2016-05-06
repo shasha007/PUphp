@@ -1,0 +1,164 @@
+<include file="../Teacher/_header" />
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<include file="__THEME__/editor" />
+<style>
+    .tan{border: 1px solid #ccc;background: #fff;position: fixed;left:50%;top: 50%;margin-left: -100px;margin-top: -130px;display: none;}
+    .tan input{width:50px;}
+</style>
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        &nbsp;&nbsp;&nbsp;&nbsp;{$info.title}&nbsp;&nbsp;<a style="cursor: pointer; float: right;padding-right: 50px;" onclick="javascript:history.go(-1);"><<返回</a>
+    </div>
+    <div class="page_tit"><if condition="$info['title'] == ''">新增<else />编辑</if>上报文件</div>
+    <div class="form2">
+        <form method="post" action="{:U('event/Available/doAddPutFile')}" enctype="multipart/form-data">
+            <dl class="lineD adx">
+                <dt>上报标题：</dt>
+                <dd>
+                    <input type="text" name="title" value="{$info.title}" >
+                </dd>
+            </dl>
+            <dl class="lineD adx">
+                <dt>上报内容：</dt>
+                <dd>
+                    <textarea name="content" id="content" style="width:700px;height:200px">{$info.content}</textarea>
+                </dd>
+            </dl>
+            <dl class="lineD adx">
+                <dd>
+                    <dt>上报附件：</dt>
+                    <dd>
+                        <div id="uploaded_files1">
+                            <if condition="!empty($info['attachid'])">
+                                <div class="attach_span" id="attach1">
+                                    <input name="file1[]" type="hidden" value="{$info.attachid}">
+                                    <span class="attach_title">{$info.attachid|getAttachHtml}</span>
+                                    <a onclick="delFile(1,1)" href="javascript:void(0)">删除</a>
+                                </div>
+                            </if>
+                        </div>
+                        <input type="button" onclick="openUploadFile(1);" value="上传附件"/>
+                    </dd>
+                </dd>
+            </dl>
+            <dl class="lineD adx">
+                <dt></dt>
+                <dd>
+                    <input type="hidden" name="putId" value="{$info.id}">
+                </dd>
+            </dl> <!-- 编辑的时候 传的id -->                      
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var imgCount = [0,0,0];
+    var imgMax = [0,1,1];
+    var fileCount = [0,<?php if($info['attachid']):?>1<?php else:?>0<?php endif;?>];
+    var fileMax = [0,1];
+    var thumbSizeW = [0,125,1500];
+    var thumbSizeH = [0,125,357];
+    var showW = [0,100,440];
+    var showH = [0,100,100];
+    var imgId = 0;
+    var attach_type = 'putFile';
+    $(document).ready(function(){
+        loadEditor("content");
+    });
+    function getSchools(obj){
+        var span = $(obj).siblings('span');
+        if($(obj).val()==0){
+            span.hide();
+            return false;
+        }
+        span.show();
+        span.empty();
+        var cityId=$(obj).val();
+        $.get( U('fund/Admin/school') ,{cityId:cityId},function(data) {
+            var json=  $.parseJSON(data);
+            var string = "<input  type='checkbox' onclick='checkAll(this,"+cityId+")' value=''/>全部";
+            $.each(json, function(k,v)
+            {
+                string += "&nbsp;&nbsp;<input name='schools"+cityId+"[]' type='checkbox' value='"+v.id+"'>"+v.title;
+            });
+            span.append(string);
+
+        });
+    }
+
+    function add(){
+        var obj = $('#jun').clone(true).insertAfter("#jun");
+        $(obj).find("option:selected").attr('selected','');
+        $(obj).find('span').hide();
+    }
+
+
+    function checkAll(o,cityId){
+        if( o.checked == true ){
+            $('input[name="schools'+cityId+'[]"]').attr('checked','true');
+        }else{
+            $('input[name="schools'+cityId+'[]"]').removeAttr('checked');
+        }
+    }
+
+    function checkYearAll(o){
+        if( o.checked == true ){
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+    }
+
+    function adType(obj){
+        if(obj.value==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+    }
+
+    function adPlace(obj){
+        if(obj.value==0||obj.value==1){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+
+        if(obj.value<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    }
+
+
+    $(function(){
+        if($("select[name='type']").val()==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+        if($("select[name='place']").val()==1||$("select[name='place']").val()==0){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+        }
+
+        if($("select[name='place']").val()<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    });
+</script>
+<include file="_footer" />
+
+<include file="__THEME__/comm/_upload_file" />

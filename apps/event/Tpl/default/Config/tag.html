@@ -1,0 +1,74 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+  <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="add_tab()"><span>添加标签</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="del()"><span>删除标签</span></a>
+    </div>
+
+    <div class="list">
+        <input type="hidden" id="cat1" value="【<?php echo(getSchoolOrgaCat(1));?>】"/>
+        <input type="hidden" id="cat2" value="【<?php echo(getSchoolOrgaCat(2));?>】"/>
+      <form action="{:U('/Admin/doEditType')}" method="POST">
+        <table id="event_list" width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th class="line_l">ID</th>
+            <th class="line_l">标签名</th>
+            <th class="line_l">操作</th>
+          </tr>
+          <volist name="list" id='vo'>
+          <tr id="{$vo.id}">
+            <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+            <td>{$vo.id}</td>
+            <td id="title_{$vo.id}">{$vo.title}</td>
+            <td><a href="javascript:edit_tab({$vo['id']})">编辑</a> <a href="javascript:del({$vo['id']})">删除</a></td>
+          </tr>
+          </volist>
+        </table>
+      </form>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="add_tab()"><span>添加标签</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="del()"><span>删除标签</span></a>
+    </div>
+
+</div>
+<include file="../Teacher/_footer" />
+<script>
+    function add_tab(id){
+        ui.box.load('__URL__&act=editTag&id='+id,{title:'增加标签'});
+    }
+    function edit_tab(id){
+        ui.box.load('__URL__&act=editTag&id='+id,{title:'编辑标签'});
+    }
+    function del(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            alert('请选择要删除的标签！');return false;
+        }
+        if( confirm("是否删除标签？") ){
+            $.post( '__URL__&act=doDeleteTag',{id:id},function(text ){
+                if( text == 1 ){
+                    ui.success( "删除多个标签成功" );
+                    var id_list = id.split( ',' );
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#'+id_list[j]).remove();
+                    }
+                }else if( text == 2 ){
+                    ui.success( "删除成功" );
+                    $('#'+id).remove();
+                }else{
+                    ui.error( "删除失败" );
+                }
+            });
+        }
+    }
+    
+</script>

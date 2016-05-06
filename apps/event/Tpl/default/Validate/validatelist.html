@@ -1,0 +1,69 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+
+
+        <div class="form2" style="padding-bottom: 10px">
+        <form action="__URL__&act=validatelist" method="post">
+            部落名称：<input name="title" type="text" value="{$title}">
+                &nbsp;分类：
+            <select name="cid">
+                <option value="">--全部--</option>
+                <volist name='categorys' id='vo'>
+                    <php>if($cid==$vo['id']) { </php>
+                        <option value="{$vo['id']}" selected="selected">{$vo.title}</option>
+                    <php> } else { </php>
+                        <option value="{$vo['id']}">{$vo.title}</option>
+                    <php> }</php>
+                </volist>
+            </select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+
+
+    <div class="list">
+    <span>共{$list.totalRows}条记录</span>
+    <div class="page right">{$list['html']}</div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>部落名称</th>
+                <th>星级</th>
+                <th>主席</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="list['data']" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td><a href="{:U('event/GroupAnnounce/index', array('gid'=>$vo['id']))}" target="_blank">{$vo['name']}</a></td>
+                    <td><eq name="vo.vStern" value="0"><span id="stern{$vo['id']}">无</span><else/> <span id="stern{$vo['id']}">{$vo.vStern}</span></eq>星<a href="javascript:tz({$vo.id},{$vo.vStern})">【修改】</a></td>
+                    <td id="zx_{$vo.id}">{$vo.uid|getUserRealName}</td>
+                    <td>{$vo.ctime|friendlyDate}</td>
+                    <td>
+                <a href="{:U('/Validate/editGroup', array('id'=>$vo['id']))}">编辑</a>
+               <a href="javascript:void(0)" onclick="allowDisband({$vo.id})">解散</a>
+               <a href="javascript:void(0)" onclick="transfer({$vo.id})">转让</a>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+ <div class="page right">{$list['html']}</div>
+</div>
+<script>
+    function tz(id,stern){
+        ui.box.load( '{:U('/Validate/doStern')}' + '&id=' + id + '&stern=' + stern,{title:'修改部落星级'});
+    }
+
+        function allowDisband(id){
+        if(confirm('确定同意解散部落？一旦解散，不可恢复')){
+            location.href = "{:U('event/Validate/doDisband')}"+'&id='+id;
+        }
+    }
+    function transfer(id){
+      ui.box.load( '{:U('/Validate/transfer')}' + '&id=' + id,{title:'转让部落'});
+    }
+</script>
+<include file="../Teacher/_footer" />

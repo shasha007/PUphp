@@ -1,0 +1,23 @@
+<include file="_header" />
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_news.gif" alt="" /></div>
+    <div class="news_list">
+        <ul>
+            <volist name="data" id='vo'>
+                <?php $detailsUrl = U('event/Front/newsDetails',array('id'=>$eventId,'nid'=>$vo['id']))?>
+                <li <php>if($i==count($data)){</php> class="i2"<php>}</php>>
+                <div class="news_list_title">
+                    <a href="{$detailsUrl}" title="{$vo.title}">{$vo.title}</a>
+                </div>
+                <div class="news_list_date">{$vo.cTime|date='Y-m-d',###}</div>
+                <div class="news_list_desc">
+                    <a href="{$detailsUrl}">
+                        {$vo.content|text|getShort=###,170,'…'}</a></div>
+                <div class="news_list_more"><a href="{$detailsUrl}">详情>></a></div>
+            </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<include file="_footer" />

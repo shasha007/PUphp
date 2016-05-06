@@ -1,0 +1,42 @@
+<div style="height:200px;width:400px;margin:10px auto 30px auto;overflow-y:scroll;">
+    <table width="100%" border="1" cellspacing="0" cellpadding="0">
+        <tr>
+            <th>用户名</th>
+            <td>{$list.name}</td>
+        </tr>
+        <tr>
+            <th>地址</th>
+            <td>{$list.address}</td>
+        </tr>
+        <tr>
+            <th>身份证号</th>
+            <td>{$list.identity}</td>
+        </tr>
+        <tr>
+            <th>联系电话</th>
+            <td>{$list.tel}</td>
+        </tr>
+        <tr>
+            <th>邮编</th>
+            <td>{$list.zipCode}</td>
+        </tr>
+        <tr>
+            <th>商品名</th>
+            <td>{$res.name}</td>
+        </tr>
+        <tr>
+            <th>商品价格</th>
+            <td>{$res.price}</td>
+        </tr>
+        <tr>
+            <th>商品颜色</th>
+            <td>{$res.color}</td>
+        </tr>
+        <if condition="$reason neq null">
+        <tr>
+            <th>驳回原因</th>
+            <td>{$reason}</td>
+        </tr>
+        </if>
+    </table>
+</div>

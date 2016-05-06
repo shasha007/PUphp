@@ -1,0 +1,399 @@
+body {
+    font-size: 16px;
+    color: #3e3e3e;
+}
+.more-list a{
+    display: block;
+    outline: none;
+    color: #3e3e3e;
+    text-decoration: none;
+}
+.more-list-l {
+    margin: 5px 0;
+}
+
+@media screen and (max-width: 320px) {
+    .more-list-l {
+        width: 36%;
+        float: left;
+    }
+
+    .more-list-l img {
+        width: 105px;
+        height: 105px;
+    }
+}
+
+@media screen and (min-width: 321px ) and (max-width: 390px) {
+    .more-list-l {
+        width: 32%;
+        float: left;
+    }
+
+    .more-list-l img {
+        width: 105px;
+        height: 105px;
+    }
+}
+
+@media screen and (min-width: 391px ) and (max-width: 480px) {
+    .more-list-l {
+        width: 30%;
+        float: left;
+    }
+
+    .more-list-l img {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+@media screen and (min-width: 481px ) {
+    .more-list-l {
+        width: 20%;
+        float: left;
+    }
+
+    .more-list-l img {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+.more-list li {
+    min-width: 100%;
+    border-bottom: 1px solid #efefef;
+}
+
+.more-list-r {
+    min-width: 62%;
+    width: 62%;
+    float: left;
+    margin-left: 5px;
+    margin-top: 5px;
+    /*padding: 15px 0;*/
+}
+
+.more-flag {
+    height: 25px;
+}
+
+.more-flag span {
+    font-size: 12px;
+    padding: 2px 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+.more-flag span:nth-child(1) {
+    border: 1px solid #d36d07;
+    color: #d36d07;
+}
+
+.more-flag span:nth-child(2) {
+    border: 1px solid #3bb473;
+    color: #3bb473;
+}
+
+.more-flag span:nth-child(3) {
+    border: 1px solid #ea5504;
+    color: #ea5504;
+}
+
+.more-name {
+    height: 45px;
+}
+
+.more-school  ,.more-time {
+    display: block;
+    font-size: 12px;
+    padding-bottom: 5px;
+    overflow: hidden;
+    height: 20px;
+    line-height: 20px;
+    color: #888;
+}
+.more-name {
+    width: 100%;
+    height: 40px;
+
+    font-size: 16px;
+    overflow: hidden;
+}
+.more-list-r{
+    font-size: 12px;
+}
+.more-list{
+    margin-top: 5px;
+}
+
+html{-webkit-user-select:none}
+
+
+
+.h-scheve {
+    position: fixed;
+    top:0;
+    display: flex;
+    width: 100%;
+    height: 40px;
+    max-width: 640px;
+    margin: 0 auto;
+
+    background-color: #F2F1ED;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.h-scheve div {
+
+    flex: 1;
+    border-right: 1px solid #E1E0DC;
+}
+
+.h-scheve-show1 {
+    position: fixed;
+    top:40px;
+    width: 100%;
+    max-width: 640px;
+
+    margin : 0 auto;
+    background-color: #fff;
+    z-index: 999;
+}
+.h-show1-show{
+    display: inherit !important;
+    height: auto!important;
+    animation:fadeIn 0.5s !important;
+    -webkit-animation:fadeIn 0.5s !important;
+}
+.h-scheve-show1 header {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color:#ea5504;
+    border-bottom: 1px solid #efefef;
+}
+.h-show-1 ul{
+    margin-top: 10px;
+}
+.h-show-1 li {
+    float: left;
+    width: 22%;
+    margin-right: 4%;
+    padding: 5px 0;
+    font-size: 14px;
+}
+.h-show-1 li > img{
+    border-radius: 100%;
+}
+.h-show-1 li > p {
+    text-align: center;
+
+}
+.h-show-1 li:nth-child(4n) {
+    margin-right: 0;
+}
+
+
+.h-show-2 > li{
+    width: 100%;
+    height: 40px;
+    padding: 0 15px;
+    line-height: 40px;
+    border-bottom: 1px solid #EFEFEF;
+}
+.h-show-3 > li{
+    width: 50%;
+    height: 40px;
+    float: left;
+    padding: 0 15px;
+    line-height: 40px;
+    border-bottom: 1px solid #EFEFEF;
+    border-right: 1px solid #EFEFEF;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0; 
+    }
+    50% {
+        opacity: 0; 
+    }
+    100% {
+        opacity: 1; 
+    }
+}
+
+.h-show-3,.h-show-2,.h-show-1{
+    display: none;
+}
+
+
+
+.event-more-list {
+    margin-top: 10px;
+}
+
+.event-more-list a {
+    display: block;
+    outline: none;
+    color: #3e3e3e;
+    text-decoration: none;
+}
+
+.event-more-list-l {
+    margin: 5px 0;
+}
+
+@media screen and (max-width: 320px) {
+    .event-more-list-l {
+        width: 36%;
+        float: left;
+    }
+
+    .event-more-list-l img {
+        width: 105px;
+        height: 105px;
+    }
+}
+
+@media screen and (min-width: 321px ) and (max-width: 390px) {
+    .event-more-list-l {
+        width: 32%;
+        float: left;
+    }
+
+    .event-more-list-l img {
+        width: 105px;
+        height: 105px;
+    }
+}
+
+@media screen and (min-width: 391px ) and (max-width: 480px) {
+    .event-more-list-l {
+        width: 30%;
+        float: left;
+    }
+
+    .event-more-list-l img {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+@media screen and (min-width: 481px ) {
+    .event-more-list-l {
+        width: 20%;
+        float: left;
+    }
+
+    .event-more-list-l img {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+.event-more-list li {
+    min-width: 100%;
+    border-bottom: 1px solid #efefef;
+}
+
+.event-more-list-r {
+    min-width: 62%;
+    width: 62%;
+    float: left;
+    margin-left: 5px;
+    margin-top: 5px;
+
+}
+
+.event-more-flag {
+    height: 25px;
+}
+
+.event-more-flag span {
+    font-size: 12px;
+    padding: 2px 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+.event-more-flag span:nth-child(1) {
+    border: 1px solid #d36d07;
+    color: #d36d07;
+}
+
+.event-more-flag span:nth-child(2) {
+    border: 1px solid #3bb473;
+    color: #3bb473;
+}
+
+.event-more-flag span:nth-child(3) {
+    border: 1px solid #ea5504;
+    color: #ea5504;
+}
+
+.event-more-school, .event-more-time {
+    display: block;
+    font-size: 12px;
+    padding-bottom: 5px;
+    overflow: hidden;
+    height: 20px;
+    line-height: 20px;
+    color: #888;
+}
+
+.event-more-name {
+    width: 100%;
+    height: 42px;
+    font-size: 15px;
+    overflow: hidden;
+}
+
+.event-more-list-r {
+    font-size: 12px;
+}
+
+
+.event-header {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    line-height: 50px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.event-header div div:nth-child(1) {
+    width: 65%;
+    height: 35px;
+    color: #888;
+    overflow: hidden;
+}
+
+.event-header div div:nth-child(2) {
+    width: 35%;
+    height: 35px;
+    color: #3e3e3e;
+    padding-right: 25px;
+}
+
+.event-header span {
+    margin: 18px 0 0 10px;
+}
+
+
+#h-back-cover {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+     display: none;
+    background: #000;
+    opacity: 0.5;
+    z-index: 998;
+}

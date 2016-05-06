@@ -1,0 +1,19 @@
+<div class="tit_tab">
+    <ul>
+        <li><a href="{:U('pufinance/PufinanceOrder/orderList')}"<?php if(!isset($status)):?>
+            class="on"
+            <?php endif;?>
+            >全部</a>
+        </li>
+        <li><a href="{:U('pufinance/PufinanceOrder/orderList',array('status'=>0))}"<?php if(isset($status) && $status==0):?>
+			class="on"
+			<?php endif;?>
+		    >待风控审核</a>
+        </li>
+        <li><a href="{:U('pufinance/PufinanceOrder/orderList',array('status'=>2))}" <?php if($status==2):?>
+            class="on"
+            <?php endif;?>
+            >已风控通过</a>
+        </li>
+    </ul>
+</div>

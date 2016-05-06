@@ -1,0 +1,33 @@
+<include file="../Lesson/_header" />
+<div class="kc_content">
+    <div class="c_left">
+        <div class="c_fl">
+            <div class="c_fl_menu l_30 b f_14">我要报名</div>          
+            <div class="kc_bm f_14">
+                <form action="{:U('/LessonMember/doAddMember',array('id'=>$courseId))}" method="post">
+                    <div class="kc_name">姓名：{$name}</div>
+                    <if condition="$need_tel eq 1"> 
+                        <div class="kc_tel">手机：{$tel}</div>
+                    </if>
+                    <if condition="($limitCount gt 0) AND ($deadline gt time())">
+                        <div class="kc_bm_btn"><input name="bm" type="submit" value="确 定" class="kc_pl_btn b" /></div>
+                    </if>
+                </form>
+                <div class="kc_bm_note b">
+                    <if condition="$limitCount lt 1">
+                        <!--登陆后不能报名的提示1-->名额已满，感谢关注！<br />
+                    </if>
+                    <if condition="($tel eq '') AND ($need_tel eq 1)"> 
+                        <!--登陆后不能报名的提示2-->系统中无法提取你的手机号码，请前去个人中心绑定手机！<br />
+                    </if>
+                    <?php if($deadline<=time()): ?>
+                    <!--登陆后不能报名的提示3-->报名时间已结束，请关注下次课程活动！
+                    <?php endif; ?>
+                </div>
+            </div>  
+        </div>           
+    </div>
+    <div class="c_right">
+        <include file="../Lesson/_right" />
+    </div>
+    <include file="../Lesson/_footer" />

@@ -1,0 +1,57 @@
+<include file="_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <div class="form2">
+  	<form method="post" action="{:U('home/Themes/doAddThemes')}" enctype="multipart/form-data">
+    <div style="background-color:#E6E9ED;padding:10px 0px">
+    <dl class="">
+      <dt><span>*</span>话题（最多15个字）：</dt>
+      <dd>
+        <input type="text" name="name" value="{$name}" maxlength="15" />
+      </dd>
+    </dl>
+
+    <dl class="">
+      <dt><span>*</span>简介：</dt>
+      <dd>
+        <textarea name="intro" cols="40" rows="2">{$intro}</textarea>
+      </dd>
+    </dl>
+    </div>
+    <dl class="">
+      <dt><span>*</span>图片：</dt>
+      <dd>
+        <if condition="$pic">
+          <img alt="{$name}" src="{:PIC_URL}/data/uploads/{$pic}" />
+          <input name="exsitPic" type="hidden" value="{$pic}" />
+          <br />
+          <br />
+        </if>
+        <input name="pic" type="file" /> 建议图片86x*86px
+      </dd>
+    </dl>
+      <dl class="">
+        <dt><span>*</span>是否开启(前台是否显示)：</dt>
+        <dd>
+          <label><input name="isShow" type="radio" value="1" <eq name="isShow" value="1">checked</eq> >是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input name="isShow" type="radio" value="0" <eq name="isShow" value="0">checked</eq> >否</label>
+        </dd>
+      </dl>
+    <dl class="">
+      <dt><span>*</span>设为置顶：</dt>
+      <dd>
+        <label><input name="isTop" type="radio" value="1" <eq name="isTop" value="1">checked</eq> >是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><input name="isTop" type="radio" value="0" <eq name="isTop" value="0">checked</eq> >否</label>
+      </dd>
+    </dl>
+
+    <div class="page_btm">
+      <if condition="$id != 0">
+        <input type="hidden" name="id" value="{$id}" />
+      </if>
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+    </form>
+  </div>
+</div>
+<include file="_footer" />

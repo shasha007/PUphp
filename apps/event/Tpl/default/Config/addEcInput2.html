@@ -1,0 +1,147 @@
+<div style="width:600px;overflow-y:scroll;height:500px;">
+    <input type="hidden" id="id" value="{$obj.id}"/>
+    <input type="hidden" id="fileId" value="{$fileId}"/>
+    <input type="hidden" id="type" value="3"/>
+    <ul id="list_vote" class="list_vote lineS_btm">
+        <li>
+            <label>单选问题：<span class="cRed">*</span></label>
+            <div class="c1"><input id="title" name="" type="text" size="40" class="txt_vote" value ="{$obj.title}"/></div>
+        </li>
+        <li>
+            <label>简短说明：</label>
+            <div class="c1"><textarea id='desc' cols='40' rows='4'>{$obj.desc}</textarea>250字内</div>
+        </li>
+        <li>
+        <div class="page_btm">得分可填数字如：3.45 或百分率【如是否体育特长生 是 50%，否 100%】</div>
+        </li>
+        <li>
+        <!--候选项-->
+        <div id="opt_list"  class="lineS_top pt10 mt10">
+            <?php if(isset($obj)):?>
+                <?php foreach($obj['opt'] as $v):?>
+                <dl>
+                    <label class="vote_num">侯选项：</label>
+                    <div class="c1">
+                        <input name="" type="text" class="vote_opt" size="40" value="{$v[0]}"/>
+                    得分：<input name="" type="text" class="vote_note" size="5" value="{$v[1]}"/>
+                    <a href="javascript:void(0)" class="vote_delete hover del" onclick="delOpt(this)"></a>
+                    </div>
+                    <div class="c"></div>
+                </dl>
+                <?php endforeach;?>
+            <?php else:?>
+                <?php for($i=1;$i<=2;$i++):?>
+                <dl>
+                    <label class="vote_num">侯选项：</label>
+                    <div class="c1">
+                    <input name="" type="text" class="vote_opt" size="40"/>
+                    得分：<input name="" type="text" class="vote_note" size="5"/>
+                    <a href="javascript:void(0)" class="vote_delete hover del" onclick="delOpt(this)"></a>
+                    </div>
+                    <div class="c"></div>
+                </dl>
+                <?php endfor;?>
+            <?php endif;?>
+        </div>
+        <!--//候选项-->
+        </li>
+        <li>
+            <label>&nbsp;</label>
+            <div class="c1"><a href="javascript:void(0)" onclick="moreList(this)" class="ml5" id="ops">增加新选项</a></div>
+            <div class="c"></div>
+        </li>
+    </ul>
+    <div class="page_btm">
+        <input type="button" class="btn_b" value="提交" onclick="editType()"/>
+        <input type="button" class="btn_b" value="取消" onclick="javascript:ui.box.close();"/>
+    </div>
+</div>
+<script>
+    function delOpt(o){
+        $(o).parent().parent().remove();
+    }
+    var num_limit = 30;
+    function moreList(){
+        var new_vote = $($('#opt_list').children().get(0)).clone();
+        var flag = $('#opt_list').children('dl').size();
+        if( num_limit <= flag ){
+            alert('候选项最多'+num_limit+'个');
+            return;
+        }
+        new_vote.children( 'span' ).html( "op"+flag+":" );
+        new_vote.find( 'input' ).val( '' );
+        new_vote.show();
+        $( '#opt_list' ).append( new_vote );
+    }
+    function editType(){
+        var title = $( '#title' ).val();
+        title = title.replace(/\s+/g,"");
+        var tlen = title.length;
+        if(tlen<=0){
+            ui.error("单选问题不能为空");
+            $( '#title' ).focus();
+            return false;
+        }else if(tlen>100){
+            $( '#title' ).focus();
+            ui.error("问题长度不大于100个字符");
+            return false;
+        }
+        var flag = 0;
+        $(".vote_opt").each(function (i) {
+            if($.trim($(this).val())) flag++;
+        })
+        if(flag<2){
+            ui.error("最少填写2个侯选项");
+            $( '.vote_opt' ).focus();
+            return false;
+        }
+        var data = {};
+        data.name =[];
+        var inValue = '';
+        var checkRes = true;
+        $(".vote_opt").each(function(i){
+            inValue = $.trim($(this).val());
+            if(getLength(inValue) > 100){
+                ui.error("候选项长度不能大于100个字符");//选项最多20个字符
+                $(this).focus();
+                checkRes = false;
+                return false;
+            }
+            if(inValue == '' || getLength(inValue.replace(/\s+/g,"")) == 0){
+                ui.error("候选项内容不能为空");
+                $(this).focus();
+                checkRes = false;
+                return false;
+            }
+            data.name[i] = inValue;
+        });
+        if(!checkRes) return false;
+        var regel = /^[.\d]+[%]*$/;
+        data.note =[];
+        $(".vote_note").each(function(i){
+            inValue = $.trim($(this).val());
+            if(!regel.test(inValue)){
+                ui.error('得分请输入数字,或百分率。');
+                $(this).focus();
+                checkRes = false;
+                return false;
+            }
+            data.note[i] = inValue;
+        });
+        if(!checkRes) return false;
+
+        var desc = $('#desc').val();
+        var fileId = $('#fileId').val();
+        var id = $('#id').val();
+        $.post( '__URL__&act=doAddEcInput',{title:title,must:1,fileId:fileId,type:3,desc:desc,name:data.name,note:data.note,id:id},function( res ){
+            var json =$.parseJSON(res);
+            if( json.status ==0 ){
+                ui.error(json.info);
+            }else{
+                ui.box.close();
+                ui.success(json.info);
+                rebox(fileId);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,18 @@
+
+<form action="{:U('event/Author/doAddFlash',array('id'=>$eventId))}" enctype="multipart/form-data" method="post">
+    <if condition="$memberId">
+        <input name="uid" value="{$memberId}" type="hidden">
+    </if>
+    <table cellpadding=3 cellspacing=3>
+        <tr>
+            <td align="right"><span style="color: #F00">*</span>视频网址:</td>
+            <td align="left">
+                请输入新浪播客、优酷网、酷6网的视频播放页链接： <br/>
+                <input size="50" type="text" name="link" value=""  />
+            </td>
+        </tr>
+    </table>
+    <div >
+        <input type="submit" class="btn_b" value="确定">
+    </div>
+</form>

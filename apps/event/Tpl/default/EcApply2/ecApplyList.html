@@ -1,0 +1,27 @@
+<include file="../School/_header" />
+<div class="hd_c i1">
+    <center><div class="intro_c_zt red b">【请选择申请类别】</div></center>
+    <div class="hd_f_list">
+        <ul>
+            <volist name="list" id='vo'>
+                <?php if($vo['is_folder']):?>
+                    <li class="f14 b"><span class="kt_icon1"> {$vo.title}</span></li>
+                <?php else:?>
+                    <a href="__URL__&act=ecApply&id={$vo.id}" title="{$vo.title}">
+                        <li>
+                            <span class="kt_icon2">{$vo.title}</span> <span class="red">(点击申请)</span>
+                        </li>
+                    </a>
+                <?php endif;?>
+                <?php foreach($vo['files'] as $w):?>
+                    <a href="__URL__&act=ecApply&id={$w.id}" title="{$w.title}">
+                        <li style="padding-left:60px; width:893px;">
+                            <span class="kt_icon2">{$w.title}</span> <span class="red">(点击申请)</span>
+                        </li>
+                    </a>
+                <?php endforeach;?>
+            </volist>
+        </ul>
+    </div>
+</div>
+<include file="../School/_footer" />

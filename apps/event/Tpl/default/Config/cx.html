@@ -1,0 +1,27 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit">诚信系统配置</div>
+    <form method="post" action="{:U('event/config/doCx')}">
+        <div class="form2">
+            <dl class="lineD">
+                <dt>警告次数 (1-30)：</dt>
+                <dd><input name="cxjg" type="text" value="{$cxjg}"> 几次未签到，将进行警告</dd>
+            </dl>
+            <dl class="lineD">
+                <dt>禁活动次数 (2-50)：</dt>
+                <dd><input name="cxjy" type="text" value="{$cxjy}"> 几次未签到，将禁止参加活动 (需大于警告次数)</dd>
+            </dl>
+            <dl class="lineD">
+                <dt>禁活动天数 (1-100)：</dt>
+                <dd><input name="cxday" type="text" value="{$cxday}"> 禁活动后，几天不可报名活动</dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<include file="../Teacher/_footer" />

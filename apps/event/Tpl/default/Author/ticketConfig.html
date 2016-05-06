@@ -1,0 +1,117 @@
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="right">打开投票：</td>
+                <td>
+                    <input type="radio" value="1" name="isTicket" <eq name="isTicket" value="1">checked</eq> /> 打开
+                    <input type="radio" value="0" name="isTicket" <eq name="isTicket" value="0">checked</eq> /> 关闭
+                </td>
+            </tr>
+            <tr><td height="8" colspan="20"></td></tr>
+            <tr>
+                <td align="right">投票必须先签到：</td>
+                <td>
+                    <input type="radio" value="1" name="is_check_in" <eq name="is_check_in" value="1">checked</eq> /> 是
+                    <input type="radio" value="0" name="is_check_in" <eq name="is_check_in" value="0">checked</eq> /> 否
+                </td>
+            </tr>
+            <tr><td height="8" colspan="20"></td></tr>
+            <tr>
+                <td align="right">每人最多可投(1-100)：</td>
+                <td><input type="text" name="maxVote"  value="{$maxVote}" size="5" /> 票</td>
+            </tr>
+            <tr><td height="8" colspan="20"></td></tr>
+            <tr>
+                <td align="right">可否重复投票 ：</td>
+                <td>
+                    <input type="radio" value="1" name="repeated_vote" <eq name="repeated_vote" value="1">checked</eq> /> 可重复
+                    <input type="radio" value="0" name="repeated_vote" <eq name="repeated_vote" value="0">checked</eq> /> 不可重复
+                </td>
+            </tr>
+            <tr><td height="8" colspan="20"></td></tr>
+            <tr>
+                <td align="right">票必须全部投完 ：</td>
+                <td>
+                    <input type="radio" value="1" name="allTicket" <eq name="allTicket" value="1">checked</eq> /> 是
+                    <input type="radio" value="0" name="allTicket" <eq name="allTicket" value="0">checked</eq> /> 否
+                </td>
+            </tr>
+            <tr>
+                <td align="right">是否允许每日投票 ：</td>
+                <td>
+                    <input type="radio" value="1" name="repeatTicket" <eq name="repeatTicket" value="1">checked</eq> /> 是
+                    <input type="radio" value="0" name="repeatTicket" <eq name="repeatTicket" value="0">checked</eq> /> 否
+                </td>
+            </tr>
+            <tr>
+                <td align="right">允许投票年级 ：</td>
+                <td><input type="text" name="allowYear"  value="{$allowYear}" size="20" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><span class="cGray2">2013,2014多个用英文逗号隔开，不填则不限制</span></td>
+            </tr>
+            <tr>
+                <td align="right">选手投票规则 ：</td>
+                <td>
+                    <label><input type="radio" name="player_sorted" value="0" <eq name="player_sorted" value="0">checked</eq>> 按票票数由高到低排序</label>
+                    <label><input type="radio" name="player_sorted" value="1" <eq name="player_sorted" value="1">checked</eq>> 随机排序</label>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">允许投票院系 ：</td>
+                <td>
+                    <input type="hidden" name="allowSid1" id="showSids" value="<?php if($allowSid1):?>0,{$allowSid1},<?php endif;?>"/>
+                     <input type="button" class="p_btn" value="选择院系" onclick="selectSchool(this);"/>
+                     <span class="cGray2">（不选则不限制）</span>
+                     <span id="xySelected">
+                         <volist name="sidArr" id='vo'>
+                             <br/>{$vo|tsGetSchoolName}
+                         </volist>
+                     </span>
+                </td>
+            </tr>
+        </table>
+        <div class="button_div">
+            <input type="button" onclick="submit({$eventId})" class="btn_b" value="确定" />
+        </div>
+<script>
+    function submit(id){
+        isTicket = $( 'input[name="isTicket"]:checked' ).val();
+        repeated_vote = $( 'input[name="repeated_vote"]:checked' ).val();
+        allTicket = $( 'input[name="allTicket"]:checked' ).val();
+        maxVote = $( 'input[name="maxVote"]' ).val();
+        allowYear = $( 'input[name="allowYear"]' ).val();
+        allowSid1 = $( 'input[name="allowSid1"]' ).val();
+        repeatTicket = $('input[name="repeatTicket"]:checked').val();
+        player_sorted = $('input[name="player_sorted"]:checked').val();
+        is_check_in = $('input[name="is_check_in"]:checked').val();
+        
+        $.post(U('event/Author/doTicketConfig'),{id:id,isTicket:isTicket,repeated_vote:repeated_vote,maxVote:maxVote,allTicket:allTicket,allowYear:allowYear,allowSid1:allowSid1,repeatTicket:repeatTicket,player_sorted:player_sorted,is_check_in:is_check_in},function( text ){
+            var json =$.parseJSON(text);
+            if( json.status == 1 ){
+                ui.success( json.info );
+                setTimeout(function(){ui.box.close();},1500);
+            }else{
+                ui.error( json.info );
+            }
+        });
+    }
+    var sid = {$school.id};
+    function selectSchool(en){
+        var typevalue = $("#showSids").val();
+        ui.box.load(U('event/Index/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择院系',noCheck:'yes',zIndex:'1000001'});
+    }
+    function treeCheckDiy(nodes){
+        $('#xySelected').html('');
+        var html='';
+        for(var i=0;i<nodes.length;i++){
+            if(nodes[i].id){
+                html += '<br/>'+nodes[i].name;
+            }
+        }
+        $('#xySelected').html(html);
+    }
+</script>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/js/ztree/zTreeStyle.css" />
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.core-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.excheck-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.exedit-3.5.min.js" ></script>

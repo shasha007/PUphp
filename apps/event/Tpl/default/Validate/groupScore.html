@@ -1,0 +1,75 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+        <form method="post" action="__URL__&act=groupScore">
+            标题：<input name="title" type="text" value="{$_POST.title}">
+            &nbsp;&nbsp;分类：<select name="cid0">
+                <option value="0">--请选择--</option>
+                <foreach name="clist" item="val">
+                    <option value="{$val.id}" <?php if($_POST['cid0']==$val['id']):?>selected<?php endif;?>>{$val.title}</option>
+                </foreach>
+            </select>
+            &nbsp;&nbsp;部门：<select name="category">
+                <option value="0">--请选择--</option>
+                <option value="1" <?php if($_POST['category']==1):?>selected<?php endif;?>>学生部门</option>
+                <option value="2" <?php if($_POST['category']==2):?>selected<?php endif;?>>团支部</option>
+                <option value="3" <?php if($_POST['category']==3):?>selected<?php endif;?>>学生社团</option>
+            </select>
+            &nbsp;&nbsp;院系：<select name="sid1">
+                <option value="0">--请选择--</option>
+                <foreach name="slist" item="val">
+                    <option value="{$val.id}" <?php if($_POST['sid1']==$val['id']):?>selected<?php endif;?>>{$val.title}</option>
+                </foreach>
+            </select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                    <label for="checkbox"></label>
+                </th>
+                <th>排名</th>
+                <th>部门</th>
+                <th>院系</th>
+                <th>分类</th>
+                <th>部落名</th>
+                <th>分数</th>
+                <th>操作</th>
+            </tr>
+            <foreach name="data" item="vo">
+                <tr>
+                    <td style="width:30px;">
+                        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                        <label for="checkbox"></label>
+                    </td>
+                    <td>{$vo.num}</td>
+                    <td>{$vo.category}</td>
+                    <td>{$vo.sid1}</td>
+                    <td>{$vo.cid0}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.activ_num}</td>
+                    <td><a href="__URL__&act=getScore&id={$vo.id}">查看</a>
+                        <a href="{:U('event/Validate/excel', array('id'=>$vo['id']))}">导出</a>
+
+                    </td>
+                </tr>
+            </foreach>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+
+</script>
+<include file="../Teacher/_footer" />

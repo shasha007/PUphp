@@ -1,0 +1,58 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <include file="_rw_tab" />
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>公司名称</th>
+                <th>任务名称</th>
+                <th>截止申领日期</th>
+                <th>任务奖金</th>
+                <th>申领成功部落数</th>
+                <th>待审核部落数</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.company}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.applyTime|friendlyDate}</td>
+                    <td>{$vo.needMoney}</td>
+                    <td>{$vo.passCnt}</td>
+                    <td>{$vo.waitCnt}</td>
+                    <td>
+                        <a href="__URL__&act=rwAdd&id={$vo.id}">编辑</a>
+                        <a href="javascript:void(0);" onclick="dodelete({$vo.id});">删除</a>
+
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+
+<include file="_footer" />
+
+<script>
+    //删除
+    function dodelete(id){
+        if(window.confirm('确认删除？')){
+             $.post('__URL__&act=delRw',{id:id},function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else{
+                    ui.success('操作成功');
+                    ui.box.close();
+                    $('#list_'+id).remove();
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,39 @@
+<include file="../Public/_header" />
+<div class="so_main">
+    <div class="page_tit">登录情况统计</div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">
+        <?php for($i=1;$i<5;$i++): ?>
+            <?php if($i==$p):?>
+            <span class="current">{$i}</span>
+            <?php else:?>
+            <a href="/index.php?app=admin&mod=Home&act=tg&p={$i}">{$i}</a>
+            <?php endif;?>
+        <?php endfor; ?>
+        </div>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l">ID</th>
+                <th class="line_l">姓名</th>
+                <volist id="vo" name="days">
+                <th class="line_l">{$vo}</th>
+                </volist>
+            </tr>
+            <volist id="vo" name="list">
+                <tr overstyle='on'>
+                <volist id="vo2" name="vo">
+                    <td>{$vo2}</td>
+                </volist>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录 </span>
+    </div>
+</div>
+<include file="../Public/_footer" />

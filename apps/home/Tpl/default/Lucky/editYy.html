@@ -1,0 +1,82 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <form action="{:U('home/Lucky/doEditYy')}" enctype="multipart/form-data" method="post" onsubmit="return check();">
+        <input type="hidden" name="id" value="{$id}" />
+        <div class="form2">
+            <input type="hidden" name="yyact" value="{$yyact}"/>
+            <dl class="lineD">
+                <dt>商品ID：<span style="color: #F00">*</span></dt>
+                <dd><input name="pid" type="text" value="{$pid}"></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>中奖率：<span style="color: #F00">*</span></dt>
+                <dd>1 / <input name="prozent" type="text" value="{$prozent}"
+                    onkeyup="if(this.value.length==1)
+                    this.value=this.value.replace(/[^1-9]/g,'')
+                    else this.value=this.value.replace(/\D/g,'')"
+                    onafterpaste="if(this.value.length==1)
+                    this.value=this.value.replace(/[^1-9]/g,'')
+                    else this.value=this.value.replace(/\D/g,'')">
+                <span class="cGray2">输入整数，例如1000表示千分之一</span></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>费用(可多选)：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <?php foreach($costs as $v): ?>
+                    <label><input name="cost[]" type="checkbox" value="{$v}"
+                             <?php $key='cost'.$v; if($$key==1)echo 'checked'?>/>{$v}</label>
+                    <?php endforeach; ?>
+                    PU币
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>同一用户可否重复中奖：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input type="radio" value="1" name="canRepeat" <eq name="canRepeat" value="1">checked</eq> />可
+                    <input type="radio" value="0" name="canRepeat"
+                           <?php if(!$canRepeat):?>checked<?php endif;?>/>否
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>每日中奖上限：<span style="color: #F00">*</span></dt>
+                <dd>0代表不限 <input name="dayNum" type="text" value="{$dayNum}"></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>抽奖类型：</dt>
+                <dd>
+                    <select name="lucky_type">
+                        <option value="0" <?php echo ($lucky_type==0)?'selected':'' ?>>摇一摇抽奖</option>
+                        <option value="1" <?php echo ($lucky_type==1)?'selected':'' ?>>新年拜年</option>
+                    </select>
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+function check(){
+    if(!$( 'input[name="pid"]' ).val()){
+        ui.error("商品ID不能为空");
+        return false;
+    }
+    if(!$( 'input[name="prozent"]' ).val()){
+        ui.error("中奖率不能为空");
+        return false;
+    }
+    var costs = '';
+    $.each($('input:checked'), function(i, n){
+        costs +=  $(n).val();
+    });
+    if(costs==''){
+        ui.error("费用不能为空");
+        return false;
+    }
+    return true;
+}
+</script>
+<include file="_footer" />

@@ -1,0 +1,45 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <include file="_act_tab" />
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>项目名称</th>
+                <th>部落</th>
+                <th>学校</th>
+                <th>申请人</th>
+                <th>状态</th>
+                <th>申请日期</th>
+                <th>附件</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.gname}</td>
+                    <td>{$vo.sid|tsGetSchoolName}</td>
+                    <td>{$vo.uid|getUserRealname}</td>
+                    <td>{$vo.statusName}</td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td>{$vo.attachId|getAttachHtml2}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="cyDetail({$vo.id});">详情</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+<include file="_footer" />
+
+<script>
+    function cyDetail(id){
+        ui.box.load('__URL__&act=cyDetail&id='+id,{title:'申请详情'});
+    }
+</script>

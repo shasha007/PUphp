@@ -1,0 +1,91 @@
+body {
+    font-size: 16px;
+    color: #3e3e3e;
+    background-color: #f2f1ee;
+}
+.star-body {
+    background-color: #fff;
+}
+
+.star-body li {
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 15px;
+}
+
+.add-friend-star {
+    width: 15%;
+    margin-left: 5%;
+
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    text-align: center;
+    color: #ea5504;
+    border: 1px solid #ea5504;
+    border-radius: 5px;
+}
+
+.star-person {
+    width: 15%;
+    float: left;
+}
+
+@media screen and (max-width: 320px) {
+    .add-friend-star {
+        margin-top: 3%;
+    }
+    .star-person {
+       margin-top: 0;
+    }
+    .star-school {
+        margin-top: 1%;
+    }
+}
+
+@media screen  and (min-width: 321px) {
+    .add-friend-star {
+        margin-top: 5%;
+    }
+    .star-person {
+        margin-top: 0;
+    }
+    .star-school {
+        margin-top: 3%;
+    }
+
+}
+
+.star-person img {
+    width: 100%;
+    border-radius: 100%;
+}
+
+.star-school {
+    width: 60%;
+    margin-left: 5%;
+    float: left;
+}
+
+.star-school p:nth-child(2), .star-school p:nth-child(3) {
+
+    font-size: 12px;
+    color: #888;
+}
+
+.jiaobiao {
+    position: relative;
+    top: 0;
+    left: 90%;
+    height: 15px;
+}
+
+.star-body li:last-child {
+    border-bottom: 1px solid #efefef;
+}
+.star-body li:first-child{
+    border-top: 1px solid #efefef;
+}
+.to-user-home{
+    display: block;
+}

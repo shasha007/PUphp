@@ -1,0 +1,251 @@
+<include file="../Public/_header" />
+
+	<div class="content clearfix under-suggest">
+
+<div class="index_block_l mt-0" style="min-height:860px">
+<div class="App_main_2col_r"> 					
+					<div class="appchannel_stat_tab">
+						<div class="stat_total">
+							
+							<php>if($app['cid0']>0) { </php>												
+							{$app.cid0|getCategoryName}
+							-
+							<php> } </php>			
+							<php>if($app['cid1']>0) { </php>							
+							{$app.cid1|getCategoryName}	
+							- 
+							<php> } </php>
+							{$app.title|text|getShort='30'}
+						</div>
+					</div>
+					
+					<div class="app-intro">
+					
+						<div class="app-icon">
+							<img src="{$app.icon|get_document_url}" />
+						</div>
+
+						<div class="app-content">
+							<div>
+							<h2>{$app.title|text|getShort='30'}</h2>
+							<span>浏览数:{$app.readCount} &nbsp;|&nbsp; 下载数:{$app.downloadCount}</span>
+							<div>&nbsp;</div>
+							{$app.content}
+							</div>
+							
+
+					
+						</div>
+					
+												
+						<div class="app-btn">
+							<php>if(!empty($app['appfile'])) {</php>						
+								<a href="{$app.appfile|get_document_url}" class="local appdown"></a>		
+								<br />
+							<php>}</php>
+							<php>if(!empty($app['url'])) {</php>
+							<a href="{$app.url}" target=_blank class="market appdown"></a>
+							<php>}</php>
+						</div>			
+															
+						<div class="clearfix" />																		
+					</div>
+						<div class="clear" style="height:10px;"></div>
+						</div>
+						<div class="viewRC">
+						<div class="c1">
+				            {:W('Comment',array('type'=>'appstore','appid'=>$app['id'],'author_uid'=>$uid,'title'=>$app['title'], 'url'=>U('appstore/Index/app',array('id'=>$app['id'])), 'table'=>'appstore_app','id_field'=>'id','comment_count_field'=>'commentCount'))}
+						</div>
+				      </div>
+				
+
+</div>
+
+				</div>
+				<div class="index_block_r">
+				    <div class="index_list">
+				    <div id="top-rank-list" class="section-wrap clearfix" data-zone="app-hot-all">
+				            <div class="title">
+				            <h4>最新推荐</h4>
+				            <!--<span class="top-rank-list-title-banner"></span>-->
+				            <span class="section-footer"></span>
+				        </div>
+				        <ol id="indexWeeklist" class="special-rank-list  clearfix" data-zone="app-hot-all" data-pos="index">
+
+
+
+				<volist name="recomList1" id="vo">				
+					<php>					
+						if($i>10) {
+							break;
+						}
+						if($i==1) {
+					</php>		
+				    <li class="first" style="height: 79px; ">
+				    <div class="hide-target" style=""><span style="margin-top: 25px; " class="rank-num rank-num1">1</span>
+				<dl class="app-single-item">
+				    <dt>
+				        <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-icon"><img width="64" height="64" src="{$vo.icon|get_document_url}"><i class="app-single-round" >&nbsp;</i></a>
+				    </dt>
+				    <dd>
+				    <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-name" >{$vo.title}</a>
+					<p class="app-used-amount"><strong>{$vo['readCount']}</strong>浏览</p>
+				    <p class="app-used-amount"><strong>{$vo['downloadCount']}</strong>下载</p>
+				            </dd>
+				</dl>
+				    </div>
+				    </li>
+
+				<php>} else {</php>
+
+				 <li>
+				  <div class="small-icon">
+				  <span class="rank-trend rank-keep"></span>
+				<span class="rank-num rank-num<php>echo $i;</php>"><php>echo $i;</php></span>
+				<a class="app-icon" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" ><img width="16" height="16" alt="" src="{$vo.icon|get_document_url}"> </a>
+				<a class="app-name" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" >{$vo.title}</a>
+				        </div>
+				    </li>
+				<php>}</php>
+				</volist>
+				        </ol>
+
+				    </div>
+
+				    </div>
+				    <div class="ib_shadow"></div>
+
+				</div>
+				<div class="index_block_r">
+				    <div class="index_list">
+				    <div id="top-rank-list" class="section-wrap clearfix" data-zone="app-hot-all">
+				            <div class="title">
+				            <h4>相关推荐</h4>
+				            <!--<span class="top-rank-list-title-banner"></span>-->
+				            <span class="section-footer"></span>
+				        </div>
+				        <ol id="indexWeeklist" class="special-rank-list  clearfix" data-zone="app-hot-all" data-pos="index">
+
+
+
+				<volist name="recomList2" id="vo">				
+					<php>					
+						if($i>10) {
+							break;
+						}
+						if($i==1) {
+					</php>		
+				    <li class="first" style="height: 79px; ">
+				    <div class="hide-target" style=""><span style="margin-top: 25px; " class="rank-num rank-num1">1</span>
+				<dl class="app-single-item">
+				    <dt>
+				        <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-icon"><img width="64" height="64" src="{$vo.icon|get_document_url}"><i class="app-single-round" >&nbsp;</i></a>
+				    </dt>
+				    <dd>
+				    <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-name" >{$vo.title}</a>
+					<p class="app-used-amount"><strong>{$vo['readCount']}</strong>浏览</p>
+				    <p class="app-used-amount"><strong>{$vo['downloadCount']}</strong>下载</p>
+				            </dd>
+				</dl>
+				    </div>
+				    </li>
+
+				<php>} else {</php>
+
+				 <li>
+				  <div class="small-icon">
+				  <span class="rank-trend rank-keep"></span>
+				<span class="rank-num rank-num<php>echo $i;</php>"><php>echo $i;</php></span>
+				<a class="app-icon" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" ><img width="16" height="16" alt="" src="{$vo.icon|get_document_url}"> </a>
+				<a class="app-name" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" >{$vo.title}</a>
+				        </div>
+				    </li>
+				<php>}</php>
+				</volist>
+				        </ol>
+
+				    </div>
+
+				    </div>
+				    <div class="ib_shadow"></div>
+
+				</div>				
+				<div class="index_block_r">
+				    <div class="index_list">
+				    <div id="top-rank-list" class="section-wrap clearfix" data-zone="app-hot-all">
+				            <div class="title">
+				            <h4>最受欢迎</h4>
+				            <!--<span class="top-rank-list-title-banner"></span>-->
+				            <span class="section-footer"></span>
+				        </div>
+				        <ol id="indexWeeklist" class="special-rank-list  clearfix" data-zone="app-hot-all" data-pos="index">
+
+
+
+				<volist name="hotList" id="vo">				
+					<php>					
+						if($i>10) {
+							break;
+						}
+						if($i==1) {
+					</php>		
+				    <li class="first" style="height: 79px; ">
+				    <div class="hide-target" style=""><span style="margin-top: 25px; " class="rank-num rank-num1">1</span>
+				<dl class="app-single-item">
+				    <dt>
+				        <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-icon"><img width="64" height="64" src="{$vo.icon|get_document_url}"><i class="app-single-round" >&nbsp;</i></a>
+				    </dt>
+				    <dd>
+				    <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-name" >{$vo.title}</a>
+					<p class="app-used-amount"><strong>{$vo['readCount']}</strong>浏览</p>
+				    <p class="app-used-amount"><strong>{$vo['downloadCount']}</strong>下载</p>
+				            </dd>
+				</dl>
+				    </div>
+				    </li>
+
+				<php>} else {</php>
+
+				 <li>
+				  <div class="small-icon">
+				  <span class="rank-trend rank-keep"></span>
+				<span class="rank-num rank-num<php>echo $i;</php>"><php>echo $i;</php></span>
+				<a class="app-icon" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" ><img width="16" height="16" alt="" src="{$vo.icon|get_document_url}"> </a>
+				<a class="app-name" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" >{$vo.title}</a>
+				        </div>
+				    </li>
+				<php>}</php>
+				</volist>
+				        </ol>
+
+				    </div>
+
+				    </div>
+				    <div class="ib_shadow"></div>
+
+				</div>
+						
+<script>
+
+$(function() {
+	
+	$(".market").click(function() {
+		var href = $(this).attr('href');
+		$.get("{:U('appstore/Index/appdown', array('id'=>$app['id']))}", function(data) {
+		});		
+		return true;		
+	});
+	
+	$(".local").click(function() {
+		var href = $(this).attr('href');
+		$.get("{:U('appstore/Index/appdown', array('id'=>$app['id']))}", function(data) {
+			window.location.href = href;
+		});		
+		return false;		
+	});
+	
+});
+
+						
+</script>
+<include file="../Public/_footer" />

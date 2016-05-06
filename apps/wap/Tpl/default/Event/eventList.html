@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/event.css?v=20160202" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=2016127" rel="stylesheet">
+    <link href="../Public/css/public_header.css" rel="stylesheet">
+    <title>全国热门活动</title>
+    <script>
+        $(function () {
+            var uid = Android.getUid();
+            $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+                if(data.status == 2)
+                {
+                    window.location.reload();
+                }
+            },'json');
+        });
+    </script>
+</head>
+
+<body>
+<div class="modal fade" id="area-selection" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content selection-con">
+            <p id="selection-con-p1"><a>区域</a>
+                <span id="a1" >全国</span>
+                <span id="a2">全省</span>
+                <span id="a3">全市</span>
+                <span id="a4">本校</span>
+            </p>
+            <footer class="clearfix">
+                <button id="as-btn-o" class="btn-default btn">确定</button>
+                <button id="as-btn-c" class="btn-default btn">取消</button>
+            </footer>
+        </div>
+
+    </div>
+</div>
+             <div class="more-list">
+                 <ul>
+                 <foreach name="list" item="vo">
+                     <li class="to-event-d" data-eventid="{$vo.id}">
+                         <a class="container">
+                             <div class="more-list-l">
+                                 <img class="" src="{$vo.cover}" >
+                             </div>
+                             <div class="more-list-r to-event" data-eventid="{$vo.id}">
+                                 <div class="more-flag">
+                                 <?php if(!empty($vo['isTop'])){echo '<span>'.$vo['isTop'].'</span>';} ?><?php if(!empty($vo['cName'])){echo '<span>'.$vo['cName'].'</span>';} ?><?php if(!empty($vo['isCredit'])){echo '<span>'.$vo['isCredit'].'</span>';} ?>
+                                 </div>
+                                 <p class="more-name" >{$vo.title|trim=###}</p>
+                                 <p class="more-school"><i class="glyphicon glyphicon-user">&emsp13;</i>{$vo.address}</p>
+                                 <p class="more-time" ><span class="glyphicon glyphicon-time">&emsp13;</span>{$vo.duration}</p>
+                             </div>
+                         </a>
+                     </li>
+                </foreach>
+                 </ul>
+             </div>
+</body>
+</html>
+<script src="../Public/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script src="../Public/js/publicjs.js?201802221"></script>
+<script>
+    var  ready = false;
+    var loadingShow = false;
+    var page = 2;
+    var loadingStr = '<div class="spinner"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
+    var noneStr = '<div class="nonestr">没有记录</div>';
+    $(window).scroll(function(){
+        var document = window.document;
+        var top = document.body.scrollTop || document.documentElement.scrollTop
+                || 0;
+        top += document.documentElement.clientHeight;
+        var height = document.documentElement.scrollHeight;
+        if (height - top < 100) {
+            if (!loadingShow) {
+                $(".more-list ul").append(loadingStr);
+                loadingShow = true;
+                getAjaxNews();
+            }
+        }
+    });
+
+    function getAjaxNews() {
+        var a = $(".selection-on").attr("id").substring(1);
+        setTimeout(function () {
+            $.ajax({
+                url: 'index.php?app=wap&mod=Event&act=ajaxGetEvent',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    page: page,
+                    aid: a
+                },
+                error: function () {
+                },
+                success: function (data) {
+                    console.log(page);
+                    if (data.status == '1') {
+                        var htmlstr = buildHtml(data.data)
+                        $(".more-list ul").append(htmlstr);
+                        $(".spinner").remove();
+                        $(".to-event-d").click(function () {
+                            var id = $(this).data("eventid")+"";
+                            Android.openInternalPage("eventDetails", "", "", id,"", "","");
+                        });
+                        page++;
+                        loadingShow = false;
+                        //处理图片
+                        dopicerror();
+                    }else{
+                        $(".spinner").remove();
+                        $(".more-list ul").append(noneStr);
+                    }
+                }
+            });
+        }, 1000);
+    }
+    function buildHtml(items) {
+        if (items.length > 0) {
+            var html = '';
+            for (i = 0; i < items.length; i++) {
+                html +='<li class="to-event-d" data-eventid="'+items[i].id+'">';
+                html +='<a class="container">';
+                html +='<div class="more-list-l">';
+                html +='<img class="" src="'+items[i].cover+'">';
+                html +=' </div>';
+                html +='<div class="more-list-r">';
+                html +=' <div class="more-flag">';
+                if(items[i].isTop !=="")
+                {
+                    html +='<span>'+items[i].isTop+'</span>';
+                }
+                if(items[i].cName !=="")
+                {
+                    html +='<span>'+items[i].cName+'</span>';
+                }
+                if(items[i].isCredit !=="")
+                {
+                    html +='<span>'+items[i].isCredit+'</span>';
+                }
+                html +='</div>';
+                html +='<p class="more-name">'+items[i].title+'</p>';
+                html +='<p class="more-school"><i class="glyphicon glyphicon-user">&emsp13;</i>'+items[i].address+'</p>';
+                html +='<p class="more-time"><span class="glyphicon glyphicon-time">&emsp13;</span>'+items[i].duration+'</p>';
+                html +='</div>';
+                html +='</a>';
+                html +='</li>';
+            }
+            return html;
+        }
+    }
+    //取消按钮
+    $("#as-btn-c").click(function () {
+        $('#area-selection').modal('hide')
+    });
+    $("#as-btn-o").click(function () {
+        $('#area-selection').modal('hide');
+        //修改标题
+
+        settitle($('.selection-on').html() + "热门活动","swich.png","openselect()")
+        //区域id
+        var a = $(".selection-on").attr("id").substring(1);
+        page = 2;
+        $.ajax({
+            url: 'index.php?app=wap&mod=Event&act=ajaxGetEvent',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                page: 1,
+                aid: a,
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data.status == '1') {
+                    $(".more-list ul").html(buildHtml(data.data));
+                    $(".to-event-d").click(function () {
+                        var id = $(this).data("eventid")+"";
+                        Android.openInternalPage("eventDetails", "", "", id,"", "","");
+                    });
+                    dopicerror();
+                    loadingShow = false;
+                } else {
+                    $(".more-list ul").html(noneStr)
+                }
+            }
+        });
+    });
+//    public void setActionBarMenuImage(final String title, final String menuImageUrl, final String menuAction)
+    $(document).ready(function () {
+        //设置标题
+        if (document.referrer.trim().indexOf("http://")) {
+            settitle("本校热门活动","swich.png","openselect()");
+        } else {
+            settitle("全国热门活动","swich.png","openselect()");
+        }
+
+        //选择区域事件
+        $("#selection-con-p1 span").each(function () {
+            $(this).click(function () {
+                $(this).siblings().removeClass("selection-on");
+                $(this).addClass("selection-on");
+            });
+        });
+        //选择默认页面
+        if (document.referrer.trim().indexOf("http://")) {
+            $('#a4').addClass("selection-on");
+        } else {
+            $('#a1').addClass("selection-on");
+        }
+        $(".to-event-d").click(function () {
+            var id = $(this).data("eventid")+"";
+            Android.openInternalPage("eventDetails", "", "", id,"", "","");
+        });
+    });
+
+</script>

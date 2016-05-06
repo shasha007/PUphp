@@ -1,0 +1,53 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+        <center>
+        <div class="page_tit">{$work.title}</div>
+        <div style="width:800px;overflow:hidden">{$work.description}</div>
+        </center>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>提交人</th>
+                <th>提交时间</th>
+                <th>分数</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><space uid="vo.uid" class="null" target="_blank">{realname}</space></td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td><?php if($vo['status']==1):?><span class="cRed">未评分</span>
+                        <?php else:?><span class="cGreen">{$vo.note}</span>
+                        <?php endif;?>
+                    </td>
+                    <td>
+                        <a href="{:U('event/AdminWork/editBack', array('id'=>$vo['id']))}">查看评分</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+</script>
+<include file="_footer" />

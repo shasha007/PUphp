@@ -1,0 +1,15 @@
+body{background:#fff;padding:2px;margin:1px;font-size:12px; line-height:140%}
+p{ clear:both; padding:0; margin:0}
+.top{ background:#307EA2; height:24px; line-height:24px; color:#fff;font-size:14px;font-weight:bold; padding:0px 5px;}
+a.top_a{ float:right; margin-right:5px; color:#fff}
+.pl5{ padding-left:5px;}
+.m5{ margin-top:5px; margin-bottom:5px;}
+.nav{ background-color:#E4E9EA; line-height:25px; padding-left:5px;}
+.userinfo{line-height:20px; background-color:#FAFAFA; border:1px solid #CBD6DA; padding:5px 0 5px 5px;}
+.mt5{ margin-top:5px;}
+.list{ padding-bottom:5px; padding-left:5px; margin-top:5px; margin-bottom:5px; border-bottom:1px dotted #C1CFD3}
+.desc{ padding-bottom:5px; padding-left:5px; margin-top:15px; margin-bottom:5px;}
+.kc_fldesc .f_s{ color:#C00;}
+.b{ font-weight:bold;}
+.G{ color:#63676A}
+em{ color:#63676A}

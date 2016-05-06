@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <title>参赛名单</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            top:-50px;
+            padding-right: 5px;
+            padding-left: 5px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .row {
+            margin-right: -5px;
+            margin-left: -5px;
+        }
+
+        .lol-header {
+            position: relative;
+            top:50px;
+            height: 50px;
+            font-size: 1.8rem;
+            color: #fff;
+            z-index: 1000;
+
+        }
+
+        .user li span {
+        }
+
+        .dropdown-menu {
+            left: 10%;
+        }
+
+        .search-input {
+            max-width: 100%;
+            height: 33px;
+            border: 1px solid transparent;
+            border-color: #ccc;
+            border-radius: 4px;
+
+        }
+
+        #search-button {
+
+        }
+
+        .name-show {
+            width: 100%;
+            margin-bottom: 10px;
+            color:#000;
+        }
+
+        .user {
+            display: inline-block;
+            width: 135px;
+            font-size: 1.4rem;
+            color: #333;
+            padding: 2px 5px;
+            line-height: 10px;
+            overflow: hidden;
+        }
+
+        .list {
+            color: #ef766b;
+        }
+
+        .name-show {
+            margin-top: 5px;
+
+        }
+
+        .server {
+            margin: 5px auto;
+        }
+
+        .btn {
+            font-size: 13px;
+            padding: 7px 8px;
+        }
+
+        .server-name {
+            font-size: 1.8rem;
+            padding: 5px 0;
+        }
+        .banner{
+            position: relative;
+            top:-50px;
+            margin: 0 auto 10px;
+        }
+        .ruru{
+            margin-top: 20px;
+            text-align: left;
+            font-size: 1.4rem;
+            color: #000;
+        }
+        #dropdownMenu1{
+            background: #689db8;
+            color: #fff;
+            border:  #689db8;
+        }
+        .search-input{
+            background: #689db8;
+            color: #fff;
+            border:  #689db8;
+        }
+        #search-button{
+            background: #689db8;
+            color: #fff;
+            border:  none;
+        }
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color: #FFF;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #FFF;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #FFF;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: #FFF;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="lol-header">首届英雄联盟SOLO赛<br>初赛对战名单</header>
+    <div class="banner">
+        <img class="img-responsive" src="images/lol1.jpg"/>
+
+    </div>
+    <div class="container">
+
+    <div class="search row">
+
+        <div class="dropdown col-xs-4 padding-5">
+            <button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
+                    data-toggle="dropdown" data-server="-1">
+                选择服务器
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">艾欧尼亚</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#" data-toggle="dropdown">祖安</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#"> 诺克萨斯</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">班德尔城</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">皮尔特沃夫</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">战争学院</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">巨神峰</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">雷瑟守备</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">钢铁烈阳</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">裁决之地</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">黑色玫瑰</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">暗影岛</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">均衡教派</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">水晶之痕</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">影流</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">守望之海</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">征服之海</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">卡拉曼达</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">皮城警备</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">比尔吉沃特</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">德玛西亚</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">弗雷尔卓德</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">无畏先锋</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">恕瑞玛</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">扭曲丛林</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">巨龙之巢</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-6 padding-5"><input class="search-input" type="text" placeholder="请输入QQ号"></div>
+        <div class="col-xs-2 padding-5 text-right">
+            <button class="btn btn-default" id="search-button" type="button">查询</button>
+        </div>
+
+    </div>
+    <span></span>
+
+    <div class="name-show text-primary">
+
+    </div>
+    <article class="ruru">
+        <h4>初赛比赛时间：</h4>
+        <p>12月18日18：00至12月20日24:00（<span class="color_red">双方互加好友后自行决定具体时间）</span></p>
+        <h4>流程：</h4>
+        <p>确认自己的比赛对手后，双方互加好友，进行对战。请在规定的时间内加好友并完成对战，否则视为自动放弃；</p>
+        <h4>比赛规则：</h4>
+        <p>1、比赛为Bo1，一局定胜负。晋级选手上传游戏截图至“精彩瞬间”。并将QQ号+大区名称发在扑校园中（做为晋级名单收集）</p>
+        <p>2、胜利条件：<span class="color_red">①完成100补刀；②杀掉一个人；③攻下1座塔；</span>达到任意一项即可晋级</p>
+        <p>Ps:中途可以回家；不可打野，不可换线发育；英雄随意
+            第二轮比赛时间（12月22日下午5点）
+        </p>
+        <h4 class="color_red">特别提示：</h4>
+        <p>若你请求对手对战，对手不应战或弃权，请将你邀约对手的聊天记录截图上传至“精彩瞬间”。并将自己qq号+战区名称和对手qq号+战区名称一并发到扑校园；
+        </p>
+    </article>
+</div>
+
+<article class="hide name-list">
+    <ul class="list">
+
+        <li class="server"><span class="server-name">艾欧尼亚</span>
+            <ul class="server0">
+                <li><span class="user" data-qq="403011146">403011146</span>VS<span class="user" data-qq="1418197274">1418197274</span></li>
+                <li><span class="user" data-qq="2433840815">2433840815</span>VS<span class="user" data-qq="1563475735">1563475735</span></li>
+                <li><span class="user" data-qq="2433840815">2433840815</span>VS<span class="user" data-qq="920110354">920110354</span></li>
+                <li><span class="user" data-qq="2805324502">2805324502</span>VS<span class="user" data-qq="1090018714">1090018714</span></li>
+                <li><span class="user" data-qq="1441202246">1441202246</span>VS<span class="user" data-qq="431527817">431527817</span></li>
+                <li><span class="user" data-qq="849174965">849174965</span>VS<span class="user" data-qq="675651692">675651692</span></li>
+                <li><span class="user" data-qq="979113329">979113329</span>VS<span class="user" data-qq="1321674756">1321674756</span></li>
+                <li><span class="user" data-qq="1441202246">1441202246</span>VS<span class="user" data-qq="3292190882">3292190882</span></li>
+                <li><span class="user" data-qq="1441202246">1441202246</span>VS<span class="user" data-qq="133993108">133993108</span></li>
+                <li><span class="user" data-qq="823917816">823917816</span>VS<span class="user" data-qq="635370413">635370413</span></li>
+                <li><span class="user" data-qq="1365280798">1365280798</span>VS<span class="user" data-qq="409288074">409288074</span></li>
+                <li><span class="user" data-qq="779572868">779572868</span>VS<span class="user" data-qq="81463712">81463712</span></li>
+                <li><span class="user" data-qq="1260407350">1260407350</span>VS<span class="user" data-qq="313321897">313321897</span></li>
+                <li><span class="user" data-qq="949228713">949228713</span>VS<span class="user" data-qq="446534071">446534071</span></li>
+                <li><span class="user" data-qq="2404910350">2404910350</span>VS<span class="user" data-qq="594213926">594213926</span></li>
+                <li><span class="user" data-qq="987645141">987645141</span>VS<span class="user" data-qq="429363715">429363715</span></li>
+                <li><span class="user" data-qq="1904396559">1904396559</span>VS<span class="user" data-qq="2353587964">2353587964</span></li>
+                <li><span class="user" data-qq="80599693">80599693</span>VS<span class="user" data-qq="1012944696">1012944696</span></li>
+                <li><span class="user" data-qq="1276044427">1276044427</span>VS<span class="user" data-qq="1360808721">1360808721</span></li>
+                <li><span class="user" data-qq="3301260844">3301260844</span>VS<span class="user" data-qq="1911382310">1911382310</span></li>
+                <li><span class="user" data-qq="604766899">604766899</span>VS<span class="user" data-qq="1733129127">1733129127</span></li>
+                <li><span class="user" data-qq="1606088732">1606088732</span>VS<span class="user" data-qq="2830867584">2830867584</span></li>
+                <li><span class="user" data-qq="1162136784">1162136784</span>VS<span class="user" data-qq="1274308748">1274308748</span></li>
+                <li><span class="user" data-qq="1169186930">1169186930</span>VS<span class="user" data-qq="2226529746">2226529746</span></li>
+                <li><span class="user" data-qq="2272811523">2272811523</span>VS<span class="user" data-qq="494020815">494020815</span></li>
+                <li><span class="user" data-qq="530738195">530738195</span>VS<span class="user" data-qq="627646994">627646994</span></li>
+                <li><span class="user" data-qq="1137025862">1137025862</span>VS<span class="user" data-qq="1227926690">1227926690</span></li>
+                <li><span class="user" data-qq="473462218">473462218</span>VS<span class="user" data-qq="627646994">627646994</span></li>
+                <li><span class="user" data-qq="782877160">782877160</span>VS<span class="user" data-qq="615427150">615427150</span></li>
+                <li><span class="user" data-qq="1030476642">1030476642</span>VS<span class="user" data-qq="627752436">627752436</span></li>
+                <li><span class="user" data-qq="1252767731">1252767731</span>VS<span class="user" data-qq="755860809">755860809</span></li>
+                <li><span class="user" data-qq="3310804872">3310804872</span>VS<span class="user" data-qq="755860809">755860809</span></li>
+                <li><span class="user" data-qq="1934333402">1934333402</span>VS<span class="user" data-qq="1351477745">1351477745</span></li>
+                <li><span class="user" data-qq="904294363">904294363</span>VS<span class="user" data-qq="757119098">757119098</span></li>
+                <li><span class="user" data-qq="746149342">746149342</span>VS<span class="user" data-qq="251852713">251852713</span></li>
+                <li><span class="user" data-qq="573239495">573239495</span>VS<span class="user" data-qq="2813208157">2813208157</span></li>
+                <li><span class="user" data-qq="1013726376">1013726376</span>VS<span class="user" data-qq="769653667">769653667</span></li>
+                <li><span class="user" data-qq="1161899760">1161899760</span>VS<span class="user" data-qq="623615629">623615629</span></li>
+                <li><span class="user" data-qq="794321783">794321783</span>VS<span class="user" data-qq="1137699705">1137699705</span></li>
+                <li><span class="user" data-qq="1505738455">1505738455</span>VS<span class="user" data-qq="2788582538">2788582538</span></li>
+                <li><span class="user" data-qq="277288713">277288713</span>VS<span class="user" data-qq="837179594">837179594</span></li>
+                <li><span class="user" data-qq="1441202246">1441202246</span>VS<span class="user" data-qq="804879483">804879483</span></li>
+                <li><span class="user" data-qq="1441202246">1441202246</span>VS<span class="user" data-qq="1600923832">1600923832</span></li>
+                <li><span class="user" data-qq="2569471714">2569471714</span>VS<span class="user" data-qq="1275896880">1275896880</span></li>
+                <li><span class="user" data-qq="806546759">806546759</span>VS<span class="user" data-qq="635370413">635370413</span></li>
+                <li><span class="user" data-qq="496807575">496807575</span>VS<span class="user" data-qq="1257253262">1257253262</span></li>
+                <li><span class="user" data-qq="894974032">894974032</span>VS<span class="user" data-qq="2567519075">2567519075</span></li>
+                <li><span class="user" data-qq="108128331">108128331</span>VS<span class="user" data-qq="1559926063">1559926063</span></li>
+                <li><span class="user" data-qq="379483609">379483609</span>VS<span class="user" data-qq="690888703">690888703</span></li>
+                <li><span class="user" data-qq="1296210704">1296210704</span>VS<span class="user" data-qq="747367924">747367924</span></li>
+                <li><span class="user" data-qq="821470443">821470443</span>VS<span class="user" data-qq="879535435">879535435</span></li>
+                <li><span class="user" data-qq="1281531925">1281531925</span>VS<span class="user" data-qq="2258701344">2258701344</span></li>
+                <li><span class="user" data-qq="10197347">10197347</span>VS<span class="user" data-qq="1172272570">1172272570</span></li>
+                <li><span class="user" data-qq="821971311">821971311</span>VS<span class="user" data-qq="912280309">912280309</span></li>
+                <li><span class="user" data-qq="2374659989">2374659989</span>VS<span class="user" data-qq="501810293">501810293</span></li>
+                <li><span class="user" data-qq="2505998470">2505998470</span>VS<span class="user" data-qq="1150946725">1150946725</span></li>
+                <li><span class="user" data-qq="1424437530">1424437530</span>VS<span class="user" data-qq="1499632269">1499632269</span></li>
+                <li><span class="user" data-qq="1162136784">1162136784</span>VS<span class="user" data-qq="2442694005">2442694005</span></li>
+                <li><span class="user" data-qq="501071686">501071686</span>VS<span class="user" data-qq="1725664776">1725664776</span></li>
+                <li><span class="user" data-qq="319066647">319066647</span>VS<span class="user" data-qq="422163387">422163387</span></li>
+                <li><span class="user" data-qq="852890328">852890328</span>VS<span class="user" data-qq="598597834">598597834</span></li>
+                <li><span class="user" data-qq="1850388220">1850388220</span>VS<span class="user" data-qq="494020815">494020815</span></li>
+                <li><span class="user" data-qq="1123155491">1123155491</span>VS<span class="user" data-qq="1501031295">1501031295</span></li>
+                <li><span class="user" data-qq="229029281">229029281</span>VS<span class="user" data-qq="1206887234">1206887234</span></li>
+                <li><span class="user" data-qq="1054947065">1054947065</span>VS<span class="user" data-qq="1634682745">1634682745</span></li>
+                <li><span class="user" data-qq="734049375">734049375</span>VS<span class="user" data-qq="1040089545">1040089545</span></li>
+                <li><span class="user" data-qq="690888703">690888703</span>VS<span class="user" data-qq="894227337">894227337</span></li>
+                <li><span class="user" data-qq="2567458044">2567458044</span>VS<span class="user" data-qq="478592570">478592570</span></li>
+                <li><span class="user" data-qq="2827645008">2827645008</span>VS<span class="user" data-qq="1441502121">1441502121</span></li>
+                <li><span class="user" data-qq="1099373058">1099373058</span>VS<span class="user" data-qq="919640028">919640028</span></li>
+                <li><span class="user" data-qq="2393006988">2393006988</span>VS<span class="user" data-qq="764382534">764382534</span></li>
+                <li><span class="user" data-qq="2013292219">2013292219</span>VS<span class="user" data-qq="1060674175">1060674175</span></li>
+                <li><span class="user" data-qq="2734020103">2734020103</span>VS<span class="user" data-qq="1120698781">1120698781</span></li>
+                <li><span class="user" data-qq="1301139651">1301139651</span>VS<span class="user" data-qq="928765557">928765557</span></li>
+                <li><span class="user" data-qq="156178355">156178355</span>VS<span class="user" data-qq="707044799">707044799</span></li>
+                <li><span class="user" data-qq="1392473924">1392473924</span>VS<span class="user" data-qq="895010978">895010978</span></li>
+                <li><span class="user" data-qq="1782401300">1782401300</span>VS<span class="user" data-qq="2490842861">2490842861</span></li>
+                <li><span class="user" data-qq="494065768">494065768</span>VS<span class="user" data-qq="302725525">302725525</span></li>
+                <li><span class="user" data-qq="864505893">864505893</span>VS<span class="user" data-qq="569843497">569843497</span></li>
+                <li><span class="user" data-qq="1206453485">1206453485</span>VS<span class="user" data-qq="841417521">841417521</span></li>
+                <li><span class="user" data-qq="1186305605">1186305605</span>VS<span class="user" data-qq="2194178126">2194178126</span></li>
+                <li><span class="user" data-qq="1497127178">1497127178</span>VS<span class="user" data-qq="5547543590">5547543590</span></li>
+                <li><span class="user" data-qq="80345443">80345443</span>VS<span class="user" data-qq="1667907378">1667907378</span></li>
+                <li><span class="user" data-qq="810345443">810345443</span>VS<span class="user" data-qq="1873109340">1873109340</span></li>
+                <li><span class="user" data-qq="574222933">574222933</span>VS<span class="user" data-qq="783777781">783777781</span></li>
+                <li><span class="user" data-qq="1577194667">1577194667</span>VS<span class="user" data-qq="980902334">980902334</span></li>
+                <li><span class="user" data-qq="823696738">823696738</span>VS<span class="user" data-qq="892667393">892667393</span></li>
+                <li><span class="user" data-qq="837179594">837179594</span>VS<span class="user" data-qq="2438098568">2438098568</span></li>
+                <li><span class="user" data-qq="320798536">320798536</span>VS<span class="user" data-qq="729169132">729169132</span></li>
+                <li><span class="user" data-qq="876995756">876995756</span>VS<span class="user" data-qq="274745258">274745258</span></li>
+                <li><span class="user" data-qq="783590849">783590849</span>VS<span class="user" data-qq="10082124">10082124</span></li>
+                <li><span class="user" data-qq="1094038719">1094038719</span>VS<span class="user" data-qq="1430822562">1430822562</span></li>
+                <li><span class="user" data-qq="1243860594">1243860594</span>VS<span class="user" data-qq="724711149">724711149</span></li>
+                <li><span class="user" data-qq="514104419">514104419</span>VS<span class="user" data-qq="1695867754">1695867754</span></li>
+                <li><span class="user" data-qq="1312997104">1312997104</span>VS<span class="user" data-qq="379225188">379225188</span></li>
+                <li><span class="user" data-qq="1164594678">1164594678</span>VS<span class="user" data-qq="924318143">924318143</span></li>
+                <li><span class="user" data-qq="1628623112">1628623112</span>VS<span class="user" data-qq="371034971">371034971</span></li>
+                <li><span class="user" data-qq="939659305">939659305</span>VS<span class="user" data-qq="2391637338">2391637338</span></li>
+                <li><span class="user" data-qq="1608038070">1608038070</span>VS<span class="user" data-qq="2983448001">2983448001</span></li>
+                <li><span class="user" data-qq="1184055794">1184055794</span>VS<span class="user" data-qq="424109487">424109487</span></li>
+                <li><span class="user" data-qq="1293588035">1293588035</span>VS<span class="user" data-qq="1257757952">1257757952</span></li>
+                <li><span class="user" data-qq="862649306">862649306</span>VS<span class="user" data-qq="1196901586">1196901586</span></li>
+                <li><span class="user" data-qq="2322458460">2322458460</span>VS<span class="user" data-qq="2191419895">2191419895</span></li>
+                <li><span class="user" data-qq="347211914">347211914</span>VS<span class="user" data-qq="2564007650">2564007650</span></li>
+                <li><span class="user" data-qq="780307804">780307804</span>VS<span class="user" data-qq="845395428">845395428</span></li>
+                <li><span class="user" data-qq="2641886811">2641886811</span>VS<span class="user" data-qq="563417637">563417637</span></li>
+                <li><span class="user" data-qq="1930190303">1930190303</span>VS<span class="user" data-qq="1966713002">1966713002</span></li>
+                <li><span class="user" data-qq="870224664">870224664</span>VS<span class="user" data-qq="707144367">707144367</span></li>
+                <li><span class="user" data-qq="1558925973">1558925973</span>VS<span class="user" data-qq="362852552">362852552</span></li>
+                <li><span class="user" data-qq="2890632553">2890632553</span>VS<span class="user" data-qq="1505738455">1505738455</span></li>
+                <li><span class="user" data-qq="894064352">894064352</span>VS<span class="user" data-qq="1527835760">1527835760</span></li>
+                <li><span class="user" data-qq="1176219014">1176219014</span>VS<span class="user" data-qq="1042782131">1042782131</span></li>
+                <li><span class="user" data-qq="1598035607">1598035607</span>VS<span class="user" data-qq="1850777294">1850777294</span></li>
+                <li><span class="user" data-qq="710525311">710525311</span>VS<span class="user" data-qq="1260127676">1260127676</span></li>
+                <li><span class="user" data-qq="1119330080">1119330080</span>VS<span class="user" data-qq="765678310">765678310</span></li>
+                <li><span class="user" data-qq="624692989">624692989</span>VS<span class="user" data-qq="2806618484">2806618484</span></li>
+                <li><span class="user" data-qq="865260146">865260146</span>VS<span class="user" data-qq="2731362004">2731362004</span></li>
+                <li><span class="user" data-qq="2569315937">2569315937</span>VS<span class="user" data-qq="1102282328">1102282328</span></li>
+                <li><span class="user" data-qq="1693472815">1693472815</span>VS<span class="user" data-qq="980275557">980275557</span></li>
+                <li><span class="user" data-qq="565900846">565900846</span>VS<span class="user" data-qq="1186305605">1186305605</span></li>
+                <li><span class="user" data-qq="956691264">956691264</span>VS<span class="user" data-qq="1017139532">1017139532</span></li>
+                <li><span class="user" data-qq="1289819007">1289819007</span>VS<span class="user" data-qq="646508294">646508294</span></li>
+                <li><span class="user" data-qq="461995998">461995998</span>VS<span class="user" data-qq="492472724">492472724</span></li>
+                <li><span class="user" data-qq="1577031288">1577031288</span>VS<span class="user" data-qq="2729403617">2729403617</span></li>
+                <li><span class="user" data-qq="1003237271">1003237271</span>VS<span class="user" data-qq="2214236586">2214236586</span></li>
+                <li><span class="user" data-qq="884267419">884267419</span>VS<span class="user" data-qq="373967031">373967031</span></li>
+                <li><span class="user" data-qq="1285016875">1285016875</span>VS<span class="user" data-qq="373967031">373967031</span></li>
+                <li><span class="user" data-qq="594900176">594900176</span>VS<span class="user" data-qq="1334867413">1334867413</span></li>
+                <li><span class="user" data-qq="1871192876">1871192876</span>VS<span class="user" data-qq="199620531">199620531</span></li>
+                <li><span class="user" data-qq="962750127">962750127</span>VS<span class="user" data-qq="2258701344">2258701344</span></li>
+                <li><span class="user" data-qq="709285872">709285872</span>VS<span class="user" data-qq="572131171">572131171</span></li>
+                <li><span class="user" data-qq="651463340">651463340</span>VS<span class="user" data-qq="473026050">473026050</span></li>
+                <li><span class="user" data-qq="1005211153">1005211153</span>VS<span class="user" data-qq="982007312">982007312</span></li>
+                <li><span class="user" data-qq="1456268482">1456268482</span>VS<span class="user" data-qq="1301732787">1301732787</span></li>
+                <li><span class="user" data-qq="3281285189">3281285189</span>VS<span class="user" data-qq="514251217">514251217</span></li>
+                <li><span class="user" data-qq="1113298303">1113298303</span>VS<span class="user" data-qq="2782896148">2782896148</span></li>
+                <li><span class="user" data-qq="107550198">107550198</span>VS<span class="user" data-qq="894123208">894123208</span></li>
+                <li><span class="user" data-qq="897022532">897022532</span><span class="user" data-qq="1198474058">1198474058</span></li>
+                <li><span class="user" data-qq="614486591">614486591</span><span class="user" data-qq="920938859">920938859</span></li>
+
+            </ul>
+
+        </li>
+
+        <li class="server"><span class="server-name">祖安</span>
+            <ul class="server1">
+                <li><span class="user" data-qq="1339211561">1339211561</span>VS<span class="user" data-qq="514856536">514856536</span></li>
+                <li><span class="user" data-qq="453715508">453715508</span>VS<span class="user" data-qq="549720060">549720060</span></li>
+                <li><span class="user" data-qq="540951254">540951254</span>VS<span class="user" data-qq="1944286134">1944286134</span></li>
+                <li><span class="user" data-qq="1031753211">1031753211</span>VS<span class="user" data-qq="2744282386">2744282386</span></li>
+                <li><span class="user" data-qq="1377381417">1377381417</span>VS<span class="user" data-qq="2429141792">2429141792</span></li>
+                <li><span class="user" data-qq="752558121">752558121</span>VS<span class="user" data-qq="50496877">50496877</span></li>
+                <li><span class="user" data-qq="1169317216">1169317216</span>VS<span class="user" data-qq="813140548">813140548</span></li>
+                <li><span class="user" data-qq="1207662977">1207662977</span>VS<span class="user" data-qq="1506282054">1506282054</span></li>
+                <li><span class="user" data-qq="111500490">111500490</span>VS<span class="user" data-qq="1156428160">1156428160</span></li>
+                <li><span class="user" data-qq="349759141">349759141</span>VS<span class="user" data-qq="601559440">601559440</span></li>
+                <li><span class="user" data-qq="1076444956">1076444956</span>VS<span class="user" data-qq="2830867584">2830867584</span></li>
+                <li><span class="user" data-qq="732897252">732897252</span>VS<span class="user" data-qq="820281500">820281500</span></li>
+                <li><span class="user" data-qq="1458207296">1458207296</span>VS<span class="user" data-qq="1244052566">1244052566</span></li>
+                <li><span class="user" data-qq="2418769735">2418769735</span>VS<span class="user" data-qq="974520154">974520154</span></li>
+                <li><span class="user" data-qq="577184823">577184823</span>VS<span class="user" data-qq="1169405222">1169405222</span></li>
+                <li><span class="user" data-qq="735569277">735569277</span>VS<span class="user" data-qq="1017728195">1017728195</span></li>
+                <li><span class="user" data-qq="2436697512">2436697512</span>VS<span class="user" data-qq="1306684651">1306684651</span></li>
+                <li><span class="user" data-qq="1002957122">1002957122</span>VS<span class="user" data-qq="404878562">404878562</span></li>
+                <li><span class="user" data-qq="1220359093">1220359093</span>VS<span class="user" data-qq="1449452331">1449452331</span></li>
+                <li><span class="user" data-qq="806473152">806473152</span>VS<span class="user" data-qq="719712056">719712056</span></li>
+                <li><span class="user" data-qq="1060087267">1060087267</span>VS<span class="user" data-qq="2399867167">2399867167</span></li>
+                <li><span class="user" data-qq="1151126171">1151126171</span>VS<span class="user" data-qq="2638887694">2638887694</span></li>
+                <li><span class="user" data-qq="846700709">846700709</span>VS<span class="user" data-qq="1216362437">1216362437</span></li>
+                <li><span class="user" data-qq="1726198218">1726198218</span>VS<span class="user" data-qq="1044760322">1044760322</span></li>
+                <li><span class="user" data-qq="631064803">631064803</span>VS<span class="user" data-qq="1090972859">1090972859</span></li>
+                <li><span class="user" data-qq="1571326223">1571326223</span>VS<span class="user" data-qq="285102598">285102598</span></li>
+                <li><span class="user" data-qq="879985900">879985900</span>VS<span class="user" data-qq="978517621">978517621</span></li>
+                <li><span class="user" data-qq="1040426094">1040426094</span>VS<span class="user" data-qq="2948840883">2948840883</span></li>
+                <li><span class="user" data-qq="2087489995">2087489995</span>VS<span class="user" data-qq="824683196">824683196</span></li>
+                <li><span class="user" data-qq="773221749">773221749</span>VS<span class="user" data-qq="943655953">943655953</span></li>
+                <li><span class="user" data-qq="1377381417">1377381417</span>VS<span class="user" data-qq="1553292186">1553292186</span></li>
+                <li><span class="user" data-qq="1530708158">1530708158</span>VS<span class="user" data-qq="804879483">804879483</span></li>
+                <li><span class="user" data-qq="642779728">642779728</span>VS<span class="user" data-qq="664960841">664960841</span></li>
+                <li><span class="user" data-qq="2292633382">2292633382</span>VS<span class="user" data-qq="575593596">575593596</span></li>
+                <li><span class="user" data-qq="1065662451">1065662451</span>VS<span class="user" data-qq="1254009191">1254009191</span></li>
+                <li><span class="user" data-qq="2644626519">2644626519</span>VS<span class="user" data-qq="470958489">470958489</span></li>
+                <li><span class="user" data-qq="695532353">695532353</span>VS<span class="user" data-qq="18800666099">18800666099</span></li>
+                <li><span class="user" data-qq="623102606">623102606</span>VS<span class="user" data-qq="545542316">545542316</span></li>
+                <li><span class="user" data-qq="1044760322">1044760322</span>VS<span class="user" data-qq="910317230">910317230</span></li>
+                <li><span class="user" data-qq="528552975">528552975</span>VS<span class="user" data-qq="2234352512">2234352512</span></li>
+                <li><span class="user" data-qq="860459124">860459124</span>VS<span class="user" data-qq="312591271">312591271</span></li>
+                <li><span class="user" data-qq="1797013123">1797013123</span>VS<span class="user" data-qq="970534419">970534419</span></li>
+                <li><span class="user" data-qq="1806064236">1806064236</span>VS<span class="user" data-qq="378884371">378884371</span></li>
+                <li><span class="user" data-qq="1044392212">1044392212</span>VS<span class="user" data-qq="1261009719">1261009719</span></li>
+                <li><span class="user" data-qq="1044760322">1044760322</span>VS<span class="user" data-qq="727135751">727135751</span></li>
+                <li><span class="user" data-qq="1034405129">1034405129</span>VS<span class="user" data-qq="2567519075">2567519075</span></li>
+                <li><span class="user" data-qq="1391132017">1391132017</span>VS<span class="user" data-qq="825235432">825235432</span></li>
+                <li><span class="user" data-qq="1401844784">1401844784</span>VS<span class="user" data-qq="839894221">839894221</span></li>
+                <li><span class="user" data-qq="2286676126">2286676126</span>VS<span class="user" data-qq="413954025">413954025</span></li>
+                <li><span class="user" data-qq="1391132017">1391132017</span>VS<span class="user" data-qq="2461710813">2461710813</span></li>
+                <li><span class="user" data-qq="1805916046">1805916046</span>VS<span class="user" data-qq="1641482213">1641482213</span></li>
+                <li><span class="user" data-qq="916561409">916561409</span>VS<span class="user" data-qq="1710859764">1710859764</span></li>
+                <li><span class="user" data-qq="719349526">719349526</span>VS<span class="user" data-qq="1440833255">1440833255</span></li>
+                <li><span class="user" data-qq="1123155491">1123155491</span>VS<span class="user" data-qq="316254332">316254332</span></li>
+                <li><span class="user" data-qq="958819457">958819457</span>VS<span class="user" data-qq="317143828">317143828</span></li>
+                <li><span class="user" data-qq="878484233">878484233</span>VS<span class="user" data-qq="1533094043">1533094043</span></li>
+                <li><span class="user" data-qq="312470622">312470622</span>VS<span class="user" data-qq="545425381">545425381</span></li>
+                <li><span class="user" data-qq="997824680">997824680</span>VS<span class="user" data-qq="545425381">545425381</span></li>
+                <li><span class="user" data-qq="1048297824">1048297824</span>VS<span class="user" data-qq="2377864092">2377864092</span></li>
+                <li><span class="user" data-qq="2383262345">2383262345</span>VS<span class="user" data-qq="2823580675">2823580675</span></li>
+                <li><span class="user" data-qq="2383262345">2383262345</span>VS<span class="user" data-qq="1572960983">1572960983</span></li>
+                <li><span class="user" data-qq="635287339">635287339</span>VS<span class="user" data-qq="1042788832">1042788832</span></li>
+                <li><span class="user" data-qq="1358663382">1358663382</span>VS<span class="user" data-qq="1343837208">1343837208</span></li>
+                <li><span class="user" data-qq="422765636">422765636</span>VS<span class="user" data-qq="1348230343">1348230343</span></li>
+                <li><span class="user" data-qq="2711371802">2711371802</span>VS<span class="user" data-qq="1246416743">1246416743</span></li>
+                <li><span class="user" data-qq="997261531">997261531</span>VS<span class="user" data-qq="1044862809">1044862809</span></li>
+                <li><span class="user" data-qq="1501323775">1501323775</span>VS<span class="user" data-qq="2915189996">2915189996</span></li>
+                <li><span class="user" data-qq="1041035446">1041035446</span>VS<span class="user" data-qq="734571286">734571286</span></li>
+                <li><span class="user" data-qq="2441123269">2441123269</span>VS<span class="user" data-qq="541529665">541529665</span></li>
+                <li><span class="user" data-qq="915988259">915988259</span>VS<span class="user" data-qq="1264779723">1264779723</span></li>
+                <li><span class="user" data-qq="627743363">627743363</span>VS<span class="user" data-qq="1241563417">1241563417</span></li>
+                <li><span class="user" data-qq="835423921">835423921</span>VS<span class="user" data-qq="1354151392">1354151392</span></li>
+                <li><span class="user" data-qq="1657916559">1657916559</span>VS<span class="user" data-qq="983965896">983965896</span></li>
+                <li><span class="user" data-qq="1104130078">1104130078</span>VS<span class="user" data-qq="972919757">972919757</span></li>
+                <li><span class="user" data-qq="505585334">505585334</span>VS<span class="user" data-qq="1074163090">1074163090</span></li>
+                <li><span class="user" data-qq="2837816539">2837816539</span>VS<span class="user" data-qq="1192171451">1192171451</span></li>
+                <li><span class="user" data-qq="1809005306">1809005306</span>VS<span class="user" data-qq="594519678">594519678</span></li>
+                <li><span class="user" data-qq="1196019060">1196019060</span>VS<span class="user" data-qq="1732893779">1732893779</span></li>
+                <li><span class="user" data-qq="1962093525">1962093525</span>VS<span class="user" data-qq="1816691518">1816691518</span></li>
+                <li><span class="user" data-qq="778497684">778497684</span>VS<span class="user" data-qq="1126751725">1126751725</span></li>
+                <li><span class="user" data-qq="289606323">289606323</span>VS<span class="user" data-qq="1024798884">1024798884</span></li>
+                <li><span class="user" data-qq="1525331827">1525331827</span>VS<span class="user" data-qq="1732893779">1732893779</span></li>
+                <li><span class="user" data-qq="2383262345">2383262345</span>VS<span class="user" data-qq="1343837208">1343837208</span></li>
+                <li><span class="user" data-qq="2501098594">2501098594</span>VS<span class="user" data-qq="834395907">834395907</span></li>
+                <li><span class="user" data-qq="841823491">841823491</span>VS<span class="user" data-qq="907552374">907552374</span></li>
+                <li><span class="user" data-qq="947553800">947553800</span>VS<span class="user" data-qq="972280590">972280590</span></li>
+                <li><span class="user" data-qq="783590849">783590849</span>VS<span class="user" data-qq="895919013">895919013</span></li>
+                <li><span class="user" data-qq="1224912258">1224912258</span>VS<span class="user" data-qq="137713496">137713496</span></li>
+                <li><span class="user" data-qq="1041035446">1041035446</span>VS<span class="user" data-qq="975996410">975996410</span></li>
+                <li><span class="user" data-qq="862201464">862201464</span>VS<span class="user" data-qq="137716496">137716496</span></li>
+                <li><span class="user" data-qq="147330461">147330461</span>VS<span class="user" data-qq="342088082">342088082</span></li>
+                <li><span class="user" data-qq="1815854807">1815854807</span>VS<span class="user" data-qq="1025796985">1025796985</span></li>
+                <li><span class="user" data-qq="719712056">719712056</span>VS<span class="user" data-qq="347890863">347890863</span></li>
+                <li><span class="user" data-qq="1665788853">1665788853</span>VS<span class="user" data-qq="1156153113">1156153113</span></li>
+                <li><span class="user" data-qq="1829012037">1829012037</span>VS<span class="user" data-qq="836176867">836176867</span></li>
+                <li><span class="user" data-qq="1050396039">1050396039</span>VS<span class="user" data-qq="770644531">770644531</span></li>
+                <li><span class="user" data-qq="996345437">996345437</span>VS<span class="user" data-qq="1134901997">1134901997</span></li>
+                <li><span class="user" data-qq="2436396878">2436396878</span>VS<span class="user" data-qq="1157449056">1157449056</span></li>
+                <li><span class="user" data-qq="992415958">992415958</span>VS<span class="user" data-qq="859946409">859946409</span></li>
+                <li><span class="user" data-qq="1305925778">1305925778</span>VS<span class="user" data-qq="2730377216">2730377216</span></li>
+                <li><span class="user" data-qq="351137671">351137671</span>VS<span class="user" data-qq="986320550">986320550</span></li>
+                <li><span class="user" data-qq="523909997">523909997</span>VS<span class="user" data-qq="1194224065">1194224065</span></li>
+                <li><span class="user" data-qq="732458228">732458228</span>VS<span class="user" data-qq="1255409875">1255409875</span></li>
+                <li><span class="user" data-qq="858081991">858081991</span>VS<span class="user" data-qq="939070556">939070556</span></li>
+                <li><span class="user" data-qq="1216144568">1216144568</span>VS<span class="user" data-qq="995725444">995725444</span></li>
+                <li><span class="user" data-qq="2788237206">2788237206</span>VS<span class="user" data-qq="609796578">609796578</span></li>
+                <li><span class="user" data-qq="2597363489">2597363489</span>VS<span class="user" data-qq="847512427">847512427</span></li>
+                <li><span class="user" data-qq="1364116865">1364116865</span>VS<span class="user" data-qq="1046682537">1046682537</span></li>
+                <li><span class="user" data-qq="912663450">912663450</span>VS<span class="user" data-qq="1300734773">1300734773</span></li>
+                <li><span class="user" data-qq="523909997">523909997</span>VS<span class="user" data-qq="1349589930">1349589930</span></li>
+                <li><span class="user" data-qq="442635141">442635141</span>VS<span class="user" data-qq="54996010">54996010</span></li>
+                <li><span class="user" data-qq="523909997">523909997</span>VS<span class="user" data-qq="2547966271">2547966271</span></li>
+                <li><span class="user" data-qq="1326194177">1326194177</span>VS<span class="user" data-qq="2027253723">2027253723</span></li>
+                <li><span class="user" data-qq="605380832">605380832</span>VS<span class="user" data-qq="2499876332">2499876332</span></li>
+                <li><span class="user" data-qq="445823424">445823424</span>VS<span class="user" data-qq="1015190257">1015190257</span></li>
+                <li><span class="user" data-qq="844902438">844902438</span>VS<span class="user" data-qq="649788649">649788649</span></li>
+                <li><span class="user" data-qq="1559352232">1559352232</span>VS<span class="user" data-qq="1201140408">1201140408</span></li>
+                <li><span class="user" data-qq="1505065113">1505065113</span>VS<span class="user" data-qq="775234257">775234257</span></li>
+                <li><span class="user" data-qq="461995998">461995998</span>VS<span class="user" data-qq="1535253421">1535253421</span></li>
+                <li><span class="user" data-qq="1292109635">1292109635</span>VS<span class="user" data-qq="1306684651">1306684651</span></li>
+                <li><span class="user" data-qq="1075215398">1075215398</span>VS<span class="user" data-qq="903073081">903073081</span></li>
+                <li><span class="user" data-qq="1326724919">1326724919</span>VS<span class="user" data-qq="1254791440">1254791440</span></li>
+                <li><span class="user" data-qq="376268975">376268975</span>VS<span class="user" data-qq="563507234">563507234</span></li>
+                <li><span class="user" data-qq="519729631">519729631</span>VS<span class="user" data-qq="2455431690">2455431690</span></li>
+                <li><span class="user" data-qq="505584467">505584467</span>VS<span class="user" data-qq="954117367">954117367</span></li>
+                <li><span class="user" data-qq="1437835571">1437835571</span>VS<span class="user" data-qq="997959845">997959845</span></li>
+                <li><span class="user" data-qq="2265669832">2265669832</span>VS<span class="user" data-qq="781189149">781189149</span></li>
+                <li><span class="user" data-qq="294053223">294053223</span>VS<span class="user" data-qq="2483173135">2483173135</span></li>
+                <li><span class="user" data-qq="770352135">770352135</span>VS<span class="user" data-qq="937623240">937623240</span></li>
+                <li><span class="user" data-qq="2276657911">2276657911</span>VS<span class="user" data-qq="656284189">656284189</span></li>
+                <li><span class="user" data-qq="1005196166">1005196166</span>VS<span class="user" data-qq="834383740">834383740</span></li>
+                <li><span class="user" data-qq="2423053718">2423053718</span>VS<span class="user" data-qq="1029549294">1029549294</span></li>
+                <li><span class="user" data-qq="904015706">904015706</span>VS<span class="user" data-qq="422163387">422163387</span></li>
+                <li><span class="user" data-qq="532672147">532672147</span>VS<span class="user" data-qq="569843497">569843497</span></li>
+                <li><span class="user" data-qq="714018201">714018201</span>VS<span class="user" data-qq="50946193">50946193</span></li>
+                <li><span class="user" data-qq="2401021586">2401021586</span>VS<span class="user" data-qq="1171991493">1171991493</span></li>
+                <li><span class="user" data-qq="2693874685">2693874685</span>VS<span class="user" data-qq="2214236586">2214236586</span></li>
+                <li><span class="user" data-qq="1091161308">1091161308</span>VS<span class="user" data-qq="982007312">982007312</span></li>
+                <li><span class="user" data-qq="122376510">122376510</span>VS<span class="user" data-qq="879985900">879985900</span></li>
+            </ul>
+
+        </li>
+        <li class="server"><span class="server-name">暗影岛</span>
+            <ul class="server11">
+                <li><span class="user" data-qq="1826287598">1826287598</span>VS<span class="user" data-qq="935706417">935706417</span></li>
+                <li><span class="user" data-qq="983108366">983108366</span>VS<span class="user" data-qq="1587284090">1587284090</span></li>
+                <li><span class="user" data-qq="1871949525">1871949525</span>VS<span class="user" data-qq="1587284090">1587284090</span></li>
+                <li><span class="user" data-qq="969826159">969826159</span>VS<span class="user" data-qq="1056519194">1056519194</span></li>
+                <li><span class="user" data-qq="1453942882">1453942882</span>VS<span class="user" data-qq="1611846154">1611846154</span></li>
+                <li><span class="user" data-qq="1651057696">1651057696</span>VS<span class="user" data-qq="1543907676">1543907676</span></li>
+                <li><span class="user" data-qq="1651057696">1651057696</span>VS<span class="user" data-qq="1934980973">1934980973</span></li>
+                <li><span class="user" data-qq="1228995976">1228995976</span>VS<span class="user" data-qq="1227926690">1227926690</span></li>
+                <li><span class="user" data-qq="1850388220">1850388220</span>VS<span class="user" data-qq="1429191280">1429191280</span></li>
+                <li><span class="user" data-qq="958819457">958819457</span>VS<span class="user" data-qq="2504650447">2504650447</span></li>
+                <li><span class="user" data-qq="1143240599">1143240599</span>VS<span class="user" data-qq="954277246">954277246</span></li>
+                <li><span class="user" data-qq="992273940">992273940</span>VS<span class="user" data-qq="1823310332">1823310332</span></li>
+                <li><span class="user" data-qq="2441123269">2441123269</span>VS<span class="user" data-qq="632704688">632704688</span></li>
+                <li><span class="user" data-qq="461928608">461928608</span>VS<span class="user" data-qq="823470565">823470565</span></li>
+                <li><span class="user" data-qq="462079222">462079222</span>VS<span class="user" data-qq="1007640204">1007640204</span></li>
+                <li><span class="user" data-qq="854407193">854407193</span>VS<span class="user" data-qq="1315950867">1315950867</span></li>
+                <li><span class="user" data-qq="328832435">328832435</span>VS<span class="user" data-qq="865307384">865307384</span></li>
+                <li><span class="user" data-qq="1456889405">1456889405</span>VS<span class="user" data-qq="728130610">728130610</span></li>
+                <li><span class="user" data-qq="1608038070">1608038070</span>VS<span class="user" data-qq="352907683">352907683</span></li>
+                <li><span class="user" data-qq="1370146089">1370146089</span>VS<span class="user" data-qq="1020037493">1020037493</span></li>
+                <li><span class="user" data-qq="731266053">731266053</span>VS<span class="user" data-qq="274440938">274440938</span></li>
+                <li><span class="user" data-qq="1920577240">1920577240</span>VS<span class="user" data-qq="1060328651">1060328651</span></li>
+                <li><span class="user" data-qq="1174866967">1174866967</span>VS<span class="user" data-qq="1227053882">1227053882</span></li>
+                <li><span class="user" data-qq="1223263980">1223263980</span>VS<span class="user" data-qq="2678408095">2678408095</span></li>
+                <li><span class="user" data-qq="475299739">475299739</span>VS<span class="user" data-qq="1934980973">1934980973</span></li>
+                <li><span class="user" data-qq="843388017">843388017</span>VS<span class="user" data-qq="414806475">414806475</span></li>
+                <li><span class="user" data-qq="1194939433">1194939433</span>VS<span class="user" data-qq="893825863">893825863</span></li>
+                <li><span class="user" data-qq="1013516662">1013516662</span>VS<span class="user" data-qq="171404365">171404365</span></li>
+                <li><span class="user" data-qq="1257259984">1257259984</span>VS<span class="user" data-qq="1245582390">1245582390</span></li>
+                <li><span class="user" data-qq="847447817">847447817</span><span class="user" data-qq="1291965454">1291965454</span></li>
+                <li><span class="user" data-qq="969826159">969826159</span><span class="user" data-qq="962017587">962017587</span></li>
+
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">班德尔城</span>
+            <ul class="server3">
+                <li><span class="user" data-qq="1491279231">1491279231</span>VS<span class="user" data-qq="438913403">438913403</span></li>
+                <li><span class="user" data-qq="1210409587">1210409587</span>VS<span class="user" data-qq="715236903">715236903</span></li>
+                <li><span class="user" data-qq="2477655562">2477655562</span>VS<span class="user" data-qq="1146738895">1146738895</span></li>
+                <li><span class="user" data-qq="709712602">709712602</span>VS<span class="user" data-qq="1422419569">1422419569</span></li>
+                <li><span class="user" data-qq="1546862328">1546862328</span>VS<span class="user" data-qq="1018951744">1018951744</span></li>
+                <li><span class="user" data-qq="956826405">956826405</span>VS<span class="user" data-qq="1875646684">1875646684</span></li>
+                <li><span class="user" data-qq="919482273">919482273</span>VS<span class="user" data-qq="547983695">547983695</span></li>
+                <li><span class="user" data-qq="913496207">913496207</span>VS<span class="user" data-qq="879731137">879731137</span></li>
+                <li><span class="user" data-qq="1461867657">1461867657</span>VS<span class="user" data-qq="836158718">836158718</span></li>
+                <li><span class="user" data-qq="2858172761">2858172761</span>VS<span class="user" data-qq="1941680173">1941680173</span></li>
+                <li><span class="user" data-qq="778497684">778497684</span>VS<span class="user" data-qq="564196805">564196805</span></li>
+                <li><span class="user" data-qq="1218071439">1218071439</span>VS<span class="user" data-qq="1414000308">1414000308</span></li>
+                <li><span class="user" data-qq="841375991">841375991</span>VS<span class="user" data-qq="1182778016">1182778016</span></li>
+                <li><span class="user" data-qq="1114569800">1114569800</span>VS<span class="user" data-qq="332834884">332834884</span></li>
+                <li><span class="user" data-qq="1007620890">1007620890</span>VS<span class="user" data-qq="1047926301">1047926301</span></li>
+                <li><span class="user" data-qq="2890632553">2890632553</span>VS<span class="user" data-qq="805136449">805136449</span></li>
+                <li><span class="user" data-qq="1183250686">1183250686</span>VS<span class="user" data-qq="1714347816">1714347816</span></li>
+                <li><span class="user" data-qq="2437179071">2437179071</span>VS<span class="user" data-qq="516203457">516203457</span></li>
+                <li><span class="user" data-qq="1405907568">1405907568</span>VS<span class="user" data-qq="1018951744">1018951744</span></li>
+                <li><span class="user" data-qq="251915443">251915443</span>VS<span class="user" data-qq="504956263">504956263</span></li>
+                <li><span class="user" data-qq="819802397">819802397</span>VS<span class="user" data-qq="1062251578">1062251578</span></li>
+                <li><span class="user" data-qq="1290125466">1290125466</span>VS<span class="user" data-qq="840819599">840819599</span></li>
+                <li><span class="user" data-qq="1206680008">1206680008</span>VS<span class="user" data-qq="2522591185">2522591185</span></li>
+                <li><span class="user" data-qq="1148342063">1148342063</span>VS<span class="user" data-qq="782205984">782205984</span></li>
+                <li><span class="user" data-qq="2868201162">2868201162</span>VS<span class="user" data-qq="1220846478">1220846478</span></li>
+                <li><span class="user" data-qq="1550484910">1550484910</span>VS<span class="user" data-qq="715236903">715236903</span></li>
+                <li><span class="user" data-qq="935706417">935706417</span>VS<span class="user" data-qq="879731137">879731137</span></li>
+                <li><span class="user" data-qq="996265498">996265498</span>VS<span class="user" data-qq="992839842">992839842</span></li>
+                <li><span class="user" data-qq="297762792">297762792</span><span class="user" data-qq="晋级">晋级</span></li>
+
+            </ul>
+
+        </li>
+        <li class="server"><span class="server-name">裁决之地</span>
+            <ul class="server9">
+                <li><span class="user" data-qq="985755025">985755025</span>VS<span class="user" data-qq="1160727528">1160727528</span></li>
+                <li><span class="user" data-qq="928433727">928433727</span>VS<span class="user" data-qq="763038353">763038353</span></li>
+                <li><span class="user" data-qq="1335122232">1335122232</span>VS<span class="user" data-qq="2100630290">2100630290</span></li>
+                <li><span class="user" data-qq="1027923428">1027923428</span>VS<span class="user" data-qq="1299420511">1299420511</span></li>
+                <li><span class="user" data-qq="1181343773">1181343773</span>VS<span class="user" data-qq="958720210">958720210</span></li>
+                <li><span class="user" data-qq="782877160">782877160</span>VS<span class="user" data-qq="947155040">947155040</span></li>
+                <li><span class="user" data-qq="444570162">444570162</span>VS<span class="user" data-qq="1918365684">1918365684</span></li>
+                <li><span class="user" data-qq="450589323">450589323</span>VS<span class="user" data-qq="303468932">303468932</span></li>
+                <li><span class="user" data-qq="2569471714">2569471714</span>VS<span class="user" data-qq="875998806">875998806</span></li>
+                <li><span class="user" data-qq="1103993488">1103993488</span>VS<span class="user" data-qq="2504181068">2504181068</span></li>
+                <li><span class="user" data-qq="1667612615">1667612615</span>VS<span class="user" data-qq="1874639719">1874639719</span></li>
+                <li><span class="user" data-qq="386025968">386025968</span>VS<span class="user" data-qq="1424904696">1424904696</span></li>
+                <li><span class="user" data-qq="2479664405">2479664405</span>VS<span class="user" data-qq="1559926008">1559926008</span></li>
+                <li><span class="user" data-qq="511457515">511457515</span>VS<span class="user" data-qq="1455086207">1455086207</span></li>
+                <li><span class="user" data-qq="2504181068">2504181068</span>VS<span class="user" data-qq="121683897">121683897</span></li>
+                <li><span class="user" data-qq="649958121">649958121</span>VS<span class="user" data-qq="1422721357">1422721357</span></li>
+                <li><span class="user" data-qq="947155040">947155040</span>VS<span class="user" data-qq="2495935163">2495935163</span></li>
+                <li><span class="user" data-qq="947155040">947155040</span>VS<span class="user" data-qq="2495935163">2495935163</span></li>
+                <li><span class="user" data-qq="1294810010">1294810010</span>VS<span class="user" data-qq="991861376">991861376</span></li>
+                <li><span class="user" data-qq="1542826076">1542826076</span>VS<span class="user" data-qq="875998806">875998806</span></li>
+                <li><span class="user" data-qq="1421023851">1421023851</span>VS<span class="user" data-qq="1241733920">1241733920</span></li>
+                <li><span class="user" data-qq="354844038">354844038</span>VS<span class="user" data-qq="157106496">157106496</span></li>
+                <li><span class="user" data-qq="249589842">249589842</span>VS<span class="user" data-qq="962084569">962084569</span></li>
+                <li><span class="user" data-qq="1922538960">1922538960</span>VS<span class="user" data-qq="862792065">862792065</span></li>
+                <li><span class="user" data-qq="591018335">591018335</span>VS<span class="user" data-qq="2205917024">2205917024</span></li>
+                <li><span class="user" data-qq="158235274">158235274</span>VS<span class="user" data-qq="1015668455">1015668455</span></li>
+                <li><span class="user" data-qq="649835297">649835297</span>VS<span class="user" data-qq="1090039479">1090039479</span></li>
+                <li><span class="user" data-qq="31865774">31865774</span>VS<span class="user" data-qq="674851965">674851965</span></li>
+                <li><span class="user" data-qq="979540790">979540790</span>VS<span class="user" data-qq="1206838178">1206838178</span></li>
+                <li><span class="user" data-qq="1323109201">1323109201</span>VS<span class="user" data-qq="1594471135">1594471135</span></li>
+                <li><span class="user" data-qq="1561067921">1561067921</span>VS<span class="user" data-qq="1012311237">1012311237</span></li>
+                <li><span class="user" data-qq="1327313536">1327313536</span>VS<span class="user" data-qq="2476987944">2476987944</span></li>
+                <li><span class="user" data-qq="1327313536">1327313536</span>VS<span class="user" data-qq="2294283134">2294283134</span></li>
+                <li><span class="user" data-qq="550829466">550829466</span>VS<span class="user" data-qq="1874639719">1874639719</span></li>
+                <li><span class="user" data-qq="395679431">395679431</span>VS<span class="user" data-qq="2321575326">2321575326</span></li>
+                <li><span class="user" data-qq="925036247">925036247</span><span class="user" data-qq="1121905924">1121905924</span></li>
+
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">钢铁烈阳</span>
+            <ul class="server8">
+                <li><span class="user" data-qq="2332317741">2332317741</span>VS<span class="user" data-qq="1369242109">1369242109</span></li>
+                <li><span class="user" data-qq="552430565">552430565</span>VS<span class="user" data-qq="969237714">969237714</span></li>
+                <li><span class="user" data-qq="1083675899">1083675899</span>VS<span class="user" data-qq="910317230">910317230</span></li>
+                <li><span class="user" data-qq="752914738">752914738</span>VS<span class="user" data-qq="1813157517">1813157517</span></li>
+                <li><span class="user" data-qq="1810534547">1810534547</span>VS<span class="user" data-qq="877961977">877961977</span></li>
+                <li><span class="user" data-qq="1810534547">1810534547</span>VS<span class="user" data-qq="770601308">770601308</span></li>
+                <li><span class="user" data-qq="1540813643">1540813643</span>VS<span class="user" data-qq="1989387396">1989387396</span></li>
+                <li><span class="user" data-qq="695239413">695239413</span>VS<span class="user" data-qq="1520275816">1520275816</span></li>
+                <li><span class="user" data-qq="1044392212">1044392212</span>VS<span class="user" data-qq="1317880402">1317880402</span></li>
+                <li><span class="user" data-qq="1964463077">1964463077</span>VS<span class="user" data-qq="2501737646">2501737646</span></li>
+                <li><span class="user" data-qq="779370928">779370928</span>VS<span class="user" data-qq="936760223">936760223</span></li>
+                <li><span class="user" data-qq="914407299">914407299</span>VS<span class="user" data-qq="865454627">865454627</span></li>
+                <li><span class="user" data-qq="770490126">770490126</span>VS<span class="user" data-qq="136667854">136667854</span></li>
+                <li><span class="user" data-qq="1242839330">1242839330</span>VS<span class="user" data-qq="997959845">997959845</span></li>
+                <li><span class="user" data-qq="312973979">312973979</span>VS<span class="user" data-qq="2060557629">2060557629</span></li>
+                <li><span class="user" data-qq="734571286">734571286</span>VS<span class="user" data-qq="997959845">997959845</span></li>
+
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">黑色玫瑰</span>
+            <ul class="server10">
+                <li><span class="user" data-qq="1399833441">1399833441</span>VS<span class="user" data-qq="2291940817">2291940817</span></li>
+                <li><span class="user" data-qq="1049734044">1049734044</span>VS<span class="user" data-qq="310984087">310984087</span></li>
+                <li><span class="user" data-qq="1172565825">1172565825</span>VS<span class="user" data-qq="1606322930">1606322930</span></li>
+                <li><span class="user" data-qq="1192625562">1192625562</span>VS<span class="user" data-qq="610677353">610677353</span></li>
+                <li><span class="user" data-qq="963685569">963685569</span>VS<span class="user" data-qq="731248733">731248733</span></li>
+                <li><span class="user" data-qq="522916545">522916545</span>VS<span class="user" data-qq="675651692">675651692</span></li>
+                <li><span class="user" data-qq="1259214273">1259214273</span>VS<span class="user" data-qq="1220635937">1220635937</span></li>
+                <li><span class="user" data-qq="920439332">920439332</span>VS<span class="user" data-qq="547420713">547420713</span></li>
+                <li><span class="user" data-qq="1762171354">1762171354</span>VS<span class="user" data-qq="916943283">916943283</span></li>
+                <li><span class="user" data-qq="541600135">541600135</span>VS<span class="user" data-qq="253185102">253185102</span></li>
+                <li><span class="user" data-qq="1337784849">1337784849</span>VS<span class="user" data-qq="1006216704">1006216704</span></li>
+                <li><span class="user" data-qq="929451661">929451661</span>VS<span class="user" data-qq="2671210791">2671210791</span></li>
+                <li><span class="user" data-qq="321994321">321994321</span>VS<span class="user" data-qq="768139355">768139355</span></li>
+                <li><span class="user" data-qq="438336028">438336028</span>VS<span class="user" data-qq="1918365684">1918365684</span></li>
+                <li><span class="user" data-qq="806546759">806546759</span>VS<span class="user" data-qq="1102755923">1102755923</span></li>
+                <li><span class="user" data-qq="1337281016">1337281016</span>VS<span class="user" data-qq="273551594">273551594</span></li>
+                <li><span class="user" data-qq="1571365462">1571365462</span>VS<span class="user" data-qq="1539183331">1539183331</span></li>
+                <li><span class="user" data-qq="897015298">897015298</span>VS<span class="user" data-qq="1161782581">1161782581</span></li>
+                <li><span class="user" data-qq="237299434">237299434</span>VS<span class="user" data-qq="2104182771">2104182771</span></li>
+                <li><span class="user" data-qq="853562850">853562850</span>VS<span class="user" data-qq="1227046128">1227046128</span></li>
+                <li><span class="user" data-qq="1094295918">1094295918</span>VS<span class="user" data-qq="1261647516">1261647516</span></li>
+                <li><span class="user" data-qq="871014243">871014243</span>VS<span class="user" data-qq="516203457">516203457</span></li>
+                <li><span class="user" data-qq="1315697917">1315697917</span>VS<span class="user" data-qq="421645107">421645107</span></li>
+                <li><span class="user" data-qq="593069226">593069226</span>VS<span class="user" data-qq="1308500730">1308500730</span></li>
+                <li><span class="user" data-qq="1240854539">1240854539</span>VS<span class="user" data-qq="1587514374">1587514374</span></li>
+                <li><span class="user" data-qq="962112069">962112069</span>VS<span class="user" data-qq="846109774">846109774</span></li>
+                <li><span class="user" data-qq="1105186962">1105186962</span>VS<span class="user" data-qq="1401429016">1401429016</span></li>
+                <li><span class="user" data-qq="424049685">424049685</span>VS<span class="user" data-qq="1960742686">1960742686</span></li>
+                <li><span class="user" data-qq="971168424">971168424</span>VS<span class="user" data-qq="504270882">504270882</span></li>
+                <li><span class="user" data-qq="670223435">670223435</span>VS<span class="user" data-qq="1610278434">1610278434</span></li>
+                <li><span class="user" data-qq="531578724">531578724</span>VS<span class="user" data-qq="2458773239">2458773239</span></li>
+                <li><span class="user" data-qq="1694966320">1694966320</span>VS<span class="user" data-qq="576549188">576549188</span></li>
+                <li><span class="user" data-qq="1503458195">1503458195</span>VS<span class="user" data-qq="1216382047">1216382047</span></li>
+                <li><span class="user" data-qq="1290971825">1290971825</span>VS<span class="user" data-qq="925184243">925184243</span></li>
+                <li><span class="user" data-qq="281387353">281387353</span>VS<span class="user" data-qq="290613222">290613222</span></li>
+                <li><span class="user" data-qq="2411420236">2411420236</span>VS<span class="user" data-qq="405136512">405136512</span></li>
+                <li><span class="user" data-qq="1312887834">1312887834</span>VS<span class="user" data-qq="1366354135">1366354135</span></li>
+                <li><span class="user" data-qq="987945792">987945792</span>VS<span class="user" data-qq="2294411746">2294411746</span></li>
+                <li><span class="user" data-qq="970453904">970453904</span>VS<span class="user" data-qq="295647241">295647241</span></li>
+                <li><span class="user" data-qq="280744732">280744732</span>VS<span class="user" data-qq="1147836559">1147836559</span></li>
+                <li><span class="user" data-qq="949336875">949336875</span>VS<span class="user" data-qq="1132062025">1132062025</span></li>
+                <li><span class="user" data-qq="320798536">320798536</span>VS<span class="user" data-qq="540823103">540823103</span></li>
+                <li><span class="user" data-qq="303701186">303701186</span>VS<span class="user" data-qq="1326802257">1326802257</span></li>
+                <li><span class="user" data-qq="1462208651">1462208651</span>VS<span class="user" data-qq="2656538150">2656538150</span></li>
+                <li><span class="user" data-qq="602548639">602548639</span>VS<span class="user" data-qq="1341710125">1341710125</span></li>
+                <li><span class="user" data-qq="2234512399">2234512399</span>VS<span class="user" data-qq="297094263">297094263</span></li>
+                <li><span class="user" data-qq="775825763">775825763</span>VS<span class="user" data-qq="644899489">644899489</span></li>
+                <li><span class="user" data-qq="1603443765">1603443765</span>VS<span class="user" data-qq="610677353">610677353</span></li>
+                <li><span class="user" data-qq="627943159">627943159</span>VS<span class="user" data-qq="974122887">974122887</span></li>
+                <li><span class="user" data-qq="976430506">976430506</span>VS<span class="user" data-qq="3194176453">3194176453</span></li>
+                <li><span class="user" data-qq="916955527">916955527</span>VS<span class="user" data-qq="3194176453">3194176453</span></li>
+                <li><span class="user" data-qq="544134017">544134017</span>VS<span class="user" data-qq="953667004">953667004</span></li>
+                <li><span class="user" data-qq="710525311">710525311</span>VS<span class="user" data-qq="500340770">500340770</span></li>
+                <li><span class="user" data-qq="1367551730">1367551730</span>VS<span class="user" data-qq="1137125760">1137125760</span></li>
+                <li><span class="user" data-qq="1504632397">1504632397</span>VS<span class="user" data-qq="393051630">393051630</span></li>
+                <li><span class="user" data-qq="1976602740">1976602740</span>VS<span class="user" data-qq="295647241">295647241</span></li>
+                <li><span class="user" data-qq="1322809340">1322809340</span>VS<span class="user" data-qq="1831431740">1831431740</span></li>
+                <li><span class="user" data-qq="419868507">419868507</span>VS<span class="user" data-qq="1074081681">1074081681</span></li>
+                <li><span class="user" data-qq="1109884152">1109884152</span>VS<span class="user" data-qq="547420713">547420713</span></li>
+                <li><span class="user" data-qq="2374456735">2374456735</span>VS<span class="user" data-qq="735815290">735815290</span></li>
+                <li><span class="user" data-qq="321087840">321087840</span>VS<span class="user" data-qq="956504997">956504997</span></li>
+                <li><span class="user" data-qq="627943159">627943159</span>VS<span class="user" data-qq="912048963">912048963</span></li>
+                <li><span class="user" data-qq="574005345">574005345</span>VS<span class="user" data-qq="983667963">983667963</span></li>
+                <li><span class="user" data-qq="1113298303">1113298303</span>VS<span class="user" data-qq="1368960836">1368960836</span></li>
+                <li><span class="user" data-qq="2710154478">2710154478</span>VS<span class="user" data-qq="405013244">405013244</span></li>
+                <li><span class="user" data-qq="732248733">732248733</span>VS<span class="user" data-qq="937623240">937623240</span></li>
+                <li><span class="user" data-qq="120758409">120758409</span>VS<span class="user" data-qq="晋级">晋级</span></li>
+
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">巨神峰</span>
+            <ul class="server6">
+                <li><span class="user" data-qq="920221084">920221084</span>VS<span class="user" data-qq="2504650447">2504650447</span></li>
+                <li><span class="user" data-qq="1156688302">1156688302</span>VS<span class="user" data-qq="1570996138">1570996138</span></li>
+                <li><span class="user" data-qq="2268930127">2268930127</span>VS<span class="user" data-qq="648738362">648738362</span></li>
+                <li><span class="user" data-qq="2268930127">2268930127</span>VS<span class="user" data-qq="825698802">825698802</span></li>
+                <li><span class="user" data-qq="646678973">646678973</span>VS<span class="user" data-qq="824328593">824328593</span></li>
+                <li><span class="user" data-qq="1278518790">1278518790</span>VS<span class="user" data-qq="50946193">50946193</span></li>
+                <li><span class="user" data-qq="2567458044">2567458044</span>VS<span class="user" data-qq="370598070">370598070</span></li>
+                <li><span class="user" data-qq="807793392">807793392</span>VS<span class="user" data-qq="975313385">975313385</span></li>
+                <li><span class="user" data-qq="519611760">519611760</span>VS<span class="user" data-qq="1362379540">1362379540</span></li>
+                <li><span class="user" data-qq="1277872826">1277872826</span>VS<span class="user" data-qq="781053476">781053476</span></li>
+                <li><span class="user" data-qq="494065768">494065768</span>VS<span class="user" data-qq="1986232564">1986232564</span></li>
+                <li><span class="user" data-qq="2548851816">2548851816</span>VS<span class="user" data-qq="1782891612">1782891612</span></li>
+                <li><span class="user" data-qq="895177828">895177828</span>VS<span class="user" data-qq="835780109">835780109</span></li>
+                <li><span class="user" data-qq="1264676639">1264676639</span>VS<span class="user" data-qq="594381126">594381126</span></li>
+                <li><span class="user" data-qq="983665472">983665472</span>VS<span class="user" data-qq="834080496">834080496</span></li>
+                <li><span class="user" data-qq="1976224913">1976224913</span>VS<span class="user" data-qq="1171991493">1171991493</span></li>
+                <li><span class="user" data-qq="2322458460">2322458460</span>VS<span class="user" data-qq="1622485242">1622485242</span></li>
+                <li><span class="user" data-qq="1475486063">1475486063</span>VS<span class="user" data-qq="229617812">229617812</span></li>
+                <li><span class="user" data-qq="1047659062">1047659062</span>VS<span class="user" data-qq="740279664">740279664</span></li>
+                <li><span class="user" data-qq="624540671">624540671</span>VS<span class="user" data-qq="979993534">979993534</span></li>
+                <li><span class="user" data-qq="2358978589">2358978589</span>VS<span class="user" data-qq="719338376">719338376</span></li>
+                <li><span class="user" data-qq="2284423637">2284423637</span>VS<span class="user" data-qq="1250314072">1250314072</span></li>
+                <li><span class="user" data-qq="1592977063">1592977063</span>VS<span class="user" data-qq="2217515792">2217515792</span></li>
+                <li><span class="user" data-qq="594900176">594900176</span>VS<span class="user" data-qq="982469898">982469898</span></li>
+                <li><span class="user" data-qq="1534243374">1534243374</span>VS<span class="user" data-qq="2575317500">2575317500</span></li>
+                <li><span class="user" data-qq="381046298">381046298</span>VS<span class="user" data-qq="476507847">476507847</span></li>
+
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">均衡教派</span>
+            <ul class="server12">
+                <li><span class="user" data-qq="1969621855">1969621855</span>VS<span class="user" data-qq="1191401558">1191401558</span></li>
+                <li><span class="user" data-qq="1710761162">1710761162</span>VS<span class="user" data-qq="1243616201">1243616201</span></li>
+                <li><span class="user" data-qq="1539097765">1539097765</span>VS<span class="user" data-qq="1332668399">1332668399</span></li>
+                <li><span class="user" data-qq="1398100216">1398100216</span>VS<span class="user" data-qq="2264303546">2264303546</span></li>
+                <li><span class="user" data-qq="1219792242">1219792242</span>VS<span class="user" data-qq="2920048810">2920048810</span></li>
+                <li><span class="user" data-qq="2947717277">2947717277</span>VS<span class="user" data-qq="785117062">785117062</span></li>
+                <li><span class="user" data-qq="1146976950">1146976950</span>VS<span class="user" data-qq="1511096546">1511096546</span></li>
+                <li><span class="user" data-qq="929886863">929886863</span>VS<span class="user" data-qq="2811016100">2811016100</span></li>
+                <li><span class="user" data-qq="1126529665">1126529665</span>VS<span class="user" data-qq="1070346414">1070346414</span></li>
+                <li><span class="user" data-qq="1051995884">1051995884</span>VS<span class="user" data-qq="847653640">847653640</span></li>
+                <li><span class="user" data-qq="644352160">644352160</span>VS<span class="user" data-qq="2104888567">2104888567</span></li>
+                <li><span class="user" data-qq="821971311">821971311</span>VS<span class="user" data-qq="9983074">9983074</span></li>
+                <li><span class="user" data-qq="1223106855">1223106855</span>VS<span class="user" data-qq="1261412251">1261412251</span></li>
+                <li><span class="user" data-qq="1974310021">1974310021</span>VS<span class="user" data-qq="32713778">32713778</span></li>
+                <li><span class="user" data-qq="747301881">747301881</span>VS<span class="user" data-qq="1229341744">1229341744</span></li>
+                <li><span class="user" data-qq="1815854807">1815854807</span>VS<span class="user" data-qq="2763102609">2763102609</span></li>
+                <li><span class="user" data-qq="1683192494">1683192494</span>VS<span class="user" data-qq="1293978819">1293978819</span></li>
+                <li><span class="user" data-qq="623950631">623950631</span>VS<span class="user" data-qq="1513201324">1513201324</span></li>
+                <li><span class="user" data-qq="2978952027">2978952027</span>VS<span class="user" data-qq="1243616201">1243616201</span></li>
+                <li><span class="user" data-qq="1664198725">1664198725</span>VS<span class="user" data-qq="1924193233">1924193233</span></li>
+                <li><span class="user" data-qq="844158343">844158343</span>VS<span class="user" data-qq="1768339692">1768339692</span></li>
+                <li><span class="user" data-qq="2713893977">2713893977</span>VS<span class="user" data-qq="1145353067">1145353067</span></li>
+                <li><span class="user" data-qq="854018874">854018874</span>VS<span class="user" data-qq="805872935">805872935</span></li>
+                <li><span class="user" data-qq="884267419">884267419</span>VS<span class="user" data-qq="1484330767">1484330767</span></li>
+                <li><span class="user" data-qq="1411539718">1411539718</span>VS<span class="user" data-qq="447109700">447109700</span></li>
+                <li><span class="user" data-qq="2489512525">2489512525</span>VS<span class="user" data-qq="695365002">695365002</span></li>
+                <li><span class="user" data-qq="120758409">120758409</span>VS<span class="user" data-qq="晋级">晋级</span></li>
+
+                </ul>
+        </li>
+        <li class="server"><span class="server-name">卡拉曼达</span>
+            <ul class="server17">
+                <li><span class="user" data-qq="546432853">546432853</span>VS<span class="user" data-qq="894523141">894523141</span></li>
+                <li><span class="user" data-qq="1016020799">1016020799</span>VS<span class="user" data-qq="695995429">695995429</span></li>
+                <li><span class="user" data-qq="1239679062">1239679062</span>VS<span class="user" data-qq="1017265430">1017265430</span></li>
+                <li><span class="user" data-qq="2445856104">2445856104</span>VS<span class="user" data-qq="2782896148">2782896148</span></li>
+                <li><span class="user" data-qq="1940712779">1940712779</span>VS<span class="user" data-qq="574360596">574360596</span></li>
+                <li><span class="user" data-qq="1638342638">1638342638</span>VS<span class="user" data-qq="1186477980">1186477980</span></li>
+                <li><span class="user" data-qq="1411123262">1411123262</span>VS<span class="user" data-qq="568101318">568101318</span></li>
+                <li><span class="user" data-qq="453536967">453536967</span>VS<span class="user" data-qq="8412873">8412873</span></li>
+                <li><span class="user" data-qq="738256511">738256511</span>VS<span class="user" data-qq="963365856">963365856</span></li>
+                <li><span class="user" data-qq="1300734773">1300734773</span><span class="user" data-qq="晋级">晋级</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">雷瑟守备</span>
+            <ul class="server7">
+                <li><span class="user" data-qq="1728794127">1728794127</span>VS<span class="user" data-qq="1227233843">1227233843</span></li>
+                <li><span class="user" data-qq="382272069">382272069</span>VS<span class="user" data-qq="2637551024">2637551024</span></li>
+                <li><span class="user" data-qq="429251121">429251121</span>VS<span class="user" data-qq="641859304">641859304</span></li>
+                <li><span class="user" data-qq="1459191128">1459191128</span>VS<span class="user" data-qq="1733129127">1733129127</span></li>
+                <li><span class="user" data-qq="953764410">953764410</span>VS<span class="user" data-qq="657730779">657730779</span></li>
+                <li><span class="user" data-qq="110269430">110269430</span>VS<span class="user" data-qq="979125442">979125442</span></li>
+                <li><span class="user" data-qq="840796336">840796336</span>VS<span class="user" data-qq="1210638908">1210638908</span></li>
+                <li><span class="user" data-qq="1940238605">1940238605</span>VS<span class="user" data-qq="2740872529">2740872529</span></li>
+                <li><span class="user" data-qq="1435323977">1435323977</span>VS<span class="user" data-qq="2740872529">2740872529</span></li>
+                <li><span class="user" data-qq="1401640460">1401640460</span>VS<span class="user" data-qq="377276031">377276031</span></li>
+                <li><span class="user" data-qq="314485733">314485733</span>VS<span class="user" data-qq="375257315">375257315</span></li>
+                <li><span class="user" data-qq="342351420">342351420</span>VS<span class="user" data-qq="2524672267">2524672267</span></li>
+                <li><span class="user" data-qq="1305399786">1305399786</span>VS<span class="user" data-qq="931069587">931069587</span></li>
+                <li><span class="user" data-qq="1115791604">1115791604</span>VS<span class="user" data-qq="2205917024">2205917024</span></li>
+                <li><span class="user" data-qq="845352083">845352083</span>VS<span class="user" data-qq="2226752265">2226752265</span></li>
+                <li><span class="user" data-qq="2865336146">2865336146</span>VS<span class="user" data-qq="2776338689">2776338689</span></li>
+                <li><span class="user" data-qq="599544171">599544171</span>VS<span class="user" data-qq="804682350">804682350</span></li>
+                <li><span class="user" data-qq="735093475">735093475</span>VS<span class="user" data-qq="1249235355">1249235355</span></li>
+                <li><span class="user" data-qq="1047969527">1047969527</span>VS<span class="user" data-qq="502693357">502693357</span></li>
+                <li><span class="user" data-qq="598109605">598109605</span>VS<span class="user" data-qq="1250152556">1250152556</span></li>
+                <li><span class="user" data-qq="1011190044">1011190044</span>VS<span class="user" data-qq="1151815317">1151815317</span></li>
+                <li><span class="user" data-qq="1358914923">1358914923</span>VS<span class="user" data-qq="943142697">943142697</span></li>
+                <li><span class="user" data-qq="599410609">599410609</span>VS<span class="user" data-qq="237287827">237287827</span></li>
+                <li><span class="user" data-qq="1553047137">1553047137</span>VS<span class="user" data-qq="1355367062">1355367062</span></li>
+                <li><span class="user" data-qq="953766410">953766410</span>VS<span class="user" data-qq="415903791">415903791</span></li>
+                <li><span class="user" data-qq="2896767558">2896767558</span>VS<span class="user" data-qq="1092854532">1092854532</span></li>
+                <li><span class="user" data-qq="1021238404">1021238404</span>VS<span class="user" data-qq="1055474533">1055474533</span></li>
+                <li><span class="user" data-qq="1446040674">1446040674</span>VS<span class="user" data-qq="657832380">657832380</span></li>
+                <li><span class="user" data-qq="1047191230">1047191230</span>VS<span class="user" data-qq="656320570">656320570</span></li>
+                <li><span class="user" data-qq="2303994949">2303994949</span>VS<span class="user" data-qq="646844314">646844314</span></li>
+                <li><span class="user" data-qq="2925725541">2925725541</span>VS<span class="user" data-qq="778769798">778769798</span></li>
+                <li><span class="user" data-qq="1872681827">1872681827</span>VS<span class="user" data-qq="982843009">982843009</span></li>
+                <li><span class="user" data-qq="1145349828">1145349828</span>VS<span class="user" data-qq="940968541">940968541</span></li>
+                <li><span class="user" data-qq="528374613">528374613</span>VS<span class="user" data-qq="1541330942">1541330942</span></li>
+                <li><span class="user" data-qq="1973384605">1973384605</span>VS<span class="user" data-qq="963844890">963844890</span></li>
+                <li><span class="user" data-qq="357312650">357312650</span>VS<span class="user" data-qq="272667225">272667225</span></li>
+                <li><span class="user" data-qq="1151897857">1151897857</span>VS<span class="user" data-qq="824436501">824436501</span></li>
+                <li><span class="user" data-qq="2469941834">2469941834</span>VS<span class="user" data-qq="1538080559">1538080559</span></li>
+                <li><span class="user" data-qq="352933293">352933293</span><span class="user" data-qq="晋级">晋级</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">皮城警备</span>
+            <ul class="server18">
+                <li><span class="user" data-qq="1339211561">1339211561</span>VS<span class="user" data-qq="841687604">841687604</span></li>
+                <li><span class="user" data-qq="1710761162">1710761162</span>VS<span class="user" data-qq="249537338">249537338</span></li>
+                <li><span class="user" data-qq="17743337">17743337</span>VS<span class="user" data-qq="847447817">847447817</span></li>
+                <li><span class="user" data-qq="1296932978">1296932978</span>VS<span class="user" data-qq="1414000308">1414000308</span></li>
+                <li><span class="user" data-qq="778984773">778984773</span>VS<span class="user" data-qq="740497121">740497121</span></li>
+                <li><span class="user" data-qq="1404416042">1404416042</span>VS<span class="user" data-qq="984188453">984188453</span></li>
+                <li><span class="user" data-qq="976885596">976885596</span>VS<span class="user" data-qq="2557872973">2557872973</span></li>
+                <li><span class="user" data-qq="807793392">807793392</span>VS<span class="user" data-qq="1024269357">1024269357</span></li>
+                <li><span class="user" data-qq="2454716659">2454716659</span>VS<span class="user" data-qq="2425820666">2425820666</span></li>
+                <li><span class="user" data-qq="1577194667">1577194667</span>VS<span class="user" data-qq="1005167613">1005167613</span></li>
+                <li><span class="user" data-qq="594972878">594972878</span>VS<span class="user" data-qq="119412304">119412304</span></li>
+                <li><span class="user" data-qq="1405907568">1405907568</span>VS<span class="user" data-qq="1806418027">1806418027</span></li>
+                <li><span class="user" data-qq="2427518276">2427518276</span>VS<span class="user" data-qq="858755584">858755584</span></li>
+                <li><span class="user" data-qq="1411539718">1411539718</span>VS<span class="user" data-qq="1723163280">1723163280</span></li>
+                <li><span class="user" data-qq="1148992256">1148992256</span><span class="user" data-qq="晋级">晋级</span></li>
+                </ul>
+        </li>
+        <li class="server"><span class="server-name">皮尔特沃夫</span>
+            <ul class="server4">
+                <li><span class="user" data-qq="193000194">193000194</span>VS<span class="user" data-qq="2892018500">2892018500</span></li>
+                <li><span class="user" data-qq="1398100216">1398100216</span>VS<span class="user" data-qq="819029970">819029970</span></li>
+                <li><span class="user" data-qq="1215626908">1215626908</span>VS<span class="user" data-qq="302884940">302884940</span></li>
+                <li><span class="user" data-qq="937597922">937597922</span>VS<span class="user" data-qq="517678643">517678643</span></li>
+                <li><span class="user" data-qq="1586231096">1586231096</span>VS<span class="user" data-qq="2226529746">2226529746</span></li>
+                <li><span class="user" data-qq="920439332">920439332</span>VS<span class="user" data-qq="2440547635">2440547635</span></li>
+                <li><span class="user" data-qq="2586993824">2586993824</span>VS<span class="user" data-qq="1213428977">1213428977</span></li>
+                <li><span class="user" data-qq="1310443942">1310443942</span>VS<span class="user" data-qq="251852713">251852713</span></li>
+                <li><span class="user" data-qq="805393559">805393559</span>VS<span class="user" data-qq="273551594">273551594</span></li>
+                <li><span class="user" data-qq="1494399978">1494399978</span>VS<span class="user" data-qq="1206785112">1206785112</span></li>
+                <li><span class="user" data-qq="1731077699">1731077699</span>VS<span class="user" data-qq="928725108">928725108</span></li>
+                <li><span class="user" data-qq="1251240000">1251240000</span>VS<span class="user" data-qq="542101033">542101033</span></li>
+                <li><span class="user" data-qq="863477894">863477894</span>VS<span class="user" data-qq="973611180">973611180</span></li>
+                <li><span class="user" data-qq="2502018269">2502018269</span>VS<span class="user" data-qq="598930832">598930832</span></li>
+                <li><span class="user" data-qq="879004715">879004715</span>VS<span class="user" data-qq="545273069">545273069</span></li>
+                <li><span class="user" data-qq="1051149004">1051149004</span>VS<span class="user" data-qq="351949047">351949047</span></li>
+                <li><span class="user" data-qq="892667393">892667393</span>VS<span class="user" data-qq="790679555">790679555</span></li>
+                <li><span class="user" data-qq="1045579215">1045579215</span>VS<span class="user" data-qq="1337906082">1337906082</span></li>
+                <li><span class="user" data-qq="1536436715">1536436715</span>VS<span class="user" data-qq="1548648794">1548648794</span></li>
+                <li><span class="user" data-qq="1085375320">1085375320</span>VS<span class="user" data-qq="3293584114">3293584114</span></li>
+                <li><span class="user" data-qq="1029126140">1029126140</span>VS<span class="user" data-qq="2736532770">2736532770</span></li>
+                <li><span class="user" data-qq="274704409">274704409</span>VS<span class="user" data-qq="1421651044">1421651044</span></li>
+                <li><span class="user" data-qq="928154472">928154472</span>VS<span class="user" data-qq="2862464244">2862464244</span></li>
+                <li><span class="user" data-qq="1131283320">1131283320</span>VS<span class="user" data-qq="1933275681">1933275681</span></li>
+                <li><span class="user" data-qq="843250351">843250351</span>VS<span class="user" data-qq="1579998045">1579998045</span></li>
+                <li><span class="user" data-qq="934771051">934771051</span>VS<span class="user" data-qq="583047139">583047139</span></li>
+                <li><span class="user" data-qq="653130191">653130191</span>VS<span class="user" data-qq="1137445454">1137445454</span></li>
+                <li><span class="user" data-qq="916955527">916955527</span>VS<span class="user" data-qq="1137445454">1137445454</span></li>
+                <li><span class="user" data-qq="657627114">657627114</span>VS<span class="user" data-qq="836766635">836766635</span></li>
+                <li><span class="user" data-qq="499088973">499088973</span>VS<span class="user" data-qq="405013244">405013244</span></li>
+                <li><span class="user" data-qq="429811631">429811631</span>VS<span class="user" data-qq="1654820515">1654820515</span></li>
+                <li><span class="user" data-qq="1148342063">1148342063</span>VS<span class="user" data-qq="764115411">764115411</span></li>
+                <li><span class="user" data-qq="3293584114">3293584114</span>VS<span class="user" data-qq="1214803436">1214803436</span></li>
+                <li><span class="user" data-qq="897022532">897022532</span>VS<span class="user" data-qq="956988351">956988351</span></li>
+                <li><span class="user" data-qq="1067799350">1067799350</span>VS<span class="user" data-qq="718895713">718895713</span></li>
+                <li><span class="user" data-qq="785117062">785117062</span><span class="user" data-qq="962017587">962017587</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">守望之海</span>
+            <ul class="server15">
+                <li><span class="user" data-qq="1017283526">1017283526</span>VS<span class="user" data-qq="1119330080">1119330080</span></li>
+                <li><span class="user" data-qq="1025501848">1025501848</span>VS<span class="user" data-qq="1174866967">1174866967</span></li>
+                <li><span class="user" data-qq="1303188448">1303188448</span>VS<span class="user" data-qq="1293854825">1293854825</span></li>
+                <li><span class="user" data-qq="1711218467">1711218467</span>VS<span class="user" data-qq="2719982764">2719982764</span></li>
+                <li><span class="user" data-qq="414546514">414546514</span>VS<span class="user" data-qq="1453486884">1453486884</span></li>
+                <li><span class="user" data-qq="275886152">275886152</span>VS<span class="user" data-qq="742955298">742955298</span></li>
+                <li><span class="user" data-qq="932055534">932055534</span>VS<span class="user" data-qq="285102598">285102598</span></li>
+                <li><span class="user" data-qq="892298056">892298056</span>VS<span class="user" data-qq="1261009719">1261009719</span></li>
+                <li><span class="user" data-qq="1501245777">1501245777</span>VS<span class="user" data-qq="421645107">421645107</span></li>
+                <li><span class="user" data-qq="1556546672">1556546672</span>VS<span class="user" data-qq="1830226781">1830226781</span></li>
+                <li><span class="user" data-qq="1831654919">1831654919</span>VS<span class="user" data-qq="912522296">912522296</span></li>
+                <li><span class="user" data-qq="1716949769">1716949769</span>VS<span class="user" data-qq="951617332">951617332</span></li>
+                <li><span class="user" data-qq="1638342638">1638342638</span>VS<span class="user" data-qq="935012900">935012900</span></li>
+                <li><span class="user" data-qq="1850579324">1850579324</span>VS<span class="user" data-qq="1260127676">1260127676</span></li>
+                <li><span class="user" data-qq="49014110">49014110</span>VS<span class="user" data-qq="604247191">604247191</span></li>
+                <li><span class="user" data-qq="979709165">979709165</span>VS<span class="user" data-qq="2080681680">2080681680</span></li>
+                <li><span class="user" data-qq="757947242">757947242</span>VS<span class="user" data-qq="894123208">894123208</span></li>
+                <li><span class="user" data-qq="1023541748">1023541748</span>VS<span class="user" data-qq="1030956806">1030956806</span></li>
+                <li><span class="user" data-qq="2471662017">2471662017</span>VS<span class="user" data-qq="2362843674">2362843674</span></li>
+                <li><span class="user" data-qq="252493026">252493026</span>VS<span class="user" data-qq="2560786052">2560786052</span></li>
+                <li><span class="user" data-qq="1726848680">1726848680</span>VS<span class="user" data-qq="982469898">982469898</span></li>
+                <li><span class="user" data-qq="601551309">601551309</span>VS<span class="user" data-qq="983667963">983667963</span></li>
+                </ul>
+        </li>
+        <li class="server"><span class="server-name">水晶之痕</span>
+            <ul class="server13">
+                <li><span class="user" data-qq="1835502165">1835502165</span>VS<span class="user" data-qq="1287394323">1287394323</span></li>
+                <li><span class="user" data-qq="870724523">870724523</span>VS<span class="user" data-qq="1783142314">1783142314</span></li>
+                <li><span class="user" data-qq="616059490">616059490</span>VS<span class="user" data-qq="1272717831">1272717831</span></li>
+                <li><span class="user" data-qq="2442530946">2442530946</span>VS<span class="user" data-qq="2639926067">2639926067</span></li>
+                <li><span class="user" data-qq="991960354">991960354</span>VS<span class="user" data-qq="735140144">735140144</span></li>
+                <li><span class="user" data-qq="305954863">305954863</span>VS<span class="user" data-qq="2323704912">2323704912</span></li>
+                <li><span class="user" data-qq="572365481">572365481</span>VS<span class="user" data-qq="568000204">568000204</span></li>
+                <li><span class="user" data-qq="1447320630">1447320630</span>VS<span class="user" data-qq="461517068">461517068</span></li>
+                <li><span class="user" data-qq="1250148365">1250148365</span>VS<span class="user" data-qq="1164748825">1164748825</span></li>
+                <li><span class="user" data-qq="1096458621">1096458621</span>VS<span class="user" data-qq="1282624126">1282624126</span></li>
+                <li><span class="user" data-qq="2502018269">2502018269</span>VS<span class="user" data-qq="1369242109">1369242109</span></li>
+                <li><span class="user" data-qq="1835502165">1835502165</span>VS<span class="user" data-qq="413455303">413455303</span></li>
+                <li><span class="user" data-qq="1148235180">1148235180</span>VS<span class="user" data-qq="1244066821">1244066821</span></li>
+                <li><span class="user" data-qq="1932024439">1932024439</span>VS<span class="user" data-qq="184026297">184026297</span></li>
+                <li><span class="user" data-qq="2021498071">2021498071</span>VS<span class="user" data-qq="2234496549">2234496549</span></li>
+                <li><span class="user" data-qq="845352083">845352083</span>VS<span class="user" data-qq="466050571">466050571</span></li>
+                <li><span class="user" data-qq="937689451">937689451</span>VS<span class="user" data-qq="374796579">374796579</span></li>
+                <li><span class="user" data-qq="874916893">874916893</span>VS<span class="user" data-qq="987364022">987364022</span></li>
+                <li><span class="user" data-qq="1461867657">1461867657</span>VS<span class="user" data-qq="1803511918">1803511918</span></li>
+                <li><span class="user" data-qq="337036427">337036427</span>VS<span class="user" data-qq="2426817539">2426817539</span></li>
+                <li><span class="user" data-qq="1241981420">1241981420</span>VS<span class="user" data-qq="784100527">784100527</span></li>
+                <li><span class="user" data-qq="737738789">737738789</span>VS<span class="user" data-qq="1102145749">1102145749</span></li>
+                <li><span class="user" data-qq="1412895943">1412895943</span>VS<span class="user" data-qq="869667583">869667583</span></li>
+                <li><span class="user" data-qq="407109151">407109151</span>VS<span class="user" data-qq="973254412">973254412</span></li>
+                <li><span class="user" data-qq="1670277754">1670277754</span>VS<span class="user" data-qq="373426135">373426135</span></li>
+                <li><span class="user" data-qq="1251515046">1251515046</span>VS<span class="user" data-qq="1439016766">1439016766</span></li>
+                <li><span class="user" data-qq="1305410218">1305410218</span>VS<span class="user" data-qq="1659823415">1659823415</span></li>
+                <li><span class="user" data-qq="1176219014">1176219014</span>VS<span class="user" data-qq="1193459969">1193459969</span></li>
+                <li><span class="user" data-qq="358716716">358716716</span>VS<span class="user" data-qq="17751107254">17751107254</span></li>
+                <li><span class="user" data-qq="793138973">793138973</span>VS<span class="user" data-qq="1005095926">1005095926</span></li>
+                <li><span class="user" data-qq="1197786642">1197786642</span>VS<span class="user" data-qq="584283993">584283993</span></li>
+                <li><span class="user" data-qq="1013516662">1013516662</span>VS<span class="user" data-qq="328101774">328101774</span></li>
+                <li><span class="user" data-qq="895935174">895935174</span>VS<span class="user" data-qq="704195485">704195485</span></li>
+                <li><span class="user" data-qq="929958387">929958387</span>VS<span class="user" data-qq="906978466">906978466</span></li>
+                <li><span class="user" data-qq="294588909">294588909</span>VS<span class="user" data-qq="1732495877">1732495877</span></li>
+                <li><span class="user" data-qq="2567778178">2567778178</span>VS<span class="user" data-qq="1944119226">1944119226</span></li>
+                <li><span class="user" data-qq="779191154">779191154</span>VS<span class="user" data-qq="360875905">360875905</span></li>
+                <li><span class="user" data-qq="327979606">327979606</span>VS<span class="user" data-qq="2415626931">2415626931</span></li>
+                <li><span class="user" data-qq="2298604911">2298604911</span>VS<span class="user" data-qq="2832378388">2832378388</span></li>
+                <li><span class="user" data-qq="1913068633">1913068633</span>VS<span class="user" data-qq="904265947">904265947</span></li>
+                <li><span class="user" data-qq="2822121068">2822121068</span><span class="user" data-qq="1227335578">1227335578</span></li>
+
+                </ul>
+        </li>
+        <li class="server"><span class="server-name">影流</span>
+            <ul class="server14">
+                <li><span class="user" data-qq="2543100711">2543100711</span>VS<span class="user" data-qq="1085529087">1085529087</span></li>
+                <li><span class="user" data-qq="1624797041">1624797041</span>VS<span class="user" data-qq="465615456">465615456</span></li>
+                <li><span class="user" data-qq="1034297875">1034297875</span>VS<span class="user" data-qq="821371928">821371928</span></li>
+                <li><span class="user" data-qq="1665434573">1665434573</span>VS<span class="user" data-qq="1981220928">1981220928</span></li>
+                <li><span class="user" data-qq="657456703">657456703</span>VS<span class="user" data-qq="413801503">413801503</span></li>
+                <li><span class="user" data-qq="821371928">821371928</span>VS<span class="user" data-qq="2938092210">2938092210</span></li>
+                <li><span class="user" data-qq="1970343527">1970343527</span>VS<span class="user" data-qq="992580327">992580327</span></li>
+                <li><span class="user" data-qq="3195119062">3195119062</span>VS<span class="user" data-qq="1390841879">1390841879</span></li>
+                <li><span class="user" data-qq="952844924">952844924</span>VS<span class="user" data-qq="526929617">526929617</span></li>
+                <li><span class="user" data-qq="1494879320">1494879320</span>VS<span class="user" data-qq="4943375164">4943375164</span></li>
+                <li><span class="user" data-qq="2543100711">2543100711</span>VS<span class="user" data-qq="1434058203">1434058203</span></li>
+                <li><span class="user" data-qq="397441862">397441862</span>VS<span class="user" data-qq="1352580104">1352580104</span></li>
+                <li><span class="user" data-qq="835947413">835947413</span>VS<span class="user" data-qq="896388853">896388853</span></li>
+                <li><span class="user" data-qq="473462218">473462218</span>VS<span class="user" data-qq="723729655">723729655</span></li>
+                <li><span class="user" data-qq="1162319394">1162319394</span>VS<span class="user" data-qq="1312582246">1312582246</span></li>
+                <li><span class="user" data-qq="1975978436">1975978436</span>VS<span class="user" data-qq="419614404">419614404</span></li>
+                <li><span class="user" data-qq="1533132103">1533132103</span>VS<span class="user" data-qq="857381717">857381717</span></li>
+                <li><span class="user" data-qq="575925024">575925024</span>VS<span class="user" data-qq="923856948">923856948</span></li>
+                <li><span class="user" data-qq="2938092210">2938092210</span>VS<span class="user" data-qq="987645141">987645141</span></li>
+                <li><span class="user" data-qq="312470622">312470622</span>VS<span class="user" data-qq="940193076">940193076</span></li>
+                <li><span class="user" data-qq="2450660218">2450660218</span>VS<span class="user" data-qq="1165990311">1165990311</span></li>
+                <li><span class="user" data-qq="10860092">10860092</span>VS<span class="user" data-qq="185947347">185947347</span></li>
+                <li><span class="user" data-qq="735093475">735093475</span>VS<span class="user" data-qq="743193149">743193149</span></li>
+                <li><span class="user" data-qq="1749865571">1749865571</span>VS<span class="user" data-qq="1669577373">1669577373</span></li>
+                <li><span class="user" data-qq="798285211">798285211</span>VS<span class="user" data-qq="787802191">787802191</span></li>
+                <li><span class="user" data-qq="437541536">437541536</span>VS<span class="user" data-qq="550822175">550822175</span></li>
+                <li><span class="user" data-qq="1521619706">1521619706</span>VS<span class="user" data-qq="958119411">958119411</span></li>
+                <li><span class="user" data-qq="1461518665">1461518665</span>VS<span class="user" data-qq="973649407">973649407</span></li>
+                <li><span class="user" data-qq="2631948143">2631948143</span>VS<span class="user" data-qq="1370506422">1370506422</span></li>
+                <li><span class="user" data-qq="1005017720">1005017720</span>VS<span class="user" data-qq="397441862">397441862</span></li>
+                <li><span class="user" data-qq="1312993365">1312993365</span>VS<span class="user" data-qq="2817284798">2817284798</span></li>
+                <li><span class="user" data-qq="1505065113">1505065113</span>VS<span class="user" data-qq="1308673492">1308673492</span></li>
+                <li><span class="user" data-qq="1274719728">1274719728</span>VS<span class="user" data-qq="1017139532">1017139532</span></li>
+                <li><span class="user" data-qq="1550484910">1550484910</span>VS<span class="user" data-qq="1541330942">1541330942</span></li>
+                <li><span class="user" data-qq="954157727">954157727</span>VS<span class="user" data-qq="1370506422">1370506422</span></li>
+                <li><span class="user" data-qq="540823103">540823103</span>VS<span class="user" data-qq="1005167613">1005167613</span></li>
+                <li><span class="user" data-qq="373433606">373433606</span>VS<span class="user" data-qq="1269060104">1269060104</span></li>
+
+                </ul>
+        </li>
+        <li class="server"><span class="server-name">战争学院</span>
+            <ul class="server5">
+                <li><span class="user" data-qq="1157077178">1157077178</span>VS<span class="user" data-qq="326667206">326667206</span></li>
+                <li><span class="user" data-qq="940519515">940519515</span>VS<span class="user" data-qq="770352135">770352135</span></li>
+                <li><span class="user" data-qq="1539097765">1539097765</span>VS<span class="user" data-qq="1293854825">1293854825</span></li>
+                <li><span class="user" data-qq="1070153177">1070153177</span>VS<span class="user" data-qq="841687604">841687604</span></li>
+                <li><span class="user" data-qq="1025447374">1025447374</span>VS<span class="user" data-qq="756908391">756908391</span></li>
+                <li><span class="user" data-qq="1589978396">1589978396</span>VS<span class="user" data-qq="893447124">893447124</span></li>
+                <li><span class="user" data-qq="987881481">987881481</span>VS<span class="user" data-qq="732248733">732248733</span></li>
+                <li><span class="user" data-qq="2958113258">2958113258</span>VS<span class="user" data-qq="310984087">310984087</span></li>
+                <li><span class="user" data-qq="2436697512">2436697512</span>VS<span class="user" data-qq="1075973139">1075973139</span></li>
+                <li><span class="user" data-qq="674932540">674932540</span>VS<span class="user" data-qq="337228941">337228941</span></li>
+                <li><span class="user" data-qq="1292236913">1292236913</span>VS<span class="user" data-qq="971914561">971914561</span></li>
+                <li><span class="user" data-qq="2575229052">2575229052</span>VS<span class="user" data-qq="215531798">215531798</span></li>
+                <li><span class="user" data-qq="995516445">995516445</span>VS<span class="user" data-qq="731248733">731248733</span></li>
+                <li><span class="user" data-qq="610699569">610699569</span>VS<span class="user" data-qq="690607514">690607514</span></li>
+                <li><span class="user" data-qq="1186180043">1186180043</span>VS<span class="user" data-qq="297864469">297864469</span></li>
+                <li><span class="user" data-qq="1197260629">1197260629</span>VS<span class="user" data-qq="1132801489">1132801489</span></li>
+                <li><span class="user" data-qq="726306320">726306320</span>VS<span class="user" data-qq="2547867830">2547867830</span></li>
+                <li><span class="user" data-qq="1259194038">1259194038</span>VS<span class="user" data-qq="1527061870">1527061870</span></li>
+                <li><span class="user" data-qq="976737187">976737187</span>VS<span class="user" data-qq="2034048359">2034048359</span></li>
+                <li><span class="user" data-qq="1184141041">1184141041</span>VS<span class="user" data-qq="2809396598">2809396598</span></li>
+                <li><span class="user" data-qq="874487256">874487256</span>VS<span class="user" data-qq="819706883">819706883</span></li>
+                <li><span class="user" data-qq="529096211">529096211</span>VS<span class="user" data-qq="406467920">406467920</span></li>
+                <li><span class="user" data-qq="496807575">496807575</span>VS<span class="user" data-qq="1176169675">1176169675</span></li>
+                <li><span class="user" data-qq="184654634">184654634</span>VS<span class="user" data-qq="1572964272">1572964272</span></li>
+                <li><span class="user" data-qq="1324998641">1324998641</span>VS<span class="user" data-qq="1187647271">1187647271</span></li>
+                <li><span class="user" data-qq="2681104456">2681104456</span>VS<span class="user" data-qq="632969982">632969982</span></li>
+                <li><span class="user" data-qq="1162364730">1162364730</span>VS<span class="user" data-qq="2413093691">2413093691</span></li>
+                <li><span class="user" data-qq="1162364730">1162364730</span>VS<span class="user" data-qq="1790938911">1790938911</span></li>
+                <li><span class="user" data-qq="1197260629">1197260629</span>VS<span class="user" data-qq="1277159425">1277159425</span></li>
+                <li><span class="user" data-qq="1306803631">1306803631</span>VS<span class="user" data-qq="2318570391">2318570391</span></li>
+                <li><span class="user" data-qq="1282698582">1282698582</span>VS<span class="user" data-qq="2730555931">2730555931</span></li>
+                <li><span class="user" data-qq="1162136784">1162136784</span>VS<span class="user" data-qq="1158529853">1158529853</span></li>
+                <li><span class="user" data-qq="1007411523">1007411523</span>VS<span class="user" data-qq="1527988766">1527988766</span></li>
+                <li><span class="user" data-qq="1873779056">1873779056</span>VS<span class="user" data-qq="957303932">957303932</span></li>
+                <li><span class="user" data-qq="392231077">392231077</span>VS<span class="user" data-qq="942671043">942671043</span></li>
+                <li><span class="user" data-qq="1435721538">1435721538</span>VS<span class="user" data-qq="1441043252">1441043252</span></li>
+                <li><span class="user" data-qq="1781628268">1781628268</span>VS<span class="user" data-qq="1348476661">1348476661</span></li>
+                <li><span class="user" data-qq="2785775531">2785775531</span>VS<span class="user" data-qq="251029115">251029115</span></li>
+                <li><span class="user" data-qq="2234200985">2234200985</span>VS<span class="user" data-qq="591533067">591533067</span></li>
+                <li><span class="user" data-qq="2315916115">2315916115</span>VS<span class="user" data-qq="784589614">784589614</span></li>
+                <li><span class="user" data-qq="347211243">347211243</span>VS<span class="user" data-qq="1746615613">1746615613</span></li>
+                <li><span class="user" data-qq="1519141584">1519141584</span>VS<span class="user" data-qq="785609297">785609297</span></li>
+                <li><span class="user" data-qq="1350042106">1350042106</span>VS<span class="user" data-qq="1367970489">1367970489</span></li>
+                <li><span class="user" data-qq="932247124">932247124</span>VS<span class="user" data-qq="411535277">411535277</span></li>
+                <li><span class="user" data-qq="1634694317">1634694317</span>VS<span class="user" data-qq="825627551">825627551</span></li>
+                <li><span class="user" data-qq="602340446">602340446</span>VS<span class="user" data-qq="1475813141">1475813141</span></li>
+                <li><span class="user" data-qq="1304204720">1304204720</span>VS<span class="user" data-qq="1026668789">1026668789</span></li>
+                <li><span class="user" data-qq="614091384">614091384</span>VS<span class="user" data-qq="502833215">502833215</span></li>
+                <li><span class="user" data-qq="1057999740">1057999740</span>VS<span class="user" data-qq="839782027">839782027</span></li>
+                <li><span class="user" data-qq="1550456735,">1550456735,</span>VS<span class="user" data-qq="1076551334">1076551334</span></li>
+                <li><span class="user" data-qq="1362994646">1362994646</span>VS<span class="user" data-qq="562386467">562386467</span></li>
+                <li><span class="user" data-qq="1093800374">1093800374</span>VS<span class="user" data-qq="1140512844">1140512844</span></li>
+                <li><span class="user" data-qq="1023028013">1023028013</span>VS<span class="user" data-qq="1398395302">1398395302</span></li>
+                <li><span class="user" data-qq="673267914">673267914</span>VS<span class="user" data-qq="1733141361">1733141361</span></li>
+                <li><span class="user" data-qq="1398592308">1398592308</span>VS<span class="user" data-qq="820466246">820466246</span></li>
+                <li><span class="user" data-qq="934980320">934980320</span>VS<span class="user" data-qq="1659823415">1659823415</span></li>
+                <li><span class="user" data-qq="1150084019">1150084019</span>VS<span class="user" data-qq="1553028076">1553028076</span></li>
+                <li><span class="user" data-qq="2090745894">2090745894</span>VS<span class="user" data-qq="604825819">604825819</span></li>
+                <li><span class="user" data-qq="1297295499">1297295499</span>VS<span class="user" data-qq="845395428">845395428</span></li>
+                <li><span class="user" data-qq="434870448">434870448</span>VS<span class="user" data-qq="1365053531">1365053531</span></li>
+                <li><span class="user" data-qq="247369147">247369147</span>VS<span class="user" data-qq="921386017">921386017</span></li>
+                <li><span class="user" data-qq="2474578042">2474578042</span>VS<span class="user" data-qq="695365002">695365002</span></li>
+                <li><span class="user" data-qq="1021876822">1021876822</span>VS<span class="user" data-qq="1427338250">1427338250</span></li>
+                <li><span class="user" data-qq="1337340473">1337340473</span>VS<span class="user" data-qq="384731370">384731370</span></li>
+                <li><span class="user" data-qq="1104594208">1104594208</span>VS<span class="user" data-qq="1037945808">1037945808</span></li>
+                <li><span class="user" data-qq="475299739">475299739</span>VS<span class="user" data-qq="1738569632">1738569632</span></li>
+                <li><span class="user" data-qq="351602758">351602758</span>VS<span class="user" data-qq="2290748234">2290748234</span></li>
+                <li><span class="user" data-qq="1187827494">1187827494</span>VS<span class="user" data-qq="415986064">415986064</span></li>
+                <li><span class="user" data-qq="648369483">648369483</span>VS<span class="user" data-qq="2441805761">2441805761</span></li>
+                <li><span class="user" data-qq="2441805761">2441805761</span>VS<span class="user" data-qq="996212823">996212823</span></li>
+                <li><span class="user" data-qq="402720645">402720645</span>VS<span class="user" data-qq="1790938911">1790938911</span></li>
+                <li><span class="user" data-qq="1476440747">1476440747</span>VS<span class="user" data-qq="1443994763">1443994763</span></li>
+                </ul>
+        </li>
+        <li class="server"><span class="server-name">征服之海</span>
+            <ul class="server16">
+                <li><span class="user" data-qq="993478314">993478314</span>VS<span class="user" data-qq="1274308748">1274308748</span></li>
+                <li><span class="user" data-qq="764419397">764419397</span>VS<span class="user" data-qq="676479837">676479837</span></li>
+                <li><span class="user" data-qq="1187448781">1187448781</span>VS<span class="user" data-qq="2062340661">2062340661</span></li>
+                <li><span class="user" data-qq="610699569">610699569</span>VS<span class="user" data-qq="93580542">93580542</span></li>
+                <li><span class="user" data-qq="1228423440">1228423440</span>VS<span class="user" data-qq="1031302965">1031302965</span></li>
+                <li><span class="user" data-qq="1259214273">1259214273</span>VS<span class="user" data-qq="2575762438">2575762438</span></li>
+                <li><span class="user" data-qq="1473245155">1473245155</span>VS<span class="user" data-qq="1264582912">1264582912</span></li>
+                <li><span class="user" data-qq="714800466">714800466</span>VS<span class="user" data-qq="1433975409">1433975409</span></li>
+                <li><span class="user" data-qq="379483609">379483609</span>VS<span class="user" data-qq="1740007164">1740007164</span></li>
+                <li><span class="user" data-qq="3164086079">3164086079</span>VS<span class="user" data-qq="2395413111">2395413111</span></li>
+                <li><span class="user" data-qq="1021000130">1021000130</span>VS<span class="user" data-qq="2448041182">2448041182</span></li>
+                <li><span class="user" data-qq="1471646706">1471646706</span>VS<span class="user" data-qq="1403936991">1403936991</span></li>
+                <li><span class="user" data-qq="714800466">714800466</span>VS<span class="user" data-qq="1729301754">1729301754</span></li>
+                <li><span class="user" data-qq="1214370115">1214370115</span>VS<span class="user" data-qq="292706518">292706518</span></li>
+                <li><span class="user" data-qq="453536967">453536967</span>VS<span class="user" data-qq="410564275">410564275</span></li>
+                <li><span class="user" data-qq="2879082832">2879082832</span>VS<span class="user" data-qq="1447578950">1447578950</span></li>
+                <li><span class="user" data-qq="2785197669">2785197669</span>VS<span class="user" data-qq="2548604247">2548604247</span></li>
+
+                </ul>
+        </li>
+        <li class="server"><span class="server-name">诺克萨斯</span>
+            <ul class="server2">
+                <li><span class="user" data-qq="283661128">283661128</span>VS<span class="user" data-qq="1085079392">1085079392</span></li>
+                <li><span class="user" data-qq="453715508">453715508</span>VS<span class="user" data-qq="729463430">729463430</span></li>
+                <li><span class="user" data-qq="1327257363">1327257363</span>VS<span class="user" data-qq="1060467442">1060467442</span></li>
+                <li><span class="user" data-qq="2860533983">2860533983</span>VS<span class="user" data-qq="1370146089">1370146089</span></li>
+                <li><span class="user" data-qq="470320891">470320891</span>VS<span class="user" data-qq="1796195300">1796195300</span></li>
+                <li><span class="user" data-qq="476284562">476284562</span>VS<span class="user" data-qq="1216209354">1216209354</span></li>
+                <li><span class="user" data-qq="305954863">305954863</span>VS<span class="user" data-qq="935706417">935706417</span></li>
+                <li><span class="user" data-qq="544300756">544300756</span>VS<span class="user" data-qq="1256834710">1256834710</span></li>
+                <li><span class="user" data-qq="1276044427">1276044427</span>VS<span class="user" data-qq="97830603">97830603</span></li>
+                <li><span class="user" data-qq="764419397">764419397</span>VS<span class="user" data-qq="694025741">694025741</span></li>
+                <li><span class="user" data-qq="736206263">736206263</span>VS<span class="user" data-qq="547083316">547083316</span></li>
+                <li><span class="user" data-qq="1423323856">1423323856</span>VS<span class="user" data-qq="923934263">923934263</span></li>
+                <li><span class="user" data-qq="2641093009">2641093009</span>VS<span class="user" data-qq="791531602">791531602</span></li>
+                <li><span class="user" data-qq="1797854309">1797854309</span>VS<span class="user" data-qq="1948075548">1948075548</span></li>
+                <li><span class="user" data-qq="623389842">623389842</span>VS<span class="user" data-qq="2491652988">2491652988</span></li>
+                <li><span class="user" data-qq="1193012549">1193012549</span>VS<span class="user" data-qq="549720060">549720060</span></li>
+                <li><span class="user" data-qq="1289537136">1289537136</span>VS<span class="user" data-qq="465615456">465615456</span></li>
+                <li><span class="user" data-qq="2549616499">2549616499</span>VS<span class="user" data-qq="1106838720">1106838720</span></li>
+                <li><span class="user" data-qq="1310443942">1310443942</span>VS<span class="user" data-qq="1191401558">1191401558</span></li>
+                <li><span class="user" data-qq="604909466">604909466</span>VS<span class="user" data-qq="1422434946">1422434946</span></li>
+                <li><span class="user" data-qq="631064803">631064803</span>VS<span class="user" data-qq="1309003545">1309003545</span></li>
+                <li><span class="user" data-qq="616869998">616869998</span>VS<span class="user" data-qq="952232362">952232362</span></li>
+                <li><span class="user" data-qq="948934660">948934660</span>VS<span class="user" data-qq="642607453">642607453</span></li>
+                <li><span class="user" data-qq="775894680">775894680</span>VS<span class="user" data-qq="25003838">25003838</span></li>
+                <li><span class="user" data-qq="1311532215">1311532215</span>VS<span class="user" data-qq="93580542">93580542</span></li>
+                <li><span class="user" data-qq="360907357">360907357</span>VS<span class="user" data-qq="2545655590">2545655590</span></li>
+                <li><span class="user" data-qq="769598218">769598218</span>VS<span class="user" data-qq="1203270106">1203270106</span></li>
+                <li><span class="user" data-qq="2501133749">2501133749</span>VS<span class="user" data-qq="929136001">929136001</span></li>
+                <li><span class="user" data-qq="940402205">940402205</span>VS<span class="user" data-qq="664960841">664960841</span></li>
+                <li><span class="user" data-qq="342351420">342351420</span>VS<span class="user" data-qq="635370413">635370413</span></li>
+                <li><span class="user" data-qq="2443816469">2443816469</span>VS<span class="user" data-qq="940210182">940210182</span></li>
+                <li><span class="user" data-qq="2227313297">2227313297</span>VS<span class="user" data-qq="1390920067">1390920067</span></li>
+                <li><span class="user" data-qq="245354296">245354296</span>VS<span class="user" data-qq="1121626542">1121626542</span></li>
+                <li><span class="user" data-qq="851180868">851180868</span>VS<span class="user" data-qq="523696261">523696261</span></li>
+                <li><span class="user" data-qq="2413364378">2413364378</span>VS<span class="user" data-qq="1398172253">1398172253</span></li>
+                <li><span class="user" data-qq="704884658">704884658</span>VS<span class="user" data-qq="303517476">303517476</span></li>
+                <li><span class="user" data-qq="734049375">734049375</span>VS<span class="user" data-qq="1076754372">1076754372</span></li>
+                <li><span class="user" data-qq="2358156850">2358156850</span>VS<span class="user" data-qq="204310908">204310908</span></li>
+                <li><span class="user" data-qq="614063614">614063614</span>VS<span class="user" data-qq="1768240702">1768240702</span></li>
+                <li><span class="user" data-qq="1149202136">1149202136</span>VS<span class="user" data-qq="673994211">673994211</span></li>
+                <li><span class="user" data-qq="1715867836">1715867836</span>VS<span class="user" data-qq="767828737">767828737</span></li>
+                <li><span class="user" data-qq="719349526">719349526</span>VS<span class="user" data-qq="1004726166">1004726166</span></li>
+                <li><span class="user" data-qq="2272519630">2272519630</span>VS<span class="user" data-qq="861799443">861799443</span></li>
+                <li><span class="user" data-qq="735243383">735243383</span>VS<span class="user" data-qq="1149781059">1149781059</span></li>
+                <li><span class="user" data-qq="2091399453">2091399453</span>VS<span class="user" data-qq="1051221847">1051221847</span></li>
+                <li><span class="user" data-qq="1085375320">1085375320</span>VS<span class="user" data-qq="706404542">706404542</span></li>
+                <li><span class="user" data-qq="1043361028">1043361028</span>VS<span class="user" data-qq="1163743292">1163743292</span></li>
+                <li><span class="user" data-qq="734049375">734049375</span>VS<span class="user" data-qq="1589881780">1589881780</span></li>
+                <li><span class="user" data-qq="1873779056">1873779056</span>VS<span class="user" data-qq="1144367599">1144367599</span></li>
+                <li><span class="user" data-qq="2422058937">2422058937</span>VS<span class="user" data-qq="765080719">765080719</span></li>
+                <li><span class="user" data-qq="2746576247">2746576247</span>VS<span class="user" data-qq="448644578">448644578</span></li>
+                <li><span class="user" data-qq="657372518">657372518</span>VS<span class="user" data-qq="373864308">373864308</span></li>
+                <li><span class="user" data-qq="1390176202">1390176202</span>VS<span class="user" data-qq="362852552">362852552</span></li>
+                <li><span class="user" data-qq="2287024240">2287024240</span>VS<span class="user" data-qq="1062509751">1062509751</span></li>
+                <li><span class="user" data-qq="553014774">553014774</span>VS<span class="user" data-qq="1171619583">1171619583</span></li>
+                <li><span class="user" data-qq="492714966">492714966</span>VS<span class="user" data-qq="1154026947">1154026947</span></li>
+                <li><span class="user" data-qq="1697013573">1697013573</span>VS<span class="user" data-qq="945941472">945941472</span></li>
+                <li><span class="user" data-qq="997261531">997261531</span>VS<span class="user" data-qq="1063566581">1063566581</span></li>
+                <li><span class="user" data-qq="727392668">727392668</span>VS<span class="user" data-qq="1157051252">1157051252</span></li>
+                <li><span class="user" data-qq="411563827">411563827</span>VS<span class="user" data-qq="965354702">965354702</span></li>
+                <li><span class="user" data-qq="634819137">634819137</span>VS<span class="user" data-qq="171404365">171404365</span></li>
+                <li><span class="user" data-qq="934619458">934619458</span>VS<span class="user" data-qq="522754485">522754485</span></li>
+                <li><span class="user" data-qq="759735768">759735768</span>VS<span class="user" data-qq="824100282">824100282</span></li>
+                <li><span class="user" data-qq="952232362">952232362</span>VS<span class="user" data-qq="1226200868">1226200868</span></li>
+                <li><span class="user" data-qq="646740084">646740084</span>VS<span class="user" data-qq="904265947">904265947</span></li>
+                <li><span class="user" data-qq="1179126369">1179126369</span>VS<span class="user" data-qq="873451049">873451049</span></li>
+                <li><span class="user" data-qq="844120911">844120911</span>VS<span class="user" data-qq="514441303">514441303</span></li>
+                <li><span class="user" data-qq="514104419">514104419</span>VS<span class="user" data-qq="2730555931">2730555931</span></li>
+                <li><span class="user" data-qq="1074174430">1074174430</span>VS<span class="user" data-qq="504956263">504956263</span></li>
+                </ul>
+        </li>
+    </ul>
+</article>
+</div>
+
+</body>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-menu li').click(function (event) {
+            $("#dropdownMenu1").data("server", $(this).index());
+            $("#dropdownMenu1").attr("data-server", $(this).index());
+            $("#dropdownMenu1").html($(this).children("a").html());
+            $("#dropdownMenu1").append(" <span class=\"caret\"></span>");
+        });
+
+        $('#search-button').click(function () {
+            var QQ = $(".search-input").val();
+            if ($("#dropdownMenu1").data("server") == "-1") {
+                $(".name-show").html("请选择服务器！");
+                $(".name-show").addClass("text-danger");
+            } else if (QQ == "") {
+                $(".name-show").html("请输入QQ号！");
+                $(".name-show").addClass("text-danger");
+            } else {
+                $(".name-show").html("");
+                $(".name-show").removeClass("text-danger");
+                if ($(".server" + $("#dropdownMenu1").data("server") + " li").length == 0) {
+                    $(".name-show").html("没有记录！");
+                } else {
+                    var servername = $(".dropdown-menu li").eq($("#dropdownMenu1").data("server")).text().trim();
+                    console.log(servername);
+                    $(".server" + $("#dropdownMenu1").data("server") + " li").each(function () {
+                        if (($(this).children("span").eq(0).attr("data-qq") == QQ)) {
+                            $(".name-show").html("所在服务器:<br>" + servername + "<br/>" + "对战名单:<br>");
+                            $(".name-show").append($(this).children("span").eq(0).text() + " VS " + $(this).children("span").eq(1).text());
+                            return false;
+                        } else if (($(this).children("span").eq(1).attr("data-qq") == QQ)) {
+                            $(".name-show").html("所在服务器:<br>" + servername + "<br/>" + "对战名单:<br>");
+                            $(".name-show").append($(this).children("span").eq(1).text() + " VS " + $(this).children("span").eq(0).text());
+                            return false;
+                        }
+                        else {
+                            $(".name-show").html("没有记录！");
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+</html>

@@ -1,0 +1,47 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>部落名称</th>
+                <th>申请人</th>
+                <th>学校</th>
+                <th>类别</th>
+                <th>驳回原因</th>
+                <th>审核人</th>
+                
+            </tr>
+            <foreach name="list" item="val">
+                <tr>
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$val.id}"></td>
+                    <td>{$val.id}</td>
+                    <td>{$val.name}</td>
+                    <td>{$val.uid}</td>
+                    <td>{$val.sid}</td>
+                    <td>{$val.cid}</td>
+                    <td>{$val.reason}</td>
+                    <td>{$val.audit}</td>
+                </tr>
+            </foreach>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script>
+
+</script>
+<include file="_footer" />

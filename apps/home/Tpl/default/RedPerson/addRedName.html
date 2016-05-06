@@ -1,0 +1,23 @@
+<include file="_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <div class="form2">
+  	<form method="post" action="{:U('home/RedPerson/doaddRedName')}" enctype="multipart/form-data">
+    <div style="background-color:#E6E9ED;padding:10px 0px">
+    <dl class="">
+      <dt><span>*</span>名字：</dt>
+      <dd>
+        <input type="text" name="name" value="{$name}" />
+      </dd>
+    </dl>
+
+    <div class="page_btm">
+      <if condition="$id != 0">
+        <input type="hidden" name="id" value="{$id}" />
+      </if>
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+    </form>
+  </div>
+</div>
+<include file="_footer" />

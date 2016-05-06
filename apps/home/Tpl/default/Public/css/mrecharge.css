@@ -1,0 +1,52 @@
+*{ padding:0;margin:0;list-style:none;}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+table,td{margin:auto;padding:inherit;}
+select, input, img{ vertical-align:middle;}
+a{ text-decoration:none;}
+a:link {color:#666;}
+a:visited{ color:#666;}
+a:hover,a:active, a:focus {color:#999; text-decoration:underline;}
+body {
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+    font-size: 12px;
+    line-height:160%;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    color: #666;
+    text-decoration: none;
+    background-color:#fbfbfb;
+    background-image: none;
+    background-repeat: no-repeat;
+    letter-spacing: normal;
+    text-align: left;
+    word-spacing: normal;
+    white-space: normal;
+    display: block;
+    clear: both;
+    float: none;
+    width: auto;
+    position: static;
+    height: auto;
+    top: auto;
+    clip: rect(auto,auto,auto,auto);
+}
+.bg{width:100%;}
+.main{ margin:auto; width:100%;}
+.f14{ font-size:14px;}
+img {max-width: 100%; height: auto; width: auto\9; /* ie8 */}
+.recharge_back{ padding-left:2%; margin-top:-26px; font-size:14px;}
+.recharge_back a{ color:#f04e26;}
+.recharge_back a:hover{ text-decoration:none;}
+.recharge_title{ width:100%; text-align:center; font-size:16px; color:#f04e26; line-height:40px; font-weight:bold; border-bottom:1px solid #dedede;}
+.recharge_con{ width:92%; padding:10px 4%; line-height:24px;}
+.recharge_line{ width:100%; height:1px; background:#eee; margin:10px 0;}
+.recharge_red{ color:#F00; font-weight:bold;}
+.recharge_input{ border:1px solid #dedede; height:24px; width:30%; padding:0 1%;}
+.recharge_btn{ width:40%; height:30px; line-height:30px; margin-left:30%; background:#f04e26; color:#fff; font-weight:bold; text-align:center; border:none; cursor:pointer;}
+.mt10{ margin-top:10px;}
+.mt5{ margin-top:5px;}
+.lh30{ line-height:30px;}
+.video embed, .video object, .video iframe {width: 100%;height: auto;}
+@media screen and (max-width: 980px) {}

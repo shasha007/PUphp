@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=20160114" rel="stylesheet">
+    <link href="../Public/css/discover.css?v=20160225" rel="stylesheet">
+    <title>发现</title>
+</head>
+
+<body>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body clearfix">
+                <div class="dialog-show">
+                    <a id="market">
+                        <img class="img-responsive" src="<?php echo $recommend['grow']['ico'] ?>">
+                        <p><?php echo $recommend['grow']['name'] ?></p>
+                    </a>
+                </div>
+                <div class="dialog-show">
+                    <a href="<?php echo $recommend['qnh']['url'] ?>">
+                        <img class="img-responsive" src="<?php echo $recommend['qnh']['ico'] ?>">
+                        <p><?php echo $recommend['qnh']['name'] ?></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<header class="container dis-header">
+    <div class="dis-header-l">
+        <img class="img-responsive" src="../Public/images/plan.png">
+    </div>
+    <div class="dis-header-r">
+        <!--跳转校园广场-->
+        <a id="squire-open-new">
+            <p>校园广场</p>
+            <p>新鲜事，发心情，聊热门</p>
+        </a>
+    </div>
+</header>
+<!--热门活动-->
+<div class="dis-event clearfix">
+    <div class="dis-event-tit container ">
+        <div class="pull-left"><img class="img-responsive" src="../Public/images/huodong.png"></div>
+        <div class="pull-left"  style="font-size: 14px">
+            热门活动
+        </div>
+        <div class="pull-right">
+            <!--更多热门-->
+            <a href="{:U('wap/Event/eventList')}">
+                发现更多<span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+    <div id="myCarousel" class="carousel slide container">
+
+        <div class="carousel-inner" id="inner1">
+            <div class="item active dis-event-lun">
+                <?php foreach($hotEvent as $key=>$value){ ?>
+                <div class="dis-event-con" data-eventid="{$value.id}">
+                    <!--跳转活动-->
+                    <a class="to-event" data-eventid="{$value.id}">
+                        <img class="img-responsive" src="{$value['cover']}">
+
+                        <div class="dis-caption">
+                            <p style="font-size: 14px;">
+                                <?php echo $value['title'] ?>
+                            </p>
+
+                        </div>
+                    </a>
+                </div>
+
+                <?php if($key===2){echo '
+            </div>
+            <div class="item dis-event-lun">';}} ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--星部落-->
+<div class="dis-event clearfix">
+    <div class="dis-event-tit container ">
+        <div class="pull-left"><img class="img-responsive" src="../Public/images/buluo.png"></div>
+        <div class="pull-left" style="font-size: 14px">
+           明星部落
+        </div>
+        <div class="pull-right">
+            <!--跳转部落排行-->
+            <a href="{:U('wap/Tribe/weektribe')}">
+                更多部落排行<span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+    <div id="myCarouse2" class="carousel slide container">
+        <div class="carousel-inner" id="inner2">
+            <div class="item active dis-event-lun">
+                <?php foreach($hotGroup as $key=>$value){ ?>
+                <div class="dis-event-con" data-tribeid="{$value.id}">
+                    <!--跳转部落-->
+                    <a class="go-tribe" data-tribeid="{$value.id}">
+                        <img class="img-responsive" src="{$value['pic']}">
+
+                        <div class="dis-caption">
+                            <p style="font-size: 14px;">
+                                <?php echo $value['name'] ?>
+                            </p>
+                            <p>
+                                <?php echo $value['schoolname'] ?>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <?php if($key===2){echo '
+            </div>
+            <div class="item dis-event-lun">';}} ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--红人-->
+<div class="dis-event clearfix">
+    <div class="dis-event-tit container ">
+        <div class="pull-left"><img class="img-responsive" src="../Public/images/hongren.png"></div>
+        <div class="pull-left">
+            show红人
+        </div>
+        <div class="pull-right">
+            <a href="{:U('wap/Show/index')}">更多红人<span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+    </div>
+    <div class="dis-person container">
+        <?php foreach($show as $k=>$v){ ?>
+        <div class="dis-person-con">
+            <a class="to-user-home"  data-userid="<?php echo $v['uid']; ?>">
+                <img class="img-responsive" src="<?php echo $v['face']; ?>">
+
+                <p class="dis-person-name">
+                    <?php echo $v['uname']; ?>
+                </p>
+                <p class="dis-person-school">
+                    <?php echo $v['title']; ?>
+                </p>
+            </a>
+            <?php if($v['is_friend']>0){ ?>
+            <div class="add-friend" style="color: #ccc;border: 1px solid #ccc;" >已添加</div>
+            <?php }elseif($user_id != $v['uid']){ ?>
+            <div id="<?php echo $v['uid']; ?>" class="add-friend" style="display:none; color: #ccc;border: 1px solid #ccc;" >已添加</div>
+            <div class="add-friend" onclick="mkfriend(<?php echo $v['uid']; ?>)">+好友</div>
+            <?php } ?>
+        </div>
+        <?php } ?>
+    </div>
+</div>
+
+<!--list-->
+<div class="dis-list">
+    <ul>
+
+        <li>
+            <div class="dis-list-con container ">
+                <a href="<?php echo U('home/Public/redirectUrl',array('title'=>'时光网','url'=>base64_encode('http://m.mtime.cn'))) ?>">
+                    <div class="pull-left"><img class="img-responsive"
+                                                src="<?php echo PIC_URL.'/data/app_ico/new_film.png' ?>"></div>
+                    <div class="pull-left">
+                        电影票
+                    </div>
+                    <div class="pull-right text-right">
+                        让电影遇见生活<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                    </div>
+                </a>
+            </div>
+        </li>
+
+        <?php if ($yyFlag !== 1) : ?>
+        <li>
+            <div class="dis-list-con container ">
+                <a href="javascript:tjYiYuanLieBao();">
+                    <div class="pull-left"><img class="img-responsive"
+                                                src="<?php echo PIC_URL.'/data/app_ico/yiyuan.png' ?>"></div>
+                    <div class="pull-left">
+                        一元猎宝
+                    </div>
+                    <div class="pull-right text-right">
+                        iPhone6s 64G只需一元<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                    </div>
+                </a>
+            </div>
+        </li>
+        <?php endif; ?>
+
+        <li>
+            <div class="dis-list-con container pinganwifi">
+                <a>
+                    <div class="pull-left"><img class="img-responsive" src="<?php echo PIC_URL.'/data/app_ico/WiFi.png' ?>">
+                    </div>
+                    <div class="pull-left">
+                        平安WIFI
+                    </div>
+                    <div class="pull-right text-right">
+                        免费WIFI连接<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                    </div>
+                    </a>
+            </div>
+        </li>
+        <?php if ($yyFlag !== 1) : ?>
+        <li>
+            <div class="dis-list-con container ">
+                <a href="<?php echo U('home/Public/redirectUrl',array('title'=>'7881','url'=>base64_encode('http://pu.m.7881.com'))) ?>">
+                    <div class="pull-left"><img class="img-responsive" src="<?php echo PIC_URL.'/data/app_ico/app_icon_7881.png' ?>">
+                    </div>
+                    <div class="pull-left">
+                        7881
+                    </div>
+                    <div class="pull-right text-right">
+                        一站式充值<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                    </div>
+                </a>
+            </div>
+        </li>
+        <?php endif; ?>
+        <li>
+            <div class="dis-list-con container ">
+                <a href="<?php echo U('home/Public/redirectUrl',array('title'=>'娱乐休闲','url'=>base64_encode('/happy'))) ?>">
+                    <div class="pull-left"><img class="img-responsive"
+                                                src="<?php echo PIC_URL.'/data/app_ico/new_happy.png' ?>"></div>
+                    <div class="pull-left">
+                        娱乐休闲
+                    </div>
+                    <div class="pull-right text-right">
+                        小游戏，快来挑战吧<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                    </div>
+                </a>
+            </div>
+        </li>
+    </ul>
+</div>
+<!--list-->
+<div class="dis-list">
+    <ul>
+        <li class="app-tan">
+            <div class="dis-list-con container ">
+                <div class="pull-left"><img class="img-responsive"
+                                            src="<?php echo PIC_URL.'/data/app_ico/new_grow.png' ?>"></div>
+                <div class="pull-left">
+                    推荐应用
+                </div>
+                <div class="pull-right text-right">
+                    推荐应用<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
+<script src="../Public/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script>
+    function mkfriend(uid){
+        $.ajax({
+                url: "{:U('wap/MakeFriend/index')}",
+                type: 'post',
+                dataType: 'JSON',
+                data: {
+                fid: uid+""
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data.status==0) {
+                    alert(data.msg) ;
+                }else{
+                    $("#"+uid).next("div").hide();
+                    $("#"+uid).show();
+                }
+            }
+        });
+    }
+    function tjYiYuanLieBao() {
+        $.ajax({
+            url: "{:U('wap/Discover/tjYiYuanLieBao')}",
+            type: 'post',
+            dataType: 'JSON',
+            data:
+            {
+            },
+            error: function ()
+            {
+            },
+            success: function (data)
+            {
+                if (data.status==0)
+                {
+                    alert(data.msg) ;
+                }else
+                {
+                    window.location.href = "<?php echo U('home/Public/redirectUrl',array('title'=>'娱乐休闲','url'=>base64_encode('http://1.m.jdd.com/#/index?frm=kdxy'))) ?>";
+                }
+            }
+        });
+    }
+    $(function () {
+        dopicerror();
+        settitle("发现","","");
+
+        $("#squire-open-new").click(function () {
+            try{
+                    Android.openUrl("话题", "{:U('wap/Squire/index')}");
+            }catch (e) {
+                setTimeout(function () {
+                    Android.openUrl("话题", "{:U('wap/Squire/index')}");
+                }, 50);
+            }
+        });
+        //去活动
+        $(document).on("click", ".to-event", function () {
+            var id = $(this).data("eventid") + "";
+            Android.openInternalPage("eventDetails", "", "", id, "", "", "");
+        });
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        if(isAndroid){
+            $(".pinganwifi").show();
+            $(".pinganwifi").click(function () {
+                Android.startPAWifi({$tel});
+
+            });
+        }
+        var uid = Android.getUid();
+        $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+            if(data.status == 2)
+            {
+                window.location.reload();
+            }
+        },'json');
+    })
+</script>
+<script src="../Public/js/publicjs.js?v=20160129"></script>

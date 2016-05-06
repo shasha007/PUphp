@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <title>参赛名单</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            top:-86px;
+            padding-right: 5px;
+            padding-left: 5px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .row {
+            margin-right: -5px;
+            margin-left: -5px;
+        }
+
+        .lol-header {
+            position: relative;
+            top:50px;
+            height: 50px;
+            font-size: 1.8rem;
+            color: #fff;
+            z-index: 1000;
+
+        }
+
+        .user li span {
+        }
+
+        .dropdown-menu {
+            left: 10%;
+        }
+
+        .search-input {
+            max-width: 100%;
+            height: 33px;
+            border: 1px solid transparent;
+            border-color: #ccc;
+            border-radius: 4px;
+
+        }
+
+        #search-button {
+
+        }
+
+        .name-show {
+            width: 100%;
+            margin-bottom: 10px;
+            color:#000;
+        }
+
+        .user {
+            display: inline-block;
+            width: 135px;
+            font-size: 1.4rem;
+            color: #333;
+            padding: 2px 5px;
+            line-height: 10px;
+            overflow: hidden;
+        }
+
+        .list {
+            color: #ef766b;
+        }
+
+        .name-show {
+            margin-top: 5px;
+
+        }
+
+        .server {
+            margin: 5px auto;
+        }
+
+        .btn {
+            font-size: 13px;
+            padding: 7px 8px;
+        }
+
+        .server-name {
+            font-size: 1.8rem;
+            padding: 5px 0;
+        }
+        .banner{
+            position: relative;
+            top:-86px;
+            margin: 0 auto 10px;
+        }
+        .ruru{
+            margin-top: 20px;
+            text-align: left;
+            font-size: 1.4rem;
+            color: #000;
+        }
+        #dropdownMenu1{
+            background: #689db8;
+            color: #fff;
+            border:  #689db8;
+        }
+        .search-input{
+            background: #689db8;
+            color: #fff;
+            border:  #689db8;
+        }
+        #search-button{
+            background: #689db8;
+            color: #fff;
+            border:  none;
+        }
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color: #FFF;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #FFF;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #FFF;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: #FFF;
+        }
+        .logo{
+            position: relative;
+            float: right;
+            top:-35px;
+            width: 60px;
+            z-index: 1001;
+        }
+        .logo img{
+            width: 60px;
+
+        }
+    </style>
+</head>
+
+<body>
+<header class="lol-header">首届英雄联盟SOLO赛<br>第三轮对战名单</header>
+<div class="logo"><img class="" src="images/2.png"></div>
+<div class="banner">
+    <img class="img-responsive" src="images/lol1.jpg"/>
+
+</div>
+<div class="container">
+
+    <div class="search row">
+
+        <div class="dropdown col-xs-4 padding-5">
+            <button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
+                    data-toggle="dropdown" data-server="-1">
+                选择服务器
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">艾欧尼亚</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#" data-toggle="dropdown">祖安</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#"> 诺克萨斯</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">班德尔城</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">皮尔特沃夫</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">战争学院</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">巨神峰</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">雷瑟守备</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">钢铁烈阳</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">裁决之地</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">黑色玫瑰</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">暗影岛</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">均衡教派</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">水晶之痕</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">影流</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">守望之海</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">征服之海</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">卡拉曼达</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">皮城警备</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">比尔吉沃特</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">德玛西亚</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">弗雷尔卓德</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">无畏先锋</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">恕瑞玛</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">扭曲丛林</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">巨龙之巢</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-6 padding-5"><input class="search-input" type="text" placeholder="请输入QQ号"></div>
+        <div class="col-xs-2 padding-5 text-right">
+            <button class="btn btn-default" id="search-button" type="button">查询</button>
+        </div>
+
+    </div>
+    <span></span>
+
+    <div class="name-show text-primary">
+    </div>
+    <article class="ruru">
+        <h4>第三轮比赛时间：</h4>
+        <p>12月25日18：00至12月27日24:00（双方互加好友后自行决定具体时间</p>
+        <h4>流程：</h4>
+        <p>确认自己的比赛对手后，双方互加好友，进行对战。请在规定的时间内加好友并完成对战，否则视为自动放弃；</p>
+        <h4>比赛规则：</h4>
+        <p>  1、比赛为Bo1，一局定胜负。并将晋级QQ号+大区名称发在扑校园中并附截图（做为晋级凭证）</p>
+        <p> 2、胜利条件：①完成100补刀；②杀掉一个人；③攻下1座塔；达到任意一项即可晋级</p>
+        <p>Ps:中途可以回家；不可打野，不可换线发育；英雄随意，地图：召唤师峡谷</p>
+         <p>   大区域决赛比赛时间（12月28日中午12点）
+        </p>
+        <h4 class="color_red">特别提示：</h4>
+        <p> 若你请求对手对战，对手不应战或不加QQ（超过5次，则按弃权处理）
+        </p>
+    </article>
+</div>
+
+<article class="hide name-list">
+    <ul class="list">
+
+        <li class="server"><span class="server-name">艾欧尼亚</span>
+            <ul class="server0">
+                <li><span class="user" data-qq="373967031">373967031</span>VS<span class="user" data-qq="690888703">690888703</span></li>
+                <li><span class="user" data-qq="1099373058">1099373058</span>VS<span class="user" data-qq="821971311">821971311</span></li>
+                <li><span class="user" data-qq="823696738">823696738</span>VS<span class="user" data-qq="894974032">894974032</span></li>
+                <li><span class="user" data-qq="894064352">894064352</span>VS<span class="user" data-qq="274745258">274745258</span></li>
+                <li><span class="user" data-qq="2404910350">2404910350</span>VS<span class="user" data-qq="2226529746">2226529746</span></li>
+                <li><span class="user" data-qq="783777781">783777781</span>VS<span class="user" data-qq="1137699705">1137699705</span></li>
+                <li><span class="user" data-qq="729169132">729169132</span>VS<span class="user" data-qq="837179594">837179594</span></li>
+                <li><span class="user" data-qq="1418197274">1418197274</span>VS<span class="user" data-qq="845395428">845395428</span></li>
+                <li><span class="user" data-qq="1017139532">1017139532</span>VS<span class="user" data-qq="直接晋级">直接晋级</span></li>
+            </ul>
+
+        </li>
+
+        <li class="server"><span class="server-name">祖安</span>
+            <ul class="server1">
+                <li><span class="user" data-qq="992415958">992415958</span>VS<span class="user" data-qq="2401021586">2401021586</span></li>
+                <li><span class="user" data-qq="1060087267">1060087267</span>VS<span class="user" data-qq="986320550">986320550</span></li>
+                <li><span class="user" data-qq="2027253723">2027253723</span>VS<span class="user" data-qq="997824680">997824680</span></li>
+                <li><span class="user" data-qq="1665788853">1665788853</span>VS<span class="user" data-qq="1437835571">1437835571</span></li>
+                <li><span class="user" data-qq="609796578">609796578</span>VS<span class="user" data-qq="1044760322">1044760322</span></li>
+                <li><span class="user" data-qq="846700709">846700709</span>VS<span class="user" data-qq="2483173135">2483173135</span></li>
+                <li><span class="user" data-qq="1060087267">1060087267</span>VS<span class="user" data-qq="992415958">992415958</span></li>
+                <li><span class="user" data-qq="1377381417">1377381417</span>VS<span class="user" data-qq="直接晋级">直接晋级</span></li>
+            </ul>
+
+        </li>
+        <li class="server"><span class="server-name">暗影岛</span>
+            <ul class="server11">
+                <li><span class="user" data-qq="925163206">925163206</span>VS<span class="user" data-qq="893825863">893825863</span></li>
+                <li><span class="user" data-qq="1934980973">1934980973</span>VS<span class="user" data-qq="直接晋级">直接晋级</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">班德尔城</span>
+            <ul class="server3">
+                <li><span class="user" data-qq="1491279231">1491279231</span>VS<span class="user" data-qq="946826405">946826405</span></li>
+                <li><span class="user" data-qq="564196805">564196805</span>VS<span class="user" data-qq="1183250686">1183250686</span></li>
+                <li><span class="user" data-qq="297762792">297762792</span>VS<span class="user" data-qq="516203457">516203457</span></li>
+            </ul>
+
+        </li>
+        <li class="server"><span class="server-name">裁决之地</span>
+            <ul class="server9">
+                <li><span class="user" data-qq="1667612615">1667612615</span>VS<span class="user" data-qq="2504181068">2504181068</span></li>
+                <li><span class="user" data-qq="1027923428">1027923428</span>VS<span class="user" data-qq="354844038">354844038</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">钢铁烈阳</span>
+            <ul class="server8">
+                <li><span class="user" data-qq="997959845">997959845</span>VS<span class="user" data-qq="1810534547">1810534547</span></li>
+                <li><span class="user" data-qq="552430565">552430565</span>VS<span class="user" data-qq="直接晋级">直接晋级</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">黑色玫瑰</span>
+            <ul class="server10">
+                <li><span class="user" data-qq="653130191">653130191</span>VS<span class="user" data-qq="1606322930">1606322930</span></li>
+                <li><span class="user" data-qq="1102755923">1102755923</span>VS<span class="user" data-qq="775825763">775825763</span></li>
+                <li><span class="user" data-qq="1308500730">1308500730</span>VS<span class="user" data-qq="253185102">253185102</span></li>
+                <li><span class="user" data-qq="295647241">295647241</span>VS<span class="user" data-qq="516203457">516203457</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">巨神峰</span>
+            <ul class="server6">
+                <li><span class="user" data-qq="315519279">315519279</span>VS<span class="user" data-qq="1277872826">1277872826</span></li>
+                <li><span class="user" data-qq="920221084">920221084</span>VS<span class="user" data-qq="1534243374">1534243374</span></li>
+                <li><span class="user" data-qq="983665472">983665472</span>VS<span class="user" data-qq="1570996138">1570996138</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">均衡教派</span>
+            <ul class="server12">
+                <li><span class="user" data-qq="2978952027">2978952027</span>VS<span class="user" data-qq="2811016100">2811016100</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">卡拉曼达</span>
+            <ul class="server17">
+                <li><span class="user" data-qq="1638342638">1638342638</span>VS<span class="user" data-qq="1940712779">1940712779</span></li>
+
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">雷瑟守备</span>
+            <ul class="server7">
+                <li><span class="user" data-qq="735093475">735093475</span>VS<span class="user" data-qq="1940238605">1940238605</span></li>
+                <li><span class="user" data-qq="953766410">953766410</span>VS<span class="user" data-qq="375257315">375257315</span></li>
+                <li><span class="user" data-qq="778769798">778769798</span>VS<span class="user" data-qq="直接晋级">直接晋级</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">皮城警备</span>
+            <ul class="server18">
+
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">皮尔特沃夫</span>
+            <ul class="server4">
+                <li><span class="user" data-qq="836766635">836766635</span>VS<span class="user" data-qq="2226529746">2226529746</span></li>
+                <li><span class="user" data-qq="879004715">879004715</span>VS<span class="user" data-qq="798182084">798182084</span></li>
+                <li><span class="user" data-qq="934771051">934771051</span>VS<span class="user" data-qq="670998063">670998063</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">守望之海</span>
+            <ul class="server15">
+                <li><span class="user" data-qq="1830226781">1830226781</span>VS<span class="user" data-qq="1638342638">1638342638</span></li>
+                <li><span class="user" data-qq="1017283526">1017283526</span>VS<span class="user" data-qq="直接晋级">直接晋级</span></li>
+
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">水晶之痕</span>
+            <ul class="server13">
+                <li><span class="user" data-qq="1193459969">1193459969</span>VS<span class="user" data-qq="1096458621">1096458621</span></li>
+                <li><span class="user" data-qq="407109151">407109151</span>VS<span class="user" data-qq="直接晋级">直接晋级</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">影流</span>
+            <ul class="server14">
+                <li><span class="user" data-qq="2476987944">2476987944</span>VS<span class="user" data-qq="465615456">465615456</span></li>
+                <li><span class="user" data-qq="1308673492">1308673492</span>VS<span class="user" data-qq="1308673492">1308673492</span></li>
+                <li><span class="user" data-qq="735093475">735093475</span>VS<span class="user" data-qq="1017139532">1017139532</span></li>
+                <li><span class="user" data-qq="1017139532">1017139532</span>VS<span class="user" data-qq="直接晋级">直接晋级</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">战争学院</span>
+            <ul class="server5">
+                <li><span class="user" data-qq="496807575">496807575</span>VS<span class="user" data-qq="756908391">756908391</span></li>
+                <li><span class="user" data-qq="1427338280">1427338280</span>VS<span class="user" data-qq="1527061870">1527061870</span></li>
+                <li><span class="user" data-qq="2681104456">2681104456</span>VS<span class="user" data-qq="845395428">845395428</span></li>
+                <li><span class="user" data-qq="1398592308">1398592308</span>VS<span class="user" data-qq="864431123">864431123</span></li>
+                <li><span class="user" data-qq="2958113258">2958113258</span>VS<span class="user" data-qq="直接晋级">直接晋级</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">征服之海</span>
+            <ul class="server16">
+                <li><span class="user" data-qq="410564275">410564275</span>VS<span class="user" data-qq="1021000130">1021000130</span></li>
+            </ul>
+        </li>
+        <li class="server"><span class="server-name">诺克萨斯</span>
+            <ul class="server2">
+                <li><span class="user" data-qq="759735768">759735768</span>VS<span class="user" data-qq="1193012549">1193012549</span></li>
+                <li><span class="user" data-qq="2746576247">2746576247</span>VS<span class="user" data-qq="2227313297">2227313297</span></li>
+                <li><span class="user" data-qq="1179126369">1179126369</span>VS<span class="user" data-qq="411563827">411563827</span></li>
+                <li><span class="user" data-qq="734049375">734049375</span>VS<span class="user" data-qq="465615456">465615456</span></li>
+                <li><span class="user" data-qq="997261531">997261531</span>VS<span class="user" data-qq="1171619583">1171619583</span></li>
+            </ul>
+        </li>
+    </ul>
+</article>
+</div>
+
+</body>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-menu li').click(function (event) {
+            $("#dropdownMenu1").data("server", $(this).index());
+            $("#dropdownMenu1").attr("data-server", $(this).index());
+            $("#dropdownMenu1").html($(this).children("a").html());
+            $("#dropdownMenu1").append(" <span class=\"caret\"></span>");
+        });
+
+        $('#search-button').click(function () {
+            var QQ = $(".search-input").val();
+            if ($("#dropdownMenu1").data("server") == "-1") {
+                $(".name-show").html("请选择服务器！");
+                $(".name-show").addClass("text-danger");
+            } else if (QQ == "") {
+                $(".name-show").html("请输入QQ号！");
+                $(".name-show").addClass("text-danger");
+            } else {
+                $(".name-show").html("");
+                $(".name-show").removeClass("text-danger");
+                if ($(".server" + $("#dropdownMenu1").data("server") + " li").length == 0) {
+                    $(".name-show").html("没有记录！");
+                } else {
+                    var servername = $(".dropdown-menu li").eq($("#dropdownMenu1").data("server")).text().trim();
+                    console.log(servername);
+                    $(".server" + $("#dropdownMenu1").data("server") + " li").each(function () {
+                        if (($(this).children("span").eq(0).attr("data-qq") == QQ)) {
+                            $(".name-show").html("" + servername + " : ");
+                            $(".name-show").append($(this).children("span").eq(0).text() + " VS " + $(this).children("span").eq(1).text());
+                            return false;
+                        } else if (($(this).children("span").eq(1).attr("data-qq") == QQ)) {
+                            $(".name-show").html("" + servername + " : ");
+                            $(".name-show").append($(this).children("span").eq(1).text() + " VS " + $(this).children("span").eq(0).text());
+                            return false;
+                        }
+                        else {
+                            $(".name-show").html("没有记录！");
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+</html>

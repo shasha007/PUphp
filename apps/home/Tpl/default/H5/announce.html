@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>校园通知</title>
+        <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet">
+        <link href="data/css/h5announce.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <div class="container">
+            <header class="notif_header"> {$title}</header>
+            <nav class="notif_nav">
+                <ul>
+                    <li>{$cTime|friendlyDate}</li>
+                    <li>{$category}</li>
+                    <li>{$sid1|tsGetSchoolName}</li>
+                </ul>
+            </nav>
+            <article class="notif_article">{$content|htmlspecialchars_decode}</article>
+        </div>
+    </body>
+</html>

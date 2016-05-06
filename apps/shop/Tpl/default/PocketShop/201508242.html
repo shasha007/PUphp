@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>口贷乐</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="telephone=no" name="format-detection"/>
+<link rel="stylesheet" href="css/m_mall.css"/>
+<script type="text/javascript" src="js/jquery-1.6.4.js"></script>
+<script type="text/javascript">
+// 收缩展开效果
+$(document).ready(function(){
+	$("div.m_cash_desc1").hide();//默认隐藏div，或者在样式表中添加.text{display:none}，推荐使用后者
+	$(".m_box h1").click(function(){
+		$(this).next(".m_cash_desc1").slideToggle("slow");
+	})
+});
+</script>
+</head>
+<body>
+<div class="kdl_mobile_page">
+  <div class="kdl_mobile_header">
+  <div class="kdl_m_header f14 bold tcenter">
+  <a href="#"><li class="cur">口袋金</li></a><a href="#"><li>商城</li></a></div>
+  <!--<a href="{:U('shop/PocketShop/myList')}"><div class="kdl_dd"></div></a>-->
+  </div>
+  <a href="m_c_details.html"><div class="m_back"></div></a>
+  <div class="clear"></div>
+  <div class="m_cash_con">
+  <div class="m_cash_thumb"><img src="images/icon_cash.jpg"></div>
+  <div class="m_cash_new1 f14 m_color1 bold"><span class="m_cash_newkey">特惠：</span><div class="m_cash_mxbtn1"><a href="http://www.baidu.com">1000元免息</a></div><span class="cash_sign"><img src="images/bg_sign.png"></span>（来点我！）
+  <div class="m_hr"></div>
+</div>
+<form>
+<div class="m_cash_new f14">金额：<select name="cash_periods" class="m_cash_select"><option>500</option><option>1000</option><option>1500</option><option>2000</option><option>2500</option><option>3000</option><option>3500</option><option>4000</option><option>4500</option><option>5000</option></select> 元
+
+</div>
+<div class="clear"></div>
+<div class="m_cash_new f14">期数：<select name="cash_periods" class="m_cash_select"><option>1</option><option>3</option><option>6</option><option>9</option><option>12</option></select> 个月
+
+<div class="clear"></div>
+</div>
+
+<div class="m_cash_new f14">事由：<input name="cash_reason" type="text" class="m_cash_input" placeholder="请输入事由，15字以内" /></div>
+</form>
+<div class="m_box">
+<h1>详情</h1>
+<div class="m_cash_desc1">
+<p>没钱花？没钱买衣服？没钱买培训课程？没钱旅游？没钱请女朋友吃饭了？</p>
+<p>没关系！PU口袋金助您！</p>
+<p>口袋金是PU和理财公司合作的一个现金项目，旨在为大学生提供日常生活中的资金短缺，再也不用没到月底就跟爸妈伸手了！</p>
+</div>
+</div>
+<div class="m_hr1"></div>
+
+<div class="m_cash_menu f14 bold"><img src="images/icon_sale.png"/> 热销商品</div>
+<div class="m_cash_more"><a href="#">更多&gt;&gt;</a></div>
+<div class="m_cash_list">
+ <ul>
+  <a href="#"><li>
+   <div class="m_cash_list_title bold">盛达驾校培训</div>
+   <div class="m_cash_list_price m_color1">￥5000.00</div>
+   <div class="m_cash_list_thumb"><img src="images/thumb.png"></div>
+  </li></a>
+  <a href="#"><li>
+   <div class="m_cash_list_title bold">盛达驾校培训</div>
+   <div class="m_cash_list_price m_color1">￥5000.00</div>
+   <div class="m_cash_list_thumb"><img src="images/thumb.png"></div>
+  </li></a>
+  <a href="#"><li>
+   <div class="m_cash_list_title bold">盛达驾校培1231312训</div>
+   <div class="m_cash_list_price m_color1">￥5000.00</div>
+   <div class="m_cash_list_thumb"><img src="images/thumb.png"></div>
+  </li></a>
+ </ul>
+</div>
+<div class="clear"></div>
+
+<div class="m_cash_check f14"><a href="#"><input name="agreement" class="m_cash_check1" type="checkbox" value="" checked /> 本人同意并遵守《PU卡卡提款协议》、《PU卡服务协议》</a></div>
+<div class="clear"></div>
+   <a href="#"><div class="m_c_buy f18 fw">确定</div></a>
+</body>
+</html>

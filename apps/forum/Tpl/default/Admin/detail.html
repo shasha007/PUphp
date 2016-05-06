@@ -1,0 +1,56 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="forum">
+        <div class="forum_upic"><space uid="uid" target="_blank">{uavatar=m}</space></div>
+        <div class="forum_uinfor">
+            <div class="forum_uname f14px b"><space uid="uid" target="_blank">{uname}</space></div>
+            <div class="forum_date">{$cTime|friendlyDate}</div>
+            <div class="forum_con">{$content}</div>
+            <?php if($pic_m):?>
+            <div><img src='{$pic_m}'></div>
+            <?php endif;?>
+            <div class="forum_commentc">评论({$backCount})</div>
+        </div>
+    </div>
+    <div class="reply_list">
+        <ul>
+            <volist name="comment"  id='vo'>
+                <li>
+                    <div class="forum_upic"><space uid="vo['uid']" target="_blank">{uavatar=m}</space></div>
+                    <div class="forum_uinfor">
+                        <div class="forum_uname"><space uid="vo['uid']" target="_blank">{uname}</space></div>
+                        <div class="forum_date" >{$vo.cTime|friendlyDate}</div>
+                        <eq name="vo['rid']" value="0">
+                        <div class="forum_con"><span class='con'>{$vo.content}</span></div>
+                        <else/>
+                        <div class="forum_con">回复：<php> echo $comment[$vo['rid']]['content'];</php></br><span class='con'>{$vo.content}</span></div>
+                        </eq>
+                    </div>
+                <if condition='$vo.isDel !=1'>
+                <div style='float:right;margin-top:20px;'><input type='hidden' value='{$vo.id}' class='id'><a href="javascript:void(0);" class='del'><span class="del_{$vo.id}">删除</span></a></div>
+                <else/>
+               <div style='float:right;margin-top:20px;'><span>已删除</span></div>
+                </if>
+                </li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<script>
+$(function(){
+        $('.del').click(function(){
+        var id=$(this).parent().find('.id').val();
+          if(confirm("是否删除评论或回复，删除后无法恢复")){
+             $.post( '__URL__&act=del_Comment_reply',{id:id},function(json){
+                    if(json){
+                         ui.success( "删除成功" );
+                   }else{
+                         ui.error( "删除失败" );
+                    }
+                });
+        }
+    })
+})
+</script>
+<include file="_footer" />

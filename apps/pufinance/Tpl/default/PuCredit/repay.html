@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>还款</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+    <script src="../Public/js/mainScript.js"></script>
+    <script>
+        setActionBar('还款', '', '');
+    </script>
+</head>
+<body>
+<img src="../Public/img/bg.png">
+<p class="w-segment"></p>
+<div class="w-general w-repay">
+    <present name="etime">
+        <p>{:date('m月d日', $etime)}前</p>
+    </present>
+        <p>应还金额<span>{$amount}</span></p>
+</div>
+<p class="w-segment"></p>
+<div class="w-general w-input">
+    <form id="repay-form" action="{:U('pufinance/PuCredit/doRepay')}" method="post">
+    <p>请填写还款金额</p>
+    <input name="amount" type="text" placeholder="请输入金额"/>
+    <input name="checkedStageIds" type="hidden" value="{:implode(',',$checkedStageIds)}"/>
+
+    <button ui-sref="repaySubmit" type="submit">提交</button>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script>
+$(function() {
+    $('#repay-form').submit(function() {
+        var amount = parseFloat($(':input[name="amount"]').val());
+        if (isNaN(amount) || amount <= 0) {
+            alert('请输入还款金额');
+            return false;
+        }
+
+    });
+});
+</script>
+</body>
+</html>

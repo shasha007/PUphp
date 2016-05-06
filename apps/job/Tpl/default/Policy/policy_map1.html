@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>就业地图--创就业--Pocketuni</title>
+<link href="../Public/css/job.css" type="text/css" rel="stylesheet" />
+<link href="../Public/css/students.css" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+<style>
+    #ditu{position: relative;}
+    .bt{width:30px;height: 30px;position: absolute;cursor: pointer;}
+    .bt_1{top:16px;left: 142px;}
+    .bt_2{top:168px;left: 482px;}
+    .bt_3{top:230px;left: 554px;}   
+    .bt_4{top:274px;left: 386px;}    
+    .bt_5{top:476px;left: 374px;}
+    .bt_6{top:402px;left: 438px;}
+    .bt_7{top:516px;left: 482px;}
+    .bt_8{top:550px;left:566px;}
+    .bt_9{top:706px;left: 576px;}   
+    .bt_10{top:662px;left: 756px;}   
+    .bt_11{top:346px;left: 628px;}    
+    .bt_12{top:536px;left: 656px;}
+    .bt_13{top:530px;left: 842px;}
+    .bt_14{top:500px;left: 730px;}
+    .bt_15{top:656px;left: 570px;}
+    .bt_16{top:422px;left: 688px;}   
+    .bt_17{top:440px;left: 752px;}   
+    .bt_18{top:340px;left: 824px;}    
+    .bt_19{top:370px;left:702px;}   
+    .tan{display: none;width: 280px;height:400px;overflow-y:scroll;background: #fafafa; position: fixed;top:50%;margin-top: -200px;border: 1px solid #ccc;z-index: 100; line-height:24px;}
+    .x{cursor: pointer;font-size: 20px;width: 20px;height: 60px;background: #fafafa;position: fixed;top:50%;margin-top:-30px;}
+    .content{width:240px;overflow: hidden;float: right;}
+    .de{border-top: 1px dashed #ccc; padding:5px 0;}
+    .content span{font-weight:bold;}
+	.street_name{ font-size:14px; font-weight:bold; text-align:center; line-height:30px; color:#333;}
+</style>
+</head>
+
+<body>
+<include file="__THEME__/_holder_2014" />
+    <div class="tan">
+        <div class="x"><<</div>
+        <div class="content">
+   
+        </div>
+    </div>
+<div class="bg_job">
+ <div class="main_job">
+<include file="../Public/top" />
+  <div class="job_banner"><img src="../Public/images/bg_policy.jpg" alt="地方政策" /></div>
+  <div class="pool_menu mt50 tcenter f14">   
+    <ul>
+     <li class="cur"><a href="{:U('job/Policy/policy')}">地方政策</a></li>
+     <li><a href="{:U('job/Policy/policy_map1')}">就业地图</a></li>
+     <li><a href="{:U('job/Policy/policy_map')}">创业地图</a></li>
+     <li><a href="http://jxjy.cdeledu.com/cdel_jxjy/gusuwx.shtml">创业网校</a></li>
+    </ul>   
+  </div>
+  <div class="clear"></div>
+  
+  <div class="policy_list mt20" style="padding-bottom:20px;" id="ditu">
+    <img src="../Public/images/map_job.jpg" alt="就业地图" />
+    <span class="bt bt_1" area="1"></span>   
+    <span class="bt bt_2" area="2"></span>  
+    <span class="bt bt_3" area="3"></span> 
+    <span class="bt bt_4" area="4"></span>
+    <span class="bt bt_5" area="5"></span>
+    <span class="bt bt_6" area="6"></span>
+    <span class="bt bt_7" area="7"></span>   
+    <span class="bt bt_8" area="8"></span>  
+    <span class="bt bt_9" area="9"></span>    
+    <span class="bt bt_10" area="10"></span> 
+    <span class="bt bt_11" area="11"></span>
+    <span class="bt bt_12" area="12"></span>
+    <span class="bt bt_13" area="13"></span>
+    <span class="bt bt_14" area="14"></span>  
+    <span class="bt bt_15" area="15"></span>    
+    <span class="bt bt_16" area="16"></span> 
+    <span class="bt bt_17" area="17"></span>
+    <span class="bt bt_18" area="18"></span>
+    <span class="bt bt_19" area="19"></span>
+
+  </div>
+ </div>
+</div>
+<include file="__THEME__/footer" />
+</body>
+</html>
+<script>
+    $('#ditu .bt').click(function(){
+        var aid = $(this).attr('area');
+        $.post('__URL__&act=returnAreaInfo',{aid:aid},function(data){
+            if(data){
+                var obj = JSON.parse(data);
+                var streetName = obj.street;
+                var details = obj.detail;
+                var str = "<div class='street_name'>"+streetName+"</div>"; 
+                for(var i=0;i<details.length;i++){
+                    var st = "<div class='de'><span>部门名称:</span>"+details[i][0]+"<br><span>联系地址:</span>"+details[i][1]+"<br><span>联系电话:</span>"+details[i][2]+"</div>";
+                    str += st;
+                }
+                     $('.content').html(str);
+                     $('.tan').css('display','block')
+            }
+        })
+    })
+    
+    $('.x').click(function(){
+        $('.tan').css('display','none')
+        $('.content').html('');
+    })
+</script>

@@ -1,0 +1,133 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit">添加部落</div>
+    <form method="post" action="{:U('event/Validate/doAddGroup')}">
+            <input type="hidden" name="uid" value="" id="hidden" />
+            <div class="form2">
+                <dl class="lineD">
+                    <dt>部落名称：<span class="red">*</span></dt>
+                    <dd>
+                        <input type="text" name="title" class="text" value="""/>
+
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>主席：<span class="red">*</span></dt>
+                    <dd>
+                       <input name="name" type="text" id="name" value="" readonly style='width:100px;'> &nbsp; &nbsp;
+                       <input name="team" type="text"  value="输入查找人学号或姓名" onFocus="$(this).val('')" id="team" >
+                        <a href="javascript:findTeam()">【查找】</a>&nbsp;&nbsp;(输入查找人学号或姓名)
+                    </dd>
+                    <dd id="ren" style="display:none">
+                                </dd>
+                </dl>
+                <dl class="lineD" id="group">
+                    <dt>部门：<span class="red">*</span></dt>
+                    <dd>
+                        <select  name='category' id="cat">
+                            <option value="">请选择</option>
+                            <option value="1">学生部门</option>
+                            <option value="2">团支部</option>
+                            <option value="3">学生社团</option>
+                        </select>
+                    </dd>
+                </dl>
+
+                   <dl class="lineD" id="group">
+                    <dt>学院：<span class="red">*</span></dt>
+                    <dd>
+                        <select  name='sid1' >
+                              <option value="">请选择</option>
+                               <option value="-1">校级</option>
+                            <?php foreach($addSchool as $value): ?>
+                                <option value="{$value.id}">{$value.title}</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </dd>
+                </dl>
+
+                         <dl class="lineD" id="group">
+                    <dt>年级：</dt>
+                    <dd>
+                        <select  name='year' >
+                            <option value="">请选择</option>
+                            <volist name="years" id="vo">
+                            <option value="{$vo}">{$vo}级</option>
+                            </volist>
+                        </select>
+                    </dd>
+                         </dl>
+
+                         <dl class="lineD" id="group">
+                             <dt>分类：<span class="red">*</span></dt>
+                             <dd>
+                                 <select  name='cat' >
+                                     <volist name="cat" id="vo" >
+                                         <option value="{$vo['id']}" >{$vo.title}</option>
+                                     </volist>
+                                 </select>
+                             </dd>
+                         </dl>
+
+                <dl class="lineD" id="cs_orga">
+                    <dt>评定部落星级：<span class="red">*</span></dt>
+                    <dd>
+                        <select name="stern" id="stern">
+                            <option value="0">无星级</option>
+                            <option value="1">1星</option>
+                            <option value="2" >2星</option>
+                            <option value="3">3星</option>
+                            <option value="4">4星</option>
+                            <option value="5">5星</option>
+                        </select>
+                    </dd>
+
+                </dl>
+
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </div>
+        </form>
+</div>
+<script>
+
+
+
+    function findTeam(){
+        var val =  $('#team').val();
+        $.post( "{:U('event/Teacher/findTeam')}", {'team':val},function(data){
+            if(data){
+                var json = $.parseJSON(data);
+                if(json[0].email!='000'){
+                    $('#name').val('');
+                    $('#ren').show();
+                    $("#ren").html('');
+                    var str='';
+                    $.each(json,function(k,v){
+                        var val = v.uid+","+'\"'+v.realname+'\"';
+                        str+="<a style='background:#eee;cursor:pointer'onClick='changeName("+val+")'>"+v.realname+"&nbsp|&nbsp;学号:"+v.email+" </a></br>"
+                    });
+                    $("#ren").append(str);
+                }else{
+                    $('#ren').hide();
+                    $('#name').val(json.realname);
+                    $('#hidden').val(json.uid);
+                }
+            }else{
+                $('#name').val('');
+                ui.error('不存在此人');
+            }
+        });
+    }
+
+    function changeName(uid,realname){
+        $('#name').val(realname);
+        $('#hidden').val(uid);
+        $('#ren').hide();
+    }
+
+
+</script>
+<include file="../Teacher/_footer" />

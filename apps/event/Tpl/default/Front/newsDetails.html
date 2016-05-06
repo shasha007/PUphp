@@ -1,0 +1,12 @@
+<include file="_header" />
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_news.gif" alt="" /></div>
+    <div class="news_back"><a href="javascript:history.back( -1 )">&lt;&lt;返回上一页</a></div>
+    <div class="clear"></div>
+    <div class="news_title">{$app.title}</div>
+    <div class="news_desc">
+        {$app.content}
+    </div>
+    <div class="news_date">{$app.cTime|date='Y-m-d',###}</div>
+</div>
+<include file="_footer" />

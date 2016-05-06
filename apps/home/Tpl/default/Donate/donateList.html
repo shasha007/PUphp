@@ -1,0 +1,39 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        爱心物品
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">ID</th>
+                <th class="line_l">物品名称</th>
+                <th class="line_l">价格</th>
+                <th class="line_l">捐物者</th>
+                <th class="line_l">联系方式</th>
+                <th class="line_l">捐出时间</th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' id="{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><a href="{:U('shop/Donate/detail',array('id'=>$vo['id']))}" target="_blank">{$vo.title}</a></td>
+                    <td>{$vo.price}.00</td>
+                    <td><a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" target="_blank">{$vo.uid|getUserRealName}</a></td>
+                    <td>{$vo.mobile}</td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="_footer" />

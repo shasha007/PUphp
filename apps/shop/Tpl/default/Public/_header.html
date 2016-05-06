@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} - PocketUni
+</neq>
+    乐购 - PocketUni
+</title>
+<include file="__THEME__/comm/_main" />
+<link href="../Public/css/mall.css?20140429" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var APPNAME         =   '{$ts._app}';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+</head>
+<body>
+    <include file="__THEME__/_holder_2014" />
+    <div class="bg" style="padding-top:10px;">
+        <div class="main">
+            <div class="m_header">
+                <div class="m_logo"><a href="{:U('shop/Index/index')}"><img src="../Public/images/logo.gif" alt="PU 乐购" /></a></div>
+                <div class="m_help">
+                    <ul>
+                        <li><a href="{:U('shop/Myshop/ygguide')}">帮助中心</a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+                <div class="m_menu center">
+                    <div class="m_mlist f14 fw">
+                        <ul>
+                            <li <?php if(MODULE_NAME=='Index')echo'class="cur1"';?>><a href="{:U('shop/Index/index')}">首页</a></li>
+                            <li <?php if(MODULE_NAME=='Yg')echo'class="cur1"';?>><a href="{:U('shop/Yg/index')}">一元梦想</a></li>
+                            <li <?php if(MODULE_NAME=='kdl')echo'class="cur1"';?>><a href="{:U('shop/Kdl/index')}">口袋乐</a></li>
+                            <li <?php if(MODULE_NAME=='T_mall')echo'class="cur1"';?>><a href="{:U('shop/T_mall/index')}">特色商城</a></li>
+                            <if condition="$sid eq 473">
+                            <li <?php if(MODULE_NAME=='Tg')echo'class="cur1"';?>><a href="{:U('shop/Tg/index')}">众志成城</a></li>
+                            </if>
+                            <?php if(isDonateSchool($user['sid'])):?>
+                            <li <?php if(MODULE_NAME=='Donate')echo'class="cur1"';?>><a href="{:U('shop/Donate/index')}">爱心校园</a></li>
+                            <?php endif;?>
+                        </ul>
+                    </div>
+                    <div class="m_my f16 fw"><a href="{:U('shop/Myshop/index')}">我的乐购</a></div>
+                </div>
+            </div>
+            <div class="m_content">

@@ -1,0 +1,41 @@
+<include file="_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<include file="__THEME__/editor" />
+<div class="so_main">
+  <include file="_tab" />
+  <div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>景点介绍</div>
+  <div class="form2">
+<form action="{:U('/Admin/doEditDetail')}" enctype="multipart/form-data" method="post">
+        <input name="travelId" value="{$_GET.travelId}" type="hidden">
+        <input name="nid" value="{$_GET.nid}" type="hidden">
+    <table cellpadding=3 cellspacing=3>
+    <tr>
+        <td align="right"></td>
+        <td align="left"><input type="hidden" size="100" name="title" maxlength="100"   value="景点介绍" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">景点介绍：</td>
+        <td align="left"><textarea name="content" id="content" style="width:850px;height:300px">{$content}</textarea></td>
+    </tr>
+    </table>
+    <div class="page_btm">
+        <input type="submit" class="btn_b" value="确定">
+    </div>
+</form>
+  </div>
+  </div>
+<script>
+$(document).ready(function(){
+    loadEditor("content");
+});
+</script>
+<include file="_footer" />

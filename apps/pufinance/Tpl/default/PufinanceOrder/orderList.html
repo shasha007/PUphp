@@ -1,0 +1,357 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <eq name="mid" value="$kxuid">
+    <div class="tit_tab">
+        <ul>
+
+                <li><a href="{:U('pufinance/PufinanceOrder/orderList')}" class="on">康欣放款管理</a>
+                </li>
+        </ul>
+    </div>
+    <else />
+        <include file="../Public/tabs" />
+        <include file="twotab" />
+        <div id="searchBlog_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+        <div class="page_tit">搜索订单 [ <a href="javascript:void(0);" onclick="searchBlog();">隐藏</a> ]</div>
+        <div class="form2">
+            <form action="__URL__&act=orderList" method="POST">
+                <input type="hidden" name="isSearch" value="1"/>
+                <dl class="lineD">
+                    <dt>申请时间起止：</dt>
+                    <dd>
+                        <input name="sctime" type="text" value="{$serach.sctime}" /> 00:00:00 -
+                        <input name="ectime" type="text" value="{$serach.ectime}" /> 23:59:59  <span style="color:red;">时间格式：2016-01-01</span>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>订单ID：</dt>
+                    <dd>
+                        <input name="id" type="text" value="{$serach.id}">
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>身份证号：</dt>
+                    <dd>
+                        <input name="ctfid" type="text" value="{$serach.ctfid}">
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>姓名：</dt>
+                    <dd>
+                        <input name="realname" type="text" value="{$serach.realname}" />
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>订单类型：</dt>
+                    <dd>
+                        <select name="type">
+                            <option value="0" <?php if($serach['type']==0) echo "selected"; ?> >无</option>
+                            <option value="1" <?php if($serach['type']==1) echo "selected"; ?> >借款</option>
+                            <option value="2" <?php if($serach['type']==2) echo "selected"; ?> >提现</option>
+                            <option value="3" <?php if($serach['type']==3) echo "selected"; ?> >消费</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>订单状态：</dt>
+                    <dd>
+                        <select name="status">
+                            <option value="" <?php if(!isset($serach['status'])) echo "selected"; ?> >无</option>
+                            <option value="0" <?php if(isset($serach['status']) && $serach['status']==0) echo "selected"; ?> >待审核</option>
+                            <option value="1" <?php if($serach['status']==1) echo "selected"; ?> >已驳回</option>
+                            <option value="2" <?php if($serach['status']==2) echo "selected"; ?> >风控通过(待放款)</option>
+                            <option value="3" <?php if($serach['status']==3) echo "selected"; ?> >放款中</option>
+                            <option value="4" <?php if($serach['status']==4) echo "selected"; ?> >放款成功(还款中)</option>
+                            <option value="5" <?php if($serach['status']==5) echo "selected"; ?> >已结清</option>
+                        </select>
+                    </dd>
+                </dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+</div>
+
+
+<div class="Toolbar_inbox">
+    <a href="javascript:void(0);" class="btn_a" onclick="searchBlog();">
+        <span class="searchBlog_action"><neq name="isSearch" value="1">搜索订单<else/>搜索完毕</neq></span>
+    </a>
+    <!--<a href="{:U('home/Themes/addThemes')}" ><span>已风控通过</span></a>-->
+    <!--<a href="javascript:void(0);" class="btn_a" onclick="deleteThemes();"><span>风控通过操作</span></a>-->
+    <div class="page right">{$html}</div>
+</div>
+    </eq>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">订单号</th>
+                <th class="line_l">姓名</th>
+                <th class="line_l">身份证号</th>
+                <th class="line_l">区域</th>
+                <th class="line_l">借款金额</th>
+                <th class="line_l">期数</th>
+                <th class="line_l">总利息</th>
+                <th class="line_l">收款方式</th>
+                <th class="line_l">资金方</th>
+                <th class="line_l">用户申请时间</th>
+                <th class="line_l">事由</th>
+                <th class="line_l">订单类型</th>
+                <th class="line_l">订单状态</th>
+                <th class="line_l">用户状态</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' id="{$vo.id}">
+                    <td>
+                        <input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}">
+    				</td>
+                    <td>{$vo.id}</td>
+                    <td><a href="{:U('pufinance/Admin/userDetail',array('uid'=>$vo['uid']))}">{$vo.realname}</a></td>
+                    <td>{$vo.ctfid}</td>
+                    <td>{$vo.area}</td>
+                    <td>{$vo.amount}</td>
+                    <td>{$vo.stage}</td>
+                    <td>{$vo.interest}</td>
+                    <td>
+                        <eq name="vo.bank_card_id" value="0">
+                            PU币
+                        <else />
+                            {$vo.bank_card_info.bank_name}
+                            {$vo.bank_card_info.card_no}
+                            {$vo.bank_card_info.province_id|get_province_name}
+                            {$vo.bank_card_info.city_id|get_city_name}
+
+                        </eq>
+                    </td>
+                    <td>
+                        <eq name="vo.bank_card_id" value="0">
+                            天宫
+                        <else />
+                            <eq name="vo.bank_card_info.invest_id" value="0">
+                                未指定
+                            <else />
+                                {$vo.bank_card_info.invest_id|get_invest}
+                            </eq>
+                        </eq>
+                    </td>
+                    <td>{$vo.ctime|friendlyDate}</td>
+                    <td>{$vo.reson}</td>
+                    <td>
+                        <switch name="vo.type">
+                            <case value="1">借款</case>
+                            <case value="2">消费</case>
+                            <case value="3">提现</case>
+                        </switch>
+                    </td>
+                    <?php switch($vo['status'])
+                    {
+                         case 0:echo "<td>待审核</td>";break;
+                            case 1:echo "<td>已驳回</td>";break;
+                            case 2:echo "<td>风控通过(待放款)</td>";break;
+                            case 3:echo "<td>放款中</td>";break;
+                            case 4:echo "<td>放款成功(还款中)</td>";break;
+                            case 5:echo "<td>已结清</td>";break;
+                    }
+                    ?>
+                    <?php switch($vo['nameList'])
+                    {
+                         case 0:echo "<td>初始状态</td>";break;
+                            case 1:echo "<td>白名单</td>";break;
+                            case 2:echo "<td>黑名单</td>";break;
+
+
+                    }
+                  ?>
+
+                    <td>
+                        <!--待审核-->
+                        <eq name="vo.status" value="0">
+                        <a href="javascript:void(0);" onclick="changeStatus('{$vo.id}','2','驳回')">驳回</a>
+
+                        <if condition="$vo['bank_card_id'] eq 0 OR $vo['bank_card_info']['invest_id']">
+                            <a href="javascript:void(0);" onclick="changeStatus('{$vo.id}','1','确认风控通过')">风控通过</a>
+                        </if>
+                        </eq>
+
+                        <if condition="$vo['bank_card_id'] && $vo['status'] lt 4 && $mid != $kxuid">
+                            <a href="javascript:void(0);" onclick="setInvest('{$vo.bank_card_id}')">指定资金方</a>
+                        </if>
+
+                        <eq name="vo.status" value="2">
+                            <a href="javascript:void(0);" onclick="changeStatus('{$vo.id}','4','确认放款')">确认放款</a>
+                        </eq>
+
+                        <!--待还款状态进行结单或者提前还款操作-->
+                        <eq name="vo.status" value="4">
+                            <a href="javascript:void(0);" onclick="repayOrder('{$vo.id}')">还款</a>
+
+                        </eq>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+
+<script>
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchBlog() {
+    if(isSearchHidden == 1) {
+        $("#searchBlog_div").slideDown("fast");
+        $(".searchBlog_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchBlog_div").slideUp("fast");
+        $(".searchBlog_action").html("搜索订单");
+        isSearchHidden = 1;
+    }
+}
+
+    //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+        function () {
+            $(this).addClass("bg_hover");
+        },
+        function () {
+            $(this).removeClass("bg_hover");
+        }
+    );
+    });
+
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    //获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+    function changeStatus(ids,tag,reson) {
+        //tag:1风控通过 2驳回 3订单结清
+        var length = 0;
+        if(ids) {
+            length = 1;
+        }else {
+            ids    = getChecked();
+            length = ids[0] == 0 ? ids.length - 1 : ids.length;
+            ids    = ids.toString();
+        }
+        if(ids=='') {
+            ui.error('请先选择一个订单                                  ');
+            return ;
+        }
+        if(confirm('您将'+reson+length+'条记录，'+reson+'后无法恢复，确定继续？')) {
+            $.post("{:U('pufinance/PufinanceOrder/dealOrder')}",{ids:ids,tag:tag},function(res){
+                console.log(res);
+                if(res=='1') {
+                    ui.success(reson+'成功');
+                    removeItem(ids);
+                }else {
+                    ui.error(reson+'失败');
+                }
+            });
+        }
+    }
+
+    function removeItem(ids) {
+        ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#'+ids[i]).remove();
+        }
+    }
+
+    $(".sequence").blur(function(){
+        var orderoption = parseInt(this.value,10) ;
+        if (orderoption<0 || isNaN(orderoption)) {
+            alert('请输入正确的数字') ;
+        };
+        var id = parseInt(this.id,10) ;
+        if (id<0 || isNaN(id)) {
+            alert('操作失败请稍候再试') ;
+        };        
+        $.ajax({
+            url: '{:U('home/JavaThemes/sequence')}',
+            type: 'post',
+            data: {
+                id: id ,
+                orderoption: orderoption
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data ==='1') {
+                    location.reload(true) ;
+                }else if(data ==='0'){
+                    alert('修改失败请稍候再试') ;
+                }
+            }            
+        }) ;
+    });
+
+    $(".open").click(function(){
+        var id = $(this).data("id") ;
+        var status = $(this).data("statuses") ;
+        $.ajax({
+            type: 'post',
+            url: "{:U('home/JavaThemes/open')}" ,
+            data: {
+                status: status ,
+                id:id
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data!=='0') {
+                    if (status === 1) {
+                        $("#open"+id).html("关闭") ;
+                        $("#open"+id).attr("data-statuses", "2");
+                    }else{
+                        $("#open"+id).html("开启") ;
+                        $("#open"+id).attr("data-statuses", "1");
+                    }
+                }
+                else {
+                    alert('哈哈哈哈') ;
+                }
+            }
+        });
+    });
+function setInvest(bank_card_id) {
+    var url = "{:U('pufinance/PufinanceOrder/setInvest')}&bank_card_id=" + bank_card_id;
+    ui.box.load(url,{title:'指定资金方'});
+
+}
+
+    function repayOrder(order_id) {
+        var url = "{:U('pufinance/PufinanceOrder/repayOrder')}&order_id=" + order_id;
+        ui.box.load(url,{title:'订单还款'});
+    }
+</script>
+<include file="../Public/footer" />

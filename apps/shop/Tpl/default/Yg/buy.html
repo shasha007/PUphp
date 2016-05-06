@@ -1,0 +1,104 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/yg.js?20140701"></script>
+<div class="m_dream mt10">
+<div id="step1">
+        <div class="m_d_menu m_bule f16 fw mt10">一元梦想</div>
+        <div class="m_dd_step center">
+            <ul>
+                <li class="cur">第一步：提交订单</li>
+                <li class="arrow1"></li>
+                <li>第二步：在线支付</li>
+                <li class="arrow2"></li>
+                <li>第三步：支付成功，等到揭晓</li>
+                <li class="arrow2"></li>
+                <li class="last">第四步：揭晓获得者</li>
+            </ul>
+        </div>
+        <div class="m_dd_con mt10">
+            <div class="m_dd_con_title">
+                <ul>
+                    <li>商品</li>
+                    <li class="m_name">名称</li>
+                    <li>市场参考价（元）</li>
+                    <li>梦想价（PU币）</li>
+                    <li>购买次数</li>
+                    <li>总计（PU币）</li>
+                </ul>
+            </div>
+            <div class="m_dd_con_desc">
+                <div class="m_dd_con_thumb"><a href="{:U('shop/Yg/detail',array('id'=>$id))}"><img src="{$pic|tsMakeThumbUp=###,70,70}" alt="" /></a></div>
+                <div class="m_dd_con_infor">
+                    <div class="m_dd_con_name m_bule"><a href="{:U('shop/Yg/detail',array('id'=>$id))}">{$name}</a></div>
+                    <div class="m_dd_con_buyer mt5">已参加{$has_attended}人次，总需 <span class="m_color2">{$need_attended}</span>人次参加</div>
+                </div>
+                <div class="m_dd_con_p">￥{$price}</div>
+                <div class="m_dd_con_p m_color2">1.00</div>
+                <input id="ygid" type="hidden" value="{$id}"/>
+                <input id="productId" type="hidden" value="{$product_id}"/>
+                <input id="price" value="1" type="hidden"/>
+                <div class="m_dd_con_count">
+                    <div>剩余库存：<span id="restNum"><?php echo($need_attended-$has_attended);?></span></div>
+                    <div id="jian" class="m_dd_jian"></div>
+                    <input id="txtNum" name="num" type="text" value="1" class="m_dd_input"  onpaste="return false"/>
+                    <div id="jia" class="m_dd_jia"></div>
+                </div>
+                <div class="m_dd_con_total"><span class="moenyCount"></span></div>
+            </div>
+            <div class="m_dd_con_price">
+                梦想金额总计：PU币 <span class="fw m_color1 f18"><span class="shopT"></span>.00</span>
+                &nbsp;&nbsp;&nbsp;<input type="checkbox" id="voucher" name="voucher" /> 使用代金券
+                <input id="zjId" value="0" type="hidden"/>
+            </div>
+        </div>
+        <div class="m_dd_con_btn mt20">
+            <input type="button" value="" class="m_btn1"  onclick="javascript:$('#step1').hide();$('#step2').show();"/>
+        </div>
+</div>
+<div id="step2" style="display:none;">
+    <div class="m_dd_step center">
+        <ul>
+            <li>第一步：提交订单</li>
+            <li class="arrow3"></li>
+            <li class="cur">第二步：在线支付</li>
+            <li class="arrow4"></li>
+            <li>第三步：支付成功，等到揭晓</li>
+            <li class="arrow2"></li>
+            <li class="last">第四步：揭晓获得者</li>
+        </ul>
+    </div>
+    <div class="m_dd_con mt10">
+        <div class="m_dd_con_title">
+            <ul>
+                <li class="m_name1">商品名称</li>
+                <li>市场价（元）</li>
+                <li>梦想价（PU币）</li>
+                <li>购买次数</li>
+                <li>总计（PU币）</li>
+            </ul>
+        </div>
+        <div class="m_dd_con_desc">
+            <div class="m_dd_con_name1 m_bule"><a href="{:U('shop/Yg/detail',array('id'=>$id))}">{$name}</a></div>
+            <div class="m_dd_con_p1">￥{$price}</div>
+            <div class="m_dd_con_p1">1.00</div>
+            <div id="payNum" class="m_dd_con_count count2 m_color2"></div>
+            <div class="m_dd_con_total1"><span class="moenyCount"></span></div>
+        </div>
+        <div class="m_dd_con_price">
+            <a class="back" href="javascript:void(0)" onclick="javascript:$('#step2').hide();$('#step1').show();"><<返回修改订单</a>
+            本次订单总需支付：PU币 <span class="fw m_color1 f18"><span class="shopT"></span>.00</span></div>
+    </div>
+    <div class="m_dd_over mt10">
+        <div class="m_dd_over1 ">
+            您的账户余额为：PU币 <span class="m_color3 f16 fw b"><?php echo($user['money']/100)?></span>
+            <span style="padding-left:50px;"><a href="{:U('home/Account/recharge')}">>>点此充值<<</a></span>
+        </div>
+            使用账户余额支付：PU币 <span class="m_color2 fw f14"><span class="shopT"></span>.00</span>
+    </div>
+    <div class="m_btnlist mt20">
+        <ul>
+            <li><input type="button" value="" class="m_payment"  onclick="payment({$user['money']});"/></li>
+        </ul>
+    </div>
+</div>
+</div>
+<include file="../Public/_footer" />

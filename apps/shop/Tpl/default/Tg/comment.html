@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+    乐购 - PocketUni
+</title>
+<link href="../Public/css/mall.css?20130122" type="text/css" rel="stylesheet" />
+<style>
+body{ background:#fff; overflow-x:hidden; max-height:800px;}
+</style>
+
+</head>
+
+                <div class="m_clist">
+                    <ul>
+                        <volist name="data"  id='vo'>
+                            <li>
+                                <div class="m_clist_photo"><space uid="vo['uid']" target="_blank">{uavatar=m}</space></div>
+                                <div class="m_clist_infor">
+                                    <div class="m_clist_name"><space uid="vo['uid']" class="fn b f14" target="_blank">{uname}</space></div>
+                                    <div class="m_clist_time">{$vo.cTime|friendlyDate}</div>
+                                    <div class="clear"></div>
+                                    <div class="m_clist_c mt5">{$vo.content|htmlspecialchars_decode}</div>
+                                </div>
+                            </li>
+                        </volist>
+                    </ul>
+                    <div class="page">{$html}</div>
+                </div>
+                <div class="clear"></div>

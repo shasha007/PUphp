@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$event.title}</title>
+<include file="__THEME__/comm/_main" />
+<link href="../Public/css/style.css?201409181" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var APPNAME         =   '{$ts._app}';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+<style type="text/css">
+    {$bgcss}
+</style>
+</head>
+
+<body>
+    <?php if(!$event['is_school_event']):?>
+        <include file="__THEME__/_holder_2014" />
+    <?php else:?>
+        <style type="text/css">
+            .bg {padding-top: 0px;}
+        </style>
+    <?php endif;?>
+    <div class="bg">
+        <div class="bg_pic"></div>
+        <div class="bg1">
+            <div class="h_header">
+                <div class="header_menu">
+                    <ul>
+                        <li <eq name="ACTION_NAME" value="index">class="hover"</eq>><a href="{:U('/Front/index',array('id'=>$eventId))}">首   页</a></li>
+                        <li <if condition="ACTION_NAME == 'news' OR ACTION_NAME == 'newsDetails'">class="hover"</if>><a href="{:U('/Front/news/',array('id'=>$eventId))}">新闻中心</a></li>
+                        <li <if condition="ACTION_NAME == 'player' OR ACTION_NAME == 'playerDetails'">class="hover"</if>><a href="{:U('/Front/player/',array('id'=>$eventId))}">人气排行</a></li>
+                        <?php if($hasVideo):?>
+                        <li <eq name="ACTION_NAME" value="video">class="hover"</eq>><a href="{:U('/Front/video',array('id'=>$eventId))}">活动视频</a></li>
+                        <?php endif;?>
+                        <?php if($hasPhoto):?>
+                        <li <eq name="ACTION_NAME" value="photo">class="hover"</eq>><a href="{:U('/Front/photo',array('id'=>$eventId))}">活动照片</a></li>
+                        <?php endif;?>
+                        <li <eq name="ACTION_NAME" value="join">class="hover"</eq>><a href="{:U('/Front/join',array('id'=>$eventId))}">报名</a></li>
+                        <li <eq name="ACTION_NAME" value="comment">class="hover"</eq>><a href="{:U('/Front/comment',array('id'=>$eventId))}">评论</a></li>
+                    </ul>
+                </div>
+                <form action="{:U('/Front/player/',array('id'=>$eventId))}" method="post">
+                    <div class="header_search">
+                        <div class="frm" style="height:23px;*height:auto; position:relative">
+                            <input type="text" class="header_s_input" id="keyword" name="keyword" placeholder="请输入姓名" />
+                        </div>
+                        <input type="submit" value="" class="header_search_btn" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="main">
+            <div class="content">

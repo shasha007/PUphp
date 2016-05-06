@@ -1,0 +1,41 @@
+<include file="_header" />
+
+<div class="intro_c">
+    <form action="{:U('/Backend/newsList',array('id'=>$eventId))}" method="post">
+    <div class="member_tab">
+        共{$list.totalRows}条新闻&nbsp;&nbsp;
+        <a class="btn_b" href="{:U('/Backend/newsEdit',array('id'=>$id))}">添加新闻</a>&nbsp;&nbsp;
+        <a href="javascript:delNews({$eventId});">删除新闻</a>
+            &nbsp;&nbsp;新闻标题：<input name="newsTitle" type="text" class="member_input"  value="{$newsTitle}"/>
+            <input type="submit" value="搜索" class="member_btn3" />
+    </div>
+    </form>
+    <div class="member_list1">
+        <form>
+            <table width="956" border="0" cellspacing="0" cellpadding="0">
+                <tr class="member_tr1">
+                    <td width="30"><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0"></td>
+                    <td width="50">ID</td>
+                    <td width="585" >新闻标题</td>
+                    <td width="139">发布时间</td>
+                    <td width="100">操作</td>
+                </tr>
+                <volist name="list.data" id="vo">
+                <tr class="member_tr3" id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td class="news_title left3"><a href="{:U('/Front/newsDetails',array('id'=>$eventId,'nid'=>$vo['id']))}" target="_blank">{$vo.title}</a></td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td>
+                        <a href="{:U('/Backend/newsEdit',array('id'=>$eventId, 'nid'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:delNews({$eventId},{$vo['id']});">删除</a>
+                    </td>
+                </tr>
+                </volist>
+            </table>
+        </form>
+    </div>
+    <div class="page">{$list.html}</div>
+</div>
+
+<include file="_footer" />

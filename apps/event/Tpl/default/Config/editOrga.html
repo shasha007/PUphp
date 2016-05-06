@@ -1,0 +1,62 @@
+<div style="width:300px;margin:10px auto 20px auto;">
+    组织名：<input id="title" class="txt" value ="{$title}" /><br/><br/>
+    归类：<label><input name="cat" id="cat1"  type="radio" value="1" <eq name="cat" value="1">checked</eq>>学生组织</label>
+    <label><input name="cat" id="cat2" type="radio" value="2" <eq name="cat" value="2">checked</eq>>部门</label>
+    <if condition="$id"><input type="hidden" id="id" class="txt" value ="{$id}" /></if>
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="editType($( '#title' ).val() )" value="确定" />
+</div>
+<script>
+function editType( title ){
+  if(getLength(title.replace(/\s+/g,"")) == 0){
+	 alert("组织名不能为空");
+	 return false;
+  }
+  if($( '#title' ).val().length >20) {
+    alert("组织名不能超过20个字");
+    return false;
+  }
+  var cat = $('input:checked').val();
+  <if condition="$id">
+var id = '{$id}';
+$.post( '__URL__&act=doEditOrga',{title:title,id:id,cat:cat},function( res ){
+        if(res == -2){
+              alert("组织名不能为空");
+              return false;
+        }
+        if(res == 0){
+              alert("组织名已存在，请重新填写");
+              return false;
+        }
+    if( res == 1){
+        ui.box.close();
+        ui.success('修改成功');
+        $('#title_'+id).html(title);
+        $('#cat_'+id).html($('#cat'+cat).val());
+    }else{
+        ui.error( "修改失败，或没有改动" );
+    }
+});
+  <else />
+  $.post( '__URL__&act=doAddOrga',{title:title,cat:cat},function( id ){
+  if(id == -2){
+	alert("组织名不能为空");
+	return false;
+  }
+  if(id == 0){
+  	alert("组织名已存在，请重新填写");
+  	return false;
+  }else{
+      if( id == 1 ){
+          ui.box.close();
+          ui.success('添加成功');
+          window.location.reload(true);
+      }else{
+          ui.error( "添加组织失败" );
+      }
+  }
+  });
+  </if>
+}
+</script>

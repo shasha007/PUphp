@@ -1,0 +1,29 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/css/coupon.css" type="text/css" charset="utf-8" />
+<div class="bg">
+    <div class="main">
+        <include file="../Public/category" />
+        <div class="coupon_list">
+            <div class="coupon_list_title1"><div class="plist_up"><a href="{:U('coupon/Index')}">返回首页</a></div>&nbsp;&nbsp;
+                优惠分类：<span class="bule">{$cTitle}</span> &nbsp;&nbsp; 区域：<span class="bule">{$sTitle}</span> &nbsp;&nbsp; 共（{$count}）</div>
+            <div class="clear"></div>
+            <Div class="coupon_list_sublist">
+                <ul>
+                    <volist name="data" id="vo">
+                    <li>
+                        <div class="coupon_list_sublist_thumb">
+                            <a href="{:U('coupon/Index/details',array('id'=>$vo['id']))}" title="{$vo.description}" target="_blank">
+                        <img src="{$vo.path|realityImageURL}" alt="" /></a></div>
+                        <div class="coupon_list_sublist_title b">
+                            <a href="{:U('coupon/Index/details',array('id'=>$vo['id']))}" title="{$vo.description}" target="_blank">{$vo.description}</a></div>
+                    </li>
+                    </volist>
+                </ul>
+            </Div>
+            <div class="page">{$html}</div>   
+
+        </div>
+    </div>
+</div>
+</div>
+<include file="__THEME__/footer" />

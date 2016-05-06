@@ -1,0 +1,53 @@
+<include file="../Public/_header_lc" />
+<script src="../Public/js/donate.js" type=text/javascript></script>
+<div class="lc mt10">
+    <div class="lc_left">
+        <div class="lc_help">
+            <div class="lc_help_t f14 m_color3">爱心校园新手指南：</div>
+            <div class="lc_help_d mt5 pl10">爱心校园是由团省委和江苏省大学生成长服务平台合作共同发起的慈善公益项目。项目依托于PU平台的优势，采用信息公开的方式，将学生捐赠义卖的物品（闲置物品）发布在PU平台的“爱心校园”，交易所得善款将用于资助校贫困生和高校的公益项目。</div>
+            <div class="clear"></div>
+            <div class="lc_more m_bule"><a href="{:U('shop/Myshop/xyguide')}">更多帮助查看</a></div>
+        </div>
+        <div class="lc_classic mt10 pl10">
+            地区：<span class="m_bule">{$string}</span></div>
+        <div class="lc_classic m_link pl10">
+            分类：<a  <?php if($_SESSION['donate_searchCat']['cat']=='')echo' class="lc_cur"';?>  href="{:U('shop/Donate/index',array('cat'=>'all'))}">全部</a>
+            <volist name='catList' id='vo'>
+            <a  <?php if($_SESSION['donate_searchCat']['cat']==$vo['id'])echo' class="lc_cur"';?>   href="{:U('shop/Donate/index',array('cat'=>$vo['id']))}">{$vo.name}</a>
+            </volist>
+        </div>
+        <div class="lc_classic pl10 m_link">
+            价格：
+            <a  <?php if($_SESSION['donate_searchPrice']['price']=='')echo' class="lc_cur"';?>  href="{:U('shop/Donate/index',array('price'=>'all'))}">全部</a>
+            <a  <?php if($_SESSION['donate_searchPrice']['price']=='1')echo' class="lc_cur"';?>  href="{:U('shop/Donate/index',array('price'=>1))}">一元区</a>
+            <a  <?php if($_SESSION['donate_searchPrice']['price']=='3')echo' class="lc_cur"';?>   href="{:U('shop/Donate/index',array('price'=>3))}">三元区</a>
+            <a  <?php if($_SESSION['donate_searchPrice']['price']=='5')echo' class="lc_cur"';?>  href="{:U('shop/Donate/index',array('price'=>5))}">五元区</a>
+        </div>
+        <div class="lc_list1 mt10">
+            <ul>
+                <volist name ="data" id="vo">
+                    <li>
+                        <div class="lc_list1_thumb">
+                            <a href="{:U('shop/Donate/detail',array('id'=>$vo['id']))}">  <img src="{$vo.pic|tsMakeThumbUp=###,160,160}" alt="" /></a></div>
+                        <div class="lc_list1_name"><span class="lc_list1_curcity">[{$vo.cityId|getCityName}]</span><a class="b" href="{:U('shop/Donate/detail',array('id'=>$vo['id']))}">{$vo.title}</a></div>
+
+                        <div class="lc_list1_school m_color3">{$vo.sid|tsGetSchoolName}</div>
+                        <div class="lc_list1_xy">
+                            <?php if($vo['groupName']):?>
+                            部落：{$vo.groupName}
+                            <?php else:?>
+                            {$vo.sid1|tsGetSchoolName}
+                            <?php endif;?>
+                        </div>
+                        <div class="lc_list1_p b">{$vo.price}元</div>
+                        <div class="lc_list1_b">   <a href="{:U('shop/Donate/detail',array('id'=>$vo['id']))}"> 购买</a></div>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="page">{$html}</div>
+    </div>
+
+   <include file="./right" />
+</div>
+<include file="../Public/_footer" />

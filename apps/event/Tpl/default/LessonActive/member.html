@@ -1,0 +1,113 @@
+<include file="../Lesson/_header" />
+<div class="hd_c1">
+     <div class="intro_title b"><a href="{:U('/LessonActiveMember/detail',array('id'=>$id))}">{$title}</a></div>
+    <div class="intro_menu">
+        <ul>
+            <li <eq name="ACTION_NAME" value="index">class="i10"</eq>><a href="{:U('/LessonActive/index',array('id'=>$id))}">课程活动</a></li>
+            <li <eq name="ACTION_NAME" value="member">class="i10"</eq> ><a href="{:U('/LessonActive/member',array('id'=>$id))}">成员</a></li>
+            <li <eq name="ACTION_NAME" value="photo">class="i10"</eq>><a href="{:U('/LessonActive/photo',array('id'=>$id))}">图片</a></li>
+        </ul>
+    </div>
+    <div class="intro_c">
+        <div class="member_menu b">成员    (课时 :{$credit}分) </div>
+        <div class="member_back"><a href="{:U('/LessonActive/xls',array('id'=>$id))}">导出excel</a></div>
+        <form action="{:U('/LessonActive/member',array('id'=>$courseId))}" method="post">
+            <div class="member_tab">
+                <div class="member_cz"> &nbsp;&nbsp;共{$totalRows}个成员</div>
+                <div class="member_search">
+                    姓名：<input name="realname" type="text" class="member_searchinput"  value="{$realname}"/>
+                    <input name="tj" type="submit" value="搜索" class="member_btn3" /></div>
+            </div>
+        </form>
+        <div class="member_list">
+            <table width="956" border="0" cellspacing="0" cellpadding="0">
+                    <tr class="member_tr1">
+                        <td width="30"><input name="member" type="checkbox" value="" /></td>
+                        <td width="30">ID</td>
+                        <td width="190">姓名</td>
+                    <if condition='$need_tel eq 1'>
+                        <td width="100">电话</td>
+                    </if>
+                    <td width="40">性别</td>
+                    <td width="180">学号</td>
+                    <td width="200">院系</td>
+                    <td width="120">课时(双击编辑)</td>
+                    <td width="166">操作</td>
+                    </tr>
+                    <volist name="data" id='vo'>
+                        <tr class="member_tr2" id="list_{$vo.id}">
+                            <td><input name="member" type="checkbox" value="$vo.id}" /></td>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.realname}</td>
+                        <if condition='$need_tel eq 1'>
+                            <td>{$vo.tel}</td>
+                        </if>
+                        <td><eq name="vo['sex']" value="1">男<else/>女</eq></td>
+                        <td>{$vo.studentId}</td>
+                        <td>
+                            <?php if($vo['uid']):?>{$vo['uid']|tsGetSchoolByUid=###}
+                            <?php endif;?>
+                        </td>
+                        <td class="jun" id="{$vo.id}">{$vo.credit}</td>
+                        <td>
+                            <a href="javascript:activeDelAction( '{$vo.id}','{$courseId}');">删除</a>
+                        </td>
+                        </tr>
+                    </volist>
+                    <tr bgcolor="#dedede">
+                        <td height="1" colspan="10"></td>
+                    </tr>
+                </table>
+        </div>
+        <div class="page">{$html}</div>
+    </div>
+</div>
+<include file="../Lesson/_footer" />
+<script>
+    $(function(){
+        $(".jun").dblclick(function(){
+            var inval=$(this).html();
+            var id={$courseId};
+            var eTime= {$eTime}+'000';
+            var status ={$status};
+            var time = Date.parse(new Date());
+            var sid=$(this).attr("id");
+               if(status!=2){
+                ui.error('课程未通过审核');
+            }
+            if(eTime>time){
+            ui.error('课程活动结束后，才可评分');
+            return false;
+        }
+        if(!$('#edit'+id).val()){
+            $(this).html("<input style='width:70px;'id='edit"+id+"'name='' value='"+inval+"'>");
+        }
+        $("#edit"+id).die().live("blur",function(){
+
+
+        });
+        $("#edit"+id).focus().live("blur",function(){
+            var editval=$(this).val();
+            var credit = {$credit};
+            var r = /^\+?[1-9][0-9]*$/;
+            if(!r.test(editval)){
+                ui.error('请输入一个数字')
+                return false;
+            }
+            if(credit<editval){
+                ui.error('发放课时不得大于课时');
+                return false;
+            }
+            $(this).parent('td').html(editval);
+            $.post("{:U('event/LessonActive/editCredit')}",{id:id,sid:sid,val:editval},function(data){
+                var json=$.parseJSON(data);
+                if(json.status==0){
+                    ui.error(json.info)
+                }else{
+                    ui.success(json.info);
+                }
+            });
+        });
+    });
+    });
+</script>

@@ -1,0 +1,97 @@
+<include file="_header" />
+<div class="intro_c">
+    <div class="intro_c_thumb"><img src="{$coverId|getCover}" alt="" /></div>
+    <div class="intro_c_infor">
+        <?php if($school_audit == 5): ?>
+            <span class="intro_c_zt red b">已完结</span>
+        <?php elseif($school_audit == 6): ?>
+            <span class="intro_c_zt red b">驳回修改。请修改后重新申请</span>
+        <?php elseif($school_audit == 1): ?>
+            <span class="intro_c_zt red b">等待终审 ......</span>
+        <?php elseif($school_audit == 3): ?>
+            <span class="intro_c_zt red b">等待完结审核 ......</span>
+        <?php elseif($school_audit == 4): ?>
+            <span class="intro_c_zt red b">完结被驳回。 请修改后重新申请</span>
+        <?php elseif($school_audit == 2): ?>
+            <?php if($eTime<=time()): ?>
+                <div class="intro_c_zt red b">活动已结束</div>
+            <?php elseif( $deadline>time()): ?>
+                <div class="intro_c_zt green b" id="event_satus">此活动正在进行中……</div>
+            <?php else: ?>
+                <div class="intro_c_zt red b">报名已结束</div>
+            <?php endif; ?>
+        <?php else: ?>
+            <span class="intro_c_zt red b">等待初审 ......</span>
+        <?php endif; ?>
+        <img src="{$logoId|tsGetLogo=###,$typeId,$default_banner}" style="width:440px;height:100px;" />
+        <div class="intro_c_font"> <strong>活动名称：</strong><span class="b">{$title}</span><br />
+            <strong>活动简介：</strong>{$description}<br />
+            <strong>分类：</strong>{$category[$typeId]}<br />
+            <strong>活动时间：</strong><?php echo date('Y-m-d H:i', $sTime) . " 至 " . date('Y-m-d H:i', $eTime) ?><br />
+            <strong>报名起止：</strong>
+            <?php if($startline>0){echo date( 'Y-m-d H:i',$startline );}?> 至
+            <?php echo date('Y-m-d H:i', $deadline) ?><br />
+            <strong>活动地点：</strong>{$address}<br />
+            <?php if(!$is_prov_event): ?>
+            <strong>可得{$webconfig.cradit_name}：</strong>{$credit}<br />
+            <strong>可得积分：</strong>{$score}<br />
+            <strong>归属组织：</strong>{$sid|getEventOrga}<br />
+            <?php endif; ?>
+            <strong>参加费用：</strong>{$cost|getCost}<br />
+            <strong>费用说明：</strong>{$costExplain}<br />
+            <strong>剩余名额：</strong><?php echo 5000000 < $limitCount ? "无限制" : $limitCount ?><br />
+            <strong>联系方式：</strong>{$contact}<br />
+            <strong>需要审核：</strong><?php if( $allow ) {echo'是';}else{echo'否';}?><br />
+            <strong>不报名也可签到：</strong><?php if( $free_attend ) {echo'是';}else{echo'否';}?><br />
+            <strong>需要联系电话：</strong><?php if( $need_tel ) {echo'是';}else{echo'否';}?><br />
+            <strong>投票功能：</strong><?php if( $isTicket ) {echo'是';}else{echo'否';}?><br />
+            参加人数（<a href="{:U('/Author/member', array('id'=>$id))}">{$joinCount}</a>） <if condition="$verifyCount">待审人数（<a href="{:U('/Author/memberAudit', array('id'=>$id))}">{$verifyCount}</a>）</if><br />
+            <?php if($is_prov_event): ?>
+            <strong>显示于学校：</strong>{$showInSchool}<br />
+            <?php endif; ?>
+            <?php if($attachId): ?>
+            <strong>附件：</strong>{$attachId|getAttachHtml}
+            <?php endif; ?>
+        </div>
+        <div class="intro_c_btn">
+            <ul>
+                <?php if(!$is_prov_event): ?>
+                    <?php if( $deadline>time()): ?>
+                        <li class="i11" id="endDeadline">
+                            <a href="javascript:endEvent( '{$id}' )">结束报名</a>
+                        </li>
+                    <?php endif; ?>
+                        <?php if($school_audit != 1 && $school_audit != 5): ?>
+                    <li class="i12"><a href="{:U('/Author/edit',array('id'=>$id))}">编辑活动</a></li>
+                        <?php endif; ?>
+                    <?php if($school_audit == 6): ?>
+                        <li class="i11">
+                            <a href="javascript:renew()">重新申请</a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if($school_audit == 0 || $school_audit == 6): ?>
+                        <li class="i11">
+                            <a href="javascript:autorDel()">删除活动</a>
+                        </li>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <li class="i12"><a href="{:U('/Author/editProv',array('id'=>$id))}">编辑活动</a></li>
+                    <li class="i11"><a href="javascript:autorDel()">删除活动</a></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    function renew(){
+        if(confirm('是否重新申请活动审核?')){
+            location.href = "{:U('event/Author/renew',array('id'=>$eventId))}";
+        }
+    }
+    function autorDel(){
+        if(confirm('是否删除活动?')){
+            location.href = "{:U('event/Author/autorDel',array('id'=>$eventId))}";
+        }
+    }
+</script>
+<include file="_footer" />

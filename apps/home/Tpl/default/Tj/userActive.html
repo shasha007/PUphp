@@ -1,0 +1,178 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul>
+    </div>
+    <div class="page_tit">网站用户及活跃数报表</div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <?php if($tzFlag == 1) : ?>
+                <tr>
+                    <td colspan="2"><a href='{:U("home/Tj/rh")}'> 日活月活统计</a></td>
+                </tr>
+            <?php else:?>
+            <tr><td colspan="2"><a href='{:U("home/Tj/tjUser")}'>1. 用户数统计</a></td></tr>
+            <tr><td colspan="2"><a href='{:U("home/Tj/rh")}'> 日活月活统计</a></td></tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/allUser')}">
+                <td>2. <input type="submit" value='导出'></td>
+                <td>
+                    用户总数 | 初始化用户总数&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select name="withTeacher">
+                        <option value='0'>不含老师</option>
+                        <option value='1'>含老师</option>
+                    </select>
+                    <select name="year">
+                        <option value=''>所有年级</option>
+                        <option value='09'>09级</option>
+                        <?php $nowY=date('Y');$nowY-=2000;for($i=10;$i<=$nowY;$i++):?>
+                        <option value='{$i}'>{$i}级</option>
+                        <?php endfor;?>
+                    </select>
+                </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/userCountDetail')}" id='form'>
+                <td>3. <input type="submit" value='导出'>  </td>
+                <td>
+                    学校 | 院系 | 年级 | 用户数 | 初始化用户数&nbsp;&nbsp;
+                    <select name="school" id="school" >
+                        <option value=''>---学校---</option>
+                        <foreach name="school" item="vo">
+                            <option value="{$vo.id}">{$vo.display_order} {$vo.title}</option>
+                        </foreach>
+                    </select>
+                    <select name="yuanxi" id="yuanxi">
+                        <option value=''>--院系--</option>
+                    </select>
+                    <select name="year" id="year">
+                        <option value=''>-年级-</option>
+                        <option value='09'>09级</option>
+                        <?php $nowY=date('Y');$nowY-=2000;for($i=10;$i<=$nowY;$i++):?>
+                        <option value='{$i}'>{$i}级</option>
+                        <?php endfor;?>
+                    </select>
+                </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/user4')}" onsubmit=" return checkYear();"  enctype="multipart/form-data">
+                <td>4. 所有学校年级用户数 <span class="cRed">请先上传要导出的学校excel表，（一列 学校名称）</span><input type="file" id="file" name="file"/> <input type="submit" value='导出'>  </td>
+                <td>
+                    学校 | 注册用户10、11、12... | 初始化用户数10、11、12...&nbsp;&nbsp;
+                    年级<input size="10"  type='text' id='years' name='years' value=""> 多个年级用逗号隔开如12,13,14
+                </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/user5')}">
+                <td>5. 各校本月登录人员明细 <input type="submit" value='导出'>  </td>
+                <td>
+                    <select name="school">
+                        <option value=''>---学校---</option>
+                        <foreach name="school" item="vo">
+                            <option value="{$vo.id}">{$vo.display_order} {$vo.title}</option>
+                        </foreach>
+                    </select>
+                    &nbsp;&nbsp;
+                    年级 <input size="10"  type='text' name='years' value=""> 多个年级用逗号隔开如12,13,14
+                </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/user6')}">
+                <td>6. 各校各年级人员明细 <input type="submit" value='导出'>  </td>
+                <td>
+                    <select name="school">
+                        <option value=''>---学校---</option>
+                        <foreach name="school" item="vo">
+                            <option value="{$vo.id}">{$vo.display_order} {$vo.title}</option>
+                        </foreach>
+                    </select>
+                    &nbsp;&nbsp;
+                    年级* <input size="10"  type='text' name='years' value=""> 多个年级用逗号隔开如12,13,14
+                </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/user7')}">
+                <td>7. 各校未初始化人员明细 <input type="submit" value='导出'>  </td>
+                <td>
+                    <select name="school">
+                        <option value=''>---学校---</option>
+                        <foreach name="school" item="vo">
+                            <option value="{$vo.id}">{$vo.display_order} {$vo.title}</option>
+                        </foreach>
+                    </select>
+                    &nbsp;&nbsp;
+                    年级* <input size="10"  type='text' name='years' value=""> 多个年级用逗号隔开如12,13,14
+                </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/user8')}">
+                <td>8. 各校学分积分明细 <input type="submit" value='导出'>  </td>
+                <td>
+                    <select name="school">
+                        <option value=''>---学校---</option>
+                        <foreach name="school" item="vo">
+                            <option value="{$vo.id}">{$vo.display_order} {$vo.title}</option>
+                        </foreach>
+                    </select>
+                    &nbsp;&nbsp;
+                    年级* <input size="10"  type='text' name='years' value=""> 多个年级用逗号隔开如12,13,14
+                </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/allProSchool')}">
+                <td>9. 所有学校导出 <input type="submit" value='导出'>  </td>
+                <td>
+                    省份 | 城市 | 学校
+                </td>
+            </form>
+            </tr>
+            <?php endif; ?>
+        </table>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('#school').change(function(){
+            var id = $(this).children('option:selected').val();
+            //AJAX
+            $.post( '__URL__&act=school_ajax',{sid:id},function(data){
+                var arr = eval(data);
+                if(id == 'please'){
+                    $('#yuanxi')[0].options.length = 1;
+                }else{
+                    $('#yuanxi')[0].options.length = 1;
+                    data = eval(data);
+                    for(var i=0;i<data.length;i++){
+                        $('#yuanxi')[0].add(new Option(data[i].title,data[i].id));
+                    }
+                }
+            });
+        })
+
+        //submit
+        $('#form').submit(function(){
+            if($('#school').children('option:selected').val() == ''){
+                alert('请选择学校');
+                return false;
+            }else{
+                return true;
+            }
+        })
+    })
+    function checkYear(){
+        if($('#years').val() == ''){
+            alert('请输入年级');
+            $('#years').focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<include file="_footer" />

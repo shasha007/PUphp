@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=2.0"/>
+<meta name="MobileOptimized" content="240"/>
+<title>{$ts['site']['site_name']} 3G版</title>
+<style type="text/css"  id="internalStyle">
+    body{background:#fff;padding:2px;margin:1px;font-size:18px; line-height:140%}
+    p{ clear:both; padding:0; margin:0}
+    .linput{height: 27px;margin-bottom:10px;width:50%;}
+    .addtbox{margin:5px 0;}
+    .checkbox { width:30px; height:30px;}
+    .button {padding-left:10px;width:150px; height:40px;}
+</style>
+</head>
+<body>
+<div data-role="page">
+  <header data-role="header" data-backbtn="false">欢迎访问{$ts['site']['site_name']}</header>
+  <div data-role="content">
+    <div class="addtbox">
+      <form action="{:U('w3g/SchoolPublic/doLogin')}" method="post">
+        <label for="number">学号：</label>
+        <input type="text" name="number" class="linput" value="" />
+        <br/>
+        <label for="password">密码：</label>
+        <input type="password" name="password" class="linput" value="" />
+        <br/>
+        <label for="remember">记住我</label>
+        <input type="checkbox" name="remember" checked="checked" class="checkbox"/>
+        <input type="submit" value="登录" data-icon="forward" class="button"/>
+      </form>
+    </div>
+    <div>
+      <a href="{:U('/Public/wapToNormal')}">访问普通版</a>
+      <a href="{:U('wap/SchoolPublic/login')}">访问WAP版</a>
+    </div>
+  </div>
+  <footer data-role="footer">欢迎访问 <a href="{:U('home/Public/index')}">{$ts['site']['site_name']}</a> </footer>
+</div>
+</body>
+</html>

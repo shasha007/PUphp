@@ -1,0 +1,46 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul>
+    </div>
+    <div class="page_tit">8.小游戏</div>
+    <div class="list">
+        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr><td>1. 游戏排行截图</td>
+                <td>
+                <form method='post' action="{:U('home/Tj/gameTop')}">
+                        时间：<select name="table">
+                        <option value="GameScore">本周</option>
+                        <option value="GameScoreCopy">上周</option>
+                        </select>
+                        游戏：<select name="gid">
+                        <foreach item="val" name="list">
+                        <option value="{$val.gid}">{$val.name}</option>
+                        </foreach>
+                        </select>
+                        <input type="submit" value="查看">
+                    </form>
+                </td></tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/gameScore')}">
+                <td>2. 游戏分数：<input type="submit" value='导出'></td>
+                <td>排名 | 学号 | 学校 | 姓名 | 分数 &nbsp;&nbsp;&nbsp;&nbsp;
+                    时间：<select name="table">
+                        <option value="GameScore">本周</option>
+                        <option value="GameScoreCopy">上周</option>
+                        </select>
+                游戏：<select name="game">
+                    <foreach item="val" name="list">
+                        <option value="{$val.gid}">{$val.name}</option>
+                    </foreach>
+                </select></td>
+            </form>
+            </tr>
+            <tr><a href="http://pic.pocketuni.net/data/zyz/piano.xls">下载 钢琴大师12月10日排行统计</a></tr>
+        </table>
+    </div>
+    </div>
+<script type="text/javascript">
+
+</script>
+<include file="_footer" />

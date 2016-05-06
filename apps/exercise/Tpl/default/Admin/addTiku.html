@@ -1,0 +1,16 @@
+<include file="_header" />
+  <div id="container" class="so_main">
+    <include file="_tab" />
+
+    <pre>
+        导入完成
+        成功 - {$suc}
+        失败 - {$fail}
+    </pre>
+    <br/>
+    <volist name="failArray" id="vo">
+        {$vo}<br/>
+    </volist>
+
+  </div>
+<include file="_footer" />

@@ -1,0 +1,54 @@
+<div style="width:600px;overflow-y:scroll;height:500px;">
+<ul id="treeDemo" class="ztree"></ul>
+<center><input class="member_btn1" type="button" value="确定" onclick="qd();"></center>
+</div>
+<SCRIPT type="text/javascript">
+    <!--
+    var setting = {
+        check: {
+            enable: true
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+    var sem = {$sem};
+    var zNodes = {$tree};
+    var oldV = $('#showIds'+sem).val();
+
+    $(document).ready(function(){
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    });
+    function qd(){
+        var treeObj=$.fn.zTree.getZTreeObj("treeDemo"),
+        nodes=treeObj.getCheckedNodes(true),
+        nodesLeng = nodes.length;
+        if(nodesLeng>11){
+            alert('最多选择10个');return;
+        }
+        var newV = '';
+        for(var i=0;i<nodesLeng;i++){
+            if(nodes[i].id!=0){
+                newV+=nodes[i].id + ',';
+            }
+        }
+        if(oldV!=newV){
+            $('.line'+sem).remove();
+            var html = '';
+            for(var i=0;i<nodesLeng;i++){
+                if(nodes[i].id!=0){
+                    html += '<tr style="background-color:gainsboro;" class="line'+sem+'">'+
+                                '<td>'+nodes[i].type+'</td>'+
+                                '<td style="text-align:left;">'+nodes[i].name+'</td>'+
+                                '<td>'+nodes[i].credit+'</td></tr>';
+                }
+            }
+            $('#block'+sem).append(html);
+            $('#showIds'+sem).val(newV);
+        }
+        ui.box.close();
+    }
+    //-->
+</SCRIPT>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="../Public/js/jquery-2.1.1.min.js"></script>
+    <script src="../Public/js/bootstrap.min.js"></script>
+    <title>元宵答题</title>
+    <style>
+        html {
+            font-size: 62.5%;
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        .question-index img {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        #timer {
+            position: absolute;
+            top: 5%;
+            right: 10%;
+            font-size: 20px;
+            color: #000;
+            z-index: 1;
+        }
+
+        .question-con {
+            position: absolute;
+            width: 60%;
+            top: 20%;
+            left: 20%;
+            color: #000;
+            z-index: 2;
+
+        }
+
+        .question-con p {
+            padding-bottom: 5%;
+            word-break: break-all;
+            word-wrap: break-word;
+            text-align: left;
+        }
+        #question-no{
+            text-align: left;
+        }
+        #answer-a, #answer-b, #answer-c, #answer-d {
+
+        }
+
+        .modal-dialog {
+            margin: 0;
+            height: 100%;
+        }
+
+        .modal-content img {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+        }
+
+        #alert-close {
+            position: absolute;
+            width: 10%;
+            top: 25%;
+            left: 85%;
+            display: none;
+            z-index: 3;
+        }
+
+        #alert-button {
+            position: absolute;
+            top: 58%;
+            left: 25%;
+            width: 50%;
+            height: 50px;
+            color: #000;
+            font-size: 26px;
+            line-height: 50px;
+            text-align: center;
+            background-color: #fbd437;
+            box-shadow: 2px 2px 5px #1E1B1B;
+            border-radius: 5px;
+            z-index: 4;
+        }
+
+        #loading-pic{
+            position: absolute;
+            top:100px;
+            height: inherit;
+            width:inherit;
+        }
+    </style>
+</head>
+<body>
+<div class="question-index">
+    <img class="img-responsive" src="../Public/images/Asking/Asking.png">
+</div>
+<article class="question-con" data-question="0">
+    <p id="question-no">问题载入中.....</p>
+
+    <p>A.<span id="answer-a"></span></p>
+
+    <p>B.<span id="answer-b"></span></p>
+
+    <p>C.<span id="answer-c"></span></p>
+
+    <p>D.<span id="answer-d"></span></p>
+</article>
+<div id="timer">等待开始</div>
+<div class="modal fade " id="question-alert" data-backdrop="static">
+    <div class="modal-dialog">
+
+        <div class="modal-content" style="background-color: #fff">
+            <img class="img-responsive" id="alert_show" src="../Public/images/Asking/alert_1.png">
+        </div>
+
+
+        <div class="" id="alert-button">再玩一次</div>
+    </div>
+</div>
+<div class="modal fade " id="loading" data-backdrop="static">
+    <div class="modal-dialog">
+
+        <div class="modal-content" style="background-color: #fff">
+            <img class="img-responsive" id="loading-pic" src="../Public/images/Asking/loading.gif">
+        </div>
+        <img class="img-responsive" id="alert-close" src="../Public/images/Asking/close.png">
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    //设置超时时间为10秒钟
+    var timeout = 15;
+    //当前题目编号
+    var number = 0;
+    //返回json 测试
+    var timeoutId = null;
+//    var rjson = '{"data": {"title": "元宵节猜灯谜活动","qusetion": [{"id": "8","title": "在网红改编的“你怎么不上天”的古诗词中，“扶摇直上九万里”的前一句是什么？","options": ["阁下何不腾风起","大鹏一日同风起","假令风歇时下来","鹏鸟一日随风起"]},{"id": "10","title": "26个英文字母，从A到Z，其中E和T走了，还剩下几个英文字母？","options": ["21","22","23","20"]}]},"status": 1,"msg": "问题已经开始"}';
+    var test = "";
+    var isover = false;
+    var isright = false;
+    function show() {
+        var showbox = $("#timer");
+        showbox.html(timeout + " s");
+        timeout--;
+        if (timeout < 0) {
+            var q_id = $(".question-con").data("question");
+            getanswer(q_id,number,"");
+            getalert(number,false);
+            $("#question-alert").modal("show");
+        }
+        else {
+            timeoutId = setTimeout("show()", 1000);
+        }
+    }
+
+function getask(){
+    number = 0;
+    $.ajax({
+        url: "/index.php?app=wap&mod=Asking&act=index&id=1",
+        type: 'post',
+        dataType : "json",
+        data: {
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.status);
+            console.log(XMLHttpRequest.readyState);
+            console.log(textStatus);
+        },
+        success: function (data) {
+            if(data.leftTimes!=0){
+                test = data;
+            }else{
+                isover = true;
+                $("#alert-close").show();
+                $("#loading-pic").attr("src","../Public/images/Asking/over.png");
+            }
+        }
+    });
+    }
+    $(function () {
+        getask();
+        $("#loading").modal("show");
+        //倒计时
+        setTimeout(function () {
+            if(!isover){
+            $("#loading").modal("hide");
+            show();
+            setquestion(number);
+            }
+        }, 1500);
+
+        $(".question-con span").click(function () {
+            var q_id = $(".question-con").data("question");
+            var answer = $(this).html();
+            getanswer(q_id,number,answer);
+            console.log(isright);
+            if(isright){
+                if(number<10){
+                    number++;
+                    setquestion(number);
+                }else{
+                    getalert(number,true);
+                    $("#question-alert").modal("show");
+                }
+            }else{
+                getalert(number,false);
+                $("#question-alert").modal("show");
+            }
+
+        });
+        //关闭
+        $("#alert-close").click(function () {
+            $("#question-alert").modal("hide");
+        });
+        $("#alert-button").click(function () {
+            getask();
+            $("#question-alert").modal("hide");
+            $("#loading").modal("show");
+            number = 0;
+            setTimeout(function () {
+                if(!isover) {
+                    $("#loading").modal("hide");
+                    setquestion(number);
+                    timeout = 15;
+                    clearTimeout(timeoutId);
+                    show();
+                }
+            }, 1500);
+        });
+        $("#alert-close").click(function(){
+            window.location.href="/index.php?app=wap&mod=Asking&act=cover";
+        })
+    });
+    function  setquestion(number){
+        $("#question-no").html((number+1) + "."+test.data.qusetion[number].title);
+        $("#answer-a").html(test.data.qusetion[number].options[0]);
+        $("#answer-b").html(test.data.qusetion[number].options[1]);
+        $("#answer-c").html(test.data.qusetion[number].options[2]);
+        $("#answer-d").html(test.data.qusetion[number].options[3]);
+        $(".question-con").data("question" ,test.data.qusetion[number].id+"");
+        timeout = 15;
+        clearTimeout(timeoutId);
+        show();
+    }
+    function getanswer(id,numbers,content){
+        $.ajax({
+            url:"/index.php?app=wap&mod=Asking&act=answer",
+            type: 'post',
+            async: false,
+            dataType : "json",
+            data: {
+                qid:id,
+                number:(numbers+1),
+                answer:content
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.status);
+                console.log(XMLHttpRequest.readyState);
+                console.log(textStatus);
+            },
+            success: function (data) {
+                console.log(data.status=="1");
+                if(data.status=="1"){
+                    isright = true;
+                }else{
+                    isright = false;
+                }
+                console.log(isright);
+            }
+        });
+    }
+    function getalert(number,is_right){
+        clearTimeout(timeoutId);
+        if(!is_right){
+            $("#alert-button").show();
+        switch(true)
+        {
+            case (number+1)<5:
+                $("#alert_show").attr("src","../Public/images/Asking/alert_1.png");
+                break;
+            case (number+1)<7:
+                $("#alert_show").attr("src","../Public/images/Asking/alert_2.png");
+                break;
+            case (number+1)<9:
+                $("#alert_show").attr("src","../Public/images/Asking/alert_3.png");
+                break;
+            case (number+1)==9:
+                $("#alert_show").attr("src","../Public/images/Asking/alert_4.png");
+                break;
+            case (number+1)==10:
+                $("#alert_show").attr("src","../Public/images/Asking/alert_5.png");
+                break;
+        }
+        }else{
+            $("#alert_show").attr("src","../Public/images/Asking/alert_6.png");
+            $("#alert-button").hide();
+        }
+    }
+</script>

@@ -1,0 +1,351 @@
+<style>
+    .tan{border: 1px solid #ccc;background: #fff;position: fixed;left:50%;top: 50%;margin-left: -100px;margin-top: -130px;display: none;}
+    .tan input{width:50px;}
+</style>
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit">PU账号绑定配置</div>
+    <div class="form2">
+        <form method="post" action="{:U('home/Themes/doaddplace')}" enctype="multipart/form-data">
+            <dl class="lineD adx">
+                <dt>显示位置：</dt>
+                <dd>
+                    <select name="place">
+                        <!-- <option value ="discover">发现页面</option> -->
+                        <option value ="the4">四号位置</option>
+                    </select>
+                    &nbsp;&nbsp;<font color="red"> (请选择需要显示的位置)</font>
+                </dd>
+            </dl>
+            <dl class="lineD adx">
+                <dt>话题ID：</dt>
+                <dd>
+                    <input type="text" name="themes" size="50" value="{$themes}" />&nbsp;&nbsp;<font color="red"> (请填写对应管理话题的ID)</font>
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function getSchools(obj){
+        var span = $(obj).siblings('span');
+        if($(obj).val()==0){
+            span.hide();
+            return false;
+        }
+        span.show();
+        span.empty();
+        var cityId=$(obj).val();
+        $.get( U('fund/Admin/school') ,{cityId:cityId},function(data) {
+            var json=  $.parseJSON(data);
+            var string = "<input  type='checkbox' onclick='checkAll(this,"+cityId+")' value=''/>全部";
+            $.each(json, function(k,v)
+            {
+                string += "&nbsp;&nbsp;<input name='schools"+cityId+"[]' type='checkbox' value='"+v.id+"'>"+v.title;
+            });
+            span.append(string);
+
+        });
+    }
+
+    function add(){
+        var obj = $('#jun').clone(true).insertAfter("#jun");
+        $(obj).find("option:selected").attr('selected','');
+        $(obj).find('span').hide();
+    }
+
+
+    function checkAll(o,cityId){
+        if( o.checked == true ){
+            $('input[name="schools'+cityId+'[]"]').attr('checked','true');
+        }else{
+            $('input[name="schools'+cityId+'[]"]').removeAttr('checked');
+        }
+    }
+
+    function checkYearAll(o){
+        if( o.checked == true ){
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+    }
+
+    function adType(obj){
+        if(obj.value==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+    }
+
+    function adPlace(obj){
+        if(obj.value==0||obj.value==1){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+
+        if(obj.value<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    }
+
+
+    $(function(){
+        if($("select[name='type']").val()==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+        if($("select[name='place']").val()==1||$("select[name='place']").val()==0){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+        }
+
+        if($("select[name='place']").val()<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    });
+</script>
+<include file="_footer" />
+
+<div class="list tan" id="detail">
+    <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th colspan="2">详情<input type="hidden"></th>
+        </tr>
+        <tr>
+            <td>活动名称:</td>             
+            <td></td>      
+
+        </tr>
+         <tr>
+            <td>申请人:</td>        
+            <td></td>      
+ 
+        </tr>
+         <tr>
+            <td>职位:</td>        
+            <td></td>      
+            
+        </tr>
+        <tr>
+            <td>电话:</td>        
+            <td></td>      
+            
+        </tr>
+        <tr>
+            <td>qq:</td>        
+            <td></td>      
+            
+        </tr>
+        <tr>
+            <td>支付宝账号:</td>        
+            <td></td>      
+            
+        </tr>
+        <tr>
+            <td>部落外联负责人姓名及电话:</td>        
+            <td></td>      
+            
+        </tr>
+        <tr>
+            <td>活动范围:</td>        
+            <td></td>      
+            
+        </tr>
+       <tr>
+            <td>预计报名:</td>        
+            <td></td>      
+            
+        </tr>
+        <tr>
+            <td>预计签到:</td>        
+            <td></td>      
+            
+        </tr>
+         <tr>
+            <td>申请金额:</td>        
+            <td></td>      
+            
+        </tr>
+        
+        <tr>
+             <td><a href="javascript:void(0);" onclick="reject('no');">驳回并删除</a> | <a href="javascript:void(0);" onclick="through('no');">通过</a></td>       
+             <td><a href="javascript:void(0);" onclick="cancel();">取消</a></td>
+        </tr>
+
+    </table>
+</div>
+
+<div class="list tan" id="reject">
+    <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th colspan="2">驳回<input type="hidden"></th>
+        </tr>
+        <tr>
+            <td colspan="2">驳回原因</td>             
+
+        </tr>
+         <tr>
+             <td colspan="2"><textarea class='reason'></textarea></td>            
+ 
+        </tr>
+
+        <tr>
+             <td><a href="javascript:void(0);" onclick="doreject();">驳回并删除</a></td>       
+             <td><a href="javascript:void(0);" onclick="cancel();">取消</a></td>
+        </tr>
+
+    </table>
+</div>
+
+<div class="list tan" id="through">
+    <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th colspan="2">审核<input type="hidden"></th>
+        </tr>
+        <tr>
+            <td>活动:</td>             
+            <td></td>
+        </tr>
+         <tr>
+             <td>范围:</td>            
+             <td></td>
+        </tr>
+        <tr>
+              <td>申请金额:</td>     
+              <td></td>
+        </tr>
+        <tr>
+              <td>核准金额:</td>     
+              <td><input type='text' class='money'></td>
+        </tr>
+        <tr>
+              <td>审核:</td>     
+              <td>校级【0~1000】元<br>院级【0~500】元<br>团支书【0~200】元<br>其他请自行填写</td>
+        </tr>
+        <tr>
+             <td><a href="javascript:void(0);" onclick="dothrough();">通过</a></td>       
+             <td><a href="javascript:void(0);" onclick="cancel();">取消</a></td>
+        </tr>
+
+    </table>
+</div>
+<script>
+
+    $('select[name=school]').chosen();
+
+        function detail(id){
+        var id = id;
+        cancel();
+        $.post( '__URL__&act=fund_detailAjax',{id:id},function(json){
+            if(json){
+                var obj = JSON.parse(json);
+               $('#detail').find('tr').eq(0).find('input:hidden').val(id);  
+               $('#detail').find('tr').eq(1).find('td').eq(1).html(obj.eventName);      
+               $('#detail').find('tr').eq(2).find('td').eq(1).html(obj.uid);    
+               $('#detail').find('tr').eq(3).find('td').eq(1).html(obj.position);      
+               $('#detail').find('tr').eq(4).find('td').eq(1).html(obj.telephone);    
+               $('#detail').find('tr').eq(5).find('td').eq(1).html(obj.qq);   
+               $('#detail').find('tr').eq(6).find('td').eq(1).html(obj.alipayAccount);      
+               $('#detail').find('tr').eq(7).find('td').eq(1).html(obj.responsibleInfo);    
+               $('#detail').find('tr').eq(8).find('td').eq(1).html(obj.range); 
+               $('#detail').find('tr').eq(9).find('td').eq(1).html(obj.eRegistration);      
+               $('#detail').find('tr').eq(10).find('td').eq(1).html(obj.eSign);    
+               $('#detail').find('tr').eq(11).find('td').eq(1).html(obj.fund);   
+               if(obj.state != 0){
+                    $('#detail').find('tr').eq(12).find('td').eq(0).html('');   
+               }
+               $('#detail').css('display','block');
+            }
+        });
+
+    }
+    
+    function cancel(){
+        $('#detail').css('display','none');
+        $('#reject').css('display','none');     
+        $('#through').css('display','none');
+    }
+    
+    function reject(id){
+        cancel();
+        var id = id;
+        if(id == 'no'){
+            id = $('#detail').find('tr').eq(0).find('input:hidden').val();  
+        }
+        $('#reject').find('tr').eq(0).find('input:hidden').val(id);  
+        $('#reject').css('display','block');
+       
+    }
+    
+    function through(id){
+        cancel();
+        var id = id;
+        if(id == 'no'){
+            id = $('#detail').find('tr').eq(0).find('input:hidden').val();  
+        }
+        $('#through').find('tr').eq(0).find('input:hidden').val(id);  
+        $.post( '__URL__&act=fund_detailAjax',{id:id},function(json){
+        if(json){
+           var obj = JSON.parse(json);
+           $('#through').find('tr').eq(1).find('td').eq(1).html(obj.eventName);          
+           $('#through').find('tr').eq(2).find('td').eq(1).html(obj.range); 
+           $('#through').find('tr').eq(3).find('td').eq(1).html(obj.fund);     
+           $('#through').css('display','block');
+         }
+        });
+    }
+    
+    function dothrough(){
+        var id = $('#through').find('tr').eq(0).find('input:hidden').val();  
+        var money = $('.money').val();
+        var re =new RegExp("^[1-9]d*"); 
+        if(!money.match(re) || money.length == 0){
+            alert('请填写正确的金额');
+            return;
+        }
+       $.post( '__URL__&act=index_throughAjax',{id:id,money:money},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                $('#list_'+id).remove();
+                ui.success(json.info);
+                cancel();
+            }
+       });
+    }
+    
+    function doreject(){
+       var id = $('#reject').find('tr').eq(0).find('input:hidden').val();  
+       var reason = $('.reason').val();
+        if(reason.length <= 1){
+            alert('请填写驳回理由');
+            return ;
+        }
+        $.post( '__URL__&act=index_rejectAjax',{id:id,reason:reason},function(json){
+           if(json){
+                $('#list_'+id).remove();
+                cancel();
+                ui.success('操作成功');
+           }
+       });
+    }
+
+    
+</script>

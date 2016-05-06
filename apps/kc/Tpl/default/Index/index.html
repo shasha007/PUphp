@@ -1,0 +1,66 @@
+<include file="../Public/_header" />
+<div class="c_top">
+    <table width="978" border="0" cellspacing="0" cellpadding="0">
+        <tr height="60" align="center" valign="middle">
+            <td width="75"></td>
+            <td width="129">日 Sun</td>
+            <td width="129">一 Mon</td>
+            <td width="129">二 Tue</td>
+            <td width="129">三 Wed</td>
+            <td width="129">四 Thu</td>
+            <td width="129">五 Fri</td>
+            <td width="129">六 Sat</td>
+        </tr>
+    </table>
+</div>
+<div class="c_left">
+    <table width="75" border="0" cellspacing="0" cellpadding="0">
+        <?php for($s=1;$s<=16;$s++): ?>
+        <tr>
+            <td>{$s}</td>
+        </tr>
+        <?php endfor;?>
+    </table>
+</div>
+<div class="c_right b">
+    <table width="903" border="0" cellspacing="0" cellpadding="0">
+        <?php for($s=1;$s<=16;$s++): ?>
+        <tr>
+            <?php for($h=0;$h<=6;$h++): ?>
+            <td <?php if(isset($list[$s][$h])):?>
+                <?php $ids =$list[$s][$h][0]['id']; if(isset($list[$s][$h][1])) $ids .= ','.$list[$s][$h][1]['id'] ?>
+                onclick="kcDialog('{$ids}')"
+                <?php endif;?>>
+                <?php if(isset($list[$s][$h])):?>
+                    <volist name="list[$s][$h]" id="vo">
+                        <div>{$vo.title|getShort=###,9,''}</div>
+                    </volist>
+                <?php endif;?>
+            </td>
+            <?php endfor;?>
+        </tr>
+        <?php endfor;?>
+    </table>
+</div>
+
+ <script type="text/javascript">
+     function kcDialog(ids){
+         ui.box.load(U('kc/Index/showDialog')+'&ids='+ids,{title:'课程详细'});
+     }
+     function delKc(id){
+         if(confirm('您确定要删除课程 《'+$('#courseName'+id).text()+'》 吗？')){
+            $.post(U('kc/Index/doDelete'),{id:id},function( text ){
+               json = eval('('+text+')');
+               if( json.status == 1 ){
+                   ui.box.close();
+                   ui.success( json.info );
+                   location.reload();
+               }else{
+                   ui.error( json.info );
+               }
+            });
+       }
+    }
+ </script>
+
+<include file="../Public/_footer" />

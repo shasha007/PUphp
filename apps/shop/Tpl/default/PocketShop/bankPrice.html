@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>口贷乐</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="telephone=no" name="format-detection"/>
+<link rel="stylesheet" href="../Public/css/m_mall.css?201512083"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+
+</head>
+<body>
+<div class="kdl_mobile_page">
+  <div class="kdl_mobile_header">
+  <div class="kdl_m_header f14 bold tcenter">
+  <a href="{:U('shop/PocketShop/bankPrice')}"><li class="cur">口袋金</li></a><a href="{:U('shop/PocketShop/index')}"><li>分期商城</li></a></div>
+  <a href="{:U('shop/PocketShop/myBankList')}"><div class="kdl_dd"></div></a>
+  </div>
+
+  <div class="clear"></div>
+  <div class="m_cash_con">
+  <div class="m_cash_thumb"><img src="../Public/images/icon_cash.jpg"></div>
+  <if condition="$mark eq 1">
+  <div class="m_cash_new1 f14 m_color1 bold"><div class="m_cash_mxbtn1"><a href="__URL__&act=noServise&channel={$channel}">PU卡申请</a></div><span class="cash_sign"><img src="../Public/images/m_mall/bg_sign.png"></span>首月享1000元免息！
+  <elseif condition="$mark eq 2"/>
+  <div class="m_cash_new1 f14 m_color1 bold"><div class="m_cash_mxbtn1"><a href="__URL__&act=addPcard">PU卡申请</a></div>
+  <span class="cash_sign"><img src="../Public/images/m_mall/bg_sign.png"></span>（来点我！）
+
+</if>
+  <div class="m_apply"><a href="{:U('shop/PocketShop/apply')}">PU卡是什么?</a></div>
+  <div class="m_hr"></div>
+</div>
+<form action="{:U('shop/PocketShop/doMessage')}" method="post">
+    <input type="hidden" name="channel" value="{$channel}">
+<div class="m_cash_new f14">金额：<select name="money" class="m_cash_select">
+        <foreach name="priceList" item="val">
+        <option value="{$val}">{$val}</option>
+        </foreach>
+    </select> 元
+
+</div>
+<div class="clear"></div>
+<div class="m_cash_new f14">期数：<select name="staging" class="m_cash_select">
+        <foreach name="stagingList" item="val">
+        <option value="{$val}">{$val}</option>
+        </foreach>
+    </select> 个月
+
+<div class="clear"></div>
+</div>
+
+<div class="m_cash_new f14">事由：<select name="reason" class="m_cash_select">
+        <option value="">--请选择--</option>
+        <foreach name="data" item="val">
+        <option value="{$val.id}">{$val.name}</option>
+        </foreach>
+
+    </select></div>
+<div class="clear"></div>
+<div class="m_c_buy f18 fw"><input type="submit" value="下一步" class="m_btn">
+</div>
+
+   </form>
+
+<div class="m_box">
+<h1>详情</h1>
+<div class="m_cash_desc1">
+<p>没钱花？没钱买衣服？没钱买培训课程？没钱旅游？没钱请女朋友吃饭了？</p>
+<p>没关系！PU口袋金助您！</p>
+<p>口袋金是PU和理财公司合作的一个现金项目，旨在为大学生提供日常生活中的资金短缺，再也不用没到月底就跟爸妈伸手了！</p>
+</div>
+</div>
+<div class="m_hr1"></div>
+
+<div class="m_cash_menu f14 bold"><img src="../Public/images/m_mall/icon_sale.png"/> 热销商品</div>
+<div class="m_cash_more"><a href="{:U('shop/PocketShop/index')}">更多&gt;&gt;</a></div>
+<div class="m_cash_list">
+ <ul>
+  <foreach name="list" item="val">
+  <a href="{:U('shop/PocketShop/detail')}&id={$val.id}"><li>
+   <div class="m_cash_list_thumb"><img src="{$val.pic|tsMakeThumbUp=###,200,200,'c'}"></div>
+   <div class="m_cash_list_title bold">{$val.name}</div>
+   <div class="m_cash_list_price m_color1">￥{$val.price}</div>
+   <div class="m_cash_list_price">库存1：{$val.stock}</div>
+   <div class="m_cash_list_price"></div>
+  </li></a>
+  </foreach>
+ </ul>
+</div>
+<div class="clear"></div>
+
+
+
+</body>
+<script type="text/javascript">
+// 收缩展开效果
+$(document).ready(function(){
+	$("div.m_cash_desc1").hide();//默认隐藏div，或者在样式表中添加.text{display:none}，推荐使用后者
+	$(".m_box h1").click(function(){
+		$(this).next(".m_cash_desc1").slideToggle("slow");
+	})
+});
+</script>
+</html>

@@ -1,0 +1,23 @@
+<include file="_header" />
+
+        <div class="tour_left">
+            <div class="tour_list">
+                <ul>
+                    <volist name='data' id='vo'>
+                        <li class="p10">
+                            <div class="t_l_title f14 b"><a href='{:U('travel/Index/route', array('id'=>$vo['id']))}'>{$vo.title}</a></div>
+                            <div class="t_l_infor"><a href="{:U('travel/Index/route', array('id'=>$vo['id']))}">{$vo.description}</a></div>
+                            <div class="t_l_thumb mt5"><a href="{:U('travel/Index/route', array('id'=>$vo['id']))}"><img src="{$vo['coverId']|getImgAttach=###,300,180,'f'}" /></a></div>
+                            <div class="t_l_time mt10">行程时间：<span class="cf60"><?php echo date('Y-m-d', $vo['sTime']) . " 至 " . date('Y-m-d', $vo['eTime']) ?></span></div>
+                            <div class="t_l_time">报名截止时间：<span class="cf60"><?php echo date('Y-m-d H:i', $vo['deadline']) ?></span></div>
+                            <div class="t_l_price mt10 b"><a href="{:U('travel/Index/route', array('id'=>$vo['id']))}">PU价：￥<span class="t_l_c">{$vo.cost}</span></a></div>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+            <div class="page">{$html}</div>
+        </div>
+        <include file="_right" />
+
+
+        <include file="_footer" />

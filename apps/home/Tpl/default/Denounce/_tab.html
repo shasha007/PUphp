@@ -1,0 +1,10 @@
+<div class="page_tit">举报管理</div>
+    <div class="tit_tab">
+        <ul>
+            <li><a <eq name="state" value="0">class="on"</eq> href="{:U('home/Denounce/index','state=0')}">等待操作</a></li>
+            <li><a <eq name="state" value="1">class="on"</eq> href="{:U('home/Denounce/index','state=1')}">回收站</a></li>
+            <li><a <eq name="state" value="2">class="on"</eq> href="{:U('home/Denounce/index','state=2')}">审核通过</a></li>
+            <li><a <eq name="ACTION_NAME" value="feedback">class="on"</eq> href="{:U('home/Denounce/feedback',array('state'=>1))}">用户反馈</a></li>
+            <li><a <?php if(ACTION_NAME=='gag'||ACTION_NAME=='addGag'):?>class="on"<?php endif;?> href="{:U('home/Denounce/gag')}">用户禁言</a></li>
+        </ul>
+    </div>

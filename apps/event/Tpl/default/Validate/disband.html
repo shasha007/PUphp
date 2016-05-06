@@ -1,0 +1,39 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page right">{$list['html']}</div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>申请部落</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="list" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td>{$i}</td>
+                    <td><a href="{:U('group/Topic/index', array('gid'=>$vo['id']))}" target="_blank">{$vo['name']}</a></td>
+                    <td>{$vo.ctime|friendlyDate}</td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="allowDisband({$vo.id})">允许解散</a>
+                        <a href="javascript:void(0)" onclick="del({$vo.id})">驳回</a>
+                    </td>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="page right">{$list['html']}</div>
+</div>
+<script>
+    function del(id){
+        ui.box.load( '{:U('/Validate/notDisband')}' + '&id=' + id,{title:'驳回部落申请'});
+    }
+    function allowDisband(id){
+        if(confirm('确定同意解散部落？一旦解散，不可恢复')){
+            location.href = "{:U('event/Validate/doDisband')}"+'&id='+id;
+        }
+    }
+</script>
+<include file="../Teacher/_footer" />

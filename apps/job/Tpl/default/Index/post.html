@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>POST</title>
+        <style>
+            .bc{background: #ff0;}
+        </style>
+</head>
+<body>
+    
+	<h3>薪资</h3>
+        <ul>
+            <volist name='salary' id='vo' key='key'>
+             <li><a href="__URL__&act=post{$url | url_replace=salary}&salary={$key-1}" <?php if(isset($_GET['salary']) && $_GET['salary'] == ($key-1)){echo "class='bc'";}?>>{$vo}</a></li>
+            </volist>
+        </ul>
+        <h3>学历</h3>
+           <ul>
+            <volist name='education' id='vo' key='key'>
+             <li><a href="__URL__&act=post{$url | url_replace=education}&education={$key-1}" <?php if(isset($_GET['education']) && $_GET['education'] == ($key-1)){echo "class='bc'";}?>>{$vo}</a></li>
+            </volist>
+        </ul>
+        <h3>工作性质</h3>
+           <ul>
+            <volist name='worktype' id='vo' key='key'>
+             <li><a href="__URL__&act=post{$url | url_replace=worktype}&worktype={$key-1}" <?php if(isset($_GET['worktype']) && $_GET['worktype'] == ($key-1)){echo "class='bc'";}?>>{$vo}</a></li>
+            </volist>
+        </ul>
+        <h3>发布时间</h3>
+           <ul>
+            <volist name='time' id='vo' key='key'>
+             <li><a href="__URL__&act=post{$url | url_replace=time}&time={$key-1}" <?php if(isset($_GET['time']) && $_GET['time'] == ($key-1)){echo "class='bc'";}?>>{$vo}</a></li>
+            </volist>
+        </ul>
+        
+</body>
+</html>

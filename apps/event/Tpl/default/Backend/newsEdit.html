@@ -1,0 +1,54 @@
+<include file="_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<!--<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+
+<div class="member_c">
+    <div class="member_menu b"><eq name="type" value="edit">编辑<else/>添加</eq>新闻</div>
+    <div class="member_back"><a href="{:U('/Backend/newsList',array('id'=>$id))}">返回新闻列表</a></div>
+    <div class="news_add">
+        <form method="post" action="{:U('/Backend/doNewsEdit',array('id'=>$eventId))}">
+            <input type="hidden" name="nid" value="{$news.id}" />
+            <table width="840" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="45">标题：</td>
+                    <td width="15"></td>
+                    <td><input name="title" id="title" type="text" class="news_input" value="{$news.title}" maxlength="60" />
+                        <span class="red">*</span></td>
+                </tr>
+                <tr>
+                    <td height="10" colspan="10"></td>
+                </tr>
+                <tr>
+                    <td>内容：</td>
+                    <td></td>
+                    <td><textarea id="content" name="content" style="width:780px;height:300px">{$news.content}</textarea></td>
+                </tr>
+                <tr>
+                    <td height="10" colspan="10"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" class="member_btn1" value="提交" /></td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+
+
+</div>
+
+<include file="_footer" />
+<script>
+    $(document).ready(function(){
+        loadEditor("content");
+    });
+</script>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+        <h1>企业招聘</h1>
+	<form action="{:U('job/Position/searchPosts')}" method="POST">
+            
+            关键词<select name="key" id="">
+		<option value="company">公司</option>
+		<option value="positionname">职位名</option>
+                </select>
+            <input type="text" name='keyword'><br>
+		行业<input type="text" name='industry'><br>
+		职能<input type="text" name='function'><br>
+		地区<input type="text" name='city'><br>
+                <input type='submit'>
+	</form>
+</body>
+</html>

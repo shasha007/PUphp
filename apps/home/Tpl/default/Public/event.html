@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<title>分享活动</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+		<link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../Public/css/share_style.css?v20151126" rel="stylesheet">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<style type="text/css">
+		.row {
+			margin-left: 0px;
+			margin-right: 0px;
+		}
+		
+		p {
+			margin-bottom: 0px;
+		}
+		
+		#bg {
+			display: none;
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			z-index: 1001;
+			-moz-opacity: 0.7;
+			opacity: .70;
+			filter: alpha(opacity=70);
+		}
+		
+		#show img {
+			position: absolute;
+			z-index: 1002;
+			width: 30%;
+			left: 60%;
+			top: 5%;
+			display: none;
+		}
+	</style>
+
+	<body style="background-color: #f3f1ed;">
+		<header>
+			<div class="header_1">
+			</div>
+			<div class="header_2">
+				<div class="row h2_ma">
+					<div class="col-xs-2">
+						<img src="{:PIC_URL}/data/sys_pic/logo_new.png" class="header_2_img">
+					</div>
+					<div class="col-xs-5 h2_d2 ">
+						<span>PU口袋校园</span>
+					</div>
+					<div class="col-xs-5 h2_d2">
+						<a href="{$appUrl}" class="event_button">
+							<button type="button" class="btn btn-default pull-right">立即打开</button>
+						</a>
+
+					</div>
+				</div>
+			</div>
+		</header>
+		<div id="bg"></div>
+		<div id="show" class="">
+			<img src="{:PIC_URL}/data/sys_pic/event/arrows.png" class="img-responsive">
+		</div>
+		<article class="art1">
+			<div class="row art1_div">
+				<div class="art1_div1">
+					<img src="{$coverId|tsGetCover}" class="art1_img1 img-responsive">
+				</div>
+				<div class="art1_div2">
+					<p>{$title}</p>
+					<p> <img src="{:PIC_URL}/data/sys_pic/event/clock.png"><span>{$stime|date='m月d日 H:i',###}</span></p>
+					<p> <img src="{:PIC_URL}/data/sys_pic/event/position.png"><span>{$address}</span></p>
+					<p> <img src="{:PIC_URL}/data/sys_pic/event/join.png"><span>目前已有{$joinCount}位同学参与</span></p>
+				</div>
+			</div>
+		</article>
+
+		<div class="art2">
+			<div class="art2_div">
+				<div class="art2_div1"><img src="{:PIC_URL}/data/sys_pic/event/info.png" class="img-responsive"></div>
+				<div class="art2_div2">活动详情</div>
+			</div>
+			<article class="container">{$description}</article>
+			<div class="row art2_footer" style="margin-left: 7.5px; margin-right: 7.5px;">
+				<volist name="pics" id="vo">
+					<div class="col-xs-4"><img src="{$vo['path']|tsMakeThumbUp=###,255,182}" class="img-responsive"></div>
+				</volist>
+			</div>
+		</div>
+		<footer class="body_footer">
+			<a href="{$appUrl}"><span>想要查看更多？快来下载客户端吧~</span></a>
+
+		</footer>
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var bodyheight = parseInt($(document).height());
+			var scrheight = parseInt(window.screen.availHeight);
+			var url = $(".event_button").attr("href");
+			$(".body_footer a").attr("href", "#");
+			$(".event_button").attr("href", "#");
+			if (isWeiXin()) {
+				if (bodyheight < scrheight) {
+					$("#bg").css("height", scrheight + "px");
+				} else {
+					$("#bg").css("height", bodyheight + "px");
+				}
+			} else {}
+			$(".body_footer a").click(function() {
+				if (isWeiXin()) {
+					$("#bg").show();
+					$("#show img").show();
+				} else {
+					isInstalled(url);
+				}
+			});
+			$(".event_button").click(function() {
+				if (isWeiXin()) {
+					$("#bg").show();
+					$("#show img").show();
+				} else {
+					isInstalled(url);
+				}
+			});
+			$("#bg").click(function() {
+				$("#bg").hide();
+				$("#show img").hide();
+			});
+		});
+
+		function isWeiXin() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+				return true;
+			} else if (ua.match(/Weibo/i) == 'weibo') {
+				return true;
+			} else if(ua.match(/QQ/i) == 'qq'){
+				return true;
+			}else {
+				return false;
+			}
+		}
+		function isInstalled(url) {
+			var appurl = url;
+			window.location = appurl;
+			var t = Date.now();
+			setTimeout(function(){
+				if(Date.now()-t < 3100){
+					window.location = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.xyhui'
+				}
+			},3000)
+		}
+	</script>
+
+</html>

@@ -1,0 +1,48 @@
+申请及投票页面
+http://pocketuni.lo/index.php?app=event&mod=Index&act=sj
+1. 修改config.inc.php
+    'SJ_YEAR' => 2015,
+    'SJ_GROUP' => 101,
+    'SJ_PERSON' => 102,
+    'SJ_FS' => 103,
+
+2. 修改SjModel
+    private $joinStart = '2015-09-18 00:00';
+    private $joinEnd = '2015-09-30 23:59';
+    private $voteStart = '2015-09-01 10:00';
+    private $voteEnd = '2015-10-15 10:00';
+
+2.1 口袋大学后台修改活动
+    'SJ_GROUP' => 42047,
+    'SJ_PERSON' => 42053,
+    'SJ_FS' => 42055,标题、报名时间等
+ 数据库puRecomm 改为 4、3、2
+
+4.修改EventApi
+        voteRule 投票规则
+
+5.增加table status 0未满10票 1满10票 2待cronjob计算 3计算完毕
+DROP TABLE IF EXISTS `ts_sj_vote_2015`;
+CREATE TABLE `ts_sj_vote_2015` (
+  `id` mediumint(5) NOT NULL auto_increment,
+  `eventId` int(11) NOT NULL,
+  `mid` mediumint(5) NOT NULL default '0',
+  `pid` mediumint(5) NOT NULL default '0',
+  `cTime` int(11) unsigned default NULL,
+  `status` tinyint(1) unsigned default 0, 
+  PRIMARY KEY  (`id`),
+  KEY `status` (`status`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8;
+
+6.event/common.php
+	function isSjSchool //前台是否可以申请报名
+	function showSjBack // 学校后台管理报名
+
+7.IndexAction/sj() 
+	$showBm = true; //报名参加按钮
+        $showVote = false; //投票按钮
+8.cronjob/sj.php  每5分钟刷新票数
+    status 0未满10票 1满10票 2待cronjob计算 3计算完毕
+    投票未满10票 表ts_sj_vote_2015 status默认0
+    投满10票 eventId，mid条件的 status都改为1
+    修改年份 ts_sj_vote_2015

@@ -1,0 +1,111 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <span class="cRed">已有人中奖的商品将不可删除,并只可修改剩余数量、简介、内容</span>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('home/Lucky/editLucky')}" class="btn_a"><span>添加商品</span></a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th width="30%">商品名称</th>
+                <th>剩余数量</th>
+                <th>状态</th>
+                <th>已使用数量</th>
+                <th>类别</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo['name']}</td>
+                    <td>{$vo.num}</td>
+                    <td><?php if($vo['num']>0){echo '<span class="cGreen">进行中</span>';}else{echo '<span class="cRed">已结束</span>';}?></td>
+                    <td>{$vo.usedNum}</td>
+                    <td>
+                        <?php echo $types[$vo['type']]?>
+                        <?php if ($vo['type']==2): ?>
+                        <a class="openWindow" href="<?php echo U('home/Lucky/coupon',array('lucky_id'=>$vo['id'])) ?>">查看优惠券</a>
+                        <?php endif;?>
+                    </td>
+                    <td>
+                        <a href="{:U('home/Lucky/editLucky', array('id'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:void(0)" onclick="zeroProduct({$vo.id})">下架</a>
+                        <?php if($vo['usedNum']==0):?>
+                        <a href="javascript:void(0)" onclick="delProduct({$vo.id})">删除</a>
+                        <?php endif;?>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('home/Lucky/editLucky')}" class="btn_a"><span>添加商品</span></a>
+    </div>
+</div>
+<script>
+    (function($){
+        $('.openWindow').click(function(){
+            $url = $(this).attr('href');
+            if ($url == ''){
+                return false;
+            }
+            ui.box.load($url,{title:'查看详情'});
+            return false;
+        });
+
+        $('.dialog-box .page a').live('click',function(){
+            var $url = $(this).attr('href');
+            if ($url == ''){
+                return false;
+            }
+            $.ajax({
+                url:$url,
+                success:function(content){
+                    $('.dialog-box').html($(content).html());
+                }
+            });
+            return false;
+        });
+
+    })(jQuery);
+
+function delProduct(id){
+    if(confirm("是否删除商品，删除后不可恢复?")){
+        $.post( U('home/Lucky/delProduct'),{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                $('#list_'+id).remove();
+            }
+        });
+    }
+}
+function zeroProduct(id){
+    if(confirm("确定清空该商品的剩余数量，并下架?")){
+        $.post( U('home/Lucky/zeroProduct'),{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                setTimeout(function(){location.reload();},1500);
+            }
+        });
+    }
+}
+</script>
+<include file="_footer" />

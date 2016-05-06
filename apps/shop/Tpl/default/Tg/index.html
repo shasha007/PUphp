@@ -1,0 +1,38 @@
+<include file="../Public/_header" />
+<div class="m_dream mt10">
+    <div class="m_d_step"><img src="../Public/images/step1.jpg" alt="" /></div>
+    <div class="m_d_menu1 m_red f16 fw mt10">众志成城</div>
+    <div class="m_d_list1 center">
+        <ul>
+            <volist name="data" id="vo">
+                <li <?php if($i==4)echo ' class="b_n"';?>>
+                    <div class="m_sub1_thumb">
+                        <a href="{:U('shop/Tg/detail',array('id'=>$vo['id']))}">
+                            <img src="{$vo.pic|tsMakeThumbUp=###,160,160}" alt="" />
+                            <p class="timeDown showbar" >预售中：剩余{$vo.eday|tgRestTime}</p>
+                        </a></div>
+                    <div class="m_sub1_name b m_red"><a href="{:U('shop/Tg/detail',array('id'=>$vo['id']))}">{$vo.name}</a></div>
+                    <div class="m_sub1_price">已售<span class="m_bule">{$vo.has_attended}</span>件，当前价：<span class="m_color1"><?php echo $vo['cprice']/100?> PU币</span></div>
+                    <div class="m_sub2_count count1 mt10">
+                        <table width="234" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="m_red">
+                                <td>满1人</td>
+                                <td>每+1人减</td>
+                                <td>满{$vo.eprice_attended}人</td>
+                            </tr>
+                            <tr class="m_color1">
+                                <td>{$vo.sprice}</td>
+                                <td><?php echo $vo['dec']/100?></td>
+                                <td>{$vo.eprice}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="f14 m_sub2_dj mt10 fw">定金：{$vo.pay} </div>
+                    <div class="m_sub2_btn mt10"><a href="{:U('shop/Tg/detail',array('id'=>$vo['id']))}">立即预定</a></div>
+                </li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<div class="page">{$html}</div>
+<include file="../Public/_footer" />

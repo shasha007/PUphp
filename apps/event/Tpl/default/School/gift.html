@@ -1,0 +1,42 @@
+<include file="_header" />
+<script>
+    var mid = {$smid};
+    var score = {$scoreRest};
+    var cost = {$obj.cost};
+    function duihuan(id){
+        if(mid <= 0){
+            ui.error( '请先登录！' );
+            exit;
+        }
+        if(score < cost){
+            ui.error( '积分不够！' );
+            exit;
+        }
+        var count = $('#count').val();
+        count = parseInt(count);
+        if(!count){
+            alert('请输入兑换数量');
+            exit;
+        }
+        if(confirm('您确定要兑换 '+count+'件 礼品？')){
+            ui.box.load(U('event/School/duihuan')+'&id='+id+'&count='+count,{title:'积分兑换',noCheck:'yes'});
+        }
+    }
+</script>
+<div class="hd_c">
+    <div class="jf_c_left">
+        <div class="jf_thumb"><img src="{$obj.path|getThumb1=###,160,160}" alt="" /></div>
+        <div class="jf_infor1">
+            <div class="jf_infor1_title b">{$obj.title}</div>
+            <div class="jf_infor1_text">礼品价格： <span class="red_1 b">{$obj.cost}积分</span></div>
+            <div class="jf_infor1_text">礼品数量： <span id="jfNumber">{$obj.number}</span> 份 </div>
+            <div class="jf_infor1_text">兑换数量：<input id="count" type="text" class="jf_infor1_input" value="" /> 份 </div>
+            <input type="submit" class="jf_infor1_btn" value="" onclick="duihuan({$obj.id});"/>
+        </div>
+        <div class="jf_menu b">详细信息</div>
+        <div class="jf_desc1">{$obj.content|htmlspecialchars_decode}</div>
+    </div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

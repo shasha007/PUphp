@@ -1,0 +1,133 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th width="30%">{$ts['app']['app_alias']}标题</th>
+                <th>发起者</th>
+                <th>发起组织</th>
+                <th>{$webconfig.cradit_name}</th>
+                <th>活动积分</th>
+                <th>发起时间</th>
+                <th>指定初审人</th>
+                <th>附件(点击下载)</th>
+                <?php if($remarkFlag == 1): ?>
+                    <th>备注<br/>(下面点击编辑)</th>
+                <?php endif; ?>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <input type="hidden" id="score{$vo.id}" value="{$vo.score}"/>
+                    <input type="hidden" id="credit{$vo.id}" value="{$vo.credit}"/>
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><a href="{:U('/Author/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a> <span class="cGray2 type_{$vo.id}">[{$type_list[$vo['typeId']]}]</span>
+                    <?php if($vo['onlineTime']):?><br/>定时上线：<span class="cRed">{$vo['onlineTime']|friendlyDate}</span><?php endif;?></td>
+                    <td>{$vo.uid|getUserRealName}</td>
+                    <td>{$vo.gid|getGroupName}</td>
+                    <td>{$vo['credit']}</td>
+                    <td>{$vo['score']}</td>
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <td>{$vo.audit_uid|getUserRealName}</td>
+                    <td>{$vo.attachId|getAttachHtml}</td>
+                    <?php if($remarkFlag == 1): ?>
+                        <td class="pl10 djbj1" onclick="remark(this,{$vo['id']});" edit="on" title="单击编辑">{$vo.remark}</td>
+                    <?php endif; ?>
+                    <td>
+                        <?php if($vo['is_prov_event'] || $vo['is_school_event']==0):?>
+                        <a href="{:U('/Author/editProv', array('id'=>$vo['id']))}">编辑活动</a>
+                        <?php else: ?>
+                        <a href="{:U('/Event/editEvent', array('id'=>$vo['id']))}">编辑</a>
+                        <?php endif; ?>
+                        <a href="javascript:void(0)" onclick="audit('{$vo.id}')">通过</a>
+                        <a href="javascript:void(0)" onclick="del('{$vo.id}')">驳回</a>
+			</td>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="../Teacher/_footer" />
+<script type="text/javascript">
+    function updateNum() {
+        var auditCount = $('#auditCount').html();
+        auditCount = auditCount -1;
+        $('#auditCount').html(auditCount)
+    }
+    function del(id){
+        if(id=='' || id==0){
+            ui.error("请选择要驳回的活动");
+            return false;
+        }
+        ui.box.load( "{:U('/Event/doAuditReason')}" + '&id=' + id + '&del=1',{title:'驳回'});
+    }
+    function audit(id){
+        if(id=='' || id==0){
+            ui.error("请选择要通过的活动");
+            return false;
+        }
+        ui.box.load( "{:U('/Event/doAuditScore')}" + '&id=' + id,{title:'审核活动'});
+    }
+    function showEvent(id){
+        ui.box.load( "{:U('event/Event/event')}" + '&id=' + id,{title:'活动详情'});
+    }
+    var sid = {$editSid};
+    function selectSchool(){
+        var typevalue = $("#current").val();
+        ui.box.load(U('event/School/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择学校',noCheck:'yes'});
+    }
+
+    function remark(obj,id){
+        if($(obj).attr('edit')=='on'){
+            var inval=$(obj).html();
+            inval =inval.replace(/(^\s*)|(\s*$)/g, "");
+            if(!$('#edit'+id).val()){
+                $(obj).html("<input style='width:60px;'id='edit"+id+"'name='' value='"+inval+"'>");
+                $(obj).attr('edit','off');
+                $(obj).removeClass('djbj1');
+            }
+            $("#edit"+id).die().live("blur",function(){
+            });
+            $("#edit"+id).focus().live("blur",function(){
+                var editval=$(this).val();
+                $(obj).html(editval);
+                $(obj).attr('edit','on');
+                $(obj).addClass('djbj1');
+                if(editval.length>10){
+                    ui.error('字符长度不能超过10个字');
+                    $(obj).html(inval);
+                    return false;
+                }
+                $.post("{:U('event/Event/addRemark')}",{id:id,remark:editval},function(data){
+                    var json=$.parseJSON(data);
+                    if(json.status==1){
+                        ui.error(json.info)
+                        $(obj).html(inval);
+                    }else{
+                        ui.success(json.info);
+                    }
+                });
+            });
+        }
+
+
+    }
+</script>

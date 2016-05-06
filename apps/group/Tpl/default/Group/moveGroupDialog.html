@@ -1,0 +1,25 @@
+<script type="text/javascript" src="../Public/Js/group.info.form.js" ></script>
+
+<form action="{:U('group/group/moveGroup',array('gid'=>$groupinfo['id']))}" method="post" name="group_invite" id="group_invite">
+    </br>
+    </br>
+    </br>
+    <div class="left w300">{:W('SelectFriends')}</div>
+
+    <input type="hidden" value="jun" name="jun" id="jun" />
+    <input type="hidden" value="1" name="sendsubmit" />
+    </br></br>
+    </br>
+    <dd>
+        <input name="input" type="submit" class="btn_b" value="确 定"  />
+        <input name="input2" type="button" class="btn_w" value="取 消" onclick="javascript:ui.box.close();"/>
+
+    </dd>
+</dl>
+</form>
+</br>
+</br>
+
+</br>
+
+<!--End 解散社团弹窗-->

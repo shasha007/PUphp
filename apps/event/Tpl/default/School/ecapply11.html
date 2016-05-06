@@ -1,0 +1,29 @@
+<include file="_header" />
+<div class="hd_c i1">
+    <div class="ranktab1" id="ranktab">
+        <include file="_gd_list" />
+        <div class="clear"></div>
+        <div id="tabcon" class="tabcon">
+            <table width="940" border="0" cellspacing="0" cellpadding="0">
+                <tr class="b">
+                    <td colspan="7" ><a href="/index.php?app=event&mod=School&act=ecapply11Excel" style="color:#3b5998;">[导出excel]</a> </td>
+                </tr>
+                <tr class="b" style="color:#333; height:32px; line-height:32px;">
+                    <td>学期</td>
+                    <td style="width:580px;">竞赛名称/学术成果</td>
+                    <td style="width:150px;">奖项/成果排名</td>
+                    <td>{$webconfig.cradit_name}</td>
+                </tr>
+                <?php foreach($data as $key=>$vo):?>
+                <tr>
+                    <td >{$vo.cTime}</td>
+                    <td >{$vo.title}</td>
+                    <td >{$vo.bz}</td>
+                    <td>{$vo.credit}</td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <div class="page plist">{$html}</div>
+        </div>
+    </div>
+<include file="_footer" />

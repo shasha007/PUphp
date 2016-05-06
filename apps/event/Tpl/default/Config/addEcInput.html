@@ -1,0 +1,63 @@
+<div style="width:600px;overflow-y:scroll;height:500px;">
+    <input type="hidden" id="id" value="{$obj.id}"/>
+    <input type="hidden" id="fileId" value="{$fileId}"/>
+    <input type="hidden" id="type" value="{$type}"/>
+    <ul id="list_vote" class="list_vote lineS_btm">
+        <li>
+            <?php $types=array('','输入框','大输入框','单选','附件');?>
+            <label><?php echo($types[$type]);?>名称：<span class="cRed">*</span></label>
+            <div class="c1"><input id="title" name="" type="text" size="30" class="txt_vote" value ="{$obj.title}"/></div>
+        </li>
+        <li>
+            <label>是否必填：<span class="cRed">*</span></label>
+            <div class="c1">
+                <label><input  id="must" name="must" type="radio" value="0"
+                               <?php if(isset($obj['must']) && $obj['must']==0):?> checked<?php endif;?>/> 否</label>
+                <label><input  id="must" name="must" type="radio" value="1"
+                               <?php if(isset($obj['must']) && $obj['must']==1):?> checked<?php endif;?>/> 是</label>
+            </div>
+        </li>
+        <li>
+            <label>简短说明：</label>
+            <div class="c1"><textarea id='desc' cols='30' rows='5'>{$obj.desc}</textarea>250字内</div>
+        </li>
+    </ul>
+    <div class="page_btm">
+        <input type="button" class="btn_b" value="提交" onclick="editType()"/>
+        <input type="button" class="btn_b" value="取消" onclick="javascript:ui.box.close();"/>
+    </div>
+</div>
+<script>
+    function editType(){
+        var title = $( '#title' ).val();
+        title = title.replace(/\s+/g,"");
+        var tlen = title.length;
+        if(tlen<=0){
+            alert("名称不能为空");
+            $( '#title' ).focus();
+            return false;
+        }else if(tlen>10){
+            alert("名称不能超过10个字");
+            return false;
+        }
+        var must=$('input:radio:checked').val();
+        if(must==null){
+            alert("是否必填?");
+            return false;
+        }
+        var desc = $('#desc').val();
+        var fileId = $('#fileId').val();
+        var type = $('#type').val();
+        var id = $('#id').val();
+        $.post( '__URL__&act=doAddEcInput',{title:title,must:must,fileId:fileId,type:type,desc:desc,id:id},function( res ){
+            var json =$.parseJSON(res);
+            if( json.status ==0 ){
+                ui.error(json.info);
+            }else{
+                ui.box.close();
+                ui.success(json.info);
+                rebox(fileId);
+            }
+        });
+    }
+</script>

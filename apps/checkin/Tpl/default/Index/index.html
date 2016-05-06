@@ -1,0 +1,45 @@
+<include file="../Public/_header" />
+
+<div class="tz_content">
+     <div class="tz_content_left">
+      <?php if(isset($keyword)):?>
+            <div class="tz_search_title">搜索 “<span class="tz_search_keyword">{$keyword}</span>” 相关的结果</div>
+            <div class="tz_content_count">（共{$list.totalRows}条）</div>
+            <div class="tz_back"><a href="{:U('/Index/index',array(cid=>$cid,school=>$sid))}">返回列表>></a></div>
+      <?php else:?>
+      <div class="tz_content_title">校内通知</div>
+            <div class="tz_content_count">（共{$list.totalRows}条）</div>
+            <div class="tz_back"><a href="{:U('/Index/index',array(school=>$sid))}">通知首页>></a></div>
+      <?php endif;?>
+     </div>
+        <div class="tz_menu">
+          <ul>
+            <?php foreach($categorys as $key=>$vo):?>
+                <li<?php if(isset($cid)&&$cid==$key) echo' class="hover"';?>>
+                    <a href="{:U('/Index/index',array(cid=>$key,school=>$sid))}">{$vo}</a></li>
+            <?php endforeach;?>
+          </ul>
+        </div>
+        <div class="tz_contentbox">
+          <div id="con_tz_1" >
+            <div class="tz_list">
+              <ul>
+                  <volist name="list.data" id="vo">
+                      <li>
+                          <div class="tz_list_title b">
+                              <a href="{:U('/Index/details',array(cid=>$cid,id=>$vo['id'],school=>$sid))}">{$vo.title}</a></div>
+                          <div class="tz_list_desc"><a href="{:U('/Index/details',array(cid=>$cid,id=>$vo['id'],school=>$sid))}">{$vo.content|text|getShort=###,100,'…'}</a></div>
+                          <div class="tz_list_class">分类：<a href="{:U('/Index/index',array(cid=>$vo['cid'],school=>$sid))}" target="_blank"><span class="red">{$categorys[$vo['cid']]}</span></a>
+                              <br/>{$vo.sid1|tsGetSchoolName|getShort=###,12}
+                          </div>
+                          <div class="tz_list_date">{$vo.cTime|friendlyDate}</div>
+                      </li>
+                  </volist>
+              </ul>
+              <div class="page">{$list.html}</div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+<include file="../Public/_footer" />

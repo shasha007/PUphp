@@ -1,0 +1,222 @@
+<include file="_header" />
+<include file="__THEME__/comm/kindeditor" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <form action="{:U('shop/Pocket/doEditBankCard')}" method="post" enctype="multipart/form-data" >
+        <input type="hidden" name="id" value="{$list.id}" />
+        <div class="form2">
+            <dl class="lineD">
+                <dt>真实姓名：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="realname" type="text" value="{$list.realname}" size="100" readonly>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>手机号码：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="mobile" type="text" value="{$list.mobile}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>身份证号码：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="ctf_id" type="text" value="{$list.ctf_id}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>QQ/微信：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="qq" type="text" value="{$res.qq}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>个人邮箱：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="email_bill" type="text" value="{$list.email_bill}" size="100">
+                </dd>
+            </dl>
+
+            <dl class="lineD">
+                <dt>家庭地址：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="home" type="text" value="{$res.home}" size="100">
+                </dd>
+            </dl>
+
+            <dl class="lineD">
+                <dt>宿舍地址：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="address" type="text" value="{$list.address}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>邮编：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="post_code" type="text" value="{$list.post_code}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>父/母亲姓名：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="d_name" type="text" value="{$res.d_name}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>父/母亲手机号码：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="d_mobile" type="text" value="{$list.d_mobile}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>父/母亲工作单位：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="d_company" type="text" value="{$res.d_company}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>父/母亲工作单位电话：</dt>
+                <dd>
+                    <input name="dc_mobile" type="text" value="{$res.dc_mobile}" size="100">
+                </dd>
+            </dl>
+
+
+
+            <dl class="lineD">
+                <dt>同学姓名：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="classmate" type="text" value="{$res.classmate}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>同学手机：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="class_mobile" type="text" value="{$res.class_mobile}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>同学宿舍地址：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="class_address" type="text" value="{$res.class_address}" size="100">
+                </dd>
+            </dl>
+
+
+            <dl class="lineD">
+                <dt>剩余额度：</dt>
+                <dd>￥{$list.surplus_line}</dd>
+            </dl>
+
+
+            <dl class="lineD">
+                <dt>是否恶意欠款：</dt>
+                <dd>
+                    <if condition="$list['is_mali']">是
+                    <else />否
+                    </if>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>是否允许借款：</dt>
+                <dd>
+                    <if condition="$list['allow_finance']">允许
+                    <else />不允许
+                    </if>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>风控是否通过：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="allow_risk">
+                        <option value="0">待定</option>
+                        <option value="2" <?php if($list['allow_risk']==2):?>selected<?php endif;?>>拒绝</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>银行卡户名：</dt>
+                <dd><input name="card_account" type="text" value="{$list.card_account}" size="80"></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>银行卡号：</dt>
+                <dd><input name="card_no" type="text" value="{$list.card_no}" size="80"></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>银行卡状态：</dt>
+                <dd>
+                    <select name="status">
+                        <option value="0">未处理</option>
+                        <option value="1" <?php if($list['status']==1):?>selected<?php endif;?>>处理中</option>
+                        <option value="2" <?php if($list['status']==2):?>selected<?php endif;?>>办卡成功</option>
+                        <option value="3" <?php if($list['status']==3):?>selected<?php endif;?>>办卡失败</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>驳回原因：<span class="cGray2">（不通过时必须填写）</span></dt>
+                <dd>
+                    <input name="back_reason" type="text" value="{$list.back_reason}" size="80">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>附件上传：</dt>
+                <dd>
+                    <div class="prov_thumblist"><ul id="uploaded_photos">
+                            <?php if($imgs):?>
+                            <volist name="imgs" id="vo">
+                                <li class="prov_link" id="img{$i}">
+                                <div class="prov_thumb"><img src="{$vo|tsMakeThumbUp=###,80,80}" alt="" /></div>
+                                <div class="prov_thumb_del"><a href="javascript:void(0)" onclick="delImg({$i})">删除</a></div>
+                                <input type="hidden" name="imgs[]" value="{$vo}" />
+                                </li>
+                            </volist>
+                            <?php endif;?>
+                        </ul></div>
+                    <input type="button" onclick="openUpload();" value="添加展示图片"/><span class="cGray2">（建议上传长宽比例为1：1的图片）</span>
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+var imgCount = <?php if($imgs){echo count($imgs);}else{echo 0;} ?>;
+function openUpload(){
+    ui.box.load(U('home/Public/uploadImg')+'&attach_type=shop_yg',{title:'上传图片'});
+}
+function addInput(){
+    var html = '<dl class="lineD"><dt></dt><dd><input name="color[]" type="text" size="30"><a href="javascript:void(0);" onclick="delInput(this);">删除</a></dd></dl>';
+    $("#mycolor").after(html);
+}
+function delInput(obj){
+    $(obj).parent().parent().remove();
+}
+//单图上传回调函数,返回上传完成文件的信息
+function ts_upload_success(serverData){
+    var data	=$.parseJSON(serverData);
+    if(data.status==true){
+        imgCount+=1;
+        var msg = '<li class="prov_link" id="img'+imgCount+'">';
+        msg += '<div class="prov_thumb"><img src="'+data.src+'" alt="" /></div>';
+        msg += '<div class="prov_thumb_del"><a href="javascript:void(0)" onclick="delImg('+imgCount+')">删除</a></div>';
+        msg += '<input type="hidden" name="imgs[]" value="'+data.img+'" /></li>';
+        $('#uploaded_photos').append(msg);
+        return true;
+    }else{
+        if(data == '0'){
+            alert('上传失败，格式不允许');
+        }else{
+            alert(data.info);
+        }
+        isRedirect = false;
+        return false;
+    }
+}
+function delImg(id){
+    $('#img'+id).remove();
+}
+</script>
+<include file="_footer" />

@@ -1,0 +1,54 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <a href="__URL__&act=typeList" class=""><span><<分类管理</span></a>
+        <a href="__URL__&act=autoCredit" class="btn_a"><span class="cRed">默认学分</span></a>
+    </div>
+    1. 激活状态，发起的活动自动生成学分。后台审核学分不可修改(如有未审核的活动，请先审核完毕)，超管可手动修改。<br/>
+    2. 未激活状态，活动学分审核时手动分配。<br/>
+    3. 如只有1个级别，发起活动时不用发起人选择，会默认这个级别。
+    <div class="edit_span cRed" style="cursor:default;">
+        <pre>
+            文体艺术 志愿服务 身心发展
+        校级    3        4       2
+例如    院级    2        3       1
+        其它    1        2       0
+        </pre>
+    </div>
+    <div class="list">
+        <table id="event_list" width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+            <tr>
+                <td width="100">活动分类 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→<br/>默认学分&nbsp;&nbsp;↘<br/>活动级别↓</td>
+            <volist name="typeList" id='vo'>
+                <td width="60">{$vo.name}</td>
+            </volist>
+            <td>操作</td>
+            </tr>
+            <volist name="levelList" id='vo'>
+                <tr id="{$vo.id}">
+                    <td><input class="inpu" id="title" type="text" size="8" value="{$vo.title}" disabled="disabled"></td>
+                <volist name="vo.credits" key="k" id='ko'>
+                    <td><input class="inpu" id="credit_{$k-1}" type="text" size="5" value="{$ko}" onkeyup="clearNoNum(this)"  disabled="disabled"></td>
+                </volist>
+                <td><input class="btn_a" value="修改" onclick="toEdit(this)" type="button">
+                    <input class="btn_a" value="删除" onclick="toDelete(this)" type="button">
+                </td>
+                </tr>
+            </volist>
+            <tr style="display: none" id="mark" /></tr>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="newLevel()"><span>添加级别</span></a>
+        <span id="activ" class="edit_span" onclick="activeLevel();">{$statusMsg}</span>
+    </div>
+
+</div>
+<include file="../Teacher/_footer" />
+<script>
+    var typeCnt = {:count($typeList)};
+</script>
+<script type="text/javascript" src="../Public/js/config.level.js"></script>

@@ -1,0 +1,12 @@
+<include file="../Public/_header" />
+<div class="news">
+    <div class="news_menu"><img src="../Public/images/menu_news.gif" alt="" /></div>
+    <div class="news_back"><a href="{:U('show/news/index')}">返回新闻列表</a></div>
+    <div class="clear"></div>
+    <div class="news_title">{$app.title}</div>
+    <div class="news_desc">
+        {$app.content}
+    </div>
+    <div class="news_date">{$app.cTime|date='Y-m-d',###}</div>
+</div>
+<include file="../Public/_footer" />

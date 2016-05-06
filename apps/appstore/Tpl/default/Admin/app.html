@@ -1,0 +1,200 @@
+<include file="_header" />
+<div class="so_main"><include file="_tab" />
+  
+    <div id="searchDocument_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="page_tit">搜索{$typename} [ <a href="javascript:void(0);" onclick="searchDocument();">隐藏</a> ]</div>
+    <div class="form2">
+    <form action="{:U('appstore/Admin/app', array('t'=>$t))}" method="post">
+    <input type="hidden" name="isSearch" value="1"/>
+        <php>if($isSearch != '1') $uid = '';</php>
+	    <dl class="lineD">
+          <dt>{$typename}标题：</dt>
+          <dd>
+            <input name="name" class="txt" value="{$name}"/><span> 支持模糊查询。</span>
+          </dd>
+        </dl>
+	    <dl class="">
+          <dt>结果排序：</dt>
+          <dd>
+            <select name="order">
+			  <option value = "desc" <eq name="order" value="desc">selected</eq>>降序排列，新的在前</option>
+			  <option value = "asc" <eq name="order" value="asc">selected</eq>>升序排列，旧的在前</option>
+			</select>
+			<select name="limit">
+			  <option value = "20" <eq name="limit" value="20">selected</eq>>每页显示20条</option>
+			  <option value = "50" <eq name="limit" value="50">selected</eq>>每页显示50条</option>
+			  <option value = "100" <eq name="limit" value="100">selected</eq>>每页显示100条</option>
+			</select>
+          </dd>
+        </dl>
+        <div class="page_btm">
+	      <input type="submit" class="btn_b" value="确定" />
+	    </div>
+    </form>
+    </div>
+    </div>
+
+  <div class="Toolbar_inbox">
+	<div class="page right">{$html}</div>
+	<a href="{:U('appstore/Admin/addApp', array('t'=>$t))}" class="btn_a""><span>添加{$typename}</span></a>
+	<a href="javascript:void(0);" class="btn_a" onclick="searchDocument();">
+        <span class="searchDocument_action"><neq name="isSearch" value="1">搜索{$typename}<else/>搜索完毕</neq></span>
+    </a>
+    <a href="javascript:void(0);" class="btn_a" onclick="deleteDocument();"><span>删除{$typename}</span></a>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+        <label for="checkbox"></label>
+    </th>
+    <th class="line_l">ID</th>
+    <th class="line_l">标题</th>
+    <th class="line_l">平台</th>
+    <th class="line_l">分类</th>
+    <th class="line_l">版本</th>
+    <th class="line_l">是否有效</th>
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="data">
+      <tr overstyle='on' id="{$vo.id}">
+        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+        <td>{$vo.id}</td>
+        <td><img src="{$vo.icon|get_document_url}" style="width:25px;height:25px" valign="middle"/> {$vo.title}</td>
+        <td>{$vo.platform|getCategoryName}</td>
+        <td>{$vo.cid0|getCategoryName} {$vo.cid1|getCategoryName}</td>
+        <td>{$vo.version}</td>
+        <td><eq name="vo.is_active" value="1">是<else/>否</eq></td>
+        <td>
+			<a href="{:U('appstore/Admin/editApp',array('id'=>$vo['id']))}">编辑</a>
+		      <php>
+            if( $vo['isrecom'] ){
+              $button = "取消推荐";
+              $act    = 'cancel';
+            }else{
+              $button = "推荐";
+              $act    = 'recommend';
+            }
+            </php>
+		    <span id="button{$vo['id']}" ><a href="javascript:void(0);" onclick="recom('{$vo.id}','{$act}')">{$button}</a></span>			
+			<a href="javascript:void(0);" onclick="deleteDocument('{$vo.id}')">删除</a>
+		</td>
+      </tr>
+  </volist>
+  </table>
+  </div>
+  <div class="Toolbar_inbox">
+	<div class="page right">{$html}</div>
+	<a href="{:U('appstore/Admin/addApp', array('t'=>$t))}" class="btn_a""><span>添加{$typename}</span></a>
+    <a href="javascript:void(0);" class="btn_a" onclick="deleteDocument();"><span>删除{$typename}</span></a>
+  </div>
+</div>
+
+<script>
+    //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+          function () {
+            $(this).addClass("bg_hover");
+          },
+          function () {
+            $(this).removeClass("bg_hover");
+          }
+        );
+    });
+    
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+    
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    //获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+    
+    function deleteDocument(ids) {
+    	var length = 0;
+    	if(ids) {
+    		length = 1;
+    	}else {
+    		ids    = getChecked();
+    		length = ids[0] == 0 ? ids.length - 1 : ids.length;
+            ids    = ids.toString();
+    	}
+    	if(ids=='') {
+    		ui.error('请先选择一条记录');
+    		return ;
+    	}
+    	if(confirm('您将删除'+length+'个{$typename}，删除后无法恢复，确定继续？')) {
+    		$.post("{:U('appstore/Admin/doDeleteApp')}",{ids:ids},function(res){
+    			if(res=='1') {
+    				ui.success('删除成功');
+    				removeItem(ids);
+    			}else {
+    				ui.error('删除失败');
+    			}
+    		});
+    	}
+    }
+    
+    function removeItem(ids) {
+    	ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#'+ids[i]).remove();
+        }
+    }
+
+	function recom(id, act) {
+	  if( act == 'recommend' ){
+		  v= "推荐";
+		  v2 = "取消推荐";
+		  act2 = 'cancel';
+
+	  }else{
+		  v = "取消推荐";
+		  v2 = "推荐";
+		  act2 = 'recommend';
+	  }
+	    $.post('{:U('appstore/Admin/doRecom')}',{id:id,type:act},function( text ){		
+			  if( text == 1 ){
+			  ui.success( "操作成功" );
+			  $('#button'+id).html('<a href="javascript:void(0);" onclick="recom('+id+',\''+act2+'\')">'+v2+'</a>');
+		   }else{
+			  ui.error( "操作失败" );
+		   }
+	    });
+	}
+	
+	var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+	function searchDocument() {
+	    if(isSearchHidden == 1) {
+	        $("#searchDocument_div").slideDown("fast");
+	        $(".searchDocument_action").html("搜索完毕");
+	        isSearchHidden = 0;
+	    }else {
+	        $("#searchDocument_div").slideUp("fast");
+	        $(".searchDocument_action").html("搜索{$typename}");
+	        isSearchHidden = 1;
+	    }
+	}	
+</script>
+<include file="_footer" />

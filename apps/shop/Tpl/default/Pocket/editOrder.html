@@ -1,0 +1,63 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th width="15%">用户名</th>
+                <td>{$list.uid}</td>
+            </tr>
+            <tr>
+                <th>商品名</th>
+                <td>{$list.gid}</td>
+            </tr>
+            <tr>
+                <th>地址</th>
+                <td>{$list.addressId}</td>
+            </tr>
+            <tr>
+                <th>收货人姓名</th>
+                <td>{$result.name}</td>
+            </tr>
+            <tr>
+                <th>身份证号</th>
+                <td>{$result.identity}</td>
+            </tr>
+            <tr>
+                <th>联系电话</th>
+                <td>{$result.tel}</td>
+            </tr>
+        </table>
+        <form action="{:U('shop/Pocket/doEditOrder')}" method="post">
+            <input type="hidden" name="id" value="{$list.id}">
+            <textarea  style='width:200px;height:100px;' name='reason'></textarea>
+            <input type="submit" value="驳回">
+        </form>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+
+    </div>
+</div>
+<script>
+
+function restart(id){
+    if(confirm("确定激活，继续该一元梦想?")){
+        $.post( '{:U('/Admin/restartYg')}',{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                setTimeout(function(){location.reload();},1500);
+            }
+        });
+    }
+}
+</script>
+<include file="_footer" />

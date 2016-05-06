@@ -1,0 +1,53 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <include file="_act_tab" />
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>活动名称</th>
+                <th>合作企业</th>
+                <th>截止时间</th>
+                <th>承办详情</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.eventId}">
+                    <td>{$vo.eventId}</td>
+                    <td>{$vo.eventName}</td>
+                    <td>{$vo.company}</td>
+                    <td>{$vo['byTime']|friendlyDate}</td>
+                    <td><form action="__URL__&act=activityApply" method="post">
+                            <input type="hidden" name="ename" value="{$vo.eventName}"/>
+                            <input type="submit" value="前往"/>
+                    </form></td>
+                    <td>
+                        <a href="__URL__&act=activityAdd&id={$vo.eventId}">编辑</a>
+                        <a href="javascript:void(0);" onclick="dodelete({$vo.eventId});">删除</a>
+
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+
+<include file="_footer" />
+
+<script>
+    //删除
+    function dodelete(id){
+        if(window.confirm('确认删除？')){
+             $.post( '__URL__&act=activity_deleteAjax',{id:id},function(json){
+             if(json){
+                $('#list_'+id).remove();
+                ui.success('操作成功');
+             }
+         });
+        }
+    }
+</script>

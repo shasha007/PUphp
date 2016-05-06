@@ -1,0 +1,99 @@
+<include file="_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+<script>
+    $(document).ready(function(){
+        setTimeout('loadEditor("content")',100);
+    });
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="list" width="44%">
+        <table id="document_list" width="700px" border="1" cellspacing="0" cellpadding="0" text-align="center">
+            <if condition="$ptx_list neq null">
+            <tr>
+                <if condition="$list.rtime neq 0">
+                <th>发布日期:{$list.rtime|date="Y-m-d H:i:s",###}</th>
+                <else />
+                <th>发布日期: -未发布-</th>
+                </if>
+                <th>阅读数</th>
+                <th colspan="2">操作</th>
+            </tr>
+            <foreach name="ptx_list" item="val">
+                <tr id="{$val.id}">
+                <if condition="$val.isbig eq 1">
+                    <th><img width="100%" height="140px;" src="{$val.img|tsMakeThumbUp=###,900,500,'c'}" /><br/>{$val.title}</th>
+                    <th width="10%">{$val.rnum}</th>
+                    <th width="10%"><a href="__URL__&act=add&list_id={$val.id}">修改</a></th>
+                <else />
+                <th><span>{$val.title}</span><img width="60px;" height="60px;" src="{$val.img|tsMakeThumbUp=###,200,200,'c'}" style="float: right;"></th>
+                    <th width="10%">{$val.rnum}</th>
+                    <th width="10%"><a href="__URL__&act=add&list_id={$val.id}">修改</a></th>
+                </if>
+                <td><a href="javascript:void(0)" class="ico_top" onclick="move('{$val['id']}','up');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>&nbsp;&nbsp;
+                <a href="javascript:void(0)" class="ico_btm" onclick="move('{$val['id']}','down');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>
+                </td>
+                </tr>
+            </foreach>
+            </if>
+        </table>
+    </div>
+    <div>
+        <form action="__URL__&act=doadd" enctype="multipart/form-data" method="post">
+         <table width="80%" border="0" cellspacing="0" cellpadding="0" text-align="center">
+            <input type="hidden" name="block_id" value="{$_GET.id}"/>
+            <input type="hidden" name="list_id" value="{$obj.id}"/>
+             <tr>
+                 <th>标题</th>
+                 <td><input type="text" name="title" value="{$obj.title}" size="135"/></td>
+             </tr>
+             <tr>
+                 <th>图片</th>
+                 <td><input type="file" name="img"></td>
+             </tr>
+             <tr>
+                 <th>类型</th>
+                 <td><input type="radio" name="isbig" value="1" <?php if($obj['isbig']==1):?>checked<?php endif;?>>大图(900x500)
+                     <input type="radio" name="isbig" value="2" <?php if($obj['isbig']==2):?>checked<?php endif;?>>小图(200x200)
+                 </td>
+             </tr>
+             <tr>
+                 <th>内容</th>
+                 <td>
+                     <textarea name="content" id="content" style="width:700px;height:200px">{$obj.content}</textarea>
+                 </td>
+             </tr>
+             <tr>
+                 <th></th>
+                 <td><input type="submit" value="提交" id="ptxsub"></td>
+             </tr>
+         </table>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function move(app_id, direction) {
+	var baseid  = direction == 'up' ? $('#'+app_id).prev().attr('id') : $('#'+app_id).next().attr('id');
+        if(!baseid) {
+            direction == 'up' ? ui.error('已经是最前面了') : ui.error('已经是最后面了');
+        }else {
+            $.post("__URL__&act=changeOrder", {id:app_id, baseid:baseid}, function(res){
+                if(res == '1') {
+                    //交换位置
+                    direction == 'up' ? $('#'+app_id).insertBefore('#'+baseid) : $("#"+app_id).insertAfter('#'+baseid);
+                }else {
+                    ui.error('保存失败');
+                }
+            });
+        }
+    }
+</script>
+<include file="_footer" />

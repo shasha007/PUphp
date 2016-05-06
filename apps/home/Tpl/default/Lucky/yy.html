@@ -1,0 +1,74 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <span class="cRed"> 奖品剩余数量为0时，自动从摇一摇列表删除。请修改奖品数量后，重新添加</span>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('home/Lucky/editYy')}" class="btn_a"><span>添加摇一摇奖品</span></a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="">
+                    <label for="checkbox"></label>
+                </th>
+                <th>商品ID</th>
+                <th width="30%">商品名称</th>
+                <th>中奖率</th>
+                <th>可否重复中奖</th>
+                <th>每日中奖上限</th>
+                <th>剩余数量</th>
+                <th>0 PU币</th>
+                <th>1 PU币</th>
+                <th>2 PU币</th>
+                <th>5 PU币</th>
+                <th>类别</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>1/{$vo.prozent}</td>
+                    <td><?php if($vo['canRepeat']){echo'可';}else{echo'否';}?></td>
+                    <td><?php if($vo['dayNum']):?>{$vo.dayNum}<?php else:?>不限<?php endif;?></td>
+                    <td>{$vo.num}</td>
+                    <td><?php if($vo['cost0'])echo'<span class="cGreen">√</span>';?></td>
+                    <td><?php if($vo['cost1'])echo'<span class="cGreen">√</span>';?></td>
+                    <td><?php if($vo['cost2'])echo'<span class="cGreen">√</span>';?></td>
+                    <td><?php if($vo['cost5'])echo'<span class="cGreen">√</span>';?></td>
+                    <td><?php echo $types[$vo['type']]?></td>
+                    <td>
+                        <a href="{:U('home/Lucky/editYy', array('pid'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:void(0)" onclick="delProduct({$vo.id})">删除</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('home/Lucky/editYy')}" class="btn_a"><span>添加摇一摇奖品</span></a>
+    </div>
+</div>
+<script>
+function delProduct(id){
+    if(confirm("是否删除奖品，商品不会删除，可再次添加到摇一摇里面?")){
+        $.post( U('home/Lucky/delYy'),{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                $('#list_'+id).remove();
+            }
+        });
+    }
+}
+</script>
+<include file="_footer" />

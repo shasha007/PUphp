@@ -1,0 +1,49 @@
+<include file="_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <div class="form2">
+  	<form method="post" action="{:U('home/Asking/doAddAsk')}" enctype="multipart/form-data">
+    <div style="background-color:#E6E9ED;padding:10px 0px">
+    <dl class="">
+      <dt><span>*</span>问答主题：</dt>
+      <dd>
+        <input type="text" name="name" value="{$name}" />
+      </dd>
+    </dl>
+
+    <dl class="">
+      <dt><span>*</span>简介：</dt>
+      <dd>
+        <textarea name="intro" cols="40" rows="2">{$intro}</textarea>
+      </dd>
+    </dl>
+      <dl class="lineD">
+        <dt>开始时间：<span style="color: #F00">*</span></dt>
+        <dd><input name="sTime" id="sTime" type="text" onfocus="rcalendar(this,'full');" readonly
+                   value="<?php echo date( 'Y-m-d H:i:s',$sTime );?>"/> 小时在弹出框底部编辑</dd>
+      </dl>
+      <dl class="lineD">
+        <dt>结束时间：<span style="color: #F00">*</span></dt>
+        <dd><input name="eTime" id="eTime" type="text" onfocus="rcalendar(this,'full');" readonly
+                   value="<?php echo date( 'Y-m-d H:i:s',$eTime );?>"/> 小时在弹出框底部编辑</dd>
+      </dl>
+    </div>
+      <dl class="">
+        <dt><span>*</span>是否开启(前台是否显示)：</dt>
+        <dd>
+          <label><input name="isShow" type="radio" value="1" <eq name="isShow" value="1">checked</eq> >是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input name="isShow" type="radio" value="0" <eq name="isShow" value="0">checked</eq> >否</label>
+        </dd>
+      </dl>
+
+    <div class="page_btm">
+      <if condition="$id != 0">
+        <input type="hidden" name="id" value="{$id}" />
+      </if>
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+    </form>
+  </div>
+</div>
+<include file="__THEME__/comm/_datepicker" />
+<include file="_footer" />

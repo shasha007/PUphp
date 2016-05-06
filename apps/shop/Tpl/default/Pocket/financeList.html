@@ -1,0 +1,72 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Pocket/defaultFinance')}" class="btn_a"><span>还款失败订单列表</span></a>
+        <a href="{:U('shop/Pocket/needList')}" class="btn_a"><span>还未还款订单分期列表</span></a>
+        <form method="post" action="__URL__&act=financeList">
+            身份证号码：<input name="ctf_id" type="text" value="{$_POST.ctf_id}">
+            &nbsp;&nbsp;姓名：<input name="realname" type="text" value="{$_POST.realname}">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>学校</th>
+                <th>借款金额</th>
+                <th>还款分期</th>
+                <th>分期金额</th>
+                <th>借款原因</th>
+                <th>下单时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.school}</td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.staging}</td>
+                    <td>{$vo.stagmoney}</td>
+                    <td>{$vo.reason}</td>
+                    <td>{$vo.ctime}</td>
+                    <td>{$vo.allow_risk}
+                        <a href="javascript:;" onclick="edit('{$vo['bank_card_id']}')">用户信息</a>
+                        <a href="__URL__&act=backBankFinance&id={$vo.id}">查看详情</a>
+                        <a href="__URL__&act=lookXY&id={$vo.id}&xmark=1">提款协议</a>
+                        <a href="__URL__&act=lookXY&id={$vo.id}&xmark=2">服务协议</a>
+                        <if condition="$vo['status'] eq 1">
+                            <a href="__URL__&act=confirmRepayment&id={$vo.id}" onclick="return confirm('确认该订单还款结束吗？')">还款结束</a>
+                        </if>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Pocket/defaultFinance')}" class="btn_a"><span>还款失败订单列表</span></a>
+        <a href="{:U('shop/Pocket/needList')}" class="btn_a"><span>还未还款订单分期列表</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+function edit(id){
+    ui.box.load('__URL__&act=lookCard&id='+id,{title:'详情'});
+}
+</script>
+<include file="_footer" />

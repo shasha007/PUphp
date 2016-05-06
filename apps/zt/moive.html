@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;
+        }
+        @media screen and (max-height: 500px) {
+            .button_img {
+                position: relative;
+                top: -16%;
+                left: 25%;
+                width: 50%;
+            }
+        }
+        @media screen and (min-height: 501px) {
+            .button_img {
+                position: relative;
+                top: -14%;
+                left: 25%;
+                width: 50%;
+            }
+        }
+        .img-responsive{
+            display: block;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .div_food{
+            position: relative;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="div_food">
+    <img src="images/movie.png" class="img-responsive">
+</div>
+<div class="button_img">
+    <img class="img-responsive" id="btn_1"  src="images/movie_button.png" >
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    window.onload = function(){
+        document.getElementById('btn_1').addEventListener('click', onBtnClick, false);
+        var _int_value = window.ncp.callOnJs();
+        alert("get int from java:" + _int_value );
+
+    }
+    function onBtnClick() {
+        window.Android.openInternalPage("tipsbar", "1", "","", "","","" );
+    }
+</script>

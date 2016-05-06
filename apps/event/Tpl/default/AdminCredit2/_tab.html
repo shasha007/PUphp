@@ -1,0 +1,12 @@
+<div class="page_tit">学分认定管理</div>
+<div class="tit_tab">
+<ul>
+    <li><a <eq name="ACTION_NAME" value="index">class="on"</eq>
+            href="__URL__&act=index">待审核
+            <?php if($finishCount):?><strong style="color: #F00;">(<span  id="finishCount">{$finishCount}</span>)</strong><?php endif;?>
+            </a>
+    </li>
+    <li><a <eq name="ACTION_NAME" value="audited">class="on"</eq>
+            href="__URL__&act=audited">已通过</a></li>
+</ul>
+</div>

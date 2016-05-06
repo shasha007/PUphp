@@ -1,0 +1,147 @@
+<include file="../School/_header" />
+<div class="hd_c">
+<div class="hd_c_left">
+   <div class="st_list">
+  <div class="st_m_menu b f16 lh30 c3">创建部落</div>
+  <div class="clear"></div>
+  <!--创建部落表单开始-->
+  <div class="fl mt20">
+  <table width="600" border="0" cellspacing="0" cellpadding="0">
+  <form action="__URL__&act=doadd" enctype="multipart/form-data" method="post">
+  <tr>
+    <td width="100" valign="top" class="f14 c3 tright"><span class="group_red">*</span>部落头像：</td>
+    <td width="10"></td>
+    <td valign="bottom"><div class="group_photo"><img id="showing" src=""/></div><input name="img" type="file" id="img" onchange="viewmypic()" style="margin:119px auto auto 10px; display:inline; " /></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="f14 c3 tright"><span class="group_red">*</span>部落名称：</td>
+    <td>&nbsp;</td>
+    <td><input name="name" type="text" id="group_name" class="group_input" onblur="gettest()"/> <span class="group_red" id="span_op"></span> <!--要检查部落名称的唯一性--></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="f14 c3 tright"><span class="group_red">*</span>部门：</td>
+    <td></td>
+    <td><select name="department" class="group_input">
+     <option value="2">团支部</option>
+     <option value="3">学生社团</option>
+     <option value="1">学生部门</option>
+     </select></td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="f14 c3 tright"><span class="group_red">*</span>学院：</td>
+    <td></td>
+    <td>
+    <select name="school1" class="group_input">
+     <foreach item="val" name="school">
+     <option value="{$val.id}">{$val.title}</option>
+     </foreach>
+     </select>
+    </td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="f14 c3 tright"><span class="group_red">*</span>年级：</td>
+    <td>&nbsp;</td>
+    <td>
+    <select name="year" class="group_input">
+     <foreach item="val" name="year">
+     <option value="{$val}">{$val}</option>
+     </foreach>
+     </select>
+    </td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="f14 c3 tright"><span class="group_red">*</span>分类：</td>
+    <td>&nbsp;</td>
+    <td>
+    <select name="categroy" class="group_input">
+     <foreach item="val" name="cate">
+     <option value="{$val.id}">{$val.title}</option>
+     </foreach>
+     </select>
+    </td>
+  </tr>
+  <tr>
+    <td height="15"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class="f14 c3 tright" valign="top"><span class="group_red">*</span>部落介绍：</td>
+    <td>&nbsp;</td>
+    <td><textarea name="explain" cols="" rows="" placeholder="输入部落介绍" class="group_tarea f12"></textarea></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td><input type="submit" class="p_btn2" value="确定创建" /></td>
+  </tr>
+  </form>
+</table>
+  </div>
+   <!--创建部落表单结束-->
+    <!--创建部落申请提交成功-->
+    <div class="f14 c3 mt50 group_tj">你的创建申请已经提交，请耐心等待哟！</div>
+    </div>
+
+
+</div>
+
+<include file="../GroupPublic/_right" />
+
+<script type="text/javascript">
+    var gname = $('#group_name');
+
+    function gettest(){
+        var name = gname.val();
+        var span = $('#span_op');
+        if(name.length>1 && name.length<11){
+            $.post('__URL__&act=ajaxName',{name:name},function(data){
+                if(data==1){
+                    span.html('该部落名已存在！');
+                }
+            },'json');
+        }else{
+            //alert(name.length);
+            span.html('部落名称字数在2-10字符！');
+        }
+        //alert(name);
+
+    }
+    var img = $('#img');
+    var showing = $('#showing');
+    function viewmypic(){
+        //alert();
+        showing.src = img.val();
+    }
+</script>
+<include file="../School/_footer" />

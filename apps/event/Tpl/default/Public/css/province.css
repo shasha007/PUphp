@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+*{ padding:0;margin:0;list-style:none;}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+table,td{
+	margin:auto;
+	padding:inherit;
+}
+select, input, img{ vertical-align:middle;}
+a{ text-decoration:none;}
+a:link {
+color:#666;
+}
+a:visited{ color:#666;}
+a:hover,a:active, a:focus {
+color:#999; text-decoration:underline;
+}
+body {
+	font-family: "宋体","MingLiu","Lucida Sans Unicode", "Lucida Grande", "sans-serif",;
+	font-size: 12px;
+	line-height:160%;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	color: #666;
+	text-decoration: none;
+	background-color: #fff;
+	background-image: none;
+	background-repeat: no-repeat;
+	letter-spacing: normal;
+	text-align: left;
+	word-spacing: normal;
+	white-space: normal;
+	display: block;
+	clear: both;
+	float: none;
+	width: auto;
+	position: static;
+	height: auto;
+	top: auto;
+	clip: rect(auto,auto,auto,auto);
+}
+.clear{ clear:both;}
+/*公用*/
+.f14{ font-size:14px;}
+.f16{ font-size:16px;}
+.b{ font-weight:bold;}
+.mt10{ margin-top:10px;}
+.mt20{ margin-top:20px;}
+.p_fl{ float:left;}
+.p_w{ width:780px;}
+.pt10{ padding-top:10px;}
+.ml12{ margin-left:12px; display:inline;}
+.ml10{ margin-left:10px; display:inline;}
+.mr10{ margin-right:10px; display:inline;}
+.p_red{ color:#C00;}
+.p_c3{ color:#333;}
+.province{ float:left; width:100%; background:url(../images/bg_prov.jpg) repeat-x center top;}
+.prov_main{ margin:auto; width:1000px; }
+.prov_h{ float:left; width:100%;background:url(../images/pro_title.jpg); margin:93px auto auto 50px; display:inline; width:900px; height:110px;}
+.prov_con{ float:left; width:998px; background:#fff; border:1px solid #dedede; margin-top:40px; -moz-border-radius: 11px;-khtml-border-radius: 11px;-webkit-border-radius: 11px;border-radius: 11px; -webkit-box-shadow:5px 2px 6px #ccc;-moz-box-shadow:5px 2px 6px #ccc;}
+/*首页*/
+.prov_tpic{ float:left; width:970px; margin:12px auto auto 14px; display:inline;}
+.prov_list1{ float:left; width:970px; margin:15px auto auto 14px; display:inline; padding-bottom:10px;}
+.prov_list1 ul{ float:left;}
+.prov_list1 li{ float:left; width:310px; background:url(../images/bg_prov.gif) no-repeat right 270px #fff; padding-bottom:9px;}
+.prov_list1_thumb{ float:left; width:308px; height:195px;border-top:1px solid #b3c5c4;border-left:1px solid #b3c5c4;border-right:1px solid #b3c5c4;}
+.prov_list1_btn{ float:left; border-left:1px solid #b3c5c4;border-right:1px solid #b3c5c4;border-bottom:1px solid #b3c5c4; width:144px; height:34px; padding:20px 82px; }
+.prov_upload{ float:left; width:1000px; margin-top:17px; height:66px; color:#fff; font-family:"微软雅黑";  text-align:center; background: url(../images/btn_prov.gif) no-repeat 365px 5px #bfda8e; }
+.prov_upload a{ color:#fff;width:1000px; height:66px; display:block;}
+.prov_upload a:hover{ color:#fff;}
+.prov_back{ float:right; width:100px;margin:50px 100px auto auto; text-align:right; display:inline;}
+/*上传列表*/
+.prov_title{ float:left; width:600px; margin:50px auto auto 100px; display:inline; line-height:24px;}
+.prov_list{ float:left; width:800px; margin:25px auto auto 100px; display:inline; padding-bottom:60px;}
+.prov_list ul{ float:left;}
+.prov_list li{ float:left; height:30px; line-height:30px; width:780px; border-bottom:1px dotted #dedede; padding:3px 10px;}
+.prov_link1{}
+.prov_link1 a{ color:#a00;}
+.prov_link1 a:hover{ color:#cc2424; font-weight:bold;}
+/*上传资料表格*/
+.prov_ftitle{ float:left; width:400px; margin:50px auto auto 150px; display:inline; line-height:24px;}
+.prov_fcon{ float:left; width:700px; margin-left:100px; display:inline; padding-bottom:50px; margin-top:20px;}
+.prov_fcon ul{ float:left;}
+.prov_fcon li{ float:left; width:100%; margin-top:10px; clear:both;}
+.prov_fcon_t{ float:left; width:100px; text-align:right;}
+.prov_fcon_d{ float:left; margin-left:10px; display:inline;}
+.prov_fcon_b{ float:left; margin-left:110px; display:inline; padding-top:30px;}
+.prov_input{ border:1px solid #dedede; background:#fff; width:500px; height:24px; line-height:24px; padding:0 3px;}
+.prov_input1{ border:1px solid #dedede; background:#fff; width:300px; height:24px; line-height:24px; padding:0 3px;}
+.prov_tarea{border:1px solid #dedede; background:#fff; width:500px; height:120px; line-height:20px; overflow:hidden;padding:3px;}
+.prov_btn{ border:none; cursor:pointer; background:url(../images/bg.png) no-repeat -252px -15px; height:30px; line-height:30px; color:#fff; width:80px;}
+.prov_link{ line-height:24px;}
+.prov_link.p1{}
+.prov_link.p1 a{ text-decoration:none}
+.prov_link.p1 a:hover{ text-decoration:underline; color:#51a3f0;}
+.prov_link a{ color:#0077e6; text-decoration:underline;}
+.prov_link a:hover{ color:#51a3f0;}
+.prov_thumblist{ float:left; margin-left:110px; text-align:center; width:590px;}
+.prov_thumblist ul{ float:left; width:100%;}
+.prov_thumblist li{ float:left; margin:0 12px 5px auto; display:inline; line-height:18px; width:80px; clear:none;}
+.prov_thumb{ float:left; width:80px;}
+.prov_thumb img{ width:80px; height:80px;}
+.prov_thumb_set{ float:left; width:80px; margin-top:3px;}
+.prov_thumb_del{ float:left; width:80px;}
+/*提示*/
+.prov_tip{ float:left; width:998px; margin-top:50px; text-align:center;}
+.prov_tip_btn{ float:left; margin:30px auto auto 278px; width:440px; padding-bottom:50px;}
+.prov_tip_btn ul{ float:left;}
+.prov_tip_btn li{ float:left; width:180px; text-align:center; height:60px; line-height:60px; margin:20px; display:inline;}
+.prov_tip_btn li a{ color:#FFF; width:180px; height:60px; display:block; background:url(../images/bg_btn.png) no-repeat -20px top;}
+.prov_tip_btn li a:hover{ color:#a43603; text-decoration:none;background:url(../images/bg_btn.png) no-repeat -221px top;}
+/*帮助*/
+.prov_help{ float:left; margin-top:50px;}
+.prov_h_list{ float:left; margin-top:10px;}
+.prov_h_list ul{ float:left;}
+.prov_h_list li{ float:left;}
+.prov_h_desc{ float:left; line-height:20px; width:780px; margin:10px auto auto 109px; display:inline; padding-bottom:50px;}
+.prov_h_desc img{max-width:700px; margin:5px auto;}
+.prov_f{ float:left; width:100%; text-align:center; margin-top:20px; padding-bottom:20px;}

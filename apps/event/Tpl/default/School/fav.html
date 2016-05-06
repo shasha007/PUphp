@@ -1,0 +1,23 @@
+<div class="hd_fl color4 link">
+    <form method="post" action="{:U('/School/index')}" id="fav">
+    <span class="b">分类：</span>
+    <?php foreach($category as $k=>$vo):?>
+        <label><input type="checkbox" name="favCid[]" value="{$k}"
+               <?php if(in_array($k,$cid))echo' checked'?>/> {$vo}&nbsp;</label>
+    <?php endforeach;?>
+    <br />
+    <span class="b">组织：</span>
+    <volist name="schoolOrga" id="vo">
+        <label><input type="checkbox" name="favSid[]" value="-{$vo.id}"
+               <?php if(in_array(-$vo['id'],$sid))echo' checked'?>/> {$vo.title}&nbsp;</label>
+    </volist>
+    <volist name="addSchool" id="vo">
+        <label><input type="checkbox" name="favSid[]" value="{$vo.id}"
+               <?php if(in_array($vo['id'],$sid))echo' checked'?>/> {$vo.title}&nbsp;</label>
+    </volist>
+    <center><input class="hd_s_b f_wr" name="fav" type="submit" onclick="$('#fav'.submit)" value="确定"></center>
+    </form>
+</div>
+<script>
+
+</script>

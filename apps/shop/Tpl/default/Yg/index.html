@@ -1,0 +1,24 @@
+<include file="../Public/_header" />
+<div class="m_dream mt10">
+    <div class="m_d_step"><img src="../Public/images/step.jpg" alt="" /></div>
+    <div class="m_d_menu m_bule f16 fw mt10">一元梦想</div>
+    <div class="m_d_list center">
+        <ul>
+            <volist name="data" id="vo">
+            <li <?php if($i%4==0)echo ' class="b_n"';?>>
+                <div class="m_sub1_thumb"><a href="{:U('shop/Yg/detail',array('id'=>$vo['id']))}">
+                        <img src="{$vo.pic|tsMakeThumbUp=###,160,160}" alt="" /></a></div>
+                <div class="m_sub1_name b m_bule"><a href="{:U('shop/Yg/detail',array('id'=>$vo['id']))}">{$vo.name}</a></div>
+                <div class="m_sub1_price">梦想金：<span class="m_color1">￥{$vo.price}</span></div>
+                <div class="m_sub1_count">总需：{$vo.need_attended}人次  剩余：<span class="m_color2"><?php echo $vo['need_attended']-$vo['has_attended'];?></span>次</div>
+                <div class="m_sub1_btn b"><a href="{:U('shop/Yg/detail',array('id'=>$vo['id']))}">立即一元梦想</a></div>
+                <?php if($vo['eday']!='0000-00-00'):?>
+                <div class="m_sub1_count m_color2 b mt10">开奖时间：{$vo.eday} 03:00</div>
+                <?php endif;?>
+            </li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<div class="page">{$html}</div>
+<include file="../Public/_footer" />

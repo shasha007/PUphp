@@ -1,0 +1,41 @@
+<include file="../CoursePass/_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <!-------- 用户列表 -------->
+  <div class="Toolbar_inbox">
+ <div class="page right">{$html}</div>
+        <form method="get">
+            <input type="hidden" name="app" value="event" />
+            <input type="hidden" name="mod" value="CourseUser"/>
+            <input type="hidden" name="act" value="credit"/>
+            学号：<input type="text" value="{$_GET.num}" name="num" />
+            <input class="btn_b" type="submit" value="搜索">
+            <?php if($userInfo):?>
+            &nbsp;&nbsp;{$userInfo.realname}
+            &nbsp;&nbsp;课时：{$userInfo.course_credit}
+            <?php endif;?>
+        </form>
+      <p></p>
+        &nbsp; &nbsp; &nbsp; <a <eq name="ACTION_NAME" value="credit">class="btn_a"</eq>  href="{:U('event/CourseUser/credit')}&num={$_GET.num}" class="on" ><span>课程</span></a>
+          <a  <eq name="ACTION_NAME" value="creditActive">class="btn_a"</eq>   href="{:U('event/CourseUser/creditActive')}&num={$_GET.num}" class="on" ><span>课程活动</span></a>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th class="line_l">日期</th>
+    <th class="line_l">课程</th>
+    <th class="line_l">课时</th>
+  </tr>
+  <volist id="vo" name="data">
+  <tr>
+      <td>{$vo.cTime|date="Y-m-d",###}</td>
+      <td>{$vo.title}</td>
+      <td>+{$vo.credit}</td>
+  </tr>
+  </volist>
+
+  </table>
+   <div class="page right">{$html}</div>
+  </div>
+</div>
+<include file="../CoursePass/_footer" />

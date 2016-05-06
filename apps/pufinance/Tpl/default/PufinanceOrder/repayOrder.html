@@ -1,0 +1,85 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr>
+        <th class="line_l">分期订单号</th>
+        <th class="line_l">分期借款金额</th>
+        <th class="line_l">包含免息额</th>
+        <th class="line_l">利息</th>
+        <th class="line_l">剩余还款（本息）</th>
+        <th class="line_l">期数</th>
+        <th class="line_l">开始时间</th>
+        <th class="line_l">结束时间</th>
+        <th class="line_l">滞纳金</th>
+        <th class="line_l">总计应还</th>
+        <th class="line_l">状态</th>
+    </tr>
+    <php>$allRepay = 0;</php>
+    <volist name="stage_order" id="vo">
+        <php>
+            $repay = isset($vo['overdue']) ? bcadd($vo['last_amount'], $vo['overdue']['all_last_overdue'], 2) : $vo['last_amount'];
+            $allRepay = bcadd($allRepay, $repay, 2);
+        </php>
+
+    <tr>
+        <td>{$vo.id}</td>
+        <td>{$vo.amount}</td>
+        <td>{$vo.free_amount}</td>
+        <td>{$vo.interest}</td>
+        <td>{$vo.last_amount}</td>
+        <td>{$i}/{$stage_order|count}</td>
+        <td>{$vo.stime|date='Y-m-d H:i:s', ###}</td>
+        <td>{$vo.etime|date='Y-m-d H:i:s', ###}</td>
+        <td>
+            <if condition="isset($vo['overdue'])">
+                {$vo['overdue']['all_last_overdue']}
+                <else />
+                0.00
+            </if>
+        </td>
+        <td>{$repay}</td>
+        <td>
+            <eq name="vo.status" value="1">
+                已结清
+            <else />
+                <if condition="$vo['etime'] lt time()">
+                    逾期
+                <else />
+                还款中
+                </if>
+            </eq>
+        </td>
+    </tr>
+    </volist>
+    </tbody>
+</table>
+<table cellpadding="10" cellspacing="3">
+    <tbody><tr>
+        <td align="right">输入还款金额 <span style="color: #F00">*</span></td>
+        <td align="left">
+            <input type="text" id="amount" name="amount" value="{$allRepay}">
+            </td>
+    </tr>
+    </tbody></table>
+<div class="page_btm">
+    <input type="button" class="btn_b" onclick="doRepayOrder('{$order_id}')" value="确定" />
+    <input type="button" class="btn_w" onclick="ui.box.close();" value="取消" />
+</div>
+<script type="text/javascript">
+    function doRepayOrder(order_id) {
+        var amount = parseFloat($('#amount').val());
+        if (isNaN(amount) || amount <= 0) {
+            ui.error('请输入还款金额');
+            return false;
+        }
+        $.post("{:U('pufinance/PufinanceOrder/doRepayOrder')}", {'order_id' : order_id, 'amount' : amount}, function(result) {
+            if (result.status) {
+                ui.box.close();
+                ui.success('还款成功');
+                setTimeout(function(){location.reload();},1500);
+            } else {
+                ui.box.close();
+                ui.error(result.info);
+            }
+        }, 'json');
+    }
+</script>

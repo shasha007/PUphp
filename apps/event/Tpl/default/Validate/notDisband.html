@@ -1,0 +1,44 @@
+驳回原因：</br>
+<textarea  style='width:200px;height:100px;' id='rej'></textarea>
+
+<div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="alR">
+    <input type="button" class="btn_b" id='que'  value="确定" />
+    <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+<script type="text/javascript">
+    $(function(){
+	$('#que').click(function(){
+            var id={$gid};
+            var rej=$('#rej').val();
+            if(!rej){
+                ui.error('请填写驳回原因');
+            }else{
+                //提交修改
+                $.post("{:U('event/Validate/backDisband')}", {id:id,reject:rej}, function(res){
+                    var json =$.parseJSON(res);
+                    if (json.status ==0) {
+                        ui.error(json.info);
+                    }else{
+                        ui.success(json.info);
+                        ui.box.close();
+                        $('#list_'+id).remove();
+                        $('#sub').remove();
+                        updateNum();
+                    }
+                });
+            }
+
+	});
+
+    });
+    function updateNum() {
+        var auditCount = $('#disbandCount').html();
+        auditCount = auditCount -1;
+        $('#disbandCount').html(auditCount)
+    }
+
+    function cancel() {
+	ui.box.close();
+    }
+
+</script>

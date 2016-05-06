@@ -1,0 +1,42 @@
+<include file="../School/_header" />
+<div class="hd_c i1">
+    <div class="ranktab1">
+        <div class="clear"></div>
+        <div id="tabcon" class="tabcon">
+            <table width="940" border="0" cellspacing="0" cellpadding="0">
+                <tr class="b" style="color:#333; height:36px; line-height:36px;">
+                    <td colspan="5" class="rank4 f14"> 我的申请 (不包括被驳回的，被驳回的请注意查收站内系统通知)
+                        <a href="/index.php?app=event&mod=School&act=credit" style="color:#3b5998;">【学时明细】</a>
+                        <a href="/index.php?app=event&mod=EcApply2&act=cjd" style="color:#3b5998;">【第二课堂成绩单】</a>
+                    </td>
+                </tr>
+                <tr class="b" style="color:#333; height:32px; line-height:32px;">
+                    <td style="width:400px;"> 名称 </td>
+                    <td style="width:200px;">类别</td>
+                    <td>申请时间</td>
+                    <td>状态</td>
+                    <td>获得学分</td>
+                </tr>
+                <?php foreach($data as $key=>$vo):?>
+                <tr>
+                    <td><a href="javascript:void(0)" style="color:#3b5998;" onclick="showDetail({$vo.id})">{$vo.title}</a></td>
+                    <td>{$vo.fileName|msubstr=###,0,14,'utf-8'}</td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td><?php if($vo['status']==1):?><span class="green">已通过</span>
+                        <?php else:?><span class="red">待审核</span>
+                        <?php endif;?>
+                    </td>
+                    <td><?php if($vo['status']):?>{$vo.credit}<?php endif;?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <div class="page plist">{$html}</div>
+        </div>
+    </div>
+</div>
+<script>
+    function showDetail(id){
+//        ui.box.load('__URL__&act=myDetail'+'&id='+id,{title:'申请详情'});
+    }
+</script>
+<include file="../School/_footer" />

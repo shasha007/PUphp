@@ -1,0 +1,9 @@
+<?php if($totalPages>1):?>
+    <?php $pageUrl=getPageUrl(); $upRow=$nowPage-1;$downRow=$nowPage+1;?>
+    <?php if($nowPage>1):?>
+    <div class="kc_plist mt10 mr10 ml10"><a href="{$pageUrl}&p={$upRow}">上一页</a></div>
+    <?php endif;?>
+    <?php if($totalPages>$nowPage):?>
+    <div class="kc_plist mt10"><a href="{$pageUrl}&p={$downRow}">下一页</a></div>
+    <?php endif;?>
+<?php endif;?>

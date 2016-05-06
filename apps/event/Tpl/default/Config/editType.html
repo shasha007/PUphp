@@ -1,0 +1,43 @@
+<div style="width:300px;margin:10px auto 20px auto;">
+    活动分类名称：<input id="name" class="txt" value ="{$name}" /><br/><br/>
+    归类：<label>
+        <select name="pid" id="pid" class="text">
+            <?php foreach($typeOrig as $v): ?>
+                <option value="{$v.id}"<php>if($v['id'] == $pid ) {echo "selected";}</php>>{$v.name}</option>
+            <?php endforeach; ?>
+        </select>
+    </label>
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="editType( )" value="确定" />
+</div>
+<script>
+<if condition="$id">
+    var id = '{$id}';
+<else />
+    var id = '0';
+</if>
+function editType( name ){
+    var name = $( '#name' ).val();
+  if(getLength(name.replace(/\s+/g,"")) == 0){
+	 alert("活动分类名称不能为空");
+	 return false;
+  }
+  if(name.length >10) {
+    alert("活动分类名称不能超过10个字");
+    return false;
+  }
+  var pid = $('#pid').val();
+$.post( '__URL__&act=doEditType',{name:name,id:id,pid:pid},function( res ){
+    var json =$.parseJSON(res);
+    if( json.status ==0 ){
+        ui.error(json.info);
+    }else{
+        ui.box.close();
+        ui.success(json.info);
+        window.location.reload(true);
+    }
+});
+
+}
+</script>

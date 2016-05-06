@@ -1,0 +1,151 @@
+<include file="_header" />
+<script>
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要删除的选手");
+                return false;
+            }
+            if( confirm("是否删除选手？") ){
+                $.post( '__URL__&act=put_user_to_recycle',{gid:id},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个选手成功,己放入回收站" );
+                        var id_list = id.split( ',' );   
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove(); 
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功,己放入回收站" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        },
+        stopVote:function(id,act){
+            if( act == 'start' ){
+                v1 = '可以继续投票！';
+                v2 = "关闭投票";
+                act2 = 'stop';
+            }else{
+                v1 = '已关闭投票！';
+                v2 = "打开投票";
+                act2 = 'start';
+            }
+            $.post('__URL__&act=doChangeStoped',{id:id,type:act},function( text ){
+                if( text == 1 ){
+                    ui.success( "操作成功，"+v1 );
+                    $('#button'+id).html('<a href="javascript:void(0);" onclick="c.stopVote('+id+',\''+act2+'\')">'+v2+'</a>');
+                }else{
+                    ui.error( "设置失败" );
+                }
+            });
+        }
+    }
+    var c = null;
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="{:U('show/Admin/editUser')}" class="btn_a"><span>添加选手</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除选手</span></a>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>照片</th>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>姓别</th>
+                <th>成绩</th>
+                <th>学校</th>
+                <th>学院</th>
+                <th>投票数</th>
+                <th>靓照数</th>
+                <th>视频数</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><img width="80" height="80" src="{$vo.path|realityImageURL}"></td>
+                    <td>{$vo.num}</td>
+                    <td>{$vo.realname}</td>
+                    <td> <eq name="vo['sex']" value="1">男<else/>女</eq></td>
+                <td>{$vo.note}</td>
+                <td>{$vo.school}</td>
+                <td>{$vo.college}</td>
+                <td>{$vo.ticket}
+                    <php>			  
+	              if( $vo['stoped'] == 1 ){
+	                $button = "打开投票";
+	                $act    = 'start';
+	              }else{
+	                $button = "关闭投票";
+	                $act    = 'stop';
+	              }
+	              </php>
+		      <span id="button{$vo['id']}" ><a href="javascript:void(0);" onclick="c.stopVote({$vo['id']},'{$act}')">{$button}</a></span>
+                </td>
+                <td><php>if(is_null($vo['img'])){echo '0';}else{echo count(explode(',',$vo['img']));}</php>
+                <a href="{:U('show/Admin/imgList', array('id'=>$vo['id']))}">编辑靓照</a></td>
+                <td><php>if(is_null($vo['flash'])){echo '0';}else{echo count(explode(',',$vo['flash']));}</php>
+                <a href="{:U('show/Admin/flashList', array('id'=>$vo['id']))}">编辑视频</a></td>
+                <td>
+                    <a href="{:U('show/Admin/editUser', array('id'=>$vo['id']))}">编辑</a>
+                    <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="{:U('show/Admin/editUser')}" class="btn_a"><span>添加选手</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除选手</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+    var c = new ctrl();
+</script>
+<include file="_footer" />

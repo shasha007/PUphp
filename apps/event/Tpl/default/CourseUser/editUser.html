@@ -1,0 +1,58 @@
+<include file="../CoursePass/_header" />
+
+<div class="so_main">
+    <div class="page_tit"><eq name="type" value="edit">编辑用户</div>
+    <form method="post" action="{:U('event/CourseUser/doEditUser')}">
+        <input type="hidden" name="uid" value="{$uid}" />
+
+        <div class="form2">
+
+            <dl class="lineD">
+                <dt>院系：</dt>
+                <dd>
+                    {$sidName}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>年级：</dt>
+                <dd>
+                    {$year}&nbsp;
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>专业：</dt>
+                <dd>
+                    {$major}&nbsp;
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>学号：</dt>
+                <dd>{$number}</dd>
+            </dl>
+            <dl class="lineD">
+                <dt>昵称：</dt>
+                <dd>{$uname}</dd>
+            </dl>
+            <dl class="lineD">
+                <dt>真实姓名：</dt>
+                <dd>{$realname}</dd>
+            </dl>
+
+
+            <dl class="lineD">
+                <dt>性别：</dt>
+                <dd><if condition="$sex eq 1"> 男<else/>女</if></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>权限：</dt>
+                <dd>{:W('SelectUserGroup', array('uid'=>$uid,'als'=>'5,6,7'))}</dd>
+            </dl>
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<include file="../CoursePass/_footer" />

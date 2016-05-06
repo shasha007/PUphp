@@ -1,0 +1,115 @@
+<include file="_header" />
+<div class="intro_c">
+    <div class="member_tab">
+        <div class="member_cz">
+            共{$totalRows}个选手&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="batchAllow({$eventId})">批量通过</a>
+        </div>
+    </div>
+    <div class="member_list">
+        <form>
+            <table width="956" border="0" cellspacing="0" cellpadding="0">
+                <tr class="member_tr1">
+                    <td width="5"><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0"></td>
+                    <td width="30"><a href="javascript:void(0);" class="list_order" title="排序" id="order_uid">UID</a></td>
+                    <td width="80">照片</td>
+                    <td width="100">学校</td>
+                    <td width="100">选手</td>
+                    <td width="110">靓照</td>
+                    <td width="110">视频</td>
+                    <td width="100">操作</td>
+                </tr>
+                <volist name="data" id='vo'>
+                    <tr class="member_tr2" id="list_{$vo.id}">
+                        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                        <td>{$vo.uid}</td>
+                        <td class="member_thumb">
+                            <a href="{:PIC_URL}/data/uploads/{$vo.path}">
+                                <img width="80" height="80" src="{$vo.path|getThumb=###,80,80}">
+                            </a>
+                        </td>
+                        <td>{$vo.school}</td>
+                        <td>{$vo.realname}</td>
+                        <td>
+                            <a href="{:U('/Author/playerImg', array('id'=>$eventId, 'uid'=>$vo['id'],'from'=>'upload'))}">编辑靓照</a>
+                        </td>
+                        <td>
+                            <a href="{:U('/Author/playerFlash', array('id'=>$eventId, 'uid'=>$vo['id'],'from'=>'upload'))}">编辑视频</a>
+                        </td>
+                        <td>
+                            <a href="javascript:showPlayer('{$eventId}', '{$vo.id}');">查看</a>
+                            <a href="javascript:allow('{$eventId}', '{$vo.id}');">通过</a>
+                            <a href="javascript:delto('{$eventId}', '{$vo.id}');">驳回</a>
+                        </td>
+                    </tr>
+                </volist>
+            </table>
+        </form>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<include file="_footer" />
+
+<script type="text/javascript">
+    function batchAllow(eventId){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            ui.error("请选择要通过的选项");
+            return false;
+        }
+        allow(eventId,id);
+    }
+    function allow(eventId,id){
+        if( confirm("确定通过？") ){
+            $.post( '__URL__&act=doAllowPlayer',{pid:id,id:eventId},function(text){
+                var json = $.parseJSON(text)
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                    var id_list = id.split( ',' );
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#list_'+id_list[j]).remove();
+                    }
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+    function batchDel(eventId){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            ui.error("请选择要删除的选项");
+            return false;
+        }
+        del(eventId,id);
+    }
+    function del(eventId,id){
+        if( confirm("确定删除？") ){
+            $.post( '__URL__&act=doDeletePlayer',{pid:id,id:eventId},function(text){
+                var json = $.parseJSON(text)
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                    var id_list = id.split( ',' );
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#list_'+id_list[j]).remove();
+                    }
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+
+    function delto(eventId,id){
+        if(id=='' || id==0){
+            ui.error("请选择要拒绝的选手");
+            return false;
+        }
+        ui.box.load(U('event/Author/doAuditReason') + '&id=' + eventId + '&pid='+id,{title:'拒绝'});
+    }
+    function showPlayer(eventId,id){
+        ui.box.load(U('event/Author/showPlayer') + '&id=' + eventId + '&pid='+id,{title:'选手详细'});
+    }
+</script>

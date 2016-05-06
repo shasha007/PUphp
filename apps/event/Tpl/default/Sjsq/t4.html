@@ -1,0 +1,113 @@
+<include file="_header" />
+<script type="text/javascript" src="__PUBLIC__/js/kindeditor/kindeditor.js"></script>
+<form method="post" action="{:U('event/Sjsq/doAddT4')}" enctype="multipart/form-data">
+<div class="prov_ftitle p_c3 b f14">先进工作者申报</div>
+<div class="prov_back prov_link"><a href="{:U('event/Sjsq/index/')}">返回</a></div>
+<div class="clear"></div>
+<div class="prov_fcon mt10">
+    <ul>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 院系：</div>
+            <div class="prov_fcon_d"><input name="sid1" type="text" class="prov_input" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 姓名：</div>
+            <div class="prov_fcon_d"><input name="title" type="text" class="prov_input" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 工号：</div>
+            <div class="prov_fcon_d"><input name="title2" type="text" class="prov_input" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 指导团队：</div>
+            <div class="prov_fcon_d">
+                <input name="zusatz" type="text" class="prov_input" />
+            </div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 总结材料：<br />(不超过1000字)&nbsp;</div>
+            <div class="prov_fcon_d"><textarea name="content" id="content" cols="" rows="" class="prov_tarea"></textarea></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 图片上传：</div>
+            <div class="prov_fcon_d prov_link"><input type="button" onclick="openUpload();" value="添加图片"/></div>
+        </li>
+        <li>
+            <div class="prov_thumblist">
+                <ul id="uploaded_photos">
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="prov_fcon_t">视频上传：</div>
+            <div class="prov_fcon_d prov_link"><input type="button" onclick="openFlash();" value="添加视频"/>
+                <div id="uploaded_flash"></div>
+            </div>
+        </li>
+        <li class="prov_fcon_b"><input type="button" value="提 交" onclick="submitForm(this.form);" class="prov_btn" /></li>
+    </ul>
+</div>
+</form>
+
+<script type="text/javascript" src="/public/js/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/public/js/swfupload/swfupload.queue.js"></script>
+<script type="text/javascript" src="/public/js/swfupload/fileprogress.js"></script>
+<script type="text/javascript" src="/public/js/swfupload/handlers.js"></script>
+<script>
+$(function(){
+    E=KISSY.Editor( "content" );
+});
+function checkform(v_form){
+    var sid = v_form.sid1.value;
+    if(sid == 0) {
+            v_form.sid1.focus();
+            ui.error('请输入院系');
+            return false;
+    }
+    var titleLength = getLength(v_form.title.value);
+    if(titleLength == 0) {
+            v_form.title.focus();
+            ui.error('姓名不能为空');
+            return false;
+    }
+    if(titleLength > 100) {
+            v_form.title.focus();
+            ui.error('姓名不能超过100个字');
+            return false;
+    }
+    var title2Length = getLength(v_form.title2.value);
+    if(title2Length == 0) {
+            v_form.title2.focus();
+            ui.error('工号不能为空');
+            return false;
+    }
+    if(title2Length > 100) {
+            v_form.title2.focus();
+            ui.error('工号不能超过100个字');
+            return false;
+    }
+    var zusatzLength = getLength(v_form.zusatz.value);
+    if(zusatzLength == 0) {
+            v_form.zusatz.focus();
+            ui.error('指导团队不能为空');
+            return false;
+    }
+    var contentLength = tsStripTagsLength(v_form.content.value);
+    if(contentLength == 0) {
+
+            ui.error('总结材料不能为空');
+            return false;
+    }
+    if(contentLength > 1150) {
+            ui.error('总结材料不能超过1000个字');
+            return false;
+    }
+    var imgLength = getLength($('#uploaded_photos').html());
+    if(imgLength == 0) {
+            ui.error('请上传图片');
+            return false;
+    }
+    return true;
+}
+</script>
+<include file="_footer" />

@@ -1,0 +1,22 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <include file="_ectab" />
+    <div class="page_tit">配置兑换比例，显示于第二课堂成绩单</div>
+    <form method="post" action="{:U('event/config/doEcChange')}">
+    <div class="form2">
+        <dl class="lineD">
+            <dd>
+                参加PU活动所得【{$webconfig.cradit_name}】转换为第二课堂成绩单：<input name="ecName" value="{$webconfig.ecName}" />
+                <span class="cGray2">最大4个汉字，用于打印excel成绩单</span>
+                <br/>兑换比例：1比 <input name="ecRat" value="{$webconfig.ecRat}" onkeyup="clearNoNum(this)"/>
+                <br/><input type="submit" class="btn_b" value="确定" />
+            </dd>
+        </dl>
+    </div>
+    </form>
+</div>
+<script type="text/javascript">
+
+</script>
+<include file="../Teacher/_footer" />

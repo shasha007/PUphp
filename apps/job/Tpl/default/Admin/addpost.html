@@ -1,0 +1,155 @@
+<div class="list">
+     <form action='__URL__&act=addPost' method ="POST">
+    <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>选择公司</td>
+        <td><select name="company">
+                <option value="0">-----please-----</option>
+                <volist name='eids' id='vo' key='key'>
+                    <option value="{$vo.eid}">{$vo.fullname}</option>
+                </volist>
+            </select>
+        *</td>
+    </tr>
+    <tr>
+        <td>职位名称</td>      
+        <td><input type="text" name="positionname">*</td>
+    </tr>
+    <tr>
+        <td>职位分类</td>      
+        <td>
+            <select id="pclass">
+                <option value="0">-----please-----</option>
+                <volist name="f_a" id="vo" key="key">
+                    <option value="{$vo.id}">{$vo.functionname}</option>
+                </volist>
+            </select>
+            <select id="f_b"><option value="0">-----please-----</option></select>      
+            <select id="f_c" name="positionclass"><option value="0">-----please-----</option></select>
+       *</td>
+    </tr>
+    <tr>
+        <td>招聘人数</td>      
+        <td><input type="text" name="number">*</td>
+    </tr>
+     <tr>
+        <td>工作区域</td>      
+        <td>
+            <select name="workarea">
+                <option value="0">-----please-----</option>
+                <volist name="workarea" id="vo" key="key">
+                    <option value="{$vo.cityID}">{$vo.city}</option>
+                    <?php $area = $vo['area']?>
+                     <volist name="area" id="v" key="k">
+                        <option value="{$v.areaID}">--{$v.area}</option>          
+                     </volist>
+                </volist>
+            </select>
+        *</td>
+    </tr>
+    <tr>
+        <td>信息投放学校</td>      
+        <td>       
+            <input type="hidden" name="showSids" id="showSids"/>
+            <input type="button" class="p_btn" value="选择学校" onclick="selectSchool();"/>
+        *</td>
+    </tr>
+    <tr>
+        <td>信息结束日期</td>      
+        <td><input type="text" name='endtime' id='sTime' class="p_input2 ctime" onfocus="rcalendar(this,'full');">*</td>
+    </tr>
+    <tr>
+        <td>薪资</td>      
+        <td>
+            <select name="salary">
+                <option value="0">-----please-----</option>
+                <volist name='salary' id='vo' key='key'>
+                    <option value="{$key-1}">{$vo}</option>
+                </volist>
+            </select>
+        *</td>
+    </tr>
+    <tr>
+        <td>职位类型</td>      
+        <td>
+             <select name="type">
+                <option value="1">全职</option>
+            </select>
+        *</td>
+    </tr>
+    <tr>
+        <td>学历</td>      
+        <td><select name="education"> 
+                <volist name='ed' id='vo' key='key'>
+                    <option value="{$key-1}">{$vo}</option>
+                </volist>
+            </select>*
+        </td>
+    </tr>
+    <tr>
+        <td>性别</td>      
+        <td>
+            <select name="sex">
+                <option value="0">-----不限-----</option>   
+                <option value="1">-----男-----</option>  
+                <option value="2">-----女-----</option>
+            </select>*
+        </td>
+    </tr>
+    <tr>
+        <td>岗位描述</td>      
+           <td><div class="c1"><textarea id="content" name="jobdescripition" style="height:350px;"></textarea></div>
+        </td>
+    </tr>
+    <tr>
+        <td><div class="c1" style="height:30px;"><input type="submit" class="btn_b" value="OK" /></div></td>    
+        <td></td>
+    </tr>
+    </table>
+     </form>
+</div>
+<script type="text/javascript">
+                function selectSchool(){
+                    var typevalue = $("#showSids").val();
+                    ui.box.load(U('event/Index/school')+'&selected='+typevalue,{title:'选择学校',noCheck:'yes'});
+                }
+</script>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/js/ztree/zTreeStyle.css" />
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.core-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.excheck-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.exedit-3.5.min.js" ></script>
+<include file="__THEME__/comm/_datepicker" />
+
+<include file="__THEME__/comm/_upload_file" />
+<script>
+    $(function(){
+        
+        $('#pclass').change(function(){
+            var id = $(this).children('option:selected').val();
+            change('__URL__&act=function_b','f_b',id);
+        })
+        $('#f_b').change(function(){
+            var id = $(this).children('option:selected').val();
+            change('__URL__&act=function_c','f_c',id);
+        })
+        function change(url,choice,id){
+            if(id){
+                //AJAX
+                $.post(url,{id:id},function(data){
+                    if(data){
+                        var arr = eval(data);
+                        if(id == 0){
+                            $('#'+choice)[0].options.length = 1;
+                        }else{
+                            $('#'+choice)[0].options.length = 1;
+                              for(var i=0;i<arr.length;i++){
+                               $('#'+choice)[0].add(new Option(arr[i].functionname,arr[i].id));
+                            }
+                        }
+                    }
+                    
+                })
+            }
+        }
+    })
+</script>

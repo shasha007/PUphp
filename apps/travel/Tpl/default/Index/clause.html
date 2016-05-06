@@ -1,0 +1,41 @@
+
+<div style="t_r_rules">
+    <div class="t_rules_desc">
+    <pre>
+
+     <div class="t_rules_title b f14">旅游免责条款</div>
+
+1.本活动为自愿参与的旅游活动，活动性质属于个人自发行为,活动中的任何安全责任由本人与保险公司根据保险协议自行解决（旅游意外险自行购买），与本公司及共同参与组织的其他同行人无关。</ br>
+2.本人保证在活动期间遵纪守法，文明出行，出行期间的任何纠纷和法律责任由本人自行承担解决，与本公司及参与组织的其他同行人无关。</ br>
+3.凡报名参加者均视为具有完全民事行为能力人,依法对自身的人身和财产安全具有审慎的注意义务和自我保护义务,活动期间遇到财物丢损等，责任自负。</ br>
+4.选择报名参加活动时，应选择能够控制风险的活动项目，并坚持风险和责任自负的原则，由于意外事故和急性疾病等不可预测因素造成身体损伤时，本公司不承担任何责任。</ br>
+5.参加活动者确认自己身体健康，没有不适合野外活动的心脏疾病，高血压，哮喘，急性传染病，慢性病等以及其他不适宜高强度活动的疾病。
+如因不适宜户外活动的疾病，导致参加者损害的，由其自行承担责任，本公司及其他同行的人不承担任何责任。</ br>
+
+备注：本免责条款（现在或将来）如有与国家有关的法律、法规不相符的，以国家有关的法律、法规为准。</span>
+    </pre>
+    </div>
+    <div class="clear"></div>
+    <div class="t_btn alR">
+        <ul>
+        <form action="{:U('travel/Index/pay')}" method="post">
+                <input type="hidden" name="tid" value="{$_GET['tid']}">
+                <input type="hidden" name="type" value="{$_GET['type']}">
+                <li><input type="submit" class="btn_b"  value="同意" /></li>
+        </form>
+            <li><input type="button" class="btn_w" onclick="cancel()" value="不同意" /></li>
+     </ul>
+    </div>
+        
+</div>
+
+<!--<div style="width:600px;height:400px;">
+    您尚未绑定手机，请绑定手机号码，方便与您联系
+    <a href="{:U('home/Account/security#mobile')}" target="_blank" onclick="javascript:cancel();">点击绑定</a>
+</div>-->
+<script>
+    
+    function cancel() {
+        ui.box.close();
+    }
+</script>

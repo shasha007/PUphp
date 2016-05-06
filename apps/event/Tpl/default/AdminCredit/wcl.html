@@ -1,0 +1,71 @@
+<include file="../Teacher/_header" />
+<style type="text/css">
+table td {
+    vertical-align: top;
+}
+</style>
+<div class="so_main">
+  <include file="_tab" />
+  <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <form method="post" onsubmit="return checkIn();">
+            院系：<input type="text" name="sname" id="selectSid1" class="text" value="{$_POST['sname']}" readonly="true" OnFocus="selectSchool()" />
+                  <input type="hidden" id="currentSid1" name="sid1" value="{$_POST['sid1']}"/>
+            年级(格式 14)：<input id="year" name="year" type="text" value="{$_POST['year']}" />
+            类别：<select id="type" name="type">
+                <volist id="vo" name="types">
+                    <option value="{$vo.id}" <?php if($_POST['type']==$vo['id']):?>selected<?php endif;?>>{$vo.title}</option>
+                </volist>
+                </select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+  </div>
+  <?php if(!empty($list)):?>
+  <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+        <volist id="vo" name="title">
+            <th class="line_l">{$vo}</th>
+        </volist>
+        </tr>
+        <tr>
+        <volist id="vo" name="list">
+            <td class="line_l">{$vo}</td>
+        </volist>
+        </tr>
+      </table>
+  </div>
+  <br/><br/>
+  <?php endif;?>
+</div>
+<script type="text/javascript">
+    var sid = {$editSid};
+    function selectSchool(){
+        if(!$('input[name="close"]').val()){
+            var typevalue = $("#currentSid1").val();
+            ui.box.load(U('home/Public/boxYuanxi')+'&selected='+typevalue+'&sid='+sid,{title:'选择学校',noCheck:'yes'});
+        }
+    }
+    function checkIn(){
+        var yx = $('#currentSid1').val();
+        if( !yx ) {
+            alert( '请选择院系' );
+            $('#selectSid1').focus();
+            return false;
+        }
+        var year = $('#year').val();
+        if( !year ) {
+            alert( '请输入年级，格式14' );
+            $('#year').focus();
+            return false;
+        }
+        var lb = $('#type').val();
+        if( !type ) {
+            alert( '请选择类别' );
+            $('#type').focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<include file="../Teacher/_footer" />

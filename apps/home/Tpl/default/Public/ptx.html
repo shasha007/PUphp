@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width; initial-scale=1.0">
+            <title>PU---扑天下</title>
+    </head>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+    <script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+    </script>
+    <style>
+        *{ padding:0;margin:0;list-style:none;}
+        body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+        table,td{margin:auto;padding:inherit;}
+        select, input, img{ vertical-align:middle;}
+        a{ text-decoration:none;}
+        a:link {color:#666;}
+        a:visited{ color:#666;}
+        a:hover,a:active, a:focus {color:#999; text-decoration:underline;}
+        body {
+            font-family: "宋体","MingLiu","Lucida Sans Unicode", "Lucida Grande", "sans-serif",;
+            font-size: 12px;
+            line-height:160%;
+            font-style: normal;
+            font-weight: 400;
+            font-variant: normal;
+            text-transform: none;
+            color: #666;
+            text-decoration: none;
+            background-color:#fff;
+            background-image: none;
+            background-repeat: no-repeat;
+            letter-spacing: normal;
+            text-align: left;
+            word-spacing: normal;
+            white-space: normal;
+            display: block;
+            clear: both;
+            float: none;
+            width: auto;
+            position: static;
+            height: auto;
+            top: auto;
+            clip: rect(auto,auto,auto,auto);
+        }
+        .clear{ clear:both;}
+.bg{ float:left; width:100%; background:#fff;}
+.main{ width:100%; margin:auto;}
+.ptx{ float:left; width:100%; clear:both;}
+.world_list{ float:left; width:94%; margin-bottom:10px;border:1px solid #dedede; margin:10px 3%; display:inline;}
+.world_time{ margin:10px auto 0 auto; background:#eee; border-radius:3px; height:30px; line-height:30px; width:35%; padding:0 5px; text-align:center;}
+.world{ float:left; width:94%; margin:4px 3% 0 3%; }
+.world_top{ float:left; width:96%; padding:1% 2%;}
+.world_top img{ width:100%; height:140px;}
+.world_top_title{ background:#000; font-size:16px; opacity:0.6; color:#fff; width:96%; padding:0 2%; height:30px; line-height:30px; margin-top:-30px; float:left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.t_list{ float:left; width:100%; margin:0px auto; font-size:14px;}
+.t_list_desc{float:left; width:96%; padding:5px 2%; font-weight:bold; line-height:24px; text-align:left; border-top:1px solid #eee;}
+.t_list_text{ float:left; width:70%; margin-left:2%; display:inline;color:#333; height:48px; overflow:hidden; margin-top:3px;}
+.t_list_title{ float:left; font-size:16px; height:24px; overflow:hidden;}
+.t_list_thumb{ float:right; width:24%; padding:0 2%; text-align:right;}
+.t_list_thumb img{ width:60px; height:60px;}
+img {max-width: 100%; height: auto; width: auto\9; /* ie8 */}
+.video embed, .video object, .video iframe {width: 100%;height: auto;}
+@media screen and (max-width: 980px) {
+}
+</style>
+    <body>
+        <div class="bg">
+            <div class="main">
+                <foreach item="val" name="list">
+                    <div class="ptx">
+                        <div class="world_time">{$val[rtime]|friendlyDate}</div>
+                        <div class="clear"></div>
+                        <div class="world_list">
+                        <foreach item="vo" name="val.data">
+                            <div class="world">
+                                <if condition="$vo.isbig eq 1">
+                                    <a href="{:U('home/Public/ptxdetail')}&id={$vo.id}">
+                                    <div class="world_top"><img src="{$vo.img|tsMakeThumbUp=###,900,500,'c'}" />
+                                        <div class="world_top_title">{$vo.title}</div>
+                                    </div>
+                                    </a>
+                                <else />
+                                    <div class="t_list">
+                                        <a href="{:U('home/Public/ptxdetail', array('id'=>$vo['id']))}">
+                                            <div class="t_list_desc"><div class="t_list_text">{$vo.title}</div>
+                                            <div class="t_list_thumb"><img src="{$vo.img|tsMakeThumbUp=###,200,200,'c'}" /></div></div>
+                                        </a>
+                                    </div>
+                                </if>
+                            </div>
+                        </foreach>
+                    </div>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+  $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        if (scrollTop + windowHeight == scrollHeight) {
+            var m = $('.world_list').length;
+            //alert(m);
+            $.post('__URL__&act=ajaxPtx',{n:m},function(data){
+                //alert(data);
+                if(data==0){
+
+
+                }else{
+                    var html = '';
+                    for(var i=0;i<data.length;i++){
+						html += '<div class="ptx">';
+						html += '<div class="world_time">'+ data[i]['rtime']+'</div>';
+                        html += '<div class="world_list">';
+                        for(var j=0;j<data[i]['list'].length;j++){
+                            html += '<div class="world">';
+                            if(data[i]['list'][j]['isbig']==1){
+                                html += '<a href="{:U('home/Public/ptxdetail')}&id='+data[i]['list'][j]['id']+'">';
+                                html += '<div class="world_top">';
+                                html += ' <img src="'+ data[i]['list'][j]['img']+'" />';
+                                html += '<div class="world_top_title">'+data[i]['list'][j]['title']+'</div></div></a>';
+                            }else{
+                                html += '<div class="t_list"><div class="t_list_desc">';
+                                html += '<a href="{:U('home/Public/ptxdetail')}&id='+data[i]['list'][j]['id']+'">';
+                                html += '<div class="t_list_text">'+data[i]['list'][j]['title']+'</div>';
+                                html += '<div class="t_list_thumb">';
+                                html += '<img src="'+data[i]['list'][j]['img']+'" /></div></a></div></div>';
+                            }
+                            html += '</div>';
+                        }
+                        html += '</div></div>';
+                    }
+                }
+                $(".main").append(html);
+
+              /*
+                $.each(obj, function(k,v){
+                    var list = v['list'];
+                    var html = '<div class="world_list">';
+                    html += '<div class="world_time">'+ v['rtime']|friendlyDate + '</div>';
+                    $.each(list,function(k,v){
+                        html += '<div class="world">';
+                        if(v['isbig']==1){
+                           html += '<a href="{:U('home/Public/ptxdetail')}&id='+v['id']+'">';
+                           html += '<div class="world_top">';
+                           html += ' <img src="'+ v['img']+'|tsMakeThumbUp=###,900,500 " />';
+                           html += '<div class="world_top_title">'+v['title']+'</div></div></a>';
+                        }else{
+                            html += '<div class="t_list">';
+                            html += '<a href="{:U('home/Public/ptxdetail')}&id='+v['id']+'">';
+                            html += '<div class="t_list_text">'+v['title']+'</div>';
+                            html += '<div class="t_list_thumb">';
+                            html += '<img src="'+v['img']|tsMakeThumbUp=###,200,200+'" /></div></a></div>';
+
+                        }
+                        html += '</div>';
+                    });
+                    html += '</div>';
+                    $(".main").append(html);
+                });
+
+                    //$(".main").append()
+                    */
+            },'json');
+      //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+        }
+    });
+
+    </script>
+</html>

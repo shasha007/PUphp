@@ -1,0 +1,67 @@
+<include file="header" />
+        <div id="chrome">
+            <div id="container">
+                <!-- toolbar header -->
+                <div class="toolbar">
+                    <div class="kc_menu mt10">
+                        <a href="{:U('w3g/School/kc')}"><span class="btn_kc cur mr15">课  程</span></a>
+                        <a href="{:U('w3g/School/hd')}">课程活动</a>
+                        &nbsp;{$user.uname|getShort=###,4,''}
+                        <a class="tit_rig" href="{:U('w3g/SchoolPublic/logout')}">退出</a>
+                    </div>
+                </div>
+                <div class="kc_search">
+                    <form method="post" action="{:U('w3g/School/kc')}">
+                        <input name="sousuo" type="text" class="input_search" placeholder="输入课程名" value="{$searchTitle}"/>
+                        <input type="submit" class="btn_search" value="搜 索" />
+                    </form>
+                </div>
+
+                <div class="scroller" id="kc">
+                    <div id="content">
+                        <div class="kc_fl mt10">
+                            <div class="kc_fl_menu">课程分类</div>
+                            <div class="kc_fldesc">我的课程:
+                                <a  <?php if($_SESSION['lesson_searchCat']['cat']=='')echo' class="f_s b"';?> href="{:U('w3g/School/kc',array('cat'=>'all'))}">全部</a>
+                                &nbsp;&nbsp; <a <?php if($_SESSION['lesson_searchCat']['cat']=='join')echo' class="f_s b"';?> href="{:U('w3g/School/kc',array('cat'=>'join'))}">我报名的课程</a></div>
+                            <div class="kc_fldesc">分	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类:
+                                <a <?php if(!$_SESSION['lesson_searchCat']['cid'])echo' class="f_s b"';?>
+                                    href="{:U('w3g/School/kc', array('cid'=>'all'))}">全部</a> &nbsp;&nbsp;
+                                <?php foreach($type as $k=>$vo):?>
+                                <a<?php if($_SESSION['lesson_searchCat']['cid']==$k)echo' class="f_s b"';?>
+                                    href="{:U('w3g/School/kc', array('cid'=>$k))}">{$vo}</a>&nbsp;&nbsp;
+                                <?php endforeach;?>
+                            </div>
+                        </div>
+                        <div class="C"></div>
+                        <div class="kc_list">
+                            <ul>
+                                <volist name='data' id='vo'>
+                                <li>
+                                    <div class="kc_t"><a href="{:U('w3g/School/kcDetail', array('id'=>$vo['id']))}">{$vo.title}</a></div>
+                                    <div class="kc_style">分类：{$vo.type}</div>
+                                    <div class="kc_field">上课时间：<?php echo date('Y-m-d H:i', $vo['sTime']) . " 至 " . date('Y-m-d H:i', $vo['eTime']) ?></div>
+                                    <div class="kc_field">报名时间：<?php echo date('Y-m-d H:i', $vo['deadline']) ?> 截止</div>
+                                    <div class="kc_field">地点：{$vo.address}</div>
+                                    <div class="kc_field">课时：{$vo.credit}   任课老师：{$vo.teacher}</div>
+                                    <div class="kc_field">参加人数（{$vo.joinCount}） 剩余名额：{$vo.limitCount} </div>
+                                </li>
+                                </volist>
+                            </ul>
+                            <div class="C"></div>
+                            <include file="page" />
+                        </div>
+
+                        <div>
+
+                        </div>
+                    </div><!-- end content -->
+                </div><!-- end kc -->
+
+                <!-- toolbar tabs -->
+                <div class="tabs">PocketUni版权所有	 苏ICP备12046592号-4</div>
+
+            </div><!-- end container -->
+        </div><!-- end chrome -->
+        <script type="text/javascript" src="__PUBLIC__/js/touch.js"></script>
+<include file="footer" />

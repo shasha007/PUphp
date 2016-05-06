@@ -1,0 +1,234 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<include file="__THEME__/editor" />
+
+<script>
+    var gid = {$gid};
+    var tid = {$tid};
+
+    var admin_set = function(op)
+    {
+        $.ajax({
+            type: "POST",
+            url:  "__URL__&{:C('VAR_ACTION')}="+op,
+            data: 'gid={$gid}&tid={$tid}&op=' + op,
+            dataType:"json",
+            success: function(data)
+            {
+                if (data.flag == 1) {
+                    var element_id = '';
+                    var operation = '';
+                    var operation_title = '';
+                    switch (op) {
+                        case 'top': // 置顶
+                            element_id = 'top';
+                            operation = 'untop';
+                            operation_title = '取消置顶';
+                            $('#top_icon').show();
+                            break;
+                        case 'untop': // 取消置顶
+                            element_id = 'top';
+                            operation = 'top';
+                            operation_title = '置顶';
+                            $('#top_icon').hide();
+                            break;
+                    }
+                    var obj = $('#'+element_id);
+                    obj.html(operation_title);
+                    obj.attr('title', operation_title);
+                    obj.attr('href', 'javascript:admin_set("'+operation+'");');
+                    ui.success("操作成功");
+                }else {
+                    ui.error("操作失败");
+                }
+            }
+        });
+    }
+
+
+    function reload() {
+        window.location.reload();
+    }
+
+    function delThread(gid, tid)
+    {
+
+        if (confirm("删除后无法恢复！确认删除整个话题？"))
+        {
+            document.delform.gid.value = gid;
+            document.delform.tid.value = tid;
+            document.delform.type.value = 'thread';
+            document.delform.submit();
+        }
+    }
+    function delPost(gid,pid)
+    {
+        if (confirm("删除后无法恢复！确认删除该条回复？"))
+        {
+            document.delform.gid.value = gid;
+            document.delform.tid.value = pid;
+            document.delform.type.value = 'post';
+            document.delform.submit();
+        }
+    }
+
+    function download(fid) {
+        if (!fid) {
+            ui.error('附件参数错误');
+            return false;
+        }
+        document.downloadform.fid.value = fid;
+        document.downloadform.submit();
+    }
+</script>
+{:W('EventGroupWeibo',array('tpl_name'=>'group_post_share_weibo','button_title'=>'分享','page_title'=>'分享帖子'))}
+<div class="clear"></div>
+
+<form name="delform" action="{:U('event/GroupTopic/del')}" method="post">
+    <input type=hidden name=gid value="{$gid}">
+    <input type=hidden name=tid value="{$tid}">
+    <input type=hidden name=type value="">
+</form>
+
+<!--帖子详细页-->
+<div class="st_tz_list ml10 mt20">
+    <volist name="postlist['data']" id="post" key="key">
+        <if condition="$post['istopic'] eq 1">
+            <span class="st_tz_share">
+            </span>
+            <h3 class="st_tz_t">
+
+                <span class="mr5" id="top_icon" <php>if(!$topic['top']){</php>style="display:none;"<php>}</php>><img src="../Public/images/icon_top.png" /></span>{$topic.ctitle}{$topic.title}
+            </h3>
+            <div class="mt20 ml10"style="border-bottom:1px solid #E6E6E6; float: left; width:640px; ">
+                <div class="left" style="width:60px;"><span class="st_tz_thumb"><space uid="topic['uid']" target="_blank">{uavatar=m}</space></span><br />
+                </div>
+                <div style="margin-left:70px">
+                    <div class="cGray2">
+                        <div class="right">楼主</div>
+                        <space uid="topic['uid']" class="fn" target="_blank">{uname}</space>{$topic['uid']|getUserGroupIcon} <em>{$topic['addtime']|friendlyDate}</em></div>
+                    <div class="pb10 pt10 f14px" style="padding-bottom:50px" >
+                        <div id="topic_content">{$topic.content|html_entity_decode=###,ENT_QUOTES}</div>
+                        <php>if (is_array($topic['attach'])) {</php>
+                        <if condition="!$groupinfo['openUploadFile']">
+                            <div>文件共享已关闭</div>
+                            <elseif condition="($groupinfo['whoUploadFile'] == 3 && !$ismember) || ($groupinfo['whoUploadFile'] == 2 && !$isadmin)" />
+                            <div class="locked">无权限查看附件</div>
+                            <else />
+                            <volist name="topic['attach']" id="data">
+                                <div class="adjunct_list">
+                                    <div class="Annex">
+                                        <if condition="$data['is_del']">
+                                            <span style="text-decoration:line-through;">附件：{$data['name']}</span>[<span style="color:#FF0000;">已被管理员删除</span>]
+                                            <else />
+                                            附件：<a href="javascript:;" onClick="download({$data['id']});" <if condition="$file['note']">title="注释：{$data['note']}"</if>>{$data['name']}</a>
+                                        </if>
+                                    </div>
+                                </div>
+                            </volist>
+                        </if>
+                        <php>}</php>
+                    </div>
+                    <php> if($topic['mtime']) { </php>
+                    <div class="cGray2">修改于{$topic['mtime']|friendlyDate}</div>
+                    <php>} </php>
+                    <div class="st_link st_tz_cz">
+                        <php>if($isadmin) { </php>
+
+                        <php>if($topic['top'] == 1) {</php>
+                        <a id="top" href="javascript:admin_set('untop');" title="取消置顶">取消置顶</a> 
+                        <php>} else {</php>
+                        <a id="top" href="javascript:admin_set('top');" title="置顶">置顶</a>
+                        <php>}</php>
+                        <span class="line_l">|</span>
+                        <a href="{:U('/GroupTopic/edit',array('gid'=>$gid,'tid'=>$tid))}" title="编辑">编辑</a>
+                        <span class="line_l">|</span>  <a href="javascript:delThread({$gid},{$tid});" title="删除">删除</a>
+                        <php>} else if ($mid == $topic['uid']) { </php>
+                        <a href="{:U('/GroupTopic/edit',array('gid'=>$gid,'tid'=>$tid))}" title="编辑">编辑</a> <span class="line_l">|</span>
+                        <a href="javascript:delThread({$gid},{$tid});" title="删除">删除</a>
+                        <php>}</php>
+                    </div>
+                </div>
+            </div>
+            <else />
+            <div class="clear"></div>
+            <div class="st_tz_list ml10">
+                <ul>
+                    <li>
+                        <div class="left f14px cGray2" style="width:60px; ">
+                            <span style="font-size:24px"><php>echo $start_floor;$start_floor++</php></span> 楼
+                        </div>
+                        <div style="margin-left:70px">
+                            <div class="cGray2 lh30">
+                                <span class="st_tz_l_thumb"><space uid="post['uid']" target="_blank">{uavatar=m}</space></span>
+                                <space uid="post['uid']" class="ml10" target="_blank">{uname}</space>
+                                {$post['uid']|getUserGroupIcon} {$post['ctime']|friendlyDate}</div>
+                            <div class="pb10 pt10 f14 st_tz_text">
+                                <div class="ml10 st_fl"style="padding:0 50px 0 0; " id="reply_content">
+                                    {$post['content']|html_entity_decode=###,ENT_QUOTES}
+                                </div>
+                            </div>
+                            <php>if ($ismember) { </php>
+                            <div class="st_link st_tz_cz">
+                                <php>if($mid == $post['uid'] || $isadmin){</php>
+                                <a href="{:U('/GroupTopic/editPost',array('gid'=>$gid,'pid'=>$post['id']))}">编辑</a><span class="line_l">|</span>
+                                <a href="javascript:delPost({$gid},{$post['id']});">删除</a>
+                                <php>}</php>
+                            </div>
+                            <php>}</php>
+                        </div>
+                        </div>
+                    </li>
+                </ul>
+
+        </if>
+    </volist>
+    <if condition="$postlist['html']"><div class="page">{$postlist['html']}</div></if>
+</div>
+<div class="clear"></div>
+<!--帖子回复区-->
+<div class="st_f_text ml20 b f14 mt10">
+    <form method="post" action="{:U('event/GroupTopic/post',array('gid'=>$gid,'tid'=>$tid))})}" id="replyForm">
+    <span style="height:50px; vertical-align:top">回复帖子：</span>
+    <textarea id="content" name="content" cols="" rows="" placeholder="请输入文字" class="st_textarea s_hf1"></textarea>
+</div>
+<div class="st_fl ml20 mt10 pb10"><input name="st_fb" type="submit" class="st_f_btn" value="发 表" /></div>
+</form>
+</div>
+
+<script>
+    function photo_size(name){
+        $(name+" img").each(function(){
+            var width = 500;
+            var height = 500;
+            var image = $(this);
+            if (image.width() > image.height()){
+                if(image.width()>width){
+                    image.width(width);
+                    image.height(width/image.width()*image.height());
+                }
+            }
+            else{
+                if(image.height()>height){
+                    image.height(height);
+                    image.width(height/image.height()*image.width());
+                }
+            }
+            image.addClass('hand');
+            image.bind('click',function(){
+                window.open(image.attr('src'),'_blank');
+            });
+        });
+    }
+
+    photo_size('#topic_content');
+    photo_size('#reply_content');
+    photo_size('#quotes');
+
+ $(document).ready(function(){
+    setTimeout('loadEditor("content")',500);
+});
+</script>
+
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

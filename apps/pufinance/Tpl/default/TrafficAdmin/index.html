@@ -1,0 +1,71 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="../Public/js/laydate/laydate.js"></script>
+<div class="so_main">
+    <include file="../Public/trafficTabs" />
+<!--	<include file="tabs" />-->
+<!--	<hr>-->
+<!--    <div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=index">
+			开始时间：<input class="laydate-icon" id="start" style="width:200px; margin-right:10px;" name="start" value="" /> - 
+			结束时间：<input class="laydate-icon" id="end" style="width:200px;" value="" name="end" /><br/>
+			区　域：<select name="province" id="province">
+				<option value="all">--请选择省份--</option>
+				<?php echo $provinces_option;?>
+			</select> - <select name="city" id="city">
+				<option value="all">--请选择城市--</option>
+				<?php echo $citys_option;?>
+			</select>
+			<br/>
+			学　校：<select name="school" id="school">
+				<option value="all">--请选择学校--</option>
+				<?php echo $schools_option;?>
+			</select> - 
+			<select name="yx" id="yx">
+				<option value="all">--请选择院系--</option>
+			</select>
+			<br/>
+			年　级：<input type="number" name="year" value="{$Think.post.year}" min="0" /><span style="color:red;">例如:15</span>
+			<br/>
+			订单类型: <select name="type" id="">
+			<option value="all">--请选择订单类型--</option>
+			<?php foreach($types as $k=>$type):?>
+			<option value="<?php echo $k;?>"><?php echo $type;?></option>
+			<?php endforeach;?>
+			</select>
+			<br/>
+			订单状态: <select name="status" id="">
+				<option value="all">--请选择订单状态--</option>
+				<?php foreach($status as $k=>$item):?>
+				<option value="<?php echo $k;?>"><?php echo $item;?></option>
+				<?php endforeach;?>
+			</select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="导出订单" />
+        </form>
+    </div>	-->
+</div>
+<script type="text/javascript">
+    var start = {
+        elem: '#start',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        max: '2099-06-16 23:59:59', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function(datas){
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function(datas){
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(start);
+    laydate(end);
+</script>
+<include file="../Public/footer" />

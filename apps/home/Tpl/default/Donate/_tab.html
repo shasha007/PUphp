@@ -1,0 +1,14 @@
+<div class="page_tit">爱心校园</div>
+<div class="tit_tab">
+    <ul>
+        <li><a <eq name="ACTION_NAME" value="index">class="on"</eq> href="__URL__&act=index">爱心校园后台</a></li>
+        <li><a <eq name="ACTION_NAME" value="donateList">class="on"</eq> href="__URL__&act=donateList">正在拍卖</a></li>
+        
+          <li><a <eq name="ACTION_NAME" value="audit">class="on"</eq> href="__URL__&act=audit">待审核
+            <?php if($auditCount):?><strong style="color: #F00;">(<span  id="auditCount">{$auditCount}</span>)</strong><?php endif;?>
+        </a></li>
+        <li><a <eq name="ACTION_NAME" value="donateOver">class="on"</eq> href="__URL__&act=donateOver">已经成交</a></li>
+        <li><a <eq name="ACTION_NAME" value="catList">class="on"</eq> href="__URL__&act=catList">分类管理</a></li>
+
+    </ul>
+</div>

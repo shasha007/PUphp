@@ -1,0 +1,69 @@
+<div class=page_tit>
+
+
+  <ul class="tit_tab" style="float:left">
+    <li>
+    	<a href="{:U('group/Index/newIndex')}" class="{$index_class}">{$ts['app']['app_alias']}首页</a>
+    </li>
+    <li id="dropdown_my_group">
+    	<a href="{:U('group/SomeOne')}" class="{$my_class} hover">我的{$ts['app']['app_alias']} <span class="more"></span></a>
+    	<div class="mg_lapinfo" style="width:120px">
+    	    <volist name="all_my_app" id="vo">
+    		  <a href="{:U('group/Group/index',array('gid'=>$vo['id']))}" class="g">
+    			<img src="__ROOT__/thumb.php?w=80&h=80&url={$vo['logo']|get_photo_url}" class="mg_lpimg">{$vo.name|getShort=11,'...'}
+    		  </a>
+    		  <php>if($key>=4){
+    		      $hasMoreGroup = true;
+    		      break;
+    		      }</php>
+        	</volist>
+	  	  <if condition="$config['createGroup']">
+          <php>$_class = empty($all_my_app) ? '' : 'lineS_top';</php>
+      	  <div class="{$_class} group_add" style="width:120px">
+      	    <php>if($hasMoreGroup){</php><a href="{:U('group/SomeOne/index')}" class="g right">查看»</a><php>}</php>
+      		<a href="{:U('group/Index/add')}" class="g">创建社团</a>
+      	  </div>
+      	  </if>
+        </div>
+    </li>
+<!--
+    <li>
+    	<a href="{:U('group/Index/bbsNotify')}" class="{$message_class}">社团消息</a>
+    </li>
+-->
+  </ul>
+
+  <h2 style="display:none"><img src="{$ts['app']['icon_url']}" /> {$ts['app']['app_alias']}</h2>
+<?php if($stat){ ?>
+	<if condition="$school">
+	<h2 class="platform">
+	<span class="current">{$school}</span>
+	<span>[<a href="javascript:void(0)">切换</a>]</span>
+	<ul class="platform-menu hidden">
+	<volist name="schools" id="vo">
+	<li> <a href="{:U('/Index/search', array('cid'=>$cid,'school'=>$i) )}">{$vo['t']}</a> </li>
+	</volist>
+	</ul>
+	</h2>
+	</if>
+	<?php }?>
+  <div class="c"></div>
+</div>
+<script>
+$(document).ready(function(){
+	$("#dropdown_my_group").hover(
+		function(){ $(this).addClass("hover"); },
+	    function(){ $(this).removeClass("hover"); }
+	);
+	$("#dropdown_group_massage").hover(
+		function(){ $(this).addClass("hover"); },
+	    function(){ $(this).removeClass("hover"); }
+	);
+
+	$(".platform").hover(
+		function(){ $('.platform-menu').removeClass('hidden'); },
+	    function(){ $('.platform-menu').addClass('hidden'); }
+	);
+
+});
+</script>

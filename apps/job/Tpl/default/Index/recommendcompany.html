@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        地区 <a href="__URL__&act=recommendCompany">不限</a>
+        <volist name="cityList" id='vo'>
+            <a href="__URL__&act=recommendCompany&city={$vo.cityID}">{$vo.city}</a> | 
+        </volist>
+    </body>
+</html>

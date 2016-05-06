@@ -1,0 +1,72 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        专题分类
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{:U('home/Event/addCategory')}" class="btn_a"><span>添加分类</span></a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">ID</th>
+                <th class="line_l">专题名称</th>
+                <th class="line_l">创建时间</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist id="vo" name="list.data">
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td >{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td>
+                        <a href="{:U('home/Event/addCategory', array('id'=>$vo['id']))}">编辑</a>
+                        <!--<a href="javascript:void(0)" onclick="audit('{$vo.id}')">通过</a>-->
+                        <!--<a href="javascript:void(0)" onclick="del({$vo.id})">驳回</a>-->
+                    </td>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+    </div>
+</div>
+<script type="text/javascript">
+    function del(id){
+        if(id=='' || id==0){
+            ui.error("请选择要驳回的爱心物品");
+            return false;
+        }
+        ui.box.load( '{:U('/Donate/doAuditReason')}' + '&id=' + id ,{title:'驳回'});
+    }
+    
+    
+    function audit(id){
+        if(confirm('确定通过!')){
+            $.post(U('home/Donate/pass'),{id:id},function(txt){
+                var json =$.parseJSON(txt);
+                if( json.status == 1 ){
+                    ui.success( json.info );
+                    $('#list_'+id).remove();
+                    updateNum();
+                }else{
+                    ui.error( json.info );
+                }
+            });
+        }
+    }
+    
+    function updateNum() {
+        var auditCount = $('#auditCount').html();
+        auditCount = auditCount -1;
+        $('#auditCount').html(auditCount)
+    }
+
+</script>
+<include file="_footer" />

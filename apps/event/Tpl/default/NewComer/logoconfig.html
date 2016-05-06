@@ -1,0 +1,37 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"> 迎新配置</div>
+    <form method="post" action="{:U('event/NewComer/dologoconfig')}" enctype="multipart/form-data">
+        <div class="form2">
+            <dl class="lineD">
+                <dt>学校官网logo：</dt>
+                <dd>
+                <if condition="$logo">
+                    <img style="height:80px" src="{$logo|tsMakeThumbUp=###,150}"><br/>
+                </if>
+                <input type="file" name="banner_logo" />
+                <p>重要: 支持格式jpg,jpeg,png,gif。请注意图片大小 290*60尺寸!</p>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>学校官网地址：</dt>
+                <dd>
+                    <input name="url" type="text" value="{$url}" size="40">
+                     <p> 以http开头</p>
+            </dl>
+            <dl class="lineD">
+                <dt>迎新url：</dt>
+                <dd>
+                    <input name="website" type="text" value="{$website}" size="40">
+                     <p> 如果您的学校网站有迎新栏目,可以将连接填到此处,以http开头</p>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<include file="../Teacher/_footer" />

@@ -1,0 +1,112 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+	<include file="userTab" />
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="200px">用户ID</td>
+				<td><?php echo $list['uid']?></td>
+			</tr>
+			<tr>
+				<td>姓名</td>
+				<td><?php echo $list['realname']?></td>
+			</tr>
+			<tr>
+				<td>身份证号</td>
+				<td><?php echo $list['ctfid']?></td>
+			</tr>
+			<tr>
+				<td>学校</td>
+				<td><?php echo $list['sname']?></td>
+			</tr>
+			<tr>
+				<td>区域</td>
+				<td><?php echo $list['pname'].' '.$list['city'];?></td>
+			</tr>
+			<tr>
+				<td>院系</td>
+				<td><?php echo get_info_by_sid($list['sid1']);?></td>
+			</tr>
+			<tr>
+				<td>年级</td>
+				<td><?php echo $list['year'];?></td>
+			</tr>
+			<tr>
+				<td>学历</td>
+				<td><?=$list['tj_year'] == 3 ? '专科' : '本科';?></td>
+			</tr>
+			<tr>
+				<td>学号</td>
+				<td><?php echo array_shift(explode('@',$list['uemail']));?></td>
+			</tr>
+			<tr>
+				<td>学校职务</td>
+				<td><?php echo $list['position'];?></td>
+			</tr>
+			<tr>
+				<td>民族</td>
+				<td><?php echo $list['ethnic'];?></td>
+			</tr>
+			<tr>
+				<td>QQ/微信</td>
+				<td><?php echo $list['imid'];?></td>
+			</tr>
+			<tr>
+				<td>系统注册手机号</td>
+				<td><?php echo $list['umobile'];?></td>
+			</tr>
+			<tr>
+				<td>备用手机号</td>
+				<td><?php echo $list['mobile'];?></td>
+			</tr>
+			<tr>
+				<td>常用邮箱</td>
+				<td><?php echo $list['pemail'];?></td>
+			</tr>
+			<tr>
+				<td>地址</td>
+				<td><?php echo $list['address'];?></td>
+			</tr>
+			<tr>
+				<td>学分</td>
+				<td><?php echo $list['score'];?></td>
+			</tr>
+			<tr>
+				<td>诚信值</td>
+				<td><?php echo get_eracity_value($list['attend'],$list['total']);?></td>
+			</tr>
+			<tr>
+				<td>部落信息</td>
+				<td>
+					管理的部落：<?php echo !empty($manage) ? implode(' | ',getSubByKey($manage,'name')) : '';?>
+					<hr>
+					加入的部落：<?php echo !empty($join) ? implode(' | ',getSubByKey($join,'name')) : '';?>
+				</td>
+			</tr>
+			<tr>
+				<td>认证时间</td>
+				<td>{$list.ctime|date='Y-m-d H:i:s', ###}</td>
+			</tr>
+			<tr>
+				<td>备注</td>
+				<td><?php echo $list['remark']?></td>
+			</tr>
+            <tr>
+                <td>推荐人</td>
+                <td>{$list.recommend_realname}（{$list.recommend_uid}）</td>
+            </tr>
+			<tr>
+				<td>身份证照片</td>
+				<td>
+                    <volist name="attachs" id="vo">
+                        <img src="{$vo}" alt="" width="300">
+                    </volist>
+                </td>
+			</tr>
+
+        </table>
+    </div>
+	<span style="float:left;display:block;margin:8px 10px;"><a href="<?php echo U('pufinance/Admin/index');?>">返回用户列表</a></span>
+</div>
+<include file="../Public/footer" />

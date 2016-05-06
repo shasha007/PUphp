@@ -1,0 +1,13 @@
+<?php if($rightNews):?>
+<div class="hd_c_right_menu">最新活动新闻</div>
+<div class="hd_c_right_list">
+    <ul>
+        <volist name="rightNews" id="vo">
+            <li>
+                <a href="{:U('/Front/newsDetails',array('id'=>$vo['eventId'],'nid'=>$vo['id']))}" target="_blank"
+                   title="{$vo.title}">{$vo.title|getShort=###,20,'…'}</a>
+            </li>
+        </volist>
+    </ul>
+</div>
+<?php endif;?>

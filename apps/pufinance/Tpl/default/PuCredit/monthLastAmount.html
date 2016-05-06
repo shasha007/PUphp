@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>账单详情</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+    <script src="../Public/js/mainScript.js"></script>
+    <script>
+        setActionBar('本月应还', '', '');
+    </script>
+</head>
+<body bgcolor="#F3F1EE">
+<div class="w-repayGeneral w-shouldRepay">
+    <p>{:date('n')}月剩余应还</p>
+    <span id="shouldRepay">{$month_last_amount.all_last_amount}</span>
+</div>
+
+<volist name="month_last_amount.list" id="vo">
+    <if condition="$vo['bank_card_id']">
+        <div class="w-repayGeneral w-shouldGeneral">
+            <div>
+                <img class="chkbox" check="1" src="../Public/img/sel01.png" data-id="{$vo.id}">
+                <div class="w-bank bank-{$bank_list[$vo['bank_card_id']]['bank_id']}">
+                    <p><img src="../Public/img/bank/bank-{$bank_list[$vo['bank_card_id']]['bank_id']}.png"><span>{$bank_list[$vo['bank_card_id']]['bank_name']}</span></p>
+                    <p>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i style="margin-right: 7px;"></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i style="margin-right: 7px;"></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i style="margin-right: 7px;"></i>
+                        <em>{$bank_list[$vo['bank_card_id']]['card_no']|substr=###, -4}</em>
+                    </p>
+                </div>
+                <div class="w-bankInfo">
+                    <p>￥ {$vo['all_amount']|number_format=###,2}</p>
+                    <p class="w-repaySum">￥ {$vo.last_amount|number_format=###,2}</p>
+                </div>
+            </div>
+            <p class="w-sum">
+                <span>{$vo.etime|date='m/d',###}</span>
+                <span>(本金{$vo.amount|number_format=###,2}+服务费{$vo.interest|number_format=###,2}
+                    <gt name="vo.overdue" value="0">
+                        +逾期{$vo.overdue.all_last_overdue}
+                    </gt>
+                    )</span>
+            </p>
+        </div>
+    <else />
+        <div class="w-repayGeneral w-shouldGeneral">
+            <div>
+                <img class="chkbox" check="1" src="../Public/img/sel01.png" data-id="{$vo.id}">
+                <div class="w-wallet">
+                    <img src="../Public/img/wallet.png">
+                    <span>PU 币</span>
+                </div>
+                <div class="w-walletInfo">
+                    <p>￥ {$vo['all_amount']|number_format=###,2}</p>
+                    <p class="w-repaySum">￥ {$vo.last_amount|number_format=###,2}</p>
+                </div>
+            </div>
+            <p class="w-sum">
+                <span>{$vo.etime|date='m/d',###}</span>
+                <span>(本金{$vo.amount|number_format=###,2}+服务费{$vo.interest|number_format=###,2}
+                    <gt name="vo.overdue" value="0">
+                        +逾期{$vo.overdue.all_last_overdue}
+                    </gt>
+                    )</span>
+            </p>
+        </div>
+    </if>
+</volist>
+<!--<div class="w-repayGeneral w-shouldGeneral">
+    <div>
+        <img src="../Public/img/sel1.png">
+        <div class="w-proImg">
+            <img src="../Public/img/proimg.png">
+            <p>苹果 iPhone6 Apple6s 每个ID限定一单</p>
+        </div>
+        <div class="w-proInfo">
+            <p>￥ 1000.00</p>
+            <p class="w-repaySum">￥ 1000.00</p>
+        </div>
+    </div>
+    <p class="w-sum">
+        <span>8/12期</span>
+        <span>(本金600+逾期14+服务费13)</span>
+    </p>
+</div>-->
+<a href="javascript:void(0);" class="w-goRepay">我要还款</a>
+<!--//记录还款金额-->
+<span id="shouldRepay" style="display: none;"></span>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        // 勾选
+        $('.w-repayGeneral').click(function() {
+            var img = $(this).find('img.chkbox');
+            if (img.attr('check') == 1) {
+                img.attr({
+                    'check': 0,
+                    'src' : '../Public/img/sel1.png'
+                });
+            } else {
+                img.attr({
+                    'check': 1,
+                    'src' : '../Public/img/sel01.png'
+                });
+            }
+            var $chked = $('.w-repayGeneral').find('img[check=1]');
+            var shouldSum = 0.00;
+            if ($chked.length > 0) {
+                $('.w-repayGeneral').find('img[check=1]').each(function(i, n) {
+                    var sum = parseFloat($(this).nextUntil('w-bankInfo').find('.w-repaySum').text().substr(2));
+                    shouldSum = addNum(shouldSum, sum);
+                });
+            }
+            $('#shouldRepay').text(shouldSum);
+        });
+
+        // 提交
+        $('.w-goRepay').click(function() {
+            var $chked = $('.w-repayGeneral').find('img[check=1]');
+            if ($chked.length == 0) {
+                alert('请选择还款的订单');
+                return false;
+            }
+            var stageIds = new Array();
+            $chked.each(function(i, n) {
+                stageIds.push($(n).attr('data-id'));
+            });
+            location.href = '{:U("pufinance/PuCredit/repay")}&stageids=' + stageIds.join(',');
+        });
+    });
+    function addNum(num1, num2) {
+        var sq1,sq2,m;
+        try {
+            sq1 = num1.toString().split(".")[1].length;
+        }
+        catch (e) {
+            sq1 = 0;
+        }
+        try {
+            sq2 = num2.toString().split(".")[1].length;
+        }
+        catch (e) {
+            sq2 = 0;
+        }
+        m = Math.pow(10,Math.max(sq1, sq2));
+        return (num1 * m + num2 * m) / m;
+    }
+</script>
+</body>
+
+</html>

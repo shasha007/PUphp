@@ -1,0 +1,82 @@
+<include file="_header" />
+<div class="kc_content">
+    <div class="c_left">
+        <div class="c_fl">
+            <div class="c_fl_menu l_30 b f_14">课程分类</div>
+            <div class="c_fl_desc f_14">
+                <ul>
+                    <li>我的课程:</li>
+                    <li><a <?php if($_SESSION['lesson_searchCat']['cat']=='')echo' class="f_s b"';?>  href="{:U('event/Lesson/board',array('cat'=>'all'))}">全部</a>
+                    <li><a <?php if($_SESSION['lesson_searchCat']['cat']=='launch')echo' class="f_s b"';?>  href="{:U('event/Lesson/board',array('cat'=>'launch'))}">我发起的课程</a></li>
+                    <li><a <?php if($_SESSION['lesson_searchCat']['cat']=='join')echo' class="f_s b"';?>  href="{:U('event/Lesson/board',array('cat'=>'join'))}">我参与的课程</a></li>
+
+                </ul>
+
+                <ul>
+                    <li>分类:</li>
+                    <li> <a<?php if(!$_SESSION['lesson_searchCat']['cid'])echo' class="f_s b"';?>
+                            href="{:U('event/Lesson/board', array('cid'=>'all'))}">全部</a></li>
+                    <?php foreach($type as $k=>$vo):?>
+                    <li><a<?php if($_SESSION['lesson_searchCat']['cid']==$k)echo' class="f_s b"';?>
+                            href="{:U('event/Lesson/board', array('cid'=>$k))}">{$vo}</a></li>
+                    <?php endforeach;?>
+                </ul>
+            </div>
+            <div class="c_search">
+                <form method="post" action="{:U('event/Lesson/board')}">
+                    <input name="title" type="text" class="c_input" placeholder="请输入内容" value="{$searchTitle}" />
+                    <input name="s_btn" type="submit" class="c_btn b l_30 f_14" value="搜 索" />
+                </form>
+            </div>
+        </div>
+        <div class="c_list">
+            <ul>
+                <volist name='data' id='vo'>
+                    <li>
+                        <div class="c_list_thumb"><a href="{:U('/LessonMember/detail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}" ><img src="{$vo['logoId']|getCover}" alt="" /></a></div>
+                        <div class="c_list_infor">
+                            <div class=" up link_r b f_14 l_24"><a href="{:U('/LessonMember/detail', array('id'=>$vo['id']))}" title="{$vo.title}  |  {$vo.description|getShort=###,30,'…'}">{$vo.title}</a></div>
+                            <div class="clear"></div>
+                            <div class="c_list_desc l_20">
+                                上课时间：<?php echo date('Y-m-d H:i', $vo['sTime']) . " 至 " . date('Y-m-d H:i', $vo['eTime']) ?><br />
+                                报名时间：<?php echo date('Y-m-d H:i', $vo['deadline']) ?> 截止<br />
+                                地点：{$vo['address']|getShort=###,20,'…'}<br />
+                                课时：{$vo.credit} &nbsp;&nbsp;任课老师：{$vo.teacher}<br />
+                                参加人数（{$vo.joinCount}） 剩余名额：{$vo.limitCount}
+                            </div>
+                        </div>
+                        <div class="c_list_fl">{$vo.type}</a></div>
+                        <div class="c_list_btn">
+                            <ul>
+                                <if condition="($vo['status'] eq 2) AND ($vo['eTime'] gt time())">
+                                    <li><a href="{:U('/LessonMember/detail', array('id'=>$vo['id']))}">进行中</a></li>
+                                    <?php if($_SESSION['userInfo'] && $_SESSION['userInfo']['sid'] == $school['id']) :?>
+                                     <?php if($vo['joined']):?>
+                                    <li><a href="{:U('/LessonMember/detail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">已报名</a></li>
+                                      <?php elseif($vo['deadline']>time()):?>
+                                    <li><a href="{:U('/LessonMember/index', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">我要报名</a></li>
+                                    <?php endif;?>
+                                    <?php endif;?>
+                                    <elseif  condition="$vo['status'] eq 1 "/>
+                                    <li><a href="{:U('/LessonManage/index', array('id'=>$vo['id']))}">待审核</a></li>
+                                    <elseif  condition="$vo['status'] eq 0 "/>
+                                    <li><a href="{:U('/LessonManage/index', array('id'=>$vo['id']))}">被驳回</a></li>
+                                    <elseif  condition="($vo['status'] eq 2) AND ($vo['eTime'] lt time()) "/>
+                                    <li><a href="{:U('/LessonMember/detail', array('id'=>$vo['id']))}">已结束</a></li>
+                                </if>
+                                <if condition="$uid eq $vo['uid']">
+                                    <li><a href="{:U('/LessonManage/index', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">管理课程</a></li>
+                                </if>
+                            </ul>
+                        </div>
+                    </li>
+                </volist>
+            </ul>
+            <div class="page">{$html}</div>
+        </div>
+    </div>
+    <div class="c_right">
+        <include file="_right" />
+    </div>
+
+    <include file="_footer" />

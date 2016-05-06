@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    苏大创业园2013幸运抽奖 - {$ts['site']['page_title']}
+<else/>
+    苏大创业园2013幸运抽奖
+</neq>
+</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	var $CONFIG = {};
+		$CONFIG['uid'] = _UID_;
+		$CONFIG['mid'] = _MID_;
+		$CONFIG['root_path'] =_ROOT_;
+		$CONFIG['theme_path'] = _THEME_;
+		$CONFIG['public_path'] = _PUBLIC_;
+		$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+		$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+    var bgerr;
+    try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+</script>
+<!-- 全局风格CSS -->
+<link href="../Public/style.css" rel="stylesheet" type="text/css" />
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js?20110824"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js?20110824"></script>
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js?20110824"></script>
+
+
+</head>
+
+<body>
+    <div class="bg">
+        <div class="main">
+            <div class="content_1 <eq name="ACTION_NAME" value="result">i6</eq>">
+                <div class="header">
+                    <div class="header_menu">
+                        <ul>
+                            <li <eq name="ACTION_NAME" value="home">class="i"</eq>><a href="{:U('event/Admin/home')}">首页</a></li>
+                            <li <?php if(ACTION_NAME == 'lucky' && $type==3):?>class="i"<?php endif;?>><a href="{:U('event/Admin/lucky',array('type'=>3))}">三等奖</a></li>
+                            <li <?php if(ACTION_NAME == 'lucky' && $type==2):?>class="i"<?php endif;?>><a href="{:U('event/Admin/lucky',array('type'=>2))}">二等奖</a></li>
+                            <li <?php if(ACTION_NAME == 'te' && $type==1):?>class="i"<?php endif;?>><a href="{:U('event/Admin/te',array('type'=>1))}">一等奖</a></li>
+                            <li <?php if(ACTION_NAME == 'te' && $type==0):?>class="i"<?php endif;?>><a href="{:U('event/Admin/te',array('type'=>0))}">特等奖</a></li>
+                            <li <eq name="ACTION_NAME" value="result">class="i"</eq>><a href="{:U('event/Admin/result')}">中奖名单</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content">
+

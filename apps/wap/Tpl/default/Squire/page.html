@@ -1,0 +1,84 @@
+<?php foreach ($list as $key=>$value) { ?>
+    <li class="square-list-li container" data-topicids="<?php echo $value['weibo_id']; ?>">
+        <header class="clearfix">
+            <div class="square-li-l"><a <?php echo $value['isHide']?'':'class="to-user-home"'; ?> data-userid="{$value.uid}"><img class="img-responsive" src="<?php echo $value['face']; ?>"></a></div>
+            <div class="square-li-c" style="width: 60%;">
+                <p><?php echo $value['uname']; ?>
+                    <?php if($value['sex']=='1'){
+                        echo '<span class="male">♂</span>' ;
+                    }else{
+                        echo '<span class="female">♀</span>' ;
+                    } ?>
+                </p>
+
+                <p><span><?php echo $value['schoolname']; ?></span></p>
+            </div>
+            <?php if($value['is_friend']>0){ ?>
+                <div class="square-li-addfirend"><span class=" added-friend" style="color: #ccc;border: 1px solid #ccc;">已添加</span></div>
+            <?php }elseif($user_id != $value['uid']){ ?>
+                <div class="square-li-addfirend">
+                     <span id="<?php echo $value['uid']; ?>" class="added-friend" style="display:none;color: #ccc;border: 1px solid #ccc;">已添加</span>
+                    <span onclick="mkfriend(<?php echo $value['uid']; ?>)">+好友</span>
+                </div>
+            <?php }else{ ?>
+            <div class="square-li-addfirend">
+                <span onclick="deletetopic(<?php echo $value['weibo_id']; ?>)">删除</span>
+            </div>
+            <?php } ?>
+        </header>
+        <a href ="{:U('wap/WeiboContent/index','weibo_id='.$value['weibo_id'])}">
+            <div class="square-li-con">
+                <?php 
+                    if($value['isTop'] == 0){
+                        echo $value['content'];    
+                    }else{
+                        echo "<span class='tips-toutiao'>头条</span>$value[content]" ;
+                    }
+                     
+                ?>
+            </div>
+            <div>
+            </div>
+            <div class="square-li-pic container">
+                <div class="row">
+                    <?php if(count($value['type_data'])>1){ ?>
+                            <?php  foreach($value['type_data'] as $k=>$v) { ?>
+                                <div class="col-my-<?php
+                                switch(count($value['type_data'])){
+                                    case 2:
+                                        echo 6 ;
+                                        break ;
+                                    case 4:
+                                        echo 6 ;
+                                        break ;
+                                    default:
+                                        echo 4 ;
+                                        break ;
+                                }    
+                                 ?> padding-5" style="background: url('<?php echo $v['thumbmiddleurl']; ?>') repeat-x;background-size: cover;height: 150px;" onerror="this.style.background='url(/apps/wap/Tpl/default/Public/images/img_default.png) repeat-x'">
+                                    <!--<img class="img-responsive" onerror="this.src='/apps/wap/Tpl/default/Public/images/img_default.png'" src= >-->
+                                </div>
+                            <?php } ?>
+                    <?php }elseif(count($value['type_data'])==1){ ?>
+                        <!--只有一个图片的情况 todo-->
+                        <div class="col-xs-12">
+                            <img class="img-responsive" onerror="this.src='/apps/wap/Tpl/default/Public/images/img_default.png'" src= <?php echo $value['type_data'][0]['thumbmiddleurl']; ?> >
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+
+        <footer>
+            <span class="pull-left"><?php echo $value['ctime']; ?></span>
+            <p><?php
+                    if($value['isHeart']==1){
+                        echo "<span class='glyphicon glyphicon-heart liked' data-status='0' data-weiboid='$value[weibo_id]'>&emsp13;$value[heart]</span>" ;
+                    }else{
+                        echo "<span class='glyphicon glyphicon-heart' data-status='1' data-weiboid='$value[weibo_id]'>&emsp13;$value[heart]</span>" ;
+                    }
+                 ?>
+                <span class="glyphicon glyphicon-comment">&emsp13;<?php echo $value['comment']; ?></span></p>
+        </footer>
+        </a>
+    </li>
+<?php } ?>

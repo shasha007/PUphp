@@ -1,0 +1,69 @@
+<include file="_header" />
+<div class="kdl_mobile_page">
+    <input type="hidden" id="myin" value="{$cid}">
+  <div class="kdl_mobile_header f18 bold tcenter">{$cname}</div>
+  <a href="javascript:history.go(-1);"><div class="m_back"></div></a>
+  <a href="javascript:void(0)"><div class="kdl_dd"></div></a>
+  <div class="clear"></div>
+  <div class="m_search_bg">
+
+  </div>
+  <div class="clear"></div>
+  <div class="main m_mt50">
+      <div class="m_search">
+      <form method="post" action="{:U('shop/PocketShop/sortList')}&cid={$cid}">
+      <input name="name" class="m_input" type="text" value="{$name}" id="myin2" placeholder="请输入商品名">
+      </form>
+    </div>
+  <foreach item="vo" name="list">
+<a class="list_item" href="{:U('shop/PocketShop/detail')}&id={$vo.id}">
+<div class="m_img_wap"> <img class="m_img" src="{$vo.pic|tsMakeThumbUp=###,200,200,'c'}" alt=""> </div>
+<div class="m_info">
+  <h3>{$vo.name}</h3>
+  <div class="m_key">{$vo.desc|htmlspecialchars_decode}</div>
+  <p class="m_key"></p>
+  <div class="m_price">￥{$vo.price}<?php if($vo['market']!=0){ ?></div>
+  <div class="m_price1">市场价：<span style="text-decoration:line-through;">￥{$vo.market}</span><?php }?></div>
+  <?php if($vo['lowest'] && $vo['num']){ ?><div class="m_c_infor_price">月供：￥<span class="m_color1 bold">{$vo.lowest}</span><span style="margin:0 5px;">x</span>{$vo.num}期</div><?php }?>
+</div>
+</a>
+  </foreach>
+  </div>
+  </div>
+<script type="text/javascript">
+
+  $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        if (scrollTop + windowHeight == scrollHeight) {
+            var m = $('.list_item').length;
+            var cid = $('#myin').val();
+            var title = $('#myin2').val();
+            //alert(cid);
+            $.post('__URL__&act=ajaxPocket',{n:m,id:cid,name:title},function(data){
+                //alert(data);
+                if(data==0){
+
+
+                }else{
+                    var html = '';
+                    for(var i=0;i<data.length;i++){
+			html += '<a class="list_item" href="{:U('shop/PocketShop/detail')}&id='+data[i]['id']+'">';
+                        html += '<div class="m_img_wap">';
+                        html += '<img class="m_img" src="'+data[i]['pic']+'"/></div>';
+                        html += '<div class="m_info">';
+                        html += '<h3>'+ data[i]['name']+'</h3>';
+                        html += '<div class="m_key">'+data[i]['desc']+'</div>';
+                        html += '<div class="m_price">￥'+data[i]['price']+'</div></div></a>';
+
+                    }
+                }
+                $(".main").append(html);
+            },'json');
+      //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+        }
+    });
+
+    </script>
+<include file="_footer" />

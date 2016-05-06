@@ -1,0 +1,116 @@
+<include file="../Public/_header" />
+<script src="../Public/js/vote.js" type="text/javascript"></script>
+<script>
+    function playFlash(vid){
+        ui.box.load(U('/index/playFlash')+'&id='+vid,{title:'播放视频'});
+    }
+</script>
+
+<div class="content_sub1">
+    <div class="content_ppt">
+        <div id="KinSlideshow" style="visibility:hidden;" >
+            <a href="javascript:void(0)"><img src="../Public/ppt/1.jpg" alt="" width="250" height="250" /></a>
+            <a href="javascript:void(0)"><img src="../Public/ppt/2.jpg" alt="" width="250" height="250" /></a>
+            <a href="javascript:void(0)"><img src="../Public/ppt/3.jpg" alt="" width="250" height="250" /></a>
+        </div>
+    </div>
+    <div class="content_news">
+        <div class="content_news_menu">新闻中心</div>
+        <div class="content_news_more"><a href="{:U('/news/index')}"><img src="../Public/images/more.gif" alt="" /></a></div>
+        <div class="content_news_list">
+            <ul>
+                <volist name="news" id='vo'>
+                    <li <php>if($i==count($data)){</php> class="i1"<php>}</php>>
+                        <div class="content_news_title">
+                            <a href="{:U('/news/details',array('id'=>$vo['id']))}" title="{$vo.title}">{$vo.title|getShort=###,40,'…'}</a></div>
+                        <div class="content_news_date">{$vo.cTime|date='Y-m-d',###}</div>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="content_sub2">
+    <div class="sub2_menu">最新人气排行</div>
+    <div class="sub2_more"><a href="{:U('/player/index')}">查看更多 >></a></div>
+    <div class="clear"></div>
+    <div class="sub2_desc">
+        <div class="sub2_list">
+            <ul>
+                <volist name="player" id='vo'>
+                <li>
+                    <div class="sub2_list_photo">
+                        <a href="{:U('/player/details',array('id'=>$vo['id']))}" title="{$vo.realname}">
+                            <img src="{$vo.path|getThumb=###,117,145,c}" alt="" /></a></div>
+                    <div class="sub2_list_name">
+                        <a href="{:U('/player/details',array('id'=>$vo['id']))}" title="{$vo.realname}">{$vo.realname}</a></div>
+                    <div class="sub2_list_count">{$vo.ticket}票</div>
+                    <?php if($vo['stoped']): ?>
+                        <div class="sub2_list_vote i3">终止投票</div>
+                    <?php else:?>
+                        <div class="sub2_list_vote" onclick='post_vote({$vo.id},"{$vo.realname}")'>投TA一票</div>
+                    <?php endif; ?>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="content_sub2">
+    <div class="sub2_menu">精彩掠影</div>
+    <div class="sub2_more"><a href="{:U('/index/video')}">查看更多 >></a></div>
+    <div class="clear"></div>
+    <div class="sub2_desc">
+        <div class="sub2_list1">
+            <ul>
+                <volist name="video" id='vo'>
+                <li>
+                    <div class="sub2_list1_thumb">
+                        <a href="javascript:playFlash('{$vo.id}');" title="">
+                            <img src="{$vo.path|noContentImg}" alt="" /></a></div>
+                    <div class="sub2_list1_star"><a href="javascript:playFlash('{$vo.id}');" title="点击播放"></a></div>
+                    <div class="sub2_list1_title">
+                        <a href="javascript:playFlash('{$vo.id}');" title="{$vo.title}">{$vo.title|getShort=###,10,'…'}</a></div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="content_sub3">
+    <div class="sub3_menu">组织单位</div>
+    <div class="clear"></div>
+    <div class="sub3_desc">
+        <span class="b">主办单位：</span><br />
+        共青团苏州大学委员会 <br />
+        <span class="b">承办单位：</span><br />
+        苏州大学学生社团联合会<br />
+        苏州天宫网络科技有限公司<br />
+        <span class="b">协办单位：</span><br />
+        学院部学生社团联合分会（文正学院、应用技术学院、社会学院、凤凰传媒学院、政治与公共管理学院、纺织与服装工程学院、物理科学与技术学院） <br />
+        <span class="b">冠名单位：</span><br />
+        <a href="http://js.10086.cn/" title="中国移动通信"><img src="../Public/images/logo.gif" /></a> <a href="http://www.xyhui.com/" title="校邮汇"><img src="../Public/images/logo_1.gif" /></a>
+    </div>
+</div>
+<div class="content_sub4">
+    <div class="sub4_menu">现场花絮</div>
+    <div class="sub4_more"><a href="{:U('/index/photo')}">更多>></a></div>
+    <div class="clear"></div>
+    <div class="sub4_desc">
+        <div class="sub4_list">
+            <ul>
+                <volist name="photo" id='vo'>
+                <li>
+                    <div class="sub4_list_thumb">
+                        <a href="{:U('/Index/details',array('#p'=>$photoOrder[$vo['id']]+1))}" target="_blank" title="{$vo.title}"><img src="{$vo.path|getThumb=###,126,90}" alt="" /></a>
+                    </div>
+                    <div class="sub4_list_title">
+                        <a href="{:U('/Index/details',array('#p'=>$photoOrder[$vo['id']]+1))}" target="_blank" title="{$vo.title}">{$vo.title|getShort=###,10,'…'}</a></div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<include file="../Public/_footer" />

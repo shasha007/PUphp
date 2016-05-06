@@ -1,0 +1,151 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div id="editTpl_div">
+        <div class="page_tit">今日推荐编辑</div>
+        <a href="{:U('home/Eventimage/imglist')}" class="btn_a"><span>返回今日推荐列表</span></a>
+        <div class="form2">
+            <form method="post" action="{:U('home/Eventimage/doeditimage')}" enctype="multipart/form-data">
+                <dl class="lineD">
+                    <dt>今日推荐名称<span class="red">*</span></dt>
+                    <dd>
+                        {$title}
+                    </dd>
+
+                </dl>
+                <dl class="lineD">
+                 	
+                    <dt>图片一<span class="red">*<img src="{img1Id|getImgAttachOri}"></span></dt>
+                    <dd>
+                        <input name="cover1" type="file" />
+                         </br>
+                      
+                    <span class="cGray2">尺寸为580*210px
+                        </span>
+                        
+                       
+                    
+                    </dd>
+                </dl>
+               
+      
+                <dl class="lineD">
+                    <dt>图片二<span class="red">*<img src="{img2Id|getImgAttachOri}"></span></dt>
+                    <input type='hidden' name="id" value="{$id}">
+                    <dd>
+                        <input name="cover2" type="file" />
+                         </br>
+                    <span class="cGray2">尺寸为282*282px
+                        </span>
+                    </dd>
+                </dl>
+                
+                <dl class="lineD">
+                    <dt>图片三<span class="red">*<img src="{img3Id|getImgAttachOri}"></span></dt>
+                    <dd>
+                        <input name="cover3" type="file" />
+                         </br>
+                    <span class="cGray2">尺寸为183*263px
+                        </span>
+                    </dd>
+                </dl>
+
+
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getSchools(obj){
+        var span = $(obj).siblings('span');
+        if($(obj).val()==0){
+            span.hide();
+            return false;
+        }
+        span.show();
+        span.empty();
+        var cityId=$(obj).val();
+        $.get( U('home/Ad/school') ,{cityId:cityId},function(data) {
+            var json=  $.parseJSON(data);
+            var string = "<input  type='checkbox' onclick='checkAll(this,"+cityId+")' value=''/>全部";
+            $.each(json, function(k,v)
+            {
+                string += "&nbsp;&nbsp;<input name='schools"+cityId+"[]' type='checkbox' value='"+v.id+"'>"+v.title;
+            });
+            span.append(string);
+
+        });
+    }
+
+    function add(){
+        var obj = $('#jun').clone(true).insertAfter("#jun");
+        $(obj).find('span').hide();
+    }
+
+
+    function checkAll(o,cityId){
+        if( o.checked == true ){
+            $('input[name="schools'+cityId+'[]"]').attr('checked','true');
+        }else{
+            $('input[name="schools'+cityId+'[]"]').removeAttr('checked');
+        }
+    }
+    function checkYearAll(o){
+        if( o.checked == true ){
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+    }
+
+    function adType(obj){
+        if(obj.value==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+    }
+
+    function adPlace(obj){
+        if(obj.value==0||obj.value==1){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+        if(obj.value<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    }
+
+
+    $(function(){
+        if($("select[name='type']").val()==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+        if($("select[name='place']").val()==1||$("select[name='place']").val()==0){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+
+        if($("select[name='place']").val()<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    });
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<include file="_footer" />

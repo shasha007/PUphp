@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<title>学校积分明细</title>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+    <script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+    </script>
+</head>
+<style>
+*{ padding:0;margin:0;list-style:none;}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+table,td{margin:auto;padding:inherit;}
+select, input, img{ vertical-align:middle;}
+a{ text-decoration:none;}
+a:link {color:#666;}
+a:visited{ color:#666;}
+a:hover,a:active, a:focus {color:#999; text-decoration:underline;}
+body {
+	font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+	font-size: 12px;
+	line-height:160%;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	color: #666;
+	text-decoration: none;
+	background-color:#FFF;
+	background-image: none;
+	background-repeat: no-repeat;
+	letter-spacing: normal;
+	text-align: left;
+	word-spacing: normal;
+	white-space: normal;
+	display: block;
+	clear: both;
+	float: none;
+	width: auto;
+	position: static;
+	height: auto;
+	top: auto;
+	clip: rect(auto,auto,auto,auto);
+}
+.bg{width:100%;}
+.main{ margin:auto; width:100%;}
+img {max-width: 100%; height: auto; width: auto\9; /* ie8 */}
+.mt10{ margin-top:10px;}
+.score_count{ width:94%; background:#f1f1f1; color:#f04e26; padding:0 3%; height:40px; border-bottom:1px solid #dedede; line-height:40px; font-size:16px; font-weight:bold;}
+.score_list{ width:96%; padding:0 2%; }
+.score_list ul{ width:100%;}
+.score_list li{ width:96%; padding:5px 2%;border-bottom:1px dashed #eee;}
+.score_list_name{ width:100%; color:#666; line-height:24px;}
+.score_red{ color:#f04e26; font-weight:bold;}
+
+.video embed, .video object, .video iframe {width: 100%;height: auto;}
+.score_note{ width:94%; color:#999; padding:10px 3%; margin-bottom:5px; border-bottom:1px solid #f6f6f6; color:#ea6b17}
+@media screen and (max-width: 980px) {
+}
+</style>
+<body>
+<div class="bg">
+ <div class="main">
+ <div class="score_count">当前活动积分：{$sum}分</div>
+ <div class="score_note">注意：学分、积分只在活动完结后才会发放，以下显示的活动为完结后的活动。未完结的活动请咨询活动发起人。</div>
+ <div class="score_list">
+  <ul class="mymain">
+  <?php foreach($list as $key=>$v):?>
+   <li>
+    <div class="score_list_name">活动名称：{$v.eventId}</div>
+    <div class="score_list_name">活动积分：<span class="score_red">{$v.score}</span>分</div>
+   </li>
+  <?php endforeach; ?>
+  </ul>
+ </div>
+
+ </div>
+</div>
+</body>
+<script type="text/javascript">
+
+    var i = true;
+    var page = 1;
+  $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        if (scrollTop + windowHeight == scrollHeight) {
+            page++;
+            if(!i) return;
+
+            i = false;
+            setTimeout("i = true",500);
+            var m = $('.score_list_name').length;
+//            alert(m);
+            $.post('__URL__&act=ajaxCredit',{page:page,key:2},function(data){
+                //alert(data);
+                if(data==0){
+
+
+                }else{
+                    var html = '';
+                    for(var i=0;i<data.length;i++){
+
+			html += '<li><div class="score_list_name">活动名称：'+data[i]['eventId']+'</div>';
+                        html += '<div class="score_list_name">实践学分：<span class="score_red">'+data[i]['score']+'</span>分</div></li>';
+                    }
+                }
+                $(".mymain").append(html);
+            },'json');
+      //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+        }
+
+    });
+
+</script>
+</html>

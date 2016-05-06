@@ -1,0 +1,117 @@
+<include file="_header" />
+<div class="intro_c">
+    <div class="member_tab">
+        <div class="member_cz">
+            共{$totalRows}个成员&nbsp;&nbsp;
+            <a href="{:U('/Backend/editUser',array('id'=>$eventId))}" class="btn_a"><span>添加选手</span></a>
+            &nbsp;&nbsp;
+            <span id="ticket">
+            <?php if($isTicket):?>
+                <a href="javascript:changeIsTicket( '{$eventId}','close');">关闭投票功能</a>
+            <?php else:?>
+                <a href="javascript:changeIsTicket( '{$eventId}','open');">打开投票功能</a>
+            <?php endif?>
+            </span>
+        </div>
+        <div class="member_search">
+            <form action="{:U('/Backend/member',array('id'=>$eventId))}" method="post">
+            姓名：<input name="realname" type="text" class="member_searchinput"  value="{$realname}"/>
+            <input type="submit" value="搜索" class="member_btn3" />
+            </form>
+        </div>
+    </div>
+    <div class="member_list">
+        <form>
+            <table width="956" border="0" cellspacing="0" cellpadding="0">
+                <tr class="member_tr1">
+                    <td><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0"></td>
+                    <td width="30"><a href="javascript:void(0);" class="list_order" title="排序" id="order_id">ID</a></td>
+                    <td width="80">照片</td>
+                    <td width="80">姓名</td>
+                     <if condition='$need_tel eq 1'>
+                    <td width="100">电话</td>
+                    </if>
+                    <td width="40"><a href="javascript:void(0);" class="list_order" title="排序" id="order_sex">性别</a></td>
+                    <td width="180"><a href="javascript:void(0);" class="list_order" title="排序" id="order_sid">学校</a></td>
+                    <td width="110"><a href="javascript:void(0);" class="list_order" title="排序" id="order_ticket">票数</a></td>
+                    <td width="110"><a href="javascript:void(0);" class="list_order" title="排序" id="order_img">靓照数</a></td>
+                    <td width="110"><a href="javascript:void(0);" class="list_order" title="排序" id="order_flash">视频数</a></td>
+                    <td width="70">操作</td>
+                  </tr>
+                <volist name="data" id='vo'>
+                <tr class="member_tr2" id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td class="member_thumb"><img width="80" height="80" src="{$vo.path|getThumb=###,80,80}"></td>
+                    <td>{$vo.realname}</td>
+                    <if condition='$need_tel eq 1'>
+                    <td>{$vo.tel}</td>
+                    </if>
+                    <td><eq name="vo['sex']" value="1">男<else/>女</eq></td>
+                    <td>
+                        <?php if($vo['uid']):?>{$vo['uid']|tsGetSchoolByUid=###,'<br/>'}
+                        <?php else:?>{$vo.sid|tsGetSchoolTitle=###,$schools}<?php endif;?>
+                    </td>
+                    <td>
+                        {$vo.ticket}
+                        <php>
+                          if( $vo['stoped'] == 1 ){
+                            $button = "设为打开";
+                            $act    = 'open';
+                          }else{
+                            $button = "设为关闭";
+                            $act    = 'close';
+                          }
+                          </php>
+                          <span id="vote{$vo['id']}" ><a href="javascript:changeVote({$eventId},{$vo['id']},'{$act}');" >{$button}</a></span>
+                    </td>
+                    <td>
+                        {$vo.img}
+                        <a href="{:U('/Backend/memberImg', array('id'=>$eventId, 'uid'=>$vo['id']))}">编辑靓照</a>
+                    </td>
+                    <td>
+                        {$vo.flash}
+                        <a href="{:U('/Backend/memberFlash', array('id'=>$eventId, 'uid'=>$vo['id']))}">编辑视频</a>
+                    </td>
+                    <td>
+                        <a href="{:U('/Backend/editUser', array('id'=>$eventId, 'uid'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:adminDelAction( '{$vo.id}','{$eventId}');">删除</a>
+                    </td>
+                </tr>
+                </volist>
+            </table>
+        </form>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<include file="_footer" />
+
+<script type="text/javascript">
+    $(function(){
+        var orderKey = "<?php echo $orderKey;?>";
+        var orderType = "<?php echo $orderType;?>";
+        if(orderKey != ''){
+            $('#order_'+orderKey).addClass('order_'+orderType);
+        }
+        $('.list_order').hover(
+            function(){
+                if($(this).hasClass('order_asc')){
+                    $(this).removeClass("order_asc");
+                    $(this).addClass("order_desc");
+                }else if($(this).hasClass('order_desc')){
+                    $(this).removeClass("order_desc");
+                    $(this).addClass("order_asc");
+                }
+            }
+        );
+        $('.list_order').click(
+            function(){
+                if($(this).hasClass('order_desc')){
+                    window.location.href = "{:U('event/Backend/member',array('id'=>$eventId))}&orderKey=" + $(this).attr('id').substring(6) + '&orderType=desc';
+                }else{
+                    window.location.href = "{:U('event/Backend/member',array('id'=>$eventId))}&orderKey=" + $(this).attr('id').substring(6) + '&orderType=asc';
+                }
+            }
+        );
+    });
+</script>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <link href="../Public/css/square.css?v=20161155" rel="stylesheet">
+    <title>话题收藏</title>
+    <script>
+        $(function () {
+            var uid = Android.getUid();
+            $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+                if(data.status == 2)
+                {
+                    window.location.reload();
+                }
+            },'json');
+        });
+    </script>
+</head>
+
+<body>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+               是否取消收藏话题?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">取消
+                </button>
+                <button id="delete-topic"type="button" class="btn btn-primary">
+                    确定
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+            <div class="square-list margin-top-0">
+                <ul>
+                <foreach name="list" item="vo" key="i">
+                    <li class="square-list-li container">
+                        <header class="clearfix">
+                            <!--添加好友-->
+                            <div class="square-li-l"><a class="to-user-home" data-userid="{$user_id}"><img class="img-responsive" src="{$vo.user_face}"></a></div>
+                            <div class="square-li-c">
+                                <p>{$vo.uname} <span class="female"><?php if($vo['user_sex']==1){ echo "♂";}else{echo "♀";} ?></span></p>
+
+                                <p><span>{$vo.school}</span></p>
+                            </div>
+                            <div class="square-li-r">
+                                <i class="glyphicon glyphicon-trash" data-id="{$vo.weibo_id}"></i>
+                            </div>
+                        </header>
+                        <!--<a href="{:U('wap/WeiboContent/index',array('weibo_id'=>$vo['weibo_id']))}">-->
+                        <a class="go-new-weibo" data-newweiboid="{$vo.weibo_id}">
+                            <div class="square-li-con">
+                                {$vo.content}
+                            </div>
+                            <div>
+                            </div>
+                            <div class="square-li-pic container">
+                                    <div class="row">
+                                        <?php if(count($vo['type_data'])>1){ ?>
+                                                <?php  foreach($vo['type_data'] as $k=>$v) { ?>
+                                                    <div class="col-my-<?php
+                                                    switch(count($vo['type_data'])){
+                                                        case 2:
+                                                            echo 6 ;
+                                                            break ;
+                                                        case 4:
+                                                            echo 6 ;
+                                                            break ;
+                                                        default:
+                                                            echo 4 ;
+                                                            break ;
+                                                    }    
+                                                     ?> padding-5" style="background: url('<?php echo $v['thumbmiddleurl']; ?>') repeat-x;background-size: cover;height: 150px;" onerror="this.style.background='url(/apps/wap/Tpl/default/Public/images/img_default.png) repeat-x'">
+                                                    </div>
+                                                <?php } ?>
+                                        <?php }elseif(count($vo['type_data'])==1){ ?>
+                                            <!--只有一个图片的情况 todo-->
+                                            <div class="col-xs-12">
+                                                <img class="img-responsive"  src= <?php echo $vo['type_data'][0]['thumbmiddleurl']; ?> >
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+
+                            </div>
+                        </a>
+                        <footer>
+                            <span class="pull-left">{$vo.time}</span>
+                            <p class="pull-right"><a><span class="glyphicon glyphicon-heart">&emsp13;{$vo.heart}</span></a>
+                                <a><span class="glyphicon glyphicon-comment">&emsp13;{$vo.comments}</span></a></p>
+                        </footer>
+                    </li>
+             </foreach>
+                </ul>
+            </div>
+</body>
+</html>
+<script src="../Public/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script src="../Public/js/publicjs.js"></script>
+<script>
+    var  ready = false;
+    var loadingShow = false;
+    var page = 2;
+    var loadingStr = '<div class="spinner"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
+    var noneStr = '<div class="nonestr">没有记录</div>';
+    $(window).scroll(function(){
+        var document = window.document;
+        var top = document.body.scrollTop || document.documentElement.scrollTop
+                || 0;
+        top += document.documentElement.clientHeight;
+        var height = document.documentElement.scrollHeight;
+        if (height - top < 100) {
+            if (!loadingShow) {
+                $(".square-list ul").append(loadingStr);
+                loadingShow = true;
+                getAjaxNews();
+            }
+        }
+    });
+
+    function getAjaxNews() {
+        setTimeout(function () {
+            $.ajax({
+                url: "{:U('wap/Collect/ajaxGetMyColWeibo')}",
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    page: page
+                },
+                error: function () {
+                },
+                success: function (data) {
+                    if (data.status == '1') {
+                        var swiperStr = buildHtml(data.data);
+                        loadingShow = false;
+                        $(".square-list ul").append(swiperStr);
+                        $(".spinner").remove();
+                        //处理图片
+                        dopicerror();
+                        page++;
+                    }else{
+                        $(".spinner").remove();
+                        $(".square-list ul").append(noneStr);
+                    }
+                }
+            });
+        }, 1000);
+    }
+
+    function buildHtml(items) {
+        if (items.length > 0) {
+            var html = '';
+            for (i = 0; i < items.length; i++) {
+                html +='<li class="square-list-li container">';
+                html +='<header class="clearfix">';
+                html +='<div class="square-li-l"><a class="to-user-home" data-userid="{$user_id}"><img class="img-responsive" src="'+items[i].user_face+'"></a></div>';
+                html +='<div class="square-li-c">';
+                html +='<p>'+items[i].uname+' <span class="female">';
+                if(items[i].user_sex==1)
+                { 
+                	html +='♂</span></p>';
+                }
+                else
+                {
+                	html +='♀</span></p>';
+                }
+                html +='<p><span>'+items[i].school+'</span>';
+                html +='</div>';
+                html +='<div class="square-li-r">';
+                html +='<i class="glyphicon glyphicon-trash" data-id="'+items[i].weibo_id+'" onclick="del('+items[i].weibo_id+')"></i>';
+                html +='</div>';
+                html +='</header>';
+                html +='<a href="{:U("wap/WeiboContent/index",array("weibo_id"=>"'+items[i].weibo_id+'"))}">';
+                html +='<div class="square-li-con">';
+                html +=items[i].content;
+                html +='</div>';
+                html +='<div>';
+                html +='</div>';
+                html +='<div class="square-li-pic container">';
+                html +='<div class="row">';
+                if(items[i].type_data.length>0)
+                {
+                    if(items[i].type_data.length == 2 || items[i].type_data.length == 4 ){
+                        for(t=0;t<items[i].type_data.length;t++)
+                            {
+                                html +='<div class="col-xs-6 padding-5">';
+                                html +=' <img class="img-responsive" src="'+items[i].type_data[t].thumbmiddleurl+'">';
+                                html +='</div>';
+                            }
+                    }else if(items[i].type_data.length == 1){
+                            html +='<div class="col-xs-12">';
+                            html +=' <img class="img-responsive" src="'+items[i].type_data[0].thumbmiddleurl+'">';
+                            html +='</div>';
+
+                    }else{
+                    for(t=0;t<items[i].type_data.length;t++)
+                        {
+                            html +='<div class="col-xs-4 padding-5">';
+                            html +=' <img class="img-responsive" src="'+items[i].type_data[t].thumbmiddleurl+'">';
+                            html +='</div>';
+                        }
+                    }
+                }
+                html +='</div>';
+                html +='</div>';
+                html +='</a>';
+                html +='<footer>';
+                html =+'<span class="pull-left">'+items[i].time+'</span></p>';
+                html +='<p><a><span class="glyphicon glyphicon-heart">&emsp13;'+items[i].heart+'</span></a>';
+                html +='<a><span class="glyphicon glyphicon-comment">&emsp13;'+items[i].comments+'</span></a></p>';
+                html +='</footer>';
+                html +='</li>';
+                
+            }
+            return html;
+        }
+
+    }
+
+
+    //删除事件
+    $(".square-li-r i").click(function(){
+        //话题id
+       var id  = $(this).data("id");
+        $("#myModal").modal('show');
+        $("#delete-topic").click(function(){
+        	$("#myModal").modal('hide');
+        	dodel(id);
+        });
+    });
+    function resetmytop(){
+//        swipers.removeAllSlides(); //移除全部
+        page=2;//初始化
+        //删除ajax
+        $.ajax({
+            url: "{:U('wap/Collect/ajaxGetMyColWeibo')}",
+            type: 'GET',
+            dataType: 'json',
+            data: {
+            	page: 1
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data.status == '1') {
+                    var swiperStr = buildHtml(data.data);
+                    $(".square-list ul").html( swiperStr );
+                    setpic();
+                    $(".spinner").remove();
+                    loadingShow = false
+                } else {
+                    $(".spinner").remove();
+                    $(".square-list ul").append(noneStr);
+                }
+            }
+        });
+    }
+    //下拉刷新ajax过来的数据删除
+    function del(weibo_id){
+    	$("#myModal").modal('show');
+    	$("#delete-topic").click(function(){
+        	$("#myModal").modal('hide');
+        	dodel(weibo_id);
+        });
+    	
+    }
+    //清空所有微博
+    //cleanFavoriteWeiBo()
+    function delallweibo(){
+        $.ajax({
+            url: "{:U('wap/Collect/delallweibo')}",
+            type: 'GET',
+            dataType: 'json',
+            data: {
+
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if(data.status==1)
+                {
+                   $(".square-list ul").remove();
+                }else{
+
+                }
+            }
+        });
+    }
+    //确定删除
+    function dodel(weibo_id){
+    	$("#myModal").modal('hide');
+        //删除ajax
+        $.ajax({
+            url: "{:U('wap/Collect/ajaxDelMyWeibo')}",
+            type: 'GET',
+            dataType: 'json',
+            data: {
+            	weibo_id: weibo_id
+            },
+            error: function () {
+            },
+            success: function (data) {
+            	if(data.status==1)
+            	{
+//                 resetmytop();
+                    location.reload();
+                }
+            }
+        });
+    }
+$(function () {
+    $(".go-new-weibo").click(function () {
+        var url = "{:U('wap/WeiboContent/index')}"+"&weibo_id="+$(this).data("newweiboid");
+        try{
+            Android.openUrl("话题详情", url);
+        }catch (e){
+            setTimeout(function(){
+                Android.openUrl("话题详情", url);
+            },50)
+        }
+        Android.openUrl("话题详情", url);
+    });
+});
+</script>

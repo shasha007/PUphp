@@ -1,0 +1,39 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <a href="{:U('home/Activity/addActivity')}" class="btn_a"><span>添加活动</span></a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>活动名称</th>
+                <th>状态</th>
+                <th>奖品中奖区间</th>
+                <th>分享地址</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.status}</td>
+                    <td>{$vo.winraterange}</td>
+                    <td>{$vo.url}</td>
+                    <td>{$vo.stime}</td>
+                    <td>{$vo.etime}</td>
+                    <td>{$vo.ctime}</td>
+                    <td>
+                        <a href="{:U('home/Activity/winlist', array('id'=>$vo['id']))}">中奖纪录</a>
+                        <a href="{:U('home/Activity/addActivity', array('id'=>$vo['id']))}">编辑</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+<include file="_footer" />

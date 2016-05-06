@@ -1,0 +1,100 @@
+<include file="_header" />
+
+<div class="member_c">
+    <include file="_finishTop" />
+    <?php if($canFinish):?>
+    <form action="{:U('/Author/doFinish',array('id'=>$eventId))}" enctype="multipart/form-data" method="post">
+        <div class="member_add">
+            <table width="900" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td></td>
+                    <td align="right">照片：</td>
+                    <td><span class="red">*</span> </td>
+                    <td>
+                        <div class="prov_thumblist"><ul id="uploaded_photos1">
+                        <if condition="$print_img">
+                            <li id="img1" class="prov_link">
+                                <div class="prov_thumb">
+                                    <img style="width:100px;height:100px;" alt="" src="{$print_img|getThumb=###,125,125}">
+                                </div><br>
+                                <span><a onclick="delImg(1,1)" href="javascript:void(0)">删除</a></span>
+                            </li>
+                        </if>
+                        </ul></div>
+                        <input type="button" value="上传照片" onclick="openUploadImg(1);">
+                    </td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right">总结：</td>
+                    <td><span class="red">*</span> </td>
+                    <td><textarea id="print_text" name="print_text" style="width:250px; height:200px;resize: none" onKeyUp="gbcount(this,250);">{$print_text|showBr|br2nl}</textarea>
+                    <span  id='remain' style='color:green;'>200</span><span style='color:green;'>/250</span></td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right">活动经费：</td>
+                    <td><span class="red"></span> </td>
+                    <gt name="pay" value="0">
+                    <td><input type="text" name="pay"  value="{$pay}" ></td>
+                    <else/>
+                    <td><input type="text" name="pay"  value="" ></td>
+                    </gt>
+                </tr>
+                  <tr><td height="8" colspan="20"></td></tr>
+                  <tr>
+                      <td></td>
+                      <td align="right">上传附件：</td>
+                      <td><span class="red"></span> </td>
+                      <td>
+                        <div id="uploaded_files1">
+                            <if condition="$attach">
+                            <div id="attach3" class="attach_span">
+                                <span class="attach_title">{$attach.name}</span>
+                                <a href="javascript:void(0)" onclick="delFile(3,1)">删除</a>
+                            </div>
+                            </if>
+                        </div>
+                          <input type="button" onclick="openUploadFile(1);" value="上传附件"/>
+                      </td>
+                  </tr>
+
+            </table>
+        </div>
+        <div class="member_btn">
+            <input type="submit" value="确定" class="member_btn1" />
+        </div>
+    </form>
+    <?php endif;?>
+</div>
+<script>
+    $(function(){
+        gbcount('#print_text',250);
+    });
+    function gbcount(o,max){
+        var msg = $(o).val();
+        msg = msg.replace('\n',"<br />");
+        var rest = max - msg.length;
+        if(rest < 0){
+            rest = 0;
+            $('#remain').html(0);
+            $(o).val(msg.substring(0,max));
+            alert('不能超过'+max+'个字!');
+        }
+        $('#remain').html(rest);
+    }
+var imgCount = [0,<?php if($print_img):?>1<?php else:?>0<?php endif;?>];
+var imgMax = [0,1];
+var fileCount = [0,<?php if($attach):?>1<?php else:?>0<?php endif;?>];
+var fileMax = [0,1];
+var thumbSizeW = [0,125];
+var thumbSizeH = [0,125];
+var showW = [0,100];
+var showH = [0,100];
+var imgId = 3;
+var attach_type = 'event_finish';
+</script>
+<include file="__THEME__/comm/_upload_file" />
+<include file="_footer" />

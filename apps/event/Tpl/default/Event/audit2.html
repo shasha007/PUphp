@@ -1,0 +1,86 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th width="30%">{$ts['app']['app_alias']}标题</th>
+                <th>发起者</th>
+                <th>发起组织</th>
+                <th>{$webconfig.cradit_name}</th>
+                <th>活动积分</th>
+                <th>发起时间</th>
+                <th>初审人</th>
+                <th>附件(点击下载)</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <input type="hidden" id="score{$vo.id}" value="{$vo.score}"/>
+                    <input type="hidden" id="credit{$vo.id}" value="{$vo.credit}"/>
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><a href="{:U('/Author/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a> <span class="cGray2 type_{$vo.id}">[{$type_list[$vo['typeId']]}]</span></td>
+                    <td>{$vo.uid|getUserRealName}</td>
+                    <td>{$vo.gid|getGroupName}</td>
+                    <td>{$vo['credit']}</td>
+                    <td>{$vo['score']}</td>
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <td>{$vo.audit_uid|getUserRealName}</td>
+                    <td>{$vo.attachId|getAttachHtml}</td>
+                    <td>
+                        <a href="{:U('/Event/editEvent', array('id'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:void(0)" onclick="audit('{$vo.id}')">通过</a>
+                        <a href="javascript:void(0)" onclick="del({$vo.id})">驳回</a>
+			</td>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="../Teacher/_footer" />
+<script type="text/javascript">
+    function updateNum() {
+        var auditCount = $('#auditCount').html();
+        auditCount = auditCount -1;
+        $('#auditCount').html(auditCount)
+    }
+    function del(id){
+        if(id=='' || id==0){
+            ui.error("请选择要驳回的活动");
+            return false;
+        }
+        ui.box.load( '{:U('/Event/doAuditReason')}' + '&id=' + id + '&del=1',{title:'驳回'});
+    }
+    function audit(id){
+        if(id=='' || id==0){
+            ui.error("请选择要驳回的活动");
+            return false;
+        }
+        ui.box.load( '{:U('/Event/doAuditScore')}' + '&id=' + id,{title:'审核活动'});
+    }
+    function showEvent(id){
+        ui.box.load( '{:U('event/Event/event')}' + '&id=' + id,{title:'活动详情'});
+    }
+    var sid = {$editSid};
+    function selectSchool(){
+        var typevalue = $("#current").val();
+        ui.box.load(U('event/School/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择学校',noCheck:'yes'});
+    }
+</script>

@@ -1,0 +1,25 @@
+<div class="page_tit">文件分发管理</div>
+<div class="tit_tab">
+<ul>
+    <?php if($flag == 0):?>
+    <li><a <eq name="ACTION_NAME" value="index">class="on"</eq>
+           <eq name="ACTION_NAME" value="addFile">class="on"</eq>
+           <eq name="ACTION_NAME" value="editFile">class="on"</eq>
+            <eq name="ACTION_NAME" value="chekckSchool">class="on"</eq>
+            <eq name="ACTION_NAME" value="schools">class="on"</eq>
+        <eq name="ACTION_NAME" value="reply">class="on"</eq>
+            href="__URL__&act=index">文件下发管理</a></li>
+    <li><a <eq name="ACTION_NAME" value="lists">class="on"</eq>
+        <eq name="ACTION_NAME" value="addPutFile">class="on"</eq>
+        <eq name="ACTION_NAME" value="viewPutFile">class="on"</eq>
+            href="__URL__&act=lists">文件上报管理</a></li>
+
+    <li><a <eq name="ACTION_NAME" value="attach">class="on"</eq>
+        href="__URL__&act=attach">附件箱</a></li>
+    <?php endif;?>
+    <?php if($flag == 2):?>
+    <li><a <eq name="ACTION_NAME" value="config">class="on"</eq>
+        href="__URL__&act=config">绑定接收人</a></li>
+    <?php endif;?>
+</ul>
+</div>

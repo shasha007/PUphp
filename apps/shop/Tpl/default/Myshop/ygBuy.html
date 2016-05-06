@@ -1,0 +1,44 @@
+<include file="_header" />
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">梦想记录--商品详情</div>
+            <div class="consumer_records">
+                <div class="good_infor mt10 c_r_link">
+                    <div class="good_infor_thumb"><a href="{:U('shop/Yg/detail',array('id'=>$yg['id']))}"><img src="{$product['pic']|tsMakeThumbUp=###,70,70}" alt="" /></a></div>
+                    <div class="good_infor_title">
+                        <a href="{:U('shop/Yg/detail',array('id'=>$yg['id']))}"><span class="m_color1">(第{$yg['times']}期)</span>{$product['name']}</a></div>
+                    <?php if($yg['win']):?>
+                        <div class="good_infor_title mt5">本期商品购买已结束
+                        【获奖者：<space uid="yg['win']" class="fn" target="_blank">{uname}</space> 获奖编码：{$yg.codeRNO} 获奖日期：{$yg.over_date}】</div>
+                    <?php else:?>
+                        <div class="good_infor_title mt5">本期商品云购正在进行中...<a href="{:U('shop/Yg/detail',array('id'=>$yg['id']))}">追加梦想次数</a></div>
+                    <?php endif;?>
+                    <div class="good_code mt20 b">本期商品您拥有<?php echo count($rno);?>个云购码</div>
+                    <div class="good_code_back b mt20"><a href="{:U('shop/Myshop/yg')}">返回列表</a></div>
+                    <div class="good_codetitle mt10">
+                        <li>幸运码</li>
+                    </div>
+                    <div class="good_codelist mt10">
+                        <ul>
+                            <li class="icode1">
+                            <volist name="rno" id='vo'>
+                                <?php if($yg['win'] && $vo['rno_id']==$yg['codeRNO']): ?>
+                                <span class="m_color2 b">{$vo.rno_id}</span>
+                                <?php else:?>
+                                <span>{$vo.rno_id}</span>
+                                <?php endif;?>
+                            </volist>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    </div>
+<include file="../Public/_footer" />

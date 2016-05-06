@@ -1,0 +1,173 @@
+<include file="_header" />
+<script>
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要删除的优惠劵");
+                return false;
+            }
+            if( confirm("是否删除优惠劵？") ){
+                $.post( '__URL__&act=put_coupon_to_recycle',{gid:id},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个优惠劵成功,己放入回收站" );
+                        var id_list = id.split( ',' );
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove();
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功,己放入回收站" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        },
+        edit_tab:function(action,id){
+            var title = action+"{$ts['app']['app_alias']}";
+            ui.box.load('__URL__&act=edit_coupon_tab&id='+id,{title:title+'信息'});
+        },
+        edit:function(id,act){
+            if( act == 'recommend' ){
+                v= "推荐";
+                v2 = "取消推荐";
+                act2 = 'cancel';
+
+            }else{
+                v = "取消推荐";
+                v2 = "《推荐》";
+                act2 = 'recommend';
+            }
+            $.post('__URL__&act=doChangeIsHot',{id:id,type:act},function( text ){
+                if( text == 1 ){
+                    ui.success( v+"，操作成功" );
+                    $('#button'+id).html('<a href="javascript:void(0);" onclick="c.edit('+id+',\''+act2+'\')">'+v2+'</a>');
+                }else{
+                    ui.error( "设置失败" );
+                }
+            });
+        }
+    }
+    var c = null;
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+        <form action="__URL__&act=coupon_list" method="post">
+            优惠劵名称：<input name="description" type="text" value="{$description}">
+            &nbsp;分类：
+            <select name="cid">
+                <option value="">-全部-</option>
+                <volist name='categorysInfo' key='cId' id='cName'>
+                    <php>if($cid==$key) { </php>
+                        <option value="{$key}" selected="selected">{$cName}</option>
+                    <php> } else { </php>
+                        <option value="{$key}">{$cName}</option>
+                    <php> }</php>
+                </volist>
+            </select>
+            &nbsp;校区：
+            <select name="sid">
+                <option value="">-全部-</option>
+                <volist name='schoolsInfo' key='sId' id='cName'>
+                    <php>if($sid==$key) { </php>
+                        <option value="{$key}" selected="selected">{$cName}</option>
+                    <php> } else { </php>
+                        <option value="{$key}">{$cName}</option>
+                    <php> }</php>
+                </volist>
+            </select>
+            &nbsp;是否推荐：
+                <input type="radio" value="1" name="is_hot" <eq name="is_hot" value="1">checked</eq> />是
+                <input type="radio" value="0" name="is_hot" <eq name="is_hot" value="0">checked</eq> />否
+                <input type="radio" value="" name="is_hot" <eq name="is_hot" value="">checked</eq> />全部
+                &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="{:U('coupon/Admin/edit_coupon_tab')}" class="btn_a"><span>添加{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>优惠劵名称</th>
+                <th>分类</th>
+                <th>所属校区</th>
+                <th>操作</th>
+                <th>上传时间</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.description}</td>
+                    <td>{$categorysInfo[$vo['cid']]}</td>
+                    <td>{$schoolsInfo[$vo['sid']]}</td>
+                    <td>
+                <php>
+                    if( $vo['is_hot'] ){
+                    $button = "取消推荐";
+                    $act    = 'cancel';
+                    }else{
+                    $button = "《推荐》";
+                    $act    = 'recommend';
+                    }
+                </php>
+                <span id="button{$vo['id']}" ><a href="javascript:void(0);" onclick="c.edit({$vo['id']},'{$act}')">{$button}</a></span>
+                <a href="{:U('coupon/Admin/edit_coupon_tab', array('id'=>$vo['id']))}">编辑</a>
+                <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+                </td>
+                <td>{$vo['cTime']|friendlyDate}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="{:U('coupon/Admin/edit_coupon_tab')}" class="btn_a"><span>添加{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+    var c = new ctrl();
+</script>
+<include file="_footer" />

@@ -1,0 +1,38 @@
+<div style="width: 500px">
+    <strong>活动海报：</strong><img src="{$coverId|getCover=###, 100, 100}" alt="" />
+    <strong>活动logo：</strong><if condition="$logoId">
+                <img src="{$logoId|getCover=###,428,100,f}">
+            </if>
+    <br /><br />
+    <strong>活动名称：</strong><span class="b red">{$title}</span><br />
+    <strong>可得积分：</strong>{$score}<br />
+    <strong>学校：</strong>{$sid|tsGetSchoolTitle}<br />
+    <strong>分类：</strong>{$category[$typeId]}<br />
+    <strong>活动地点：</strong>{$address}<br />
+    <strong>活动时间：</strong><?php echo date('Y-m-d H:i:s', $sTime) . " 至 " . date('Y-m-d H:i:s', $eTime) ?><br />
+    <strong>报名起止：</strong><?php if($startline>0){echo date( 'Y-m-d H:i',$startline );}?> 至<?php echo date('Y-m-d H:i:s', $deadline) ?><br />
+    <strong>经费：</strong>
+    <php>
+        if($cost == '0'){
+                echo '免费';
+        }elseif($cost == '1'){
+                echo 'AA制';
+        }elseif($cost == '2'){
+                echo '50元以下';
+        }elseif($cost == '3'){
+                echo '50-200元';}
+        elseif($cost == '4'){
+                echo '200-500元';}
+        elseif($cost == '5'){
+                echo '500-1000元';}
+        elseif($cost == '6'){
+                echo '1000元以上';}
+    </php><br />
+    <strong>经费说明：</strong>{$costExplain}<br />
+    <strong>剩余名额：</strong><?php echo 5000000 < $limitCount ? "无限制" : $limitCount ?><br />
+    <strong>联系方式：</strong>{$contact}<br />
+    <strong>需要审核：</strong><?php if( $allow ) {echo'是';}else{echo'否';}?><br />
+    参加人数（<a href="{:U('/Author/member', array('id'=>$id))}">{$joinCount}</a>） <if condition="$verifyCount">待审人数（<a href="{:U('/Author/memberAudit', array('id'=>$id))}">{$verifyCount}</a>）</if>
+<br />
+<a href="{:U('/Front/index', array('id'=>$id, 'uid'=>$uid))}" target="_blank">前往活动页面</a>
+</div>

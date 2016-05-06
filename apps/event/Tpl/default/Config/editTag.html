@@ -1,0 +1,33 @@
+<div style="width:300px;margin:10px auto 20px auto;">
+    标签名：<input id="title" class="txt" value ="{$title}" /><br/><br/>
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="editType($( '#title' ).val() )" value="确定" />
+</div>
+<script>
+<if condition="$id">
+    var id = '{$id}';
+<else />
+    var id = '0';
+</if>
+function editType( title ){
+  if(getLength(title.replace(/\s+/g,"")) == 0){
+	 alert("标签名不能为空");
+	 return false;
+  }
+  if($( '#title' ).val().length >20) {
+    alert("标签名不能超过20个字");
+    return false;
+  }
+  $.post( '__URL__&act=doEditTag',{title:title,id:id},function( res ){
+    var json =$.parseJSON(res);
+    if( json.status ==0 ){
+        ui.error(json.info);
+    }else{
+        ui.box.close();
+        ui.success(json.info);
+        window.location.reload(true);
+    }
+    });
+}
+</script>

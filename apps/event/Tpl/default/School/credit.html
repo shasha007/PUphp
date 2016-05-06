@@ -1,0 +1,42 @@
+<include file="_header" />
+
+<div class="hd_c i1">
+    <div class="ranktab1" id="ranktab">
+        <div class="clear"></div>
+        <div id="tabcon" class="tabcon">
+            <table width="940" border="0" cellspacing="0" cellpadding="0">
+                <tr class="b" style="color:#333; height:36px; line-height:36px;">
+                    <td colspan="7" class="rank4 f14"> 参加活动明细
+<?php if($school['id'] == 473):?>
+                        <a href="/index.php?app=event&mod=EcApply2&act=myEc" style="color:#3b5998;">【我的申请】</a>
+                        <a href="/index.php?app=event&mod=EcApply2&act=cjd" style="color:#3b5998;">【第二课堂成绩单】</a>
+<?php endif;?>
+                    </td>
+                </tr>
+                <tr class="b" style="color:#333; height:32px; line-height:32px;">
+                    <td style="width:400px;"> 活动名称</td>
+                    <td>签到</td>
+                    <td>报名时间</td>
+                    <td>{$webconfig.cradit_name}</td>
+                    <td>活动积分</td>
+                </tr>
+                <?php foreach($data as $key=>$vo):?>
+                <tr>
+                    <td >{$vo.title}</td>
+                    <td>
+                        <eq name="vo['status']" value="2">
+                        是
+                        <else/>
+                        否
+                        </eq>
+                    </td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td>{$vo.credit}</td>
+                    <td>{$vo.score}</td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <div class="page plist">{$html}</div>
+        </div>
+    </div>
+<include file="_footer" />

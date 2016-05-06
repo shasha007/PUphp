@@ -1,0 +1,127 @@
+<div style="width:1000px;overflow-y:scroll;height:500px;">
+    <input type="hidden" id="id" value="{$id}"/>
+    <ul id="list_vote" class="list_vote lineS_btm">
+        <li>
+            <label>申请表标题：<span class="cRed">*</span></label>
+            <div class="c1"><span id="title_{$id}" edit="on">{$title}</span> <a href="javascript:edit_title('title',{$id})">[修改]</a></div>
+        </li>
+        <li>
+            <label>申请要求：</label>
+            <div class="c1"><span id="desc_{$id}" edit="on">{$desc}</span> <a href="javascript:edit_title('desc',{$id})">[修改]</a></div>
+        </li>
+    </ul>
+    <div class="page_btm">
+        添加申请资料：<a href="javascript:add_tab(1);">+输入框(20字内)</a> | <a href="javascript:add_tab(2);">+大输入框(250字内)</a> |
+        <a href="javascript:add_tab(3);">+单选</a> | <a href="javascript:add_tab(4);">+附件(附件可一次上传5个文件，只可添加一次)</a>
+    </div>
+    <div class="list">
+    <table id="input_list" width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+        <tr>
+            <th class="line_l">排序</th>
+            <th class="line_l">名称</th>
+            <th class="line_l" width="60">类型</th>
+            <th class="line_l">是否必填</th>
+            <th class="line_l">说明</th>
+            <th class="line_l" width="60">操作</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>名称</td>
+            <td>默认输入框</td>
+            <td>是</td>
+            <td>15字以内，显示于第二课堂成绩单上</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>实践或获奖时间</td>
+            <td>默认单选</td>
+            <td>是</td>
+            <td>上半学期：02月15-08月15，下半学期：08月16-02月14</td>
+            <td></td>
+        </tr>
+        <?php $types=array('','输入框','大输入框','单选','附件');?>
+        <volist name="inputs" id='vo'><?php if($vo['type']==4):?><input type="hidden" id="hasAttach" value="1"/><?php endif;?>
+            <tr id="input_{$vo.id}">
+                <td><span id="inputOrder_{$vo.id}" edit="on">{$vo.inputOrder}</span> <a href="javascript:edit_title('inputOrder',{$vo.id},{$vo.fileId});">[修改]</a></td>
+                <td>{$vo.title}</td>
+                <td><?php echo($types[$vo['type']]);?></td>
+                <td><?php if($vo['must']):?>是<?php else:?>否<?php endif;?></td>
+                <td>{$vo.desc}</td>
+                <td><a href="javascript:editInput({$vo['id']})">编辑</a> <a href="javascript:delInput({$vo['id']},{$vo['type']})">删除</a></td>
+            </tr>
+        </volist>
+    </table>
+    </div>
+    <div class="page_btm">
+        <a href="javascript:review({$id})"><span>[预览]</span></a>
+        <input type="button" class="btn_b" value="确定" onclick="javascript:ui.box.close(renew);"/>
+    </div>
+</div>
+<script>
+    function review(id){
+        ui.box.load('__URL__&act=review&id='+id,{title:'预览',zIndex:1000002});
+    }
+    function edit_title2(type,id){
+        var obj = $('#'+type);
+        if($(obj).attr('edit')=='on'){
+            var oldval=$(obj).html();
+            oldval =oldval.replace(/(^\s*)|(\s*$)/g, "");
+            if(!$('#'+type+'_input').val()){
+                if(type=='desc'){
+                    $(obj).html("<textarea id='desc_input' cols='30' rows='5'>"+oldval+"</textarea>");
+                }else{
+                    $(obj).html("<input id='"+type+"_input' type='text' class='txt_vote' value='"+oldval+"'/>");
+                }
+                $(obj).attr('edit','off');
+            }
+            $('#'+type+'_input').die().live("blur",function(){
+            });
+            $('#'+type+'_input').select();
+            $('#'+type+'_input').focus().live("blur",function(){
+                var editval=$(this).val();
+                $(obj).html(editval);
+                $(obj).attr('edit','on');
+                if(type=='title' && editval.length<=0){
+                    ui.error('标题不可为空');
+                    $(obj).html(oldval);
+                    return false;
+                }
+                $.post('__URL__&act=setEcFiel',{id:id,value:editval,field:type},function(data){
+                    var json=$.parseJSON(data);
+                    if(type=='years'){
+                        $(obj).html(json.info);
+                    }
+                });
+            });
+        }
+    }
+    function add_tab(type){
+        if(type==4 && $('#hasAttach').val()==1){
+            ui.error('附件只可添加一个');return;
+        }
+        var typeName = new Array('输入框(20字内)','大输入框(250字内)','单选','附件');
+        var id = $('#id').val();
+        ui.box.load('__URL__&act=addEcInput&pid='+id+'&type='+type,{title:'添加'+typeName[type-1],zIndex:1000001});
+    }
+    function editInput(id){
+        ui.box.load('__URL__&act=addEcInput&id='+id,{title:'编辑',zIndex:1000001});
+    }
+    function delInput(id,type){
+        if( confirm("确定删除？") ){
+            $.post( '__URL__&act=doDelInput',{id:id},function(data ){
+                var json=$.parseJSON(data);
+                if(json.status==0){
+                    ui.error(json.info)
+                }else{
+                    ui.success(json.info);
+                    $('#input_'+id).remove();
+                    if(type==4){
+                        $('#hasAttach').val('0');
+                    }
+                }
+            });
+        }
+    }
+
+</script>

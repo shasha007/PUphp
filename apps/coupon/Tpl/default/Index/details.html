@@ -1,0 +1,23 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/css/coupon.css" type="text/css" charset="utf-8" />
+<div class="bg">
+    <div class="main">
+        <include file="../Public/category" />
+        <div class="coupon_list">
+            <div class="coupon_list_title1"><div class="plist_up"><a href="{:U('coupon/Index')}">返回首页</a></div>&nbsp;&nbsp;
+                优惠分类：<span class="bule">{$cTitle}</span> &nbsp;&nbsp; 区域：<span class="bule">{$sTitle}</span></div>
+            <div class="clear"></div>
+            <div class="coupon_desc">
+                <div class="coupon_desc1">
+                    <div class="coupon_logo"><img src="{$obj.path|realityImageURL}" alt="" /></div>
+                    <div class="coupon_infor">
+                        <div class="coupon_infor_title">{$obj.description}</div>
+                        <div class="coupon_infor_text"><span class="b fz bule">详细内容：</span><br />{$obj.content|htmlspecialchars_decode}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<include file="__THEME__/footer" />

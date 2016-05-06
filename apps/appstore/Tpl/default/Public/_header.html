@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>PocketUni-App市场</title>
+<link href="../Public/css/main.css?20140421" rel="stylesheet" type="text/css" />
+<include file="__THEME__/comm/_app" />
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" href="../Public/css/ie.css" />
+<![endif]-->
+
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+</head>
+<body class="<php>if($type==0) { echo "body";} else { echo "nav";}</php>">
+	<include file="__THEME__/_holder_2014" />
+	<div class="wrapper">
+		<div class="myheader on-suggest">
+		<div class="header-top clearfix">
+		    <h1 class="header-logo">
+		        <img src="../Public/images/pu_logo.png" alt="" height="98" width="300" />
+		    </h1>
+		<div class="platform">
+		{$platform}
+		<span>[<a href="javascript:void(0)">切换</a>]</span>
+		<ul class="platform-menu hidden">
+		<volist name="platforms" id="vo">
+		<li> <a href="{:U('appstore/Index/index', array('platform'=>$i) )}">{$vo['t']}</a> </li>
+		</volist>
+		</ul>
+		</div>
+		<div class="searchwrapper">
+			<form method="post" action="{:U('appstore/Index/items')}">
+			<input type="hidden" name="type" id="type" value="1"/>
+			<table cellspacing="0" cellpadding="0" style="height:45px">
+			<tbody><tr>
+			<td class="scbar_icon_td"></td>
+			<td class="scbar_txt_td"><input type="text" name="keyword" id="scbar_txt" value="" autocomplete="off" class=" xg1"></td>
+			<td class="scbar_type_td"><a href="javascript:;" id="scbar_type" class="showmenu xg1 xs2">应用</a>
+				<ul id="searchmenu" class="hidden">
+		        	<li><a href="javascript:void(0)" rel="1">应用</a></li>
+		            <li><a href="javascript:void(0)" rel="2">游戏</a></li>
+		            <li><a href="javascript:void(0)" rel="3">资讯</a></li>
+		        </ul>
+				</td>
+			<td class="scbar_btn_td"><button type="submit" name="searchsubmit" id="scbar_btn" class="pn pnc" value="true"><strong class="xi2 xs2">搜索</strong></button></td>
+			</tr>
+			</tbody></table>
+			</form>
+		</div>
+		</div>
+	<div class="banner">
+	<div class="navigation-bg"  <php>if($type==1||$type==2) { </php> style="height:80px;height:82px\9;"<php>}</php> >
+	<div class="navigation">
+		<ul class="clearfix">
+
+			<php>if($type==0) {</php>
+					<li class="current"><a href="{:U('appstore/Index/index')}"><span>首页</span></a>
+			<php>} else {</php>
+					<li class=""><a href="{:U('appstore/Index/index')}"><span>首页</span></a></li>
+			<php>}</php>
+
+			<php>if($type==1) {</php>
+            <li class="have-child current show"><a href="{:U('appstore/Index/items', array('type'=>1) )}"><span>应用</span></a>
+			<ul class="no-index nav-child clearfix" style="left:-57px;">
+				<li style="margin-left:50px;">&nbsp;</li>
+				<volist name="category_tree" id="category_top">
+					<li style=""><a href="{:U('appstore/Index/items', array('cid'=>$category_top['a'], 'type'=>$type))}" class="nav-bar-child">{$category_top['t']}</a></li>
+					<li class="placer"></li>
+			    </volist>
+			</ul>
+			</li>
+			<php>} else {</php>
+				<li class=""><a href="{:U('appstore/Index/items', array('type'=>1) )}"><span>应用</span></a></li>
+			<php>}</php>
+
+			<php>if($type==2) {</php>
+            <li class="have-child current show"><a href="{:U('appstore/Index/items', array('type'=>2) )}"><span>游戏</span></a>
+			<ul class="no-index nav-child clearfix" style="left:-155px;">
+				<li style="margin-left:50px;">&nbsp;</li>
+				<volist name="category_tree" id="category_top">
+					<li style=""><a href="{:U('appstore/Index/items', array('cid'=>$category_top['a'], 'type'=>$type))}" class="nav-bar-child">{$category_top['t']}</a></li>
+					<li class="placer"></li>
+			    </volist>
+			</ul>
+			</li>
+			<php>} else {</php>
+				<li class=""><a href="{:U('appstore/Index/items', array('type'=>2) )}"><span>游戏</span></a></li>
+			<php>}</php>
+
+	     </ul>
+	</div>
+	</div>
+	</div>
+	</div>
+	<script>
+	$(document).ready(function () {
+		var p = $(".scbar_type_td");
+		var position = p.position();
+		$('#searchmenu').css({'left' : position.left-10});
+		$('#searchmenu').css({'top' : position.top+40});
+
+		$('.scbar_type_td').bind('mouseover', openSubMenu);
+		$('.scbar_type_td').bind('mouseout', closeSubMenu);
+
+		$('#searchmenu > li > a').bind('click', function() {
+			a = $(this).attr('rel');
+			b = $(this).html();
+
+			$('#scbar_type').html(b);
+			$('#type').val(a);
+
+			closeSubMenu();
+		});
+
+		function openSubMenu() {
+			$('#searchmenu').removeClass('hidden');
+		};
+
+		function closeSubMenu() {
+			$('#searchmenu').addClass('hidden');
+		};
+
+	});
+	</script>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>岁月是把杀猪刀，还是美工刀？</title>
+   <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+   <script src="js/jquery-2.1.1.min.js"></script>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <style type="text/css">
+      body{
+         height: 100%;
+      }
+      .button_img{
+
+         position: relative;
+         top: -90px;
+         left: 30%;
+         width: 40%;
+         height:100%;
+      }
+      .img-responsive{
+         display: block;
+         max-width: 100%;
+         margin: 0 auto;
+      }
+   </style>
+</head>
+
+<body>
+<div>
+<img src="images/index.jpg" class="img-responsive">
+</div>
+<div class="button_img">
+<img class="img-responsive" id="btn_1"  src="images/upload_button.png" >
+</div>
+</body>
+</html>
+<script type="text/javascript">  
+window.onload = function(){  
+      document.getElementById('btn_1').addEventListener('click', onBtnClick, false);
+      var _int_value = window.ncp.callOnJs();
+      alert("get int from java:" + _int_value );
+
+
+}  
+function onBtnClick() {
+  window.Android.openInternalPage("showfield", "1", "岁月是把杀猪刀，还是美工刀？","34", "","","" );
+}  
+</script>

@@ -1,0 +1,131 @@
+
+.tribe-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+
+}
+
+.list-l {
+    width: 15%;
+    font-size: 12px;
+    height: 69px;
+    line-height: 69px;
+}
+
+.big {
+    font-size: 18px;
+}
+
+.list-c {
+    width: 20%;
+}
+
+.list-c img {
+    width: 90%;
+}
+
+.list-c2 {
+    width: 50%;
+}
+
+.list-c2 p {
+    overflow: hidden;
+}
+
+@media screen and (max-width: 320px) {
+    .list-c2 p {
+        margin-bottom: 2px;
+    }
+}
+
+@media screen and (min-width: 321px) {
+    .list-c2 p {
+        margin-bottom: 5px;
+    }
+}
+
+.list-r {
+    width: 15%;
+   height: 100%;
+}
+
+.list-r span {
+    display: inline-block;
+    width: 100%;
+    margin-top: 40%;
+    height: 30px;
+    font-size: 14px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #00b3ee;
+    color: #00b3ee;
+}
+
+.list-hobbies {
+    width: 70px;
+    height: 23px;
+    font-size: 14px;
+    line-height: 23px;
+    text-align: center;
+    border: 1px solid #9c4755;
+    color: #9c4755;
+}
+
+.list-school {
+    font-size: 12px;
+    margin-bottom: 0px;
+    color: #888;
+}
+.yiku{
+    margin-top: 5px;
+}
+/*.action-bar {*/
+    /*width: 100%;*/
+    /*border-bottom: 1px solid #efefef;*/
+/*}*/
+
+/*.action-bar div {*/
+    /*height: 40px;*/
+    /*line-height: 40px;*/
+/*}*/
+
+/*.header-back {*/
+    /*width: 15%;*/
+    /*color: #ea5504;*/
+    /*text-align: left;*/
+/*}*/
+
+/*.header-title {*/
+    /*width: 70%;*/
+    /*font-size: 18px;*/
+    /*text-align: center;*/
+/*}*/
+
+/*.header-right {*/
+    /*width: 15%;*/
+    /*color: #ea5504;*/
+/*}*/
+
+/*.selection-con {*/
+    /*padding: 20px;*/
+    /*font-size: 14px;*/
+/*}*/
+
+/*.selection-con span {*/
+    /*margin-right: 9px;*/
+/*}*/
+
+/*.selection-con p {*/
+    /*margin-bottom: 20px;*/
+/*}*/
+
+/*.selection-on {*/
+    /*padding: 5px;*/
+    /*border: 1px solid #ea5504;*/
+    /*background-color: #ea5504;*/
+    /*color: #FFF;*/
+/*}*/
+/*.selection-con footer button{*/
+    /*float: right;*/
+    /*margin-left: 10px;*/
+/*}*/

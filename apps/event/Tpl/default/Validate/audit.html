@@ -1,0 +1,28 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page right">{$list['html']}</div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>审核部落</th>
+                <th>提交时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="list['data']" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td><a href="{:U('group/Topic/index', array('gid'=>$vo['gid']))}" target="_blank">{$vo['name']}</a></td>
+                    <td>{$vo.atime|friendlyDate}</td>
+                    <td>
+                        <a href="{:U('/Validate/look', array('id'=>$vo['id']))}">查看申请资料</a>
+                    </td>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="page right">{$list['html']}</div>
+</div>
+<include file="../Teacher/_footer" />

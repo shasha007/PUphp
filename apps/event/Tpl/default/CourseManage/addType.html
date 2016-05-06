@@ -1,0 +1,29 @@
+<dl style="margin:10px 10px 0; height:22px;" class="clear">
+    <dt class="left alR " style="width:70px;">分类： </dt>
+    <dd class="left alL"><input type="text" name="type" val='' id="name"></dd>
+</dl>
+<dl style="margin:10px 10px 5px; height:30px" class="clear">
+   
+</dl>
+<div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="alR">
+    <input type="button" class="btn_b" onclick="addEdit()" value="确定" />
+    <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+<script type="text/javascript">
+    function addEdit() {
+        //提交修改
+        var name=$('#name').val();
+        $.post("{:U('event/CourseManage/doAddType')}", {name:name}, function(res){
+            if (res == '0') {
+                ui.error('添加失败');
+            }else {
+                ui.success('添加成功');
+                window.top.location.reload();
+                ui.box.close();
+            }
+        });
+    }
+function cancel() {
+	ui.box.close();
+}
+</script>

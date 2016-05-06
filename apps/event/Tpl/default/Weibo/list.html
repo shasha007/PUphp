@@ -1,0 +1,154 @@
+<include file="../Teacher/_header" />
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+
+//搜索用户
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchBlog() {
+    if(isSearchHidden == 1) {
+        $("#searchBlog_div").slideDown("fast");
+        $(".searchBlog_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchBlog_div").slideUp("fast");
+        $(".searchBlog_action").html("搜索微博");
+        isSearchHidden = 1;
+    }
+}
+
+var ctrl = function(name){
+    this.elements = document.getElementsByName('id[]');
+    this.length = this.elements.length;
+}
+ctrl.prototype = {
+    del:function(weibo_id){
+        var weibo_id = weibo_id ? weibo_id : getChecked();
+        weibo_id = weibo_id.toString();
+        if(weibo_id=='' || weibo_id==0) return;
+        if( confirm("是否删除微博") ){
+            $.post( "{:U('event/Weibo/delWeibo')}",{weibo_id:weibo_id},function(text ){
+                if( text == 1 ){
+                    var id_list = weibo_id.split( ',' );
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#weibo_list_'+id_list[j]).remove();
+                    }
+                    ui.success( "删除成功" );
+                }else{
+                    ui.error( "删除失败" );
+                }
+            });
+        }
+    }
+}
+var c = null;
+</script>
+<div class="so_main">
+    <include file="_tab" />
+
+    <div id="searchBlog_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="page_tit">搜索微博 [ <a href="javascript:void(0);" onclick="searchBlog();">隐藏</a> ]</div>
+    <div class="form2">
+    <form method="POST">
+    <input type="hidden" name="isSearch" value="1"/>
+        <dl class="lineD">
+          <dt>学号：</dt>
+          <dd>
+            <input name="num" type="text" value="{$num}">
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>内容：</dt>
+          <dd>
+            <input name="content" type="text" value="{$content}" />
+          </dd>
+        </dl>
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+    </form>
+    </div>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$list.totalRows}条记录</span>
+        <div class="page right">{$list.html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchBlog();">
+            <span class="searchBlog_action"><neq name="isSearch" value="1">搜索微博<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除微博</span></a>
+    </div>
+
+    <div class="list">
+        <table id="blog_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th class="line_l">ID</th>
+            <th class="line_l">用户名</th>
+            <th class="line_l">内容</th>
+            <th class="line_l">转发数/评论数</th>
+            <th class="line_l">发布时间</th>
+            <th class="line_l">类型</th>
+            <th class="line_l">来自</th>
+            <th class="line_l">操作</th>
+        </tr>
+        <volist id="vo" name="list['data']">
+	      	<tr overstyle='on' id="weibo_list_{$vo.weibo_id}">
+		        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.weibo_id}"></td>
+		        <td><a href="{:U('home/space/detail',array('id'=>$vo['weibo_id']))}" target="_blank">{$vo.weibo_id}</a></td>
+		        <td><space uid="vo.uid" target="_blank">{uname}</space></td>
+		        <td style="width:400px;overflow:hidden">{$vo.content}{$vo.expend}
+                        <a href="{:U('home/space/detail',array('id'=>$vo['weibo_id']))}" target="_blank">查看详情»</a></td>
+		        <td>{$vo.transpond} / {$vo.comment}</td>
+		        <td>{$vo.ctime|friendLydate}</td>
+		        <td>
+		        <switch name="vo.type">
+		        	<case value="0">
+		        		纯文字
+		        	</case>
+		        	<case value="1">
+		        		图片
+		        	</case>
+		        	<case value="3">
+		        		视频
+		        	</case>
+		        	<case value="4">
+		        		音乐
+		        	</case>
+		        	<case value="5">
+		        		文件
+		        	</case>
+		        </switch>
+		        </td>
+		        <td><?php echo getFrom($vo['from'], $vo['from_data']);?></td>
+		        <td><a href="javascript:void(0)" onclick="c.del({$vo.weibo_id})">删除</a></td>
+	      	</tr>
+		</volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$list.totalRows}条记录</span>
+        <div class="page right">{$list.html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchBlog();">
+            <span class="searchBlog_action"><neq name="isSearch" value="1">搜索微博<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除微博</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+var c = new ctrl('id[]');
+</script>
+<include file="../Teacher/_footer" />

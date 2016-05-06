@@ -1,0 +1,60 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <div class="Toolbar_inbox">
+      <div class="page right">{$html}</div>
+      <form method="post">
+      <span>共{$totalRows}条记录</span>
+            学号：<input name="num" type="text" value="{$num}">
+            &nbsp;&nbsp;姓名：<input name="realname" type="text" value="{$realname}">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <th style="width:30px;">
+              <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0" />
+              <label for="checkbox"></label>
+          </th>
+          <th class="line_l">ID</th>
+          <th class="line_l">名称</th>
+          <th class="line_l">申请人</th>
+          <th class="line_l">ta的所有申请</th>
+          <th class="line_l">审核人</th>
+          <th class="line_l">类别</th>
+          <th class="line_l">申请时间</th>
+          <th class="line_l">操作</th>
+        </tr>
+        <volist id="vo" name="data">
+            <tr overstyle='on' id="list_{$vo['id']}">
+                <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                <td>{$vo.id}</td>
+                <td>{$vo.title}</td>
+                <td>{$vo.realname} <br/> {$vo.sid1|tsGetSchoolName}</td>
+                <td><a href="/index.php?app=event&mod=AdminCredit&act=audited&uid={$vo.uid}" >[ta的所有申请]</a></td>
+                <td>{$vo.audit|getUserRealName}</td>
+                <td>{$vo.type|getEcTypeName=###,$school['id']}</td>
+                <td>{$vo.cTime|friendlyDate}</td>
+                <td>
+                    <a href="javascript:void(0)" onclick="audit('{$vo.id}')">审核</a>
+                </td>
+            </tr>
+        </volist>
+  </table>
+  </div>
+  <div class="Toolbar_inbox">
+	<span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+  </div>
+</div>
+<script type="text/javascript">
+    function audit(id){
+        if(id=='' || id==0){
+            ui.error("请选择要审核的申请");
+            return false;
+        }
+        ui.box.load(U('event/AdminCredit/auditEcApply') + '&id=' + id,{title:'审核申请'});
+    }
+</script>
+<include file="../Teacher/_footer" />

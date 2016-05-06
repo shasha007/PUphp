@@ -1,0 +1,35 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<div class="st_search mt20">
+    <form method="post">
+        <input name="k"  value="{$search_key}" type="text" class="st_s_input" placeholder="输入关键字" />
+        <input name="st_s_search" type="submit" class="st_s_btn b f14" value="搜 索" />
+    </form>
+</div>
+<div class="clear"></div>
+<if condition=" $_SESSION['uploadSuccess'] ">
+              <div class="msg st_link">
+                <h2 class="f14 b mt20" style="text-align:center; width:100%;border-top:1px solid #dedede;padding-top:50px;"><img src="../Public/images/fzcg_dh[1].gif" />文件上传成功！</h2>
+                <p style="text-align:center; float:left; margin-top:20px; width:100%;">回到<a href="{:U('event/GroupDir/index', array('gid'=>$gid))}">文件共享区</a>，或者继续<a href="{:U('event/GroupDir/upload', array('gid'=>$gid))}">上传文件</a></p>
+              </div>
+              <else />
+    <!--发帖页面-->
+<form method="post"  action="{:U('event/GroupDir/upload', array('gid'=>$gid))}" enctype="multipart/form-data" onSubmit="return checkForm()">
+    <div class="st_f_menu f14 b mt20 ml20">上传文件：</div>
+    <div class="st_f_t ml50 h30 mt20">文件路径：<input name="uploadfile" type="file" class="st_f_input ml5"  id="file" />  (仅支持： 最大上传文件：2M)  </div>
+    <div class="st_f_text ml50 mt10"><span style="height:100px; vertical-align:top">文件注释： </span> 
+        <textarea name="note" cols="" rows="" placeholder="请输入文字" class="st_m3_area"></textarea></div>
+    <div class="clear"></div>
+    <input type="hidden" name="uploadsubmit" value="1">
+    <div class="mt20 ml115 st_fl"><input name="gx_tj" type="submit" value="上 传" class="st_f_btn" /> </div>
+</form>
+</if>
+</div>
+<script>
+    function checkForm() {
+        if($('#file').val() == '') {alert('请选择上传文件');return false;}
+        return true;
+    }
+</script> 
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

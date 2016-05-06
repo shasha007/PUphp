@@ -1,0 +1,44 @@
+<div style="width:300px;margin:10px auto 20px auto;">
+    <br />
+    类型：<input id="name" class="txt" value ="{$name}" />
+    <if condition="$id"><input type="hidden" id="id" class="txt" value ="{$id}" /></if>
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="editType($( '#name' ).val() )" value="确定" />
+</div>
+<script>
+function editType( name ){
+  if(getLength(name.replace(/\s+/g,"")) == 0){
+	 alert("分类名称不能为空");
+	 return false;
+  }
+  if($( '#name' ).val().length >19) {
+    alert("分类名称不能超过19个字");
+    return false;
+  }
+  <if condition="$id">
+  var id = '{$id}';
+  $.post( '__URL__&act=doEditType',{name:name,id:id},function( res ){
+    var json =$.parseJSON(res);
+    if (json.status ==0) {
+        ui.error(json.info);
+    }else{
+        ui.box.close();
+        ui.success(json.info);
+        $('#name'+id).html(name);
+      }
+  });
+  <else />
+  $.post( '__URL__&act=doAddType',{name:name},function( res ){
+    var json =$.parseJSON(res);
+    if (json.status ==0) {
+        ui.error(json.info);
+    }else{
+          ui.box.close();
+          ui.success(json.info);
+          window.location.reload(true);
+    }
+  });
+  </if>
+}
+</script>

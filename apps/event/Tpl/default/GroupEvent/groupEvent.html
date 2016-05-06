@@ -1,0 +1,42 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<div class="st_s_submenu ml10 mt10 b c3 f14">活动</div>
+<div class="st_search mt10">
+    <form method="post">
+        <input name="k"  value="{$search_key}" type="text" class="st_s_input" placeholder="输入关键字" />
+        <input name="st_s_search" type="submit" class="st_s_btn b f14" value="搜 索" />
+    </form>
+</div>
+<div class="clear"></div>
+<if condition="$search_key">
+  <div class="st_s_count mt10 ml20 h30">找到 <span style="color:red;">{$search_key}</span> 相关结果约：({$count})条</div>
+<else/>
+<div class="st_s_count mt10 ml20 h30">共{$count}条活动  </div>
+ </if>
+
+ <if condition="$can_add_event eq 1">
+<div class="st_s_fb s_f1 h30 b f14 mt10 mr20"><a href="{:U('event/School/addEvent', array('gid'=>$gid))}">发起活动</a></div>
+ </if>
+<div class="clear"></div>
+<div class="st_list1 mt10 ml10 st_link">
+ <ul>
+  <li class="h24 ce8 st_b2">
+   <div class="st_list1_t">活动标题</div>
+   <div class="st_list1_class">分类</div>
+   <div class="st_list1_count">参加人数</div>
+   <div class="st_list1_count">创建时间</div>
+  </li>
+    <volist name='data' id='vo'>
+  <li class="mt5">
+   <div class="st_list1_t"><a target="_blank" href="{:U('event/Front/index', array('id'=>$vo['id']))}">{$vo.title}</a></div>
+   <div class="st_list1_class">{$vo.type}</div>
+   <div class="st_list1_count">{$vo.joinCount}</div>
+   <div class="st_list1_count"><?php echo date('Y-m-d H:i', $vo['cTime'])?></div>
+  </li>
+    </volist>
+ </ul>
+      <div class="page">{$html}</div>
+</div>
+</div>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

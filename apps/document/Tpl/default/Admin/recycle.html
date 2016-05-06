@@ -1,0 +1,138 @@
+<include file="_header" />
+<script>
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+	del:function(id){
+		var id = id ? id : getChecked();
+		id = id.toString();
+		if(id=='' || id==0){
+			ui.error("请选择要彻底删除的课件");
+			return false;
+		}
+		if( confirm("是否彻底删除课件？") ){
+		  $.post( '__URL__&act=delete_document',{id:id},function(text ){
+			  if( text == 1 ){
+				  ui.success( "删除多个课件成功" );
+				  var id_list = id.split( ',' );   
+				  for (var j=0 ; j< id_list.length ; j++   ){
+					  $('#list_'+id_list[j]).remove(); 
+				  }
+			  }else if( text == 2 ){
+				  ui.success( "删除成功" );
+				  $('#list_'+id).remove();
+			  }else{
+				  ui.error( "删除失败" );
+			  }
+		  });
+		}
+	},
+    recycle:function(id)
+    {
+    	var id = id ? id : getChecked();
+        id = id.toString();
+		if(id=='' || id==0){
+			ui.error("请选择要恢复的课件");
+			return false;
+		}
+        if(confirm("是否恢复选中的<?php echo $GLOBALS['ts']['app']['app_alias']; ?>？")){
+          $.post( '{:U('/Admin/doRecycle')}',{gid:id},function(text){
+              if( text == 1 ){
+                  ui.success( "恢复多个<?php echo $GLOBALS['ts']['app']['app_alias']; ?>" );
+                  var id_list = id.split( ',' );   
+                  for (var j=0 ; j< id_list.length ; j++   ){
+                      $('#list_'+id_list[j]).remove(); 
+                  }
+              }else if( text == 2 ){
+                  ui.success( "<?php echo $GLOBALS['ts']['app']['app_alias']; ?>恢复成功" );
+                  $('#list_'+id).remove();
+              }else{
+                  ui.error( "<?php echo $GLOBALS['ts']['app']['app_alias']; ?>恢复失败" );
+              }
+          });
+        }
+    }
+}
+var c = null;
+</script>
+<div class="so_main">
+  <include file="_tab" />
+
+ <div class="Toolbar_inbox">
+<a href="javascript:void(0);" class="btn_a" onclick="c.recycle()"><span>恢复课件</span></a>
+<a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除课件</span></a>
+</div>
+
+	<div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+		    <th style="width:30px;">
+		      <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+		      <label for="checkbox"></label>
+		    </th>
+            <th>ID</th>
+            <th>课件名称</th>
+            <th>所属用户</th>
+			<th>分类</th>
+            <th>上传时间</th>
+            <th>文件大小</th>
+            <th>文件隐私</th>
+            <th>操作</th>
+          </tr>
+          <volist name="data" id='vo'>
+          <tr id="list_{$vo.id}">
+            <td><input type="checkbox" name="checkbox" id="checkbox{$vo.id}" onclick="checkon(this)" value="{$vo.id}"></td>
+            <td>{$vo.id}</td>
+            <td><a href="{:U('/Index/doc',array(id=>$vo['id'],uid=>$vo['userId']))}" target=_blank>{$vo.name}</a></td>
+            <td><space uid="vo.userId" >{uname}</space>{$vo.userId|getUserGroupIcon}</td>
+			<td>{$vo.schoolid|getSchoolName} {$vo.cid0|getCategoryName} {$vo.cid1|getCategoryName}</td>
+            <td>{$vo.cTime|date="Y-m-d H:i:s",###}</td>
+            <td>{$vo.size|getSize}</td>
+            <td>{$vo.privacy|get_privacy}</td>
+            <td>
+				<a href="javascript:void(0)"
+				onclick="c.recycle('{$vo.id}')">恢复</a> <a href="javascript:void(0)"
+				onclick="c.del({$vo.id})">删除</a>
+			</td>
+          </tr>
+          </volist>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+		<a href="javascript:void(0);" class="btn_a" onclick="c.recycle()"><span>恢复课件</span></a>
+		<a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除课件</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+var c = new ctrl();
+</script>
+<include file="_footer" />

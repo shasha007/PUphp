@@ -1,0 +1,215 @@
+<include file="../Teacher/_header" />
+<link rel="stylesheet" href="../Public/event.css" type="text/css" media="screen" charset="utf-8" />
+<include file="__THEME__/comm/_datepicker" />
+<script type="text/javascript" src="../Public/js/event.js?20151210"></script>
+<div class="so_main">
+  <include file="_tab" />
+  <div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>活动</div>
+  <div class="form2">
+<form action="{:U('/Event/doEditEvent')}" method="post" onsubmit="return check();">
+    <input type="hidden" name="id" value="{$id}" />
+    <table cellpadding=3 cellspacing=3>
+    <tr>
+        <td align="right">活动名称：<span style="color: #F00">*</span></td>
+        <td align="left"><input type="text" id="title" name="title" value="{$title}" size="40" maxlength="30"/>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动简介：<span style="color: #F00">*</span></td>
+        <td align="left">
+            <textarea id='textarea' name="description" style="width:300px;height:100px;border:1px solid #ccc;" onKeyDown="gbcount(this,250);" onKeyUp="gbcount(this.form.description,250);">{$description}</textarea>
+            <span  id='remain' style='color:green;'>250</span><span style='color:green;'>/250字</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">{$webconfig.cradit_name}：<span style="color: #F00">*</span></td>
+        <td align="left"><input type="text" id="credit" name="credit" value="{$credit}" size="20" maxlength="20" onkeyup="clearNoNum(this)" <?php if(!$creditEditbar):?> disabled="disabled"<?php endif;?>/>
+            <span class="cGray2"> 最大{$webconfig.max_credit}</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动积分：<span style="color: #F00">*</span></td>
+        <td align="left"><input type="text" id="score" name="score" value="{$score}" size="20" maxlength="20" onkeyup="clearNoNum2(this)"/>
+            <span class="cGray2">整数 最大{$webconfig.max_score}</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">签到码限定使用人次：<span style="color: #F00">*</span></td>
+        <td align="left"><input type="text" id="score" name="codelimit" value="{$codelimit}" size="20" maxlength="20" onkeyup="clearNoNum2(this)"/>
+            <span class="cGray2">整数</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">归属组织：<span style="color: #F00">*</span></td>
+        <td align="left">
+            <select name="sid" id="sid" class="text">
+                <?php foreach($schoolOrga as $value): ?>
+                    <option value="-{$value.id}"<php>if( -$value['id'] == $sid ) {echo "selected";}</php>>{$value.title}</option>
+                <?php endforeach; ?>
+                <?php foreach($addSchool as $value){ ?>
+                    <option value="{$value.id}" <php>if( $value['id'] == $sid ) {echo "selected";}</php>>{$value.title}</option>
+                <?php } ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动地点：</td>
+        <td align="left">
+            <input type="text" size="40" name="address" id="address" value='{$address}' maxlength="30"/>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动分类：</td>
+        <td align="left">
+            <select name="typeId" id="type" class="text" onchange="changeType(this,1)">
+                <option value="0">请选择活动分类</option>
+                <?php foreach($type as $k=>$cate): ?>
+                <option value="{$k}" pid="<?php if($cate['pid']>0):?>{$cate.pid}<?php else:?>{$k}<?php endif?>"
+                        banner="{$cate.banner}" <?php if($k==$typeId):?> selected<?php endif?>>{$cate.name}</option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+    </tr>
+    <?php if($level):?>
+    <tr>
+        <td align="right">活动级别：</td>
+        <td align="left">
+            <select name="levelId" id="levelId" class="text" onchange="changeLevel()">
+                <?php foreach($level as $le): ?>
+                <option value="{$le.id}" <?php if($le['id']==$levelId):?> selected<?php endif?>>{$le.title}</option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+    </tr>
+    <?php endif;?>
+    <tr>
+        <td align="right">参加费用：</td>
+        <td align="left">
+            <select name="cost" id="cost" class="text">
+                <option value="0">免费</option>
+                <option value="1">AA制</option>
+                <option value="2">50元以下</option>
+                <option value="3">50-200元</option>
+                <option value="4">200-500元</option>
+                <option value="5">500-1000元</option>
+                <option value="6">1000元以上</option>
+              </select>
+              <script type="text/javascript" charset="utf-8">
+              $( "#cost option[value='{$cost}']" ).attr( 'selected',true );
+              </script>
+              费用说明：
+              <input name="costExplain" type="text" id="textfield2" size="30" maxlength="30" value="{$costExplain}"/>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动标签：</td>
+        <td align="left">
+            <?php foreach($taglist as $v): ?>
+                <input name="tags[]" type="checkbox" value="{$v['id']}" <?php if(in_array($v['id'],$tags)){echo 'checked';} ?>/>&nbsp;{$v['title']}
+            <?php endforeach; ?>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动时间：</td>
+        <td align="left">
+            <input name="sTime" type="text" id="sTime" onfocus="rcalendar(this,'full');" size="20" value="<?php echo date( 'Y-m-d H:i:s',$sTime ); ?>" readonly/>
+            --
+            <input name="eTime" type="text" id="eTime" onfocus="rcalendar(this,'full');" size="20" value="<?php echo date( 'Y-m-d H:i:s',$eTime ); ?>" readonly />
+
+        </td>
+    </tr>
+    <tr>
+        <td align="right">报名起止：</td>
+        <td align="left">
+            <input name="startline" type="text" id="startline" onfocus="rcalendar(this,'full');" size="20" value="<?php if($startline>0){echo date( 'Y-m-d H:i:s',$startline );}?>" readonly />
+            --
+            <input name="deadline" type="text" id="deadline" onfocus="rcalendar(this,'full');" size="20" value="<?php echo date( 'Y-m-d H:i:s',$deadline );?>" readonly />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动人数：</td>
+        <td align="left">
+            <input name="limitCount" type="text" class="text" id="limitCount" size="15"
+               value="<?php echo 5000000 < $limitCount ? 无限制 : $limitCount ?>"/>
+            <span class="cGray2"> 活动人数上限, 填整数或无限制</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">联系方式：</td>
+        <td align="left">
+            <input name="contact" type="text" class="text" id="contact" onfocus="this.className='text2'" onblur="this.className='text'" size="40" maxlength="30" value="{$contact}" />
+            <br />
+            <span class="cGray2">填写联系人电话，如：张小姐，1346665XXXX </span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动选项：</td>
+        <td align="left">
+            <label><input type="checkbox" name="allow" id="choice2" value="1" <?php if($allow)echo 'checked'?> />报名活动需要审批</label>
+            <label><input type="checkbox" name="need_tel" id="need_tel" value="1" <?php if($need_tel)echo 'checked'?>/> 报名活动需填写联系电话</label>
+            <label><input  name="free_attend" id="free_attend" type="checkbox" value="1" <?php if($free_attend)echo 'checked'?>/> 不报名也可签到</label>
+            <label><input type="checkbox" name="isTicket" value="1" <?php if($isTicket)echo 'checked'?> />打开投票功能</label>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动图标：</td>
+        <td align="left">
+            <if condition="$coverId">
+                <div class="prov_thumblist"><ul id="uploaded_photos1">
+                            <li id="img1" class="prov_link">
+                                <div class="prov_thumb">
+                                    <img style="width:100px;height:100px;" alt="" src="{$coverId|getCover}">
+                                </div><br>
+                                <span><a onclick="delImg(1,1)" href="javascript:void(0)">删除</a></span>
+                            </li>
+                        </ul></div>
+            </if>
+            <input type="button" value="上传图标" onclick="openUploadImg(1);"><span class="cGray2">（尺寸为125*125，用于活动列表图片）</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">活动海报：</td>
+        <td align="left">
+            <div class="prov_thumblist"><ul id="uploaded_photos2">
+                <li id="img2" class="prov_link">
+                    <div class="prov_thumb">
+                        <img style="width:440px;height:100px;" alt="" src="{$logoId|tsGetLogo=###,$typeId,$default_banner}">
+                    </div><br>
+                    <span><a onclick="delImg(2,2)" href="javascript:void(0)">删除</a></span>
+                </li>
+            </ul></div>
+            <input type="button" value="上传海报" onclick="openUploadImg(2);">
+            <span class="cGray2">（尺寸为1500*357，支持格式jpg,jpeg,png,gif。活动首页顶部。如果没有，可根据活动分类选择下面一款推荐的默认海报）</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">推荐海报：<br/><input type="button" value="取消选择" onclick="clearRadio()"/></td>
+        <td align="left" id="bannerImg">请先选择【活动分类】</td>
+    </tr>
+    </table>
+    <div class="page_btm">
+        <input type="submit" class="btn_b" value="确定">
+        <input type="hidden" id="auto_credit" value="{$autoCredit}">
+    </div>
+</form>
+  </div>
+  </div>
+<script>
+    $(function(){
+        gbcount('#textarea',250);
+        changeType('#type');
+    });
+var imgCount = [0,1,1];
+var imgMax = [0,1,1];
+var fileCount = [0,<?php if($attachId):?>1<?php else:?>0<?php endif;?>];
+var fileMax = [0,1];
+var thumbSizeW = [0,125,1500];
+var thumbSizeH = [0,125,357];
+var showW = [0,100,440];
+var showH = [0,100,100];
+var imgId = 3;
+var attach_type = 'event';
+</script>
+<script  type="text/javascript" src="../Public/js/editEvent.js?20151211" ></script>
+<include file="__THEME__/comm/_upload_file" />
+<include file="../Teacher/_footer" />

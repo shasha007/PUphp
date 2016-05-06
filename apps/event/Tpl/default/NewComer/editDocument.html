@@ -1,0 +1,85 @@
+<include file="../Teacher/_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<include file="__THEME__/editor" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>资讯</div>
+    <div class="form2">
+        <form action="{:U('/NewComer/doEditDocument')}" enctype="multipart/form-data" method="post">
+
+            <eq name="type" value="edit"><input type="hidden" name="document_id" value="{$document_id}"></eq>
+
+            <table cellpadding=3 cellspacing=3>
+                <tr>
+                    <td align="right"><span style="color: #F00">*</span>标题：</td>
+                    <td align="left"><input type="text" size="50" name="title" maxlength="50" value="{$title}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">分类{$category0}：</td>
+                    <td align="left">
+                        <select name="category0" id="categoryId" >
+                                <option value="1" <eq name="category0" value="1"> selected="selected" </eq> >报道须知</option>
+                                <option value="2" <eq name="category0" value="2"> selected="selected" </eq>  >交通指南</option>
+                                <option value="3" <eq name="category0" value="3"> selected="selected" </eq>  >户籍知识</option>
+                                <option value="4" <eq name="category0" value="4"> selected="selected" </eq>  >医疗卫生</option>
+                                <option value="5" <eq name="category0" value="5"> selected="selected" </eq>  >就餐指南</option>
+                                <option value="6" <eq name="category0" value="6"> selected="selected" </eq>  >住宿指南</option>
+                                <option value="7" <eq name="category0" value="7"> selected="selected" </eq>  >帮困助学</option>
+                                <option value="8" <eq name="category0" value="8"> selected="selected" </eq>  >财政管理</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">封面图片：</td>
+                    <td align="left">
+                <php>if(!empty($icon)) {</php>
+                <img src="{$icon|tsMakeThumbUp=###,150,150}" />
+                <br />
+                <php>}</php>
+                <input type="file" name="fileField[]" id="fileField_1" />	
+                </td>
+                </tr>
+
+                <tr>
+                    <td align="right">内容：</td>
+                    <td align="left">
+                      	<textarea name="content" id="content" style="width:780px;height:200px">{$content}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">是否推荐：</td>
+                    <td align="left">
+                        <input type="radio" name="isrecom" value="0" <neq name="isrecom" value="1">checked</neq>>否<br />
+                        <input type="radio" name="isrecom" value="1" <eq name="isrecom" value="1">checked</eq>>是
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">是否有效：</td>
+                    <td align="left">
+                        <input type="radio" name="is_active" value="0" <neq name="is_active" value="1">checked</neq>>否<br />
+                        <input type="radio" name="is_active" value="1" <eq name="is_active" value="1">checked</eq>>是
+                    </td>
+                </tr>
+            </table>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定">
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        loadEditor("content");
+    });
+</script>
+<include file="../Teacher/_footer" />

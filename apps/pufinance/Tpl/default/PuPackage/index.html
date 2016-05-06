@@ -1,0 +1,86 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+	<include file="packageTab" />
+	
+    <div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=index">
+			用户UID：<input type="number" min="1" value="{$Think.post.uid}" name="uid" />&nbsp;&nbsp;
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+		<span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+				<th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                </th>
+                <th>用户UID</th>
+                <th>金额</th>
+				<th>类型</th>
+				<th>导入时间</th>
+				<th>结束时间</th>
+				<th>领取状态</th>
+				<th>操作</th>
+            </tr>
+			<?php foreach($data as $item):?>
+			<tr overstyle='on' id="list_<?php echo $item['id'];?>">
+				<td><input type="checkbox" name="checkbox" value="<?php echo $item['id'];?>"></td>
+				<td><?php echo $item['uid'];?></td>
+				<td>￥<?php echo number_format($item['amount'],2);?></td>
+				<td><?php echo get_amount_type($item['type']);?></td>
+				<td><?php echo date('Y-m-d H:i:s',$item['ctime']);?></td>
+				<td><?php echo date('Y-m-d H:i:s',$item['etime']);?></td>
+				<td><?php echo get_amount_receive_status($item['is_receive'], $item['etime'], $item['receive_time']);?></td>
+				<td>
+					<a href="javascript:deleteImportRecordByAjax(<?php echo $item['id']; ?>)">删除</a>
+				</td>
+			</tr> 
+			<?php endforeach;?>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+		<a href="javascript:void(0);" class="btn_a" onclick="deleteImportRecordByAjax();"><span>删除用户</span></a>
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+	//获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked:not("#checkbox_handle")'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+	function deleteImportRecordByAjax(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            alert('请选择要删除的用户！');return false;
+        }
+		
+        if( confirm("是否删除用户？") ){
+            $.post( '/index.php?app=pufinance&mod=PuPackage&act=deleteImportRecordByAjax',{id:id},function(text ){
+                if( text == 1 ){
+                    ui.success( "删除多个用户成功" );
+                    var id_list = id.split( ',' );
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#list_'+id_list[j]).remove();
+                    }
+                }else if( text == 2 ){
+                    ui.success( "删除成功" );
+                    $('#list_'+id).remove();
+                }else{
+                    ui.error( "删除失败" );
+                }
+            });
+        }
+    }
+</script>
+<include file="../Public/footer" />

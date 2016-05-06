@@ -1,0 +1,52 @@
+<div class="m_myleft">
+    <div class="m_myleft_title fw f18"><a href="{:U('shop/Myshop/index')}">我的乐购</a></div>
+    <div class="m_myleft_list">
+        <ul>
+            <li>我的仓库
+                <div class="m_myleft_sublist">
+                    <ul>
+                        <li <?php if(ACTION_NAME=='zj'||ACTION_NAME=='zjDetail')echo'class="cur"';?>>
+                            <a href="{:U('shop/Myshop/zj')}">中奖纪录
+                                <?php if($zjTodo):?><span class="good_icon"></span><?php endif;?></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>一元梦想
+                <div class="m_myleft_sublist">
+                    <ul>
+                        <li <?php if(ACTION_NAME=='yg'||ACTION_NAME=='ygBuy')echo'class="cur"';?>>
+                            <a href="{:U('shop/Myshop/yg')}">梦想记录</a></li>
+                        <li <?php if(ACTION_NAME=='ygOrder'||ACTION_NAME=='ygOrderDetail')echo'class="cur"';?>>
+                            <a href="{:U('shop/Myshop/ygOrder')}">中奖商品
+                                <?php if($ygTodo):?><span class="good_icon"></span><?php endif;?></a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>众志成城
+                <div class="m_myleft_sublist">
+                    <ul>
+                        <li <?php if(ACTION_NAME=='tgOrder'||ACTION_NAME=='tgOrderDetail')echo'class="cur"';?>>
+                            <a href="{:U('shop/Myshop/tgOrder')}">团购记录
+                                <?php if($tgTodo):?><span class="good_icon"></span><?php endif;?></a></li>
+                    </ul>
+                </div>
+            </li>
+            <?php if(isDonateSchool($user['sid'])):?>
+            <li>爱心校园
+                <div class="m_myleft_sublist">
+                    <ul>
+                        <li <?php if(ACTION_NAME=='myDonate')echo'class="cur"';?>>
+                            <a href="{:U('shop/Myshop/myDonate')}">我捐赠的
+                               <?php if($notpass):?><span class="good_icon"></span><?php endif;?></a></li>
+                        <li <?php if(ACTION_NAME=='myDonateBuyer')echo'class="cur"';?>>
+                            <a href="{:U('shop/Myshop/myDonateBuyer')}">我购买的</a></li>
+                    </ul>
+                </div>
+            </li>
+            <?php endif;?>
+            <li <?php if(ACTION_NAME=='address')echo'class="cur"';?>><a href="{:U('shop/Myshop/address')}">收货地址</a></li>
+        </ul>
+    </div>
+    <div class="m_myleft_service">客服热线：<br />
+        <span class="f18 b fw m_color1">0512-69330051</span></div>
+</div>

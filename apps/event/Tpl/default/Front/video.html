@@ -1,0 +1,26 @@
+<include file="_header" />
+<script>
+    function playFlash(vid){
+        ui.box.load(U('/Index/playFlash')+'&id='+vid,{title:'播放视频'});
+    }
+</script>
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_video.gif" alt="" /></div>
+    <div class="hx_list">
+        <ul>
+            <volist name="data" id='vo'>
+            <li>
+                <div class="hx_list_thumb">
+                    <a href="javascript:playFlash('{$vo.id}');" title="">
+                        <img src="{$vo.path|get_flash_img}" alt="" /></a></div>
+                <div class="hx_list_star"><a href="javascript:playFlash('{$vo.id}');" title="点击播放"></a></div>
+                <div class="hx_list_title">
+                    <a href="javascript:playFlash('{$vo.id}');" title="{$vo.title}">{$vo.title|getShort=###,14,'…'}</a>
+                </div>
+            </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<include file="_footer" />

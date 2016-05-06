@@ -1,0 +1,50 @@
+<div style="width:600px;overflow:hidden;height:40px;">
+    <div>
+        <span>选择活动</span>
+        <input type="hidden" value="{$playid}" id="playid">
+        <select name="postEvent" id="eventId">
+            <option value="" >请选择</option>
+            <volist name="provEvent" id="list">
+                <option value="{$list.id}">{$list.title}</option>
+            </volist>
+        </select>
+        <span>
+            <input type="button" value="推荐" onclick="recommend();" />
+            <input type="button" value="关闭" onclick="javascript:ui.box.close();" />
+        </span>
+    </div>
+    <br /><br />
+</div>
+<script>
+    function playFlash(vid){
+        ui.box.close();
+        ui.box.load(U('event/School/playFlash')+'&id='+vid,{title:'播放视频'});
+    }
+    function recommend(){
+        var eventId = $("#eventId").val() ;
+        var playid = $("#playid").val() ;
+        $.ajax({
+            url: "{:U('event/Author/recommends')}",
+            type: 'post',
+            dataType: 'JSON',
+            data: {
+                playid : playid+"",
+                id: eventId+""
+            },
+            error: function () {
+                alert("error");
+            },
+            success: function (data) {
+                console.log(data) ;
+                data = JSON.parse(data) ;
+                if (data === '1') {
+                    alert(data.info) ;
+                }else{
+                    alert(data.info) ;
+
+                }
+                // window.location.reload() ;
+            }
+        });
+    }
+</script>

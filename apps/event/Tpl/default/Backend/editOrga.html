@@ -1,0 +1,52 @@
+<include file="_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<!--<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+
+<div class="member_c">
+    <div class="member_menu b">编辑修改组织单位</div>
+    <div class="news_add">
+        <form method="post" action="{:U('/Backend/doEditOrga',array('id'=>$eventId))}">
+            <table width="840" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="45">标题：</td>
+                    <td width="15"></td>
+                    <td><input name="title" id="title" type="text" class="" value="{$orga.title}" maxlength="10" />
+                        <span class="red">*</span></td>
+                </tr>
+                <tr>
+                    <td height="10" colspan="10"></td>
+                </tr>
+                <tr>
+                    <td>内容：</td>
+                    <td></td>
+                    <td><textarea id="content" name="content" style="width:300px;height:300px">{$orga.content}</textarea></td>
+                </tr>
+                <tr>
+                    <td height="10" colspan="10"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" class="member_btn1" value="提交" /></td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+
+
+</div>
+
+<include file="_footer" />
+<script>
+    $(document).ready(function(){
+        loadEditor("content");
+    });
+</script>

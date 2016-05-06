@@ -1,0 +1,121 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit">添加课程</div>
+    <div class="form2">
+        <form action="{:U('/Admin/doEditCourse')}"  method="post" onsubmit="return check();">
+            <input type="hidden"  name="tid" value="{$id}"/>
+            <table cellpadding=3 cellspacing=3>
+                <tr>
+                    <td align="right">课程名称：<span style="color: #F00">*</span></td>
+                    <td align="left"><input type="text" id="title" name="title" value="{$title}" size="40" maxlength="20"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">学习费用：<span style="color: #F00">*</span></td>
+                    <td align="left">
+                        <input name="cost" type="text" id="cost" size="30" maxlength="30" value="{$cost}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">授课地点：<span style="color: #F00">*</span></td>
+                    <td align="left">
+                        <input name="address" type="text" id="address" size="40" maxlength="30" value="{$address}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">开班日期：<span style="color: #F00">*</span></td>
+                    <td align="left">
+                        <input name="kDate" type="text" class="text" size="40" maxlength="30" value="{$kDate}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">培训周期：<span style="color: #F00">*</span></td>
+                    <td align="left">
+                        <input name="dauer" type="text" class="text" size="40" maxlength="30" value="{$dauer}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">联系方式：<span style="color: #F00">*</span></td>
+                    <td align="left">
+                        <input name="contact" type="text" class="text" id="contact" onfocus="this.className='text2'" onblur="this.className='text'" size="40" maxlength="30" value="{$contact}" />
+                        <br />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">所属机构：<span style="color: #F00">*</span></td>
+                    <td align="left">
+                        <select name="org" id="org" class="text" >
+                            <option value="0">请选择......</option>
+                            <volist name="org" id='vo'>
+                                <option value="{$vo['id']}" <if condition=" $orgId eq $vo['id']"> selected </if>  >{$vo.name}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">课程类别：<span style="color: #F00">*</span></td>
+                    <td align="left">
+                        <select name="cat" id="cat" class="text" >
+                            <option value="0">请选择......</option>
+                            <volist name="cat" id='vo'>
+                                <option value="{$vo['id']}" <if condition=" $catId eq $vo['id']"> selected </if>>{$vo.name}</option>
+                            </volist>
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">所在地区：<span style="color: #F00">*</span></td>
+                    <td align="left">
+                        <select name="province"  class="text" id="province" onchange='changeCity(this)'>
+                            <option value="0">请选择`.....</option>
+                            <volist name="area" id='vo'>
+                                <option value="{$vo['id']}" <if condition=" $provinceId eq $vo['id']"> selected </if>> {$vo.title}</option>
+                            </volist>
+                        </select>
+
+                        <select name="city" id="city"  class="text">
+                            <volist name="city" id='vo'>
+                                <option value="{$vo['id']}" <if condition=" $cityId eq $vo['id']"> selected </if>  >{$vo.title}</option>
+                            </volist>
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">课程介绍：<span style="color: #F00">*</span></td>
+                    <td align="left">
+                        <textarea id='textarea' name="description" style="width:450px;height:200px;border:1px solid #ccc;">{$description}</textarea>
+                    </td>
+                </tr>
+            </table>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定">
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function changeCity(obj){
+        var pid = $(obj).val();
+        if(pid<1){
+            $('#city').remove();
+            return;
+        }
+        $.post(U('train/Admin/changeCity'),{pid:pid},function(txt){
+            json = $.parseJSON(txt);
+            $('#city').remove();
+            var select = '      <select name="city" id="city"  class="text">';
+            select += '<option value="0">请选择.....</option>';
+            $.each(json, function(i, n) {
+                select += '<option value="' + n.id + '">' + n.title + '</option>';
+            });
+            select+='</select>';
+            $("#province").after(select);
+        });
+    }
+</script>
+<include file="_footer" />
+<script  type="text/javascript" src="../Public/js/train.js" ></script>

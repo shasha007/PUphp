@@ -1,0 +1,47 @@
+<include file="_header" />
+<div class="t_desc f14 mt20">
+    <div class="t_desc_title f18 b">{$title}</div>
+    <div class="t_desc_sc">
+        <?php if(in_array($id,$collectIds)): ?>
+        <a href="javascript:void(0)" onclick="collect(this,{$id})" act="2">取消收藏</a>
+        <?php else:?>
+        <a href="javascript:void(0)" onclick="collect(this,{$id})" act="1">我要收藏</a>
+        <?php endif;?>
+    </div>
+    <div class="clear"></div>
+    <div class="t_desc_jg">价格：<span class="cf30 b f16">{$cost}</span></div>
+    <div class="t_desc_jg">开班日期：{$kDate}</div>
+    <div class="t_desc_jg">培训周期：{$dauer}</div>
+    <div class="t_desc_jg">所属机构：<?php if($org['link']):?><a href="{$org.link}" target="_blank">{$org.name}</a>
+        <?php else:?>{$org.name}<?php endif;?></div>
+    <div class="t_desc_jg">授课地点：{$address}</div>
+    <div class="t_desc_jg">课程人气：已有{$click}人浏览，{$collect}人收藏</div>
+    <div class="t_desc_jg">联系方式：{$contact}</div>
+    <div class="t_desc_text mt10">详细说明：{$description|nl2p}</div>
+    <div class="t_jg mt20">
+        <div class="t_jg_thumb"><img src="{$org.logo|tsMakeThumbUp=###,300,200,'f'}" alt="" /></div>
+        <span style="display:block;"><span class="b c44">机构介绍：</span>{$org.description|nl2p}</span></div>
+</div>
+<script>
+    function collect(o,id){
+        var del = $(o).attr('act');
+        if(del==2){
+            ndel = 1;
+            nt = '我要收藏';
+        }else{
+            ndel = 2;
+            nt = '取消收藏';
+        }
+        $.post("{:U('train/Index/ajaxIndexCollect')}", {id:id,del:del}, function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                $(o).attr('act',ndel);
+                $(o).html(nt);
+                ui.success(json.info);
+            }
+        });
+    }
+</script>
+<include file="_footer" />

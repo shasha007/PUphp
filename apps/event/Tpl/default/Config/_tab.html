@@ -1,0 +1,17 @@
+<div class="tit_tab">
+<ul>
+    <li><a <eq name="ACTION_NAME" value="webconfig">class="on"</eq>
+            href="__URL__&act=webconfig">站点配置</a></li>
+    <li><a <eq name="ACTION_NAME" value="orga">class="on"</eq>
+            href="__URL__&act=orga">校级组织</a></li>
+    <li><a <eq name="ACTION_NAME" value="printconfig">class="on"</eq>
+            href="__URL__&act=printconfig">打印证书配置</a></li>
+    <li><a <eq name="ACTION_NAME" value="cx">class="on"</eq>
+            href="__URL__&act=cx">诚信系统配置</a></li>
+    <li><a <eq name="menu1" value="2">class="on"</eq>href="__URL__&act=typeList">活动分类自定义</a></li>
+    <li><a <eq name="menu1" value="4">class="on"</eq>href="__URL__&act=tag">活动标签自定义</a></li>
+    <?php if(isEcApplyV2($school['id'])):?>
+    <li><a <eq name="menu1" value="3">class="on"</eq>href="__URL__&act=ecCat">学分申请自定义</a></li>
+    <?php endif;?>
+</ul>
+</div>

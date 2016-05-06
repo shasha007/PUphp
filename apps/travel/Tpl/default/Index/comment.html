@@ -1,0 +1,66 @@
+<include file="top" />   
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+
+
+<!--评论-->
+<div class="tour_d_commet b f14">评论</div>
+<div class="t_c_con">
+    <form  action="{:U('travel/Index/addComment')}"  method="post">
+        <textarea id="content" name="content" style="width:623px;height:150px;" placeholder="请输入文字" class="st_textarea"></textarea>
+        <div class="t_c_fb">
+            <input name="travelId" type="hidden" id="jun"  value="{$id}" />
+            <input name="fb" type="submit"  class="t_c_btn b" value="发 布" />
+        </div>
+    </form>
+</div>
+<div class="t_c_list">
+    <ul>
+        <volist name="data"  id='vo'>
+            <li>
+                <!--<div class="t_c_floor"><strong><php>echo $start_floor;$start_floor++;</php> </strong> 楼</div>-->
+                <div class="t_c_thumb"><space uid="vo['uid']" target="_blank">{uavatar=m}</space></div>
+                <div class="t_c_infor">
+                    <div class="t_c_font"><span class="t_c_name">   <space uid="vo['uid']" class="fn" target="_blank">{uname}</space>:</span>{$vo.content|htmlspecialchars_decode}</div>
+                    <div class="t_c_time">{$vo.cTime|friendlyDate}</div>
+                </div>
+            </li>
+        </volist>
+    </ul>
+
+    <div class="page">{$html}</div>
+
+</div>
+
+</div>
+</div>
+
+      <include file="_right" />
+<script>
+    $(document).ready(function(){
+        setTimeout('loadEditor("content")',300);
+    });
+    
+    //    function comment(){
+    //        var content = $('#content').val()
+    //        var id = $('#jun').val()
+    //        alert(content);
+    //        $.post("{:U('travel/Index/addComment')}",{content:content,travelId:id},function(info){
+    //            var json = $.parseJSON(info);
+    //            if(json.status==1){
+    //                ui.success(json.info); 
+    //                window.location.reload(true);
+    //            }else{
+    //                ui.error(json.info);
+    //            }
+    //        });
+    //    }
+</script>
+<include file="_footer" />

@@ -1,0 +1,28 @@
+<include file="../Public/_header" />
+
+	<div class="content clearfix under-suggest">
+
+<div class="App_main_2col_r"> 					
+					
+					<div class="app-intro">
+							<div>
+							<h2>{$app.title|text|getShort='30'}</h2>							
+							{$app.content}
+							</div>						
+						<div class="clearfix" />
+					</div>									
+						<div class="clear" style="height:10px;"></div>
+						</div>
+						<div class="viewRC">
+						<div class="c1">
+							<php>$appid = 2147483647 - $app['document_id'];</php>
+            {:W('Comment',array('type'=>'appstore','appid'=>$appid,'author_uid'=>$uid,'title'=>$app['title'], 'url'=>U('appstore/Index/document',array('id'=>$app['document_id'])), 'table'=>'appstore_document','id_field'=>'document_id','comment_count_field'=>'commentCount'))}
+						</div>
+				      </div>
+				
+					<!-- /appchannel_stat_tab -->
+
+                        <!--/W_main_2col_r--> 
+				</div>
+				
+<include file="../Public/_footer" />

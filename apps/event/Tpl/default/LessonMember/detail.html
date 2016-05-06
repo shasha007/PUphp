@@ -1,0 +1,69 @@
+<include file="../Lesson/_header" />
+<div class="kc_content">
+    <div class="c_left">
+        <div class="c_fl">
+            <div class="c_fl_menu l_30 b f_14">课程介绍</div>
+            <div class="kc_intro">
+                <div class="kc_i_thumb"><img src="{$logoId|getCover}" alt="" /></div>
+                <div class="kc_i_infor">
+                    <div class="kc_i_title b f_14 red">{$title} </div>
+                    <div class="kc_i_fl">{$category[$typeId]}</div>
+                    <div class="clear"></div>
+                    <div class="kc_i_desc">
+                        授课老师：{$teacher} <br />
+                        上课时间：<?php echo date('Y-m-d H:i', $sTime) . " 至 " . date('Y-m-d H:i', $eTime) ?><br />
+                        报名时间：<?php echo date('Y-m-d H:i', $deadline) ?> 截止<br />
+                        课程地点：{$address}<br />
+                        课时：{$credit}<br />
+                        剩余名额：{$limitCount}人<br />
+                        已报名人数：{$joinCount}人
+                    </div>
+                </div>
+                <?php if($_SESSION['userInfo'] && $_SESSION['userInfo']['sid'] == $school['id']) :?>
+                <div class="kc_i_btn b">
+                       <ul>
+                        <?php if($status == 2): ?>
+                            <?php if($eTime<=time()): ?>
+                            <li class="i1">课程活动已结束</li>
+                            <?php else: ?>
+                                <?php if($joined): ?>
+                                <li>您已报名</li>
+                                <?php elseif($deadline<time()): ?>
+                                <li>报名已截止</li>
+                                <?php elseif($limitCount< 1): ?>
+                                <li>名额已满</li>
+                                <?php else: ?>
+                                <li>报名进行中</li>
+                                <li  class="i3"><a href="{:U('/LessonMember/index', array('id'=>$courseId, 'uid'=>$uid))}">我要报名</a></li>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+                <?php endif;?>
+            </div>
+
+
+        </div>
+        <div class="kc_i_menu b f_14">课程介绍</div>
+        <div class="kc_i_text">
+            <p>{$description}</p>
+        </div>
+        <div class="kc_pl">
+            <div class="kc_pl_menu1 f_14 l_30">我要评论</div>
+            <?php if(isset($mid)): ?>
+            <div class="news">
+                {:W('Comment',array('type'=>'course','appid'=>$courseId,'author_uid'=>$uid,'title'=>$title,'url'=>U('event/LessonMember/detail',array('id'=>$courseId)),'table'=>'course','id_field'=>'id','comment_count_field'=>'commentCount'))}
+            </div>
+            <?php else: ?>
+            <div class="member_add">
+                <div class="b">请先登录</div>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <div class="c_right">
+        <include file="../Lesson/_right" />
+    </div>
+    <include file="../Lesson/_footer" />

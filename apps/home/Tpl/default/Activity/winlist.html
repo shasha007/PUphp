@@ -1,0 +1,53 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>UID</th>
+                <th>UNAME</th>
+                <th>中奖人手机号</th>
+                <th>中奖人姓名</th>
+                <th>中奖人联系地址</th>
+                <th>中奖时间</th>
+                <th>发放时间</th>
+                <th>奖品名称</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.uid}</td>
+                    <td>{$vo.username}</td>
+                    <td>{$vo.tel}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.address}</td>
+                    <td>{$vo.ctime}</td>
+                    <td>{$vo.get_time}</td>
+                    <td>{$vo.prize}</td>
+                    <td>
+                    <if condition="($vo['get_uid'] gt 0) "> 已发放
+<else /> <a href="javascript:void(0);" onclick="sendPrize('{$vo.id}','{$vo.uid}')">发奖</a>
+</if>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+<script>
+function sendPrize(id,uid) {
+    if(confirm('您确定发奖？')) {
+        $.post("{:U('home/Activity/sendPrize')}",{id:id,uid:uid},function(res){
+            if(res=='1') {
+                ui.success('发放成功');
+                location=location;
+            }else {
+                ui.error('发放失败');
+            }
+        });
+    }
+}
+</script>
+<include file="_footer" />

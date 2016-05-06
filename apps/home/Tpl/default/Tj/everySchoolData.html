@@ -1,0 +1,140 @@
+<include file="_header" />
+
+<div class="so_main">
+    <div class="list">
+        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            <form method='post' action="{:U('home/Tj/schoolNotice')}">
+                <tr>
+                     <td>
+                         <select name="school" id="school1" >
+                         <option value='please'>---请选择学校---</option>
+                         <foreach name="school" item="vo">
+                         <option value="{$vo.id}">{$vo.title}</option>
+                         </foreach>
+                     </td>
+                     <td><input type='text' name='yuefen' value="可指定月份">格式2014-12</td>
+                     <td>校内通知4个类型的数据量（院系通知、学校发文、学校通知、其他）</td>
+                     <td><input type="submit" value='导出'></td>
+                </tr>
+            </form>
+            
+            <form method='post' action="{:U('home/Tj/weibo')}">
+                <tr>
+                      <td>
+                         <select name="school" id="school2" >
+                         <option value='please'>---请选择学校---</option>
+                         <foreach name="school" item="vo">
+                         <option value="{$vo.id}">{$vo.title}</option>
+                         </foreach>
+                     </td>
+                     <td><input type='text' name='yuefen' value="可指定月份">格式2014-12</td>
+                     <td>  
+                         <select name="year" id="year">
+                            <option value='please'>---请选择年级---</option>
+                            <option value='09'>09级</option>
+                            <option value='10'>10级</option>
+                            <option value='11'>11级</option>
+                            <option value='12'>12级</option>
+                            <option value='13'>13级</option>
+                            <option value='14'>14级</option>
+                         </select>
+                         微博发布数（本校、各院系、年级）
+                     </td>
+                   <td><input type="submit" value='导出'></td>
+                </tr>
+            </form>
+            
+                 <form method='post' action="{:U('home/Tj/topicConversation')}">
+                <tr>
+                      <td>
+                         <select name="school" id="school2" >
+                         <option value='please'>---请选择学校---</option>
+                         <foreach name="school" item="vo">
+                         <option value="{$vo.id}">{$vo.title}</option>
+                         </foreach>
+                     </td>
+                     <td><input type='text' name='yuefen' value="可指定月份">格式2014-12</td>
+                     <td>  
+                         <select name="year" id="year">
+                            <option value='please'>---请选择年级---</option>
+                            <option value='09'>09级</option>
+                            <option value='10'>10级</option>
+                            <option value='11'>11级</option>
+                            <option value='12'>12级</option>
+                            <option value='13'>13级</option>
+                            <option value='14'>14级</option>
+                         </select>
+                        话题（专题）参与度
+                     </td>
+                   <td><input type="submit" value='导出'></td>
+                </tr>
+            </form>
+            
+              <form method='post' action="{:U('home/Tj/activityGroupBySid1')}">
+                <tr>
+                      <td>
+                         <select name="school" id="school2" >
+                         <option value='please'>---请选择学校---</option>
+                         <foreach name="school" item="vo">
+                         <option value="{$vo.id}">{$vo.title}</option>
+                         </foreach>
+                     </td>
+                     <td><input type='text' name='yuefen' value="可指定月份">格式2014-12</td>
+                     <td>  
+                        各个院系与年级发起活动数、完结活动数、报名人数、 签到人数(院系分)
+                     </td>
+                   <td><input type="submit" value='导出'></td>
+                </tr>
+            </form>
+            
+             <form method='post' action="{:U('home/Tj/activityGroupByYear')}">
+                <tr>
+                      <td>
+                         <select name="school" id="school2" >
+                         <option value='please'>---请选择学校---</option>
+                         <foreach name="school" item="vo">
+                         <option value="{$vo.id}">{$vo.title}</option>
+                         </foreach>
+                     </td>
+                     <td><input type='text' name='yuefen' value="可指定月份">格式2014-12</td>
+                     <td>  
+                        各个院系与年级发起活动数、完结活动数、报名人数、 签到人数(年级分)
+                     </td>
+                   <td><input type="submit" value='导出'></td>
+                </tr>
+            </form>
+            
+            <form method='post' action="{:U('home/Tj/score')}">
+                 <tr>
+                     <td>
+                         <select name="school" id="school" >
+                         <option value='please'>---请选择学校---</option>
+                         <foreach name="school" item="vo">
+                         <option value="{$vo.id}">{$vo.title}</option>
+                         </foreach></td>
+                     <td>学分、积分：这个数据是针对学校的，导出该校所有在平台上用户的学分、积分</td>
+                     <td></td>
+                     <td><input type="submit" value='导出'></td>
+                 </tr>
+            </form>
+            
+             <form method='post' action="{:U('home/Tj/uninitialized')}">
+                 <tr>
+                     <td>
+                         <select name="school" id="school2" >
+                         <option value='please'>---请选择学校---</option>
+                         <foreach name="school" item="vo">
+                         <option value="{$vo.id}">{$vo.title}</option>
+                         </foreach></td>
+                     <td>未初始化学生信息（学号、姓名、院系、年级、专业、电话号码）</td>
+                     <td></td>
+                     <td><input type="submit" value='导出'></td>
+                 </tr>
+            </form>
+        </table>
+    </div>
+    </div>
+<script>
+
+</script>
+<include file="_footer" />

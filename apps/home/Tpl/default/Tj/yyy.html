@@ -1,0 +1,39 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul>
+    </div>
+    <div class="page_tit">5.摇一摇统计</div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr><td colspan="2"><a href='{:U("home/Tj/tjYyy")}'>1. 摇一摇统计</a></td></tr>
+        <tr>
+        <form method='post' action="{:U('home/Tj/yyy2')}" onsubmit="return checkMon(1);">
+            <td>2. 各校人次：<input type="submit" value='导出'></td>
+            <td>学校 | 摇一摇人次 &nbsp;&nbsp;&nbsp;&nbsp;
+            月份<input size="10"  type='text' id='mon1' name='mon' value="" />格式2014-12</td>
+        </form>
+        </tr>
+        <tr>
+        <form method='post' action="{:U('home/Tj/zjCount')}" onsubmit="return checkMon(2);">
+            <td>3. 摇一摇中奖纪录：<input type="submit" value='导出'></td>
+            <td>摇一摇中奖纪录
+            月份：<input size="20"  type='text' id='mon2' name='mon1' value="" />至<input size="20"  type='text' id='mon3' name='mon2' value="" />格式2014-12-12 06:47:21
+            商品ID：<input size="10"  type='text' name='pid' value="" />
+            </td>
+        </form>
+        </tr>
+    </table>
+    </div>
+</div>
+<script type="text/javascript">
+    function checkMon(i){
+        if($('#mon'+i).val() == ''){
+            alert('请输入月份');
+            $('#mon'+i).focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<include file="_footer" />

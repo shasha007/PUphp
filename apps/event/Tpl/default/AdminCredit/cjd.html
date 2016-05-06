@@ -1,0 +1,71 @@
+<include file="../Teacher/_header" />
+<style type="text/css">
+table td {
+    vertical-align: top;
+}
+</style>
+<div class="so_main">
+  <include file="_tab" />
+  <div class="Toolbar_inbox">
+      <div class="page right">{$html}</div>
+      <form method="post">
+      <span>用户</span>
+            学号：<input name="num" type="text" value="{$_POST['num']}">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+            <span class="cRed"> *注* 校园文化活动参与类 活动完结后才可打印，当日完结的活动第二天生效</span>
+        </form>
+  </div>
+  <?php if($findUser):?>
+  <div class="list">
+  <form method="post" action="{:U('/AdminCredit/outexcel',array('uid'=>$findUser))}" name="form1" id="form1">
+      <table width="90%" border="1" cellspacing="0" cellpadding="0" style="text-align:center;">
+          <caption style="font-size:16px;">南京工业大学第二课堂成绩单 ({$realname})&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="javascript:void(0)" onclick="$('#form1').submit();">[导出excel]</a></caption>
+        <tr>
+            <td colspan="3">校园文化活动参与类</td>
+        </tr>
+        <tr>
+            <?php for($k=1;$k<10;$k++):?>
+            <?php $showId=''; if($k==4 || $k==7):?></tr><tr><?php endif;?>
+            <td>
+                <table border="0" cellspacing="0" cellpadding="0" id="block{$k}">
+                <?php $chNum = array('','第一学期','第二学期','第三学期','第四学期','第五学期','第六学期','寒暑假社会实践类','文体与创新创业竞赛类','社会工作与技能培训类');?>
+                <tr><td colspan="3">{$chNum[$k]}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="javascript:void(0)" onclick="sx({$findUser},{$k})">[筛选]</a>
+                    </td></tr>
+                <tr><td width="90px;"><?php if($k<7):?>类别<?php else:?>学年<?php endif;?></td>
+                    <td style="width:300px;text-align:left;"><?php if($k<7):?>活动名称<?php else:?>内容<?php endif;?></td>
+                    <td width="50px;">学时</td>
+                </tr>
+                <?php for($i=0;$i<10;$i++):?>
+                <?php $var='semester'.$k; $sem=$$var;?>
+                <?php if(isset($sem[$i])):?>
+                    <?php $id=$sem[$i]['id']; $showId .= $id.',';?>
+                    <tr style="background-color:gainsboro;" class="line{$k}">
+                        <td>{$sem[$i]['type']}</td>
+                        <td style="text-align:left;">{$sem[$i]['name']}</td>
+                        <td>{$sem[$i]['credit']}</td>
+                    </tr>
+                <?php endif;?>
+                <?php endfor;?>
+                <input type="hidden" name="showIds{$k}" id="showIds{$k}" value="{$showId}"/>
+            </table></td>
+            <?php endfor;?>
+        </tr>
+  </table>
+  </form>
+  </div>
+  <br/><br/>
+  <?php endif;?>
+</div>
+<script type="text/javascript">
+    function sx(uid,sem){
+        var typevalue = $("#showIds"+sem).val();
+        ui.box.load('__URL__&act=selectPrint&sem='+sem+'&uid='+uid+'&selected='+typevalue,{title:'打印筛选'});
+    }
+</script>
+<include file="../Teacher/_footer" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/js/ztree/zTreeStyle.css" />
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.core-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.excheck-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.exedit-3.5.min.js" ></script>

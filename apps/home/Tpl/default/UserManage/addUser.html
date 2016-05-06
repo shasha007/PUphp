@@ -1,0 +1,142 @@
+<include file="_header" />
+
+<div class="so_main">
+    <div class="page_tit">添加用户</div>
+    <form method="post" action="{:U('home/UserManage/doAddUser')}">
+        <div class="form2">
+
+            <dl class="lineD">
+                <dt>身份：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="event_level">
+                        <option value="" selected>请选择</option>
+                        <option value="10">校级领导</option>
+                        <option value="11">院系领导</option>
+                        <option value="12">年级领导</option>
+                        <option value="13">专业领导</option>
+                        <option value="20">学生</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>学校：<span style="color: #F00">*</span>&nbsp;&nbsp;</dt>
+                <dd>
+                    <select name="sid" id="myschool" onchange="getsid();">
+                        <option value="" selected>请选择</option>
+                        <foreach name="list" item="val">
+                            <option value="{$val.id}">{$val.title}</option>
+                        </foreach>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>院系：&nbsp;&nbsp;</dt>
+                <dd>
+                    <select name="sid1" id="mysid1">
+                        <option value="" selected>请选择</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>年级：</dt>
+                <dd>
+                    <input name="year" type="text" maxlength="2">
+                    <p>例如 09，10，11<p>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>专业：</dt>
+                <dd>
+                    <input name="major" type="text">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>学号：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="number" type="text">
+                    <p>用户进行登录的帐号</p>
+            </dl>
+
+            <dl class="lineD">
+                <dt>密码：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="password" id="password" type="text">
+                    <p>用户进行登录的密码</p>
+            </dl>
+
+            <dl class="lineD">
+                <dt>昵称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="uname" id="uname" type="text">
+                    <p>2-10位个中英文、数字、下划线和中划线组成</p>
+            </dl>
+            <dl class="lineD">
+                <dt>真实姓名：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="realname" id="realname" type="text">
+            </dl>
+            <dl class="lineD">
+                <dt>性别：</dt>
+                <dd>
+                    <label><input name="sex" type="radio" value="1">男</label>
+                    <label><input name="sex" type="radio" value="0">女</label>
+            </dl>
+
+            <dl class="lineD">
+                <dt>权限：</dt>
+                <dd>
+                    <label><input name="can_admin" type="checkbox" value="1">超级管理员</label>
+                    <label><input name="can_add_event" id='addEvent' type="checkbox" value="1" onclick="addGroup();">发起活动</label>
+                    <label><input name="can_event2" type="checkbox" value="1">活动终极审核</label>
+                    <label><input name="can_gift" type="checkbox" value="1">兑换管理</label>
+                    <label><input name="can_print" type="checkbox" value="1">打印证书</label>
+                    <label><input name="can_group" type="checkbox" value="1">部落管理</label>
+                    <label><input name="can_announce" type="checkbox" value="1">校内通知</label>
+            </dl>
+            <dl class="lineD addGroup" id="addnum" style="display:none;">
+                <dt>授权人数：</dt>
+                <dd> <dl class="lineD addGroup" >
+                <input name="codelimit"  type="text" value="5"/>
+                <p>发起人能授权多少人使用活动码，进行活动签到。 默认是5人(包括本人)。第6人使用该活动码将无法进行签到</p></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>权限备注信息：</dt>
+                <dd>
+                    <input name="event_role_info" id="event_role_info" type="text" size="40">
+                    <p>例如：某某学院宣传部</p>
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    var channel=$('#myschool');
+    var categroy=$('#mysid1');
+    function getsid(){
+        var id = channel.val();
+        $.post('__URL__&act=getSid1',{pid:id},function(data){
+            categroy.empty();
+            categroy.append('<option value="0">--请选择--</option>');
+            if(data){
+                for(var i=0;i<data.length;i++){
+                    var option = document.createElement('option');
+                    option.innerHTML = data[i]['title'];
+                    option.value = data[i]['id'];
+                    categroy.append(option);
+                }
+            }
+        },'json');
+    }
+
+    function addGroup(){
+        if ($('#addEvent').is(":checked")) {
+            $('#addnum').show();
+        }else{
+            $('#addnum').hide();
+        }
+    }
+</script>
+<include file="_footer" />

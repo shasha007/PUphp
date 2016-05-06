@@ -1,0 +1,35 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+        <include file="_tab" />
+        <div class="page_tit">配置所有活动分类学分上限</div>
+        <div class="form2">
+            <dl class="lineD">
+                    <dt>上半学期上限：</dt>
+                    <dd>
+                        开始时间&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<input type='text' onfocus="rcalendar(this,'dayOnly');" readonly="readonly" name='upBeginTime' value='' />&nbsp;&nbsp;<b>-</b>&nbsp;&nbsp;
+                        结束时间&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<input type='text' onfocus="rcalendar(this,'dayOnly');" readonly="readonly" name='upEndTime' value='' />
+                        &nbsp;&nbsp;学分&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<input type='text' name='upScore' value='' />
+                    </dd>
+                </dl>
+            <dl class="lineD">
+                    <dt>下半学期上限：</dt>
+                    <dd>
+                        开始时间&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<input type='text' onfocus="rcalendar(this,'dayOnly');" readonly="readonly" name='upBeginTime' value='' />&nbsp;&nbsp;<b>-</b>&nbsp;&nbsp;
+                        结束时间&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<input type='text' onfocus="rcalendar(this,'dayOnly');" readonly="readonly" name='upEndTime' value='' />
+                        &nbsp;&nbsp;学分&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<input type='text' name='downScore' value='' />
+                    </dd>
+                </dl>
+            <dl class="lineD">
+                    <dt>总上限：</dt>
+                    <dd>
+                        学分&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;<input type='text' name='allScore' value='' />
+                    </dd>
+                </dl>
+        </div>
+      <div  class="page_btm">
+          <input type="submit" class="btn_b" value="保存" />
+        </div>
+</div>
+<include file="__THEME__/comm/_datepicker" />
+<include file="../Teacher/_footer" />

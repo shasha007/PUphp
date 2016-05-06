@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>江苏省大中专学生志愿者暑期文化科技卫生“三下乡”社会实践活动成功总结工作</title>
+        <link href="../Public/css/province.css?20140916" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="province">
+            <div class="prov_main">
+                <div class="prov_h"></div>
+                <div class="prov_con">
+                    <div class="prov_tpic"><img src="../Public/images/top_pic.jpg" alt="" /></div>
+                    <?php if($showBm):?>
+                    <div class="prov_upload"><a href="{:U('event/Sjsq/index')}"></a></div>
+                    <?php endif;?>
+                    <?php if($showVote):?>
+                    <div class="prov_list1">
+                        <ul>
+                            <li class="mr10">
+                                <a href="{:U('event/Front/player')}&id={$id1}">
+                                <div class="prov_list1_thumb"><img src="../Public/images/thumb_1.jpg" alt="十佳团队" /></div>
+                                <div class="prov_list1_btn"><img src="../Public/images/btn1_prov.gif" alt="投 票" /></div>
+                                </a>
+                            </li>
+                            <li class="ml10 mr10">
+                                <a href="{:U('event/Front/player')}&id={$id2}">
+                                <div class="prov_list1_thumb"><img src="../Public/images/thumb_2.jpg" alt="十佳使者" /></div>
+                                <div class="prov_list1_btn"><img src="../Public/images/btn1_prov.gif" alt="投 票" /></div>
+                                </a>
+                            </li>
+                            <li class="ml10">
+                                <a href="{:U('event/Front/player')}&id={$id3}">
+                                <div class="prov_list1_thumb"><img src="../Public/images/thumb_3.jpg" alt="十佳风尚" /></div>
+                                <div class="prov_list1_btn"><img src="../Public/images/btn1_prov.gif" alt="投 票" /></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php endif;?>
+                </div>
+
+                <div class="prov_f">
+                    {:W('FooterIcp')}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

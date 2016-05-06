@@ -1,0 +1,37 @@
+<include file="_header" />
+                <div class="content_fund">
+                    <div class="fund_left">
+                        <div class="fund_left_menu b f14 lh26 c1">承办活动 / <a href="__URL__&act=myapply">我承办的</a></div>
+                        <div class="fund_list1">
+                            <ul>
+                                <volist name="data" id="vo">
+                                    <li>
+                                        <div class="fund_list_thumb"><img src="{$vo.logo|getImgAttach=###,250,250,'c'}" alt="" /></div>
+                                        <div class="fund_list_title f14 mt10 c3">{$vo.eventName}</div>
+                                        <div class="fund_list_org">招募企业：<span class="b c3">{$vo.company}</span></div>
+                                        <div class="fund_list_org">已申请社团：<span class="c1 b">{$vo.count}</span>个</div>
+                                        <?php if($vo['byTime'] <= time()):?>
+                                        <div class="fund_list_status1 tcenter f16 mt10">我要承办</div>
+                                        <div class="fund_list1_end"></div>
+                                        <?php else :?>
+                                        <div class="fund_list_status1 tcenter f16 mt10 fund4">
+                                            <a href="javascript:void(0);" onclick="detail({$vo['eventId']})">我要承办</a>
+                                        </div>
+                                        <?php endif;?>
+                                    </li>
+                                </volist>
+
+                            </ul>
+                            <div class="fund_page">{$html}</div>
+                        </div>
+                    </div>
+                    <include file="_right" />
+                </div>
+<include file="_footer" />
+<script>
+    //申请活动
+    function detail(id){
+        ui.box.load("__URL__&act=eventDetail&id="+id, {title:'我要承办'});
+    }
+</script>
+

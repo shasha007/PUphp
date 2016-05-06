@@ -1,0 +1,100 @@
+<include file="../Teacher/_header" />
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+</script>
+<div class="so_main">
+    <include file="_tab" />
+
+    <div class="Toolbar_inbox">
+        用户数据导出
+    </div>
+
+    <div class="list">
+        <table id="blog_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr overstyle='on'>
+                <th>项目</th>
+                <th>选项</th>
+                <th>操作</th>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/userDetail')}">
+                    <td>1、用户数明细</td>
+                    <td>
+                        <span>院系&nbsp;&nbsp;</span>
+                        <select name="department">
+                            <option value="0">请选择</option>
+                            <volist name="department" id="vo">
+                                <option value="{$vo.id}">{$vo.title}</option>
+                            </volist>
+                        </select>
+                        <span>&nbsp;&nbsp;年级&nbsp;&nbsp;</span>
+                        <select name="year">
+                            <option value="0">请选择</option>
+                            <volist name="year" id="y">
+                                <option value="{$y.id}">{$y.year}</option>
+                            </volist>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="hidden" name="school" value="{$sid}" />
+                        <input type="submit" value="导出" />
+                    </td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/userYearDetail')}">
+                    <td>2、年级用户人员明细</td>
+                    <td>年级&nbsp;&nbsp;<input type="text" name="years" />&nbsp;&nbsp;
+                        多个年级用逗号隔开如12,13,14</td>
+                    <td><input type="submit" value="导出"></td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/userLoginMonthDetail')}">
+                    <td>3、本月登录人员明细</td>
+                    <td>年级&nbsp;&nbsp;<input type="text" name="years" />&nbsp;&nbsp;
+                    多个年级用逗号隔开如12,13,14</td>
+                    <td>
+                        <input type="submit" value="导出" />
+                    </td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/userYearOnlineDetail')}">
+                    <td>4、各年级在校人员明细</td>
+                    <td>年级&nbsp;&nbsp;<input type="text" name="years" />&nbsp;&nbsp;
+                        多个年级用逗号隔开如12,13,14</td>
+                    <td><input type="submit" value="导出"></td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/userNoInitDetail')}">
+                    <td>5、未初始化人员明细</td>
+                    <td>年级&nbsp;&nbsp;<input type="text" name="years" />&nbsp;&nbsp;
+                        多个年级用逗号隔开如12,13,14</td>
+                    <td><input type="submit" value="导出"></td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/userScoreDetail')}">
+                    <td>6、学分积分明细</td>
+                    <td>年级&nbsp;&nbsp;<input type="text" name="years" />&nbsp;&nbsp;
+                        多个年级用逗号隔开如12,13,14</td>
+                    <td><input type="submit" value="导出"></td>
+                </form>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<include file="../Teacher/_footer" />

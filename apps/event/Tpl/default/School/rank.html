@@ -1,0 +1,55 @@
+<include file="_header" />
+
+<div class="hd_c i1">
+        <?php if($smid):?>
+        <div class="myrank">我的当前排名：{$self}</div>
+        <?php endif;?>
+        <?php if(1==2):?>
+        <div class="platform">分类：
+            {$cTitle}	<span>[<a href="javascript:void(0)">切换</a>]</span>
+            <ul class="platform-menu hidden">
+                <li> <a href="{:U('/School/rank', array('cid'=>'s','k'=>$topMenu))}">全部</a> </li>
+                <?php foreach($category as $k=>$vo):?>
+                <li> <a href="{:U('/School/rank', array('cid'=>$k,'k'=>$topMenu) )}">{$vo}</a> </li>
+                <?php endforeach;?>
+            </ul>
+        </div>
+        <?php endif;?>
+        <div class="clear"></div>
+        <div class="ranktab1" id="ranktab">
+            <div id="tabtag" class="tabtag b" style="position:relative;">
+                <ul>
+                    <a href="{:U('/School/rank', array('k'=>1) )}"><li <eq name="topMenu" value="1">class="cur"</eq>>月排名</li></a>
+                    <a href="{:U('/School/rank', array('k'=>2) )}"><li <eq name="topMenu" value="2">class="cur"</eq>>学期排名</li></a>
+                    <a href="{:U('/School/rank', array('k'=>3) )}"><li <eq name="topMenu" value="3">class="cur"</eq>>年度排名</li></a>
+                </ul>
+            </div>
+            <div class="clear"></div>
+            <div id="tabcon" class="tabcon">
+                <div>
+                    <ul>
+                        <li>
+                            <table width="940" border="0" cellspacing="0" cellpadding="0">
+                                <tr class="b" style="color:#333; height:32px; line-height:32px;">
+                                    <td>排行</td>
+                                    <td>姓名</td>
+                                    <td>学号</td>
+                                    <td class="rank4">{$webconfig.cradit_name}</td>
+                                </tr>
+                                <?php foreach($data as $key=>$vo):?>
+                                <tr>
+                                    <td><?php echo (($nowPage-1)*$listRows)+$key+1?></td>
+                                    <td>{$vo['uid']|getUserRealName}</td>
+                                    <td>{$vo['uid']|getCacheUserEmail|getUserEmailNum}</td>
+                                    <td class="rank4">{$vo.note}</td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </table>
+                            <div class="page plist">{$html}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+<include file="_footer" />

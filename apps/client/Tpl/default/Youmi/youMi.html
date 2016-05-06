@@ -1,0 +1,24 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <include file="../Public/_tab" />
+  <div class="form2">
+  	<form method="post" action="{:U('client/Youmi/doSaveConfig')}" enctype="multipart/form-data">
+      <div style="background-color:#E6E9ED;padding:10px 0px">
+      <dl class="">
+        <dt><span>*</span>兑换比例：</dt>
+        <dd>
+          <input type="text" name="pu" value="{$pu}" /> :
+          <input type="text" name="score" value="{$score}" />
+          <font color="red">&nbsp;&nbsp;&nbsp;&nbsp;(1PU币需要多少积分)&nbsp;&nbsp;</font>
+        </dd>
+      </dl>
+      <div class="page_btm">
+        <if condition="$id != 0">
+          <input type="hidden" name="id" value="{$id}" />
+        </if>
+        <input type="submit" class="btn_b" value="保存" />
+      </div>
+    </form>
+  </div>
+</div>
+<include file="../Public/_footer" />

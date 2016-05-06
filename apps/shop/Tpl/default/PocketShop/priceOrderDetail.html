@@ -1,0 +1,41 @@
+<include file="_header" />
+<div class="kdl_mobile_page m_mb50">
+  <div class="kdl_mobile_header f18 bold tcenter">订单详情</div>
+  <a href="{:U('shop/PocketShop/myList')}"><div class="m_back"></div></a>
+  <div class="clear m_mt50"></div>
+  <div class="m_hr1"></div>
+  <if condition="$list['status'] eq 0">
+      <div class="m_state f16 fw mc2">审核中</div>
+  <elseif condition="$list['status'] eq 4"/>
+      <div class="m_state f16 fw">交易成功</div>
+
+  <elseif condition="$list['status'] eq 2"/>
+      <div class="m_state f16 fw">已驳回</div>
+  <else/>
+      <div class="m_state f16 fw mc1">还款中</div>
+  </if>
+  <div class="m_cdate fw f16">{$list.ctime|date="Y-m-d",###}</div><!--此处时间为用户创建订单时间-->
+  <div class="clear"></div>
+<div class="m_username">收款人：{$addressList.name}&nbsp; {$addressList.tel}<br>身份证号：{$addressList.identity}<br>收货地址：{$addressList.address}</div>
+<div class="clear"></div>
+<div class="m_c_infor">
+ <div class="m_c_infor_thumb"><img src="../Public/images/icon_cash.jpg"></div>
+ <div class="m_c_infor_desc">
+  <div class="m_c_infor_t f14">【口袋金】{$list.price}元</div>
+  <div class="m_c_infor_price">金额：{$list.price}元 {$list.staging}期</div>
+ </div>
+</div>
+<div class="clear"></div>
+<div class="m_c_price1">
+ <div class="m_c_price1_fq">期数：{$list.staging}个月<br>
+ 月供：￥{$list.stagPrice}（本金：￥{$list.benPrice}+服务费：￥{$list.service}）</div>
+</div>
+
+   <if condition="$list['status'] eq 2">
+ <div class="m_c_infor_note m_color1 f14">驳回原因：{$list.reason}</div>
+ <a href="__URL__&act=delPriceOrder&id={$list.id}"><div class="m_c_buy f18 fw">删除订单</div></a>
+<elseif condition="$list['status'] eq 4 || $list['status'] eq 0 "/>
+   <a href="__URL__&act=delPriceOrder&id={$list.id}"><div class="m_c_buy f18 fw">删除订单</div></a>
+</if>
+</div>
+<include file="_footer" />

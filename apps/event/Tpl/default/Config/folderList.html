@@ -1,0 +1,31 @@
+<div style="width:300px;margin:10px auto 20px auto;">
+    将申请表 【{$title}】
+    <br/><br/>移动到分类(文件夹)：
+        <select name="pid" id="pid" class="text">
+            <option value="0">最外层（无分类）</option>
+            <?php foreach($list as $v): ?>
+                <option value="{$v.id}"<php>if($v['id'] == $pid ) {echo "selected";}</php>>{$v.title}</option>
+            <?php endforeach; ?>
+        </select>
+    <br/><br/>
+    <input type="hidden" id="id" value="{$_REQUEST['id']}"/>
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="moveFolder()" value="确定" />
+</div>
+<script>
+function moveFolder(){
+  var pid = $('#pid').val();
+  var id = $('#id').val();
+  $.post( '__URL__&act=setEcFiel',{id:id,value:pid,field:'pid'},function( res ){
+        var json =$.parseJSON(res);
+        if( json.status ==0 ){
+            ui.error(json.info);
+        }else{
+            ui.box.close();
+            ui.success(json.info);
+            window.location.reload(true);
+        }
+  });
+}
+</script>

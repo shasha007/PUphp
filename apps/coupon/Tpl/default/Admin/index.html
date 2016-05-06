@@ -1,0 +1,50 @@
+<include file="_header" />
+<div class="so_main"><include file="_tab" />
+<div class="form2">
+<form method="post" id="basic_setting" name="form"
+	action="{:U('/Admin/addCategory', array('t'=>$t))}" onsubmit="return checkForm();">
+<dl class="lineD">
+	<dt>分类名称：</dt>
+	<dd><input type="text" name="title" id="title" value=""> <input type="submit" class="btn_b" value="添加" /></dd>
+</dl>
+</form>
+</div>
+
+<div class="list">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th class="line_l">ID</th>
+		<th class="line_l">分类名称</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist name="category_tree" id="category_top">
+	<tr>
+		<td><strong>{$category_top['a']}</strong></td>
+		<td><strong>{$category_top['t']}</strong></td>
+		<td><strong><a href="javascript:;"
+			onclick="edit('{$category_top['a']}')">修改</a> <a
+			href="{:U('/Admin/delCategory', array('id'=>$category_top['a']))}"
+			onclick="javascript:return confirm('确实删除“{$category_top['t']}”？');">删除</a></strong></td>
+	</tr>
+	</volist>
+</table>
+</div>
+</div>
+<script type="text/javascript">
+
+function checkForm()
+{
+	if($.trim($('#title').val()) == '') {
+		ui.error('名称不能为空');
+		return false;
+	}
+	return true;
+}
+
+/* 编辑分类 */
+function edit(id)
+{
+    ui.box.load( '{:U('/Admin/editCategory', array('t'=>$t))}' + '&id=' + id,{title:'修改'});
+}
+</script>
+<include file="_footer" />

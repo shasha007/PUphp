@@ -1,0 +1,14 @@
+<form action="{:U('pufinance/Admin/changeFreeAmount',array('uid'=>$_GET['uid']))}" method="post">
+    <table cellpadding=10 cellspacing=3>
+        <tr>
+            <td align="right">免息额度 <span style="color: #F00">*</span></td>
+            <td align="left">
+                <input type="text" name="amount" value="<?php echo $free_amount;?>"/>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <input type="submit" class="btn_b" value="确定">
+        <input type="button" class="btn_b" onclick="javascript:ui.box.close();" value="取消">
+    </div>
+</form>

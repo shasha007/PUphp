@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="../Public/js/jquery-2.1.1.min.js"></script>
+    <script src="../Public/js/bootstrap.min.js"></script>
+    <title>圣诞故事</title>
+    <style>
+        html {
+            font-size: 62.5%;
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+        img{max-width: 100%;height: auto}
+        a,
+        a:active,a:link,a:visited,a:hover {
+            text-decoration: none;
+            color: #e0af1d;
+        }
+        .lotter-button{
+            width:115px;
+            height:40px;
+            margin: 10px auto;
+            font-size: 18px;
+            color: #e0af1d;
+            background-color: #c30e2e;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px #9d9d9d;
+            line-height: 40px;
+        }
+        .lottery-footer p{
+            font-size: 14px;
+            text-align: center;
+            color: #b50d0d;
+        }
+        .lottery-footer p:nth-child(3){
+            margin-top: 5px;
+            color: #0b0a0a;
+        }
+        .modal-content {
+            position: relative;
+            background-color: inherit;
+            border:none;
+            box-shadow:none;
+        }
+        .modal-dialog {
+            position: absolute;
+            width: auto;
+            margin: 10px;
+            bottom: 15%;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="lottery-header">
+    <img class="img-responsive" src="http://pic.pocketuni.net/data/sys_pic/lottery/could1.png">
+    </header>
+<div class="lottery-monkey">
+    <img class="img-responsive" src="http://pic.pocketuni.net/data/sys_pic/lottery/monkey-head.gif">
+    <img class="img-responsive" src="http://pic.pocketuni.net/data/sys_pic/lottery/could.png">
+</div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <img class="img-responsive" src="http://pic.pocketuni.net/data/sys_pic/lottery/rule.png">
+            </div>
+        </div>
+    </div>
+<footer class="lottery-footer">
+    <div class="lotter-button">
+       <a href="<?php echo U('home/LuckyNewYear/lottery') ?>"> 开始游戏 </a>
+    </div>
+    <p class="rule">
+        活动规则
+    </p>
+    <p>
+        活动解释权归@苏州天宫信息技术有限公司
+    </p>
+</footer>
+</body>
+</html>
+<script>
+    $(".rule").click(function () {
+        $('#myModal').modal('show');
+    })
+</script>

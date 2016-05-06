@@ -1,0 +1,176 @@
+<include file="../Public/_header" />
+
+
+
+<script type="text/javascript" src="../Public/js/flexpaper_flash.js"></script>
+
+
+
+<div class="content clearfix under-suggest">
+	
+			<div class="index_block_l">
+
+			<div class="right_box">
+				<div class="right_boxtitle">
+				  <p>{$document['name']}</p>
+				</div>
+				<div class="right_boxwrapper">								
+
+					<p id="viewerPlaceHolder" style="width:100%;height:553px;display:block">课件载入中.. 如果仍然没有正常打开, 请检查是否己安装flash插件</p>
+                
+				</div>
+			</div>
+                     
+<div class="comment">     
+	  
+            {:W('Comment',array('type'=>'document','appid'=>$document['id'],'author_uid'=>$uid,'title'=>$document['name'], 'url'=>U('document/Index/doc',array('id'=>$document['id'],'uid'=>$uid)), 'table'=>'document','id_field'=>'id','comment_count_field'=>'commentCount'))}
+	
+</div>
+                
+			</div>
+			
+			<div class="index_block_r">
+            
+			<div class="download_box">
+				<a href="{:U('document/Index/download',array(id=>$document['id'],uid=>$document['userId']))}"></a>
+			</div>
+
+
+			<div class="right_box">
+				<div class="right_boxtitle">
+				  <p>课件信息</p>
+				</div>
+				<div class="right_boxwrapper">
+					
+						<ul class="olist">
+							
+						
+		                <li class="hot_doc">
+					<div class="label">标题:</div>
+					<div class="content">{$document['name']}</div>
+						</li>
+						
+						<php>if(strlen(trim($document['intro']))>0) { </php>
+			                <li class="hot_doc">
+						<div class="label">课件简介:</div>
+						<div class="desc">{$document['intro']}</div>
+							</li>
+						<php> } </php>
+						
+				                <li class="hot_doc">
+							<div class="label">课件分类:</div>
+							<div class="content">
+								<php>if($document['cid0']>0) { </php>
+								{$document['cid0']|getCategoryName}
+								<php> } </php>			
+								<php>if($document['cid1']>0) { </php>
+								- {$document['cid1']|getCategoryName}
+								<php> } </php>
+							</div>
+								</li>
+					                <li class="hot_doc">
+								<div class="label">类型:</div>
+								<div class="content">
+									<em class="icon {$document['extension']}"></em>
+									{$document['extension']}
+								</div>
+									</li>	
+									    <li class="hot_doc">
+									<div class="label">星级:</div>
+									<div class="content ">
+										<span class="rating star{$document['rate']}">
+										</span>										
+										</div>
+										</li>																				
+						                <li class="hot_doc">
+									<div class="label">售价:</div>
+									<div class="content">
+										<php>
+										if($document['credit']>0) { 
+											echo $document['credit'];
+										 } else {
+											echo "免费";	
+										 } </php>		
+										
+									</div>
+										</li>	
+							                <li class="hot_doc">
+										<div class="label">下载次数:</div>
+										<div class="content">{$document['downloadCount']}</div>
+											</li>
+								                <li class="hot_doc">
+											<div class="label">阅读次数:</div>
+											<div class="content">{$document['readCount']}</div>
+												</li>																																										
+		                </ul>					
+
+							
+					</div>
+				</div>
+												
+			<div class="right_box">
+				<div class="right_boxtitle">
+				  <p>相关文档</p>
+				</div>
+				<div class="right_boxwrapper">
+								
+							<ul>
+
+
+										<volist name="newdocuments" id="vo">	
+						                <li class="hot_doc">
+
+								<div class="first">
+									<em class="icon {$vo.extension}"></em><span><a href="{:U('document/Index/doc',array(id=>$vo['id'],uid=>$vo['userId']))}">{$vo.name}</a></span>
+								</div>
+								<div class="second">
+									<div class="user">上传人:<space uid="vo.userId">{uname}</space></div>
+									<div class="time">{$vo.mTime|friendlyDate}</a></div>
+								</div>
+										</li>
+										</volist>
+																		
+			                </ul>
+                
+				</div>
+			</div>
+   
+			</div>
+	
+			<script>
+			$(document).ready(function () { 						
+										
+					var swfFileUrl = escape("{:U('document/Index/docview',array(id=>$document['id'],uid=>$document['userId']))}");
+
+					var fp = new FlexPaperViewer(	
+							 '../Public/js/FlexPaperViewer',
+							 'viewerPlaceHolder', { config : {
+							 SwfFile : swfFileUrl,
+							 Scale : 1, 
+							 ZoomTransition : 'easeOut',
+							 ZoomTime : 0.5,
+							 ZoomInterval : 0.2,
+							 FitPageOnLoad : false,
+							 FitWidthOnLoad : true,
+							 FullScreenAsMaxWindow : false,
+							 ProgressiveLoading : true,
+							 MinZoomSize : 0.2,
+							 MaxZoomSize : 5,
+							 SearchMatchAll : false,
+							 InitViewMode : 'Portrait',
+							 ViewModeToolsVisible : true,
+							 ZoomToolsVisible : true,
+							 NavToolsVisible : true,
+							 CursorToolsVisible : false,
+							 SearchToolsVisible : false,
+	  						 localeChain: 'zh_CN'
+							 }});
+
+					function onDocumentLoadedError(errMessage){
+						$('#viewerPlaceHolder').html("文件格式有误, 无法在线浏览");
+					}
+										
+			});
+			</script>
+
+<include file="../Public/_footer" />

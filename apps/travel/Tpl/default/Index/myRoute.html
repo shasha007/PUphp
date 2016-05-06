@@ -1,0 +1,54 @@
+<include file="_header" />
+
+<div class="tour_left">
+    <div class="t_my mt10">
+        <div class="t_bm_title b f14">我的旅游</div>   
+        <div class="t_mylist">
+            <ul>
+                <li class="b t_mylist_center c333">
+                    <div class="t_mylist_title1">商品</div>
+                    <div class="t_mylist_count">数量</div>
+                    <div class="t_mylist_price">单价（元）</div>
+                    <div class="t_mylist_price">总价（元）</div>
+                    <div class="t_mylist_comment">评论</div>
+                </li>
+                <volist name="data" id="vo"> 
+                    <li>
+                        <div class="t_mylist_code"> 报名时间：<?php echo date('Y-m-d H:i', $vo['cTime']) ?></div>
+                        <div class="t_mylist_infor mt5">
+                            <div class="t_mylist_thumb"><a href="{:U('travel/Index/route', array('id'=>$vo['id']))}"><img src="{$vo['coverId']|getImgAttach=###,50,50,'f'}" /></a></div>
+                            <div class="t_mylist_text">
+                                <div class="t_mylist_title"><a href="{:U('travel/Index/route', array('id'=>$vo['id']))}">{$vo.title}</a></div>
+                                <div class="t_mylist_desc">  
+                                    <if condition="$vo['type'] eq 1">
+                                        {$vo.costExplain}
+                                        <else/>
+                                        {$vo.costExplain2}
+                                    </if></div>
+                            </div>
+                            <div class="t_mylist_count">1</div>
+                            <div class="t_mylist_price">
+                                <if condition="$vo['type'] eq 1">
+                                    {$vo.cost}
+                                    <else/>
+                                    {$vo.cost2}
+                                </if>
+                            </div>
+                            <div class="t_mylist_price">
+                                <if condition="$vo['type'] eq 1">
+                                    {$vo.cost}
+                                    <else/>
+                                    {$vo.cost2}
+                                </if>
+                            </div>
+                            <div class="t_mylist_comment"><a href="{:U('travel/Index/comment', array('id'=>$vo['id']))}">点此评论</a></div>
+                        </div>
+                    </li>
+                </volist>
+            </ul>
+            <div class="page">{$html}</div>
+        </div>
+    </div>
+</div>
+<include file="_right" />
+<include file="_footer" />

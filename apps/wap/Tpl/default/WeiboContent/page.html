@@ -1,0 +1,34 @@
+<?php foreach($comments as $key=>$value){ ?>
+    <li class="square-comment-list-li clearfix">
+        <header class="clearfix">
+            <div class="square-li-l"><a <?php echo $value['isHide']?'':'class="to-user-home"'; ?> data-userid="{$value[uid]}"><img class="img-responsive" src="{$value[face]}"></a></div>
+            <div class="square-li-c">
+                <p><?php echo $value['uname']; ?>
+                    <?php if($value['sex']=='1'){
+                        echo '<span class="male">♂</span>' ;
+                    }else{
+                        echo '<span class="female">♀</span>' ;
+                    } ?>
+                </p>
+                <p><span><?php echo $value['schoolname']; ?></span><span class="pull-right"><?php echo $value['ctime']; ?></span></p>
+            </div>
+            <div class="square-li-r" >
+                <?php
+                if($value['uid'] != $user_id){
+                   echo '<img class="img-responsive comment-comment pull-right"  data-topicid="'.$info['weibo_id'].'" data-commentid="'.$value['comment_id'].'" data-nickname="'.$value['uname'].'" src="../Public/images/icon_reply.png">';
+                }else{
+                    echo '<i class="glyphicon glyphicon-trash"  onclick="comDelete('.$value['comment_id'].');"></i>' ;
+                }
+                ?>
+            </div>
+        </header>
+        <a class="comment-select" data-cid="2">
+        <div class="square-comment-list-li-con ">
+            <?php echo $value['content']; ?>
+        </div>
+<!--                             <div class="square-comment-reply clearfix">
+            回复@<span>阿斯顿</span>的评论：说的好极了
+        </div> -->
+            </a>
+    </li>
+<?php } ?>

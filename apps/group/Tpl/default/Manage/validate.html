@@ -1,0 +1,91 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js?130626"></script>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+    <div class="content no_bg"><!-- 内容 begin  -->
+        <include file="../Public/_mainNav" />
+        <div class="main no_l">
+            <!-- 右侧内容 begin  -->
+            <div class="mainbox">
+                <div class="mainbox_C mainC_pad" style="margin-right:0">
+                    <include file="../Public/manage_group_top" />
+                    <div class="groupBox">
+                        <div class="boxL" style="width:90%;margin:40px auto;">
+                            <?php if($groupinfo['vStatus'] == 1):?>
+                                <span class="mod_announcement">通过认证</span>
+                            <?php elseif(!$etime['etime']):?>
+                                <span class="mod_announcement">您的学校尚未开通校方审核</span>
+                            <?php elseif($hasValid):?>
+                                <span class="mod_announcement">审核中，请耐心等待····</span>
+                            <?php else:?>
+                                <?php if($rejects) :?>
+                                    <span class="mod_announcement">申请被驳回，请修改重新申请</span>
+                                    <table width="85%"  style='margin-top:30px;'>
+                                       <tr style="border:1px solid #ccc;font-weight:bolder;" align="center">
+                                            <td  width="40%" style="height:35px;"bgcolor="#eee" algin='center'>驳回原因</td>
+                                            <td width="10%" bgcolor="#fff">驳回时间</td>
+                                        </tr>
+                                        <volist name="rejects" id="vo">
+                                          <tr style="border:1px solid #ccc;align:" align="center">
+                                                <td  width="40%" style="height:35px;;"bgcolor="#eee" algin='center'>{$vo.reject}</td>
+                                            <td width="10%" bgcolor="#fff">{$vo.vtime|friendlyDate}</td>
+
+                                            </tr>
+                                        </volist>
+                                    </table>
+                                <?php endif;?>
+                                <form method="post" action="{:U('group/Manage/addValidate',array('gid'=>$groupinfo['id']))}"  enctype="multipart/form-data" onsubmit="return checkr();">
+                                    <div class="lh35 cGray2">【申请校方认证】申请材料将由您所在学校团委审核，审核通过后社长有实践服务平台发起活动的权限</div>
+                                    <dl class="postsList">
+                                        <dd style="height:auto;">
+                                            <label>申请原因：</label>
+                                            <div class="c1">
+                                                <textarea  name="reason" id="reason" cols="50" rows="3"></textarea>(最大250个字)
+                                            </div>
+                                        </dd>
+                                        <dd>
+                                            <label>申请资料：</label>
+                                            <div class="c1">
+                                                <input type="file" name="cover" id="cover" /> (仅支持：{$upload['allow_exts']} 最大上传文件：{$config['simpleFileSize']}M)
+                                            </div>
+                                        </dd>
+                                        <dd>
+                                            <div class="c1">
+                                                <input name="submit" type="submit" class="btn_b" value="提交申请"/>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </form>
+                       <?php endif;?>
+                        </div>
+                        <!-- end  -->
+                    </div>
+                    <div class="c"></div>
+                </div>
+                <div class="c"></div>
+            </div>
+        </div>
+        <!-- 右侧内容 end  -->
+    </div>
+</div>
+<script>
+    function checkr(){
+        var reason= $('#reason').val();
+        var cover = $('#cover').val();
+        if(!reason){
+            ui.error("申请原因不能为空");
+            return false;
+        }
+        if(!reason.length>255){
+            ui.error("申请原因不能超过255个字");
+            return false;
+        }
+        if(!cover){
+            ui.error("申请资料不能为空");
+            return false;
+        }
+    }
+</script>
+<include file="__THEME__/footer" />
+</body>
+</html>

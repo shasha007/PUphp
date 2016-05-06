@@ -1,0 +1,40 @@
+<include file="_header" />
+<div class="kdl_mobile_page">
+  <div class="kdl_mobile_header f18 bold tcenter">订单中心</div>
+  <a href="{:U('shop/PocketShop/index')}"><div class="m_back"></div></a>
+  <div class="clear"></div>
+  <div class="m_order_menu fw m_mt50">
+   <a href="__URL__&act=ordercenter"><?php if($status===null){ ?><div class="m_order_submenu cur"><?php }else{echo"<div class='m_order_submenu'>";}?>全部</div></a>
+   <a href="__URL__&act=ordercenter&status=0"><?php if($status==='0'){ ?><div class="m_order_submenu cur"><?php }else{echo"<div class='m_order_submenu'>";}?>申请中</div></a>
+   <a href="__URL__&act=ordercenter&status=1"><?php if($status==='1'){ ?><div class="m_order_submenu cur"><?php }else{echo"<div class='m_order_submenu'>";}?>已通过</div></a>
+   <a href="__URL__&act=ordercenter&status=5"><?php if($status==='5'){ ?><div class="m_order_submenu cur"><?php }else{echo"<div class='m_order_submenu'>";}?>被驳回</div></a>
+
+  </div>
+  <div class="clear"></div>
+  <div class="m_hr1"></div>
+  <div class="clear"></div>
+
+<foreach name="list" item="vo">
+<a href="javascript:;">
+<div class="m_c_infor">
+ <div class="m_c_infor_thumb"><img src="{$vo.pic|tsMakeThumbUp=###,80,80,'c'}"></div>
+ <div class="m_c_infor_desc">
+  <div class="m_c_infor_t f14">【商品名称】{$vo.name}</div>
+  <div class="m_c_infor_price">金额：{$vo.price}元 期数：{$vo.staging}期</div>
+  <div class="m_c_infor_price"></div>
+ </div>
+</div>
+<div class="clear"></div>
+<div class="m_order_list">
+ <div class="m_order_half3 m_color1">
+
+ <?php if($status==='5'){echo $vo['reason'] ;}?><br/>
+
+ </div>
+
+</div>
+</a>
+<div class="clear"></div>
+</foreach>
+</div>
+<include file="_footer" />

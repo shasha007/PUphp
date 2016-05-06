@@ -1,0 +1,45 @@
+<include file="_header" />
+<div class="t_list mt10">
+    <ul>
+        <volist name="data" id='vo'>
+            <?php $org = $orgs[$vo['orgId']]; ?>
+        <li id="li_{$vo.id}">
+            <div class="t_list_thumb"><a href="{:U('train/Index/detail',array('id'=>$vo['id']))}">
+                    <img src="{$org.logo|tsMakeThumbUp=###,150,100,'f'}" alt="" /></a></div>
+            <div class="t_list_infor">
+                <div class="t_list_title f14 b"><a href="{:U('train/Index/detail',array('id'=>$vo['id']))}">{$vo.title}</a></div>
+                <div class="t_list_fee">
+                    开班日期：<span class="cf90 b">{$vo.kDate}</span>
+                    培训周期：<span class="cf90 b">{$vo.dauer}</span>
+                </div>
+                <div class="t_list_fee">城市：<span class="cf90 b">{$vo.cityId|getAreaTitle}</span></div>
+                <div class="t_list_fee">机构名称：
+                    <?php if($org['link']):?><a href="{$org.link}" target="_blank">{$org.name}</a>
+                    <?php else:?><span class="c193">{$org.name}</span><?php endif;?>
+                </div>
+                <div class="t_list_fee">联系方式：{$vo.contact}</div>
+            </div>
+            <div class="t_list_btn b">
+                <ul>
+                    <li class="t4"><a href="javascript:void(0)" onclick="collect(this,{$vo['id']})">取消收藏</a></li>
+                </ul>
+            </div>
+        </li>
+        </volist>
+    </ul>
+    <div class="page">{$html}</div>
+</div>
+<script>
+    function collect(o,id){
+        $.post("{:U('train/Index/ajaxIndexCollect')}", {id:id,del:2}, function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                $('#li_'+id).remove();
+                ui.success(json.info);
+            }
+        });
+    }
+</script>
+<include file="_footer" />

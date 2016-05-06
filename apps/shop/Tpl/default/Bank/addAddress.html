@@ -1,0 +1,37 @@
+<include file="_header" />
+ <div class="kdl_mobile_page m_mb50">
+ <div class="kdl_mobile_header">
+  <div class="kdl_mobile_header f18 bold tcenter">信息完善</div>
+  <a href="{:U('shop/PocketShop/detail')}&id={$gid}"><div class="m_back"></div></a>
+  </div>
+  <form method="post" action="{:U('shop/PocketShop/doAddress')}">
+  <input type="hidden" name="gid" value="{$gid}" />
+  <input type="hidden" name="color" value="{$color}" />
+  <input type="hidden" name="shoufu" value="{$shoufu}" />
+  <input type="hidden" name="staging" value="{$staging}" />
+  <input type="hidden" name="addId" value="{$add.id}" />
+  <!--<div class="m_save"><input type="submit" value="保存"></div>-->
+  <div class="clear m_mt50"></div>
+  <div class="m_userinfor f14">
+      <div class="m_userkey"><span style="color: #F00">*</span>姓名</div><input name="name" type="text" value="{$add['name']}" class="m_input1">
+  </div>
+  <div class="clear"></div>
+  <div class="m_userinfor f14">
+   <div class="m_userkey"><span style="color: #F00">*</span>手机号码</div><input name="tel" type="tel" value="{$add['tel']}" class="m_input1">
+  </div>
+  <div class="clear"></div>
+  <div class="m_userinfor f14">
+   <div class="m_userkey"><span style="color: #F00">*</span>身份证号</div><input name="identity" value="{$add['identity']}" type="text" class="m_input1">
+  </div>
+  <div class="clear"></div>
+  <div class="m_userinfor f14">
+   <div class="m_userkey">邮政编码</div><input name="zipCode" value="{$add['zipCode']}" type="text" class="m_input1">
+  </div>
+  <div class="clear"></div>
+  <div class="m_userinfor f14">
+   <div class="m_userkey"><span style="color: #F00">*</span>详细地址</div><input name="address" value="{$add['address']}" type="text" class="m_input1">
+  </div>
+  <div class="m_c_buy f18"><input type="submit" value="提交" class="m_btn"></div>
+  </form>
+  </div>
+<include file="_footer" />

@@ -1,0 +1,60 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+  <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <a href="__URL__&act=autoCredit" class="btn_a"><span>默认学分>></span></a>
+    </div>
+    <div class="list">
+        <div class="cRed">{$err_msg}</div>
+        <table id="event_list" width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+          <tr>
+            <th class="line_l">活动类别</th>
+            <th class="line_l">归属于</th>
+            <th class="line_l">操作</th>
+          </tr>
+          <volist name="list" id='vo'>
+          <tr id="{$vo.id}">
+            <td>{$vo.name}</td>
+            <td>【{$type_list[$vo['pid']]}】</td>
+            <td>
+                <a href="javascript:edit_tab({$vo['id']})">编辑</a> 
+                <a href="javascript:del({$vo['id']})">删除</a>
+                <a href="{:U('event/Config/configCredit',array('id'=>$vo['id']))}">配置学分上限</a>
+            </td>
+          </tr>
+          </volist>
+         </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="add_tab()"><span>添加分类</span></a>
+        <a href="{:U('event/Config/configAllCredit')}" class="btn_a"><span>设置所有分类学分上限</span></a>
+    </div>
+
+</div>
+<include file="../Teacher/_footer" />
+<script>
+    function add_tab(){
+        ui.box.load('__URL__&act=editType',{title:'添加分类'});
+    }
+    function edit_tab(id){
+        ui.box.load('__URL__&act=editType&id='+id,{title:'编辑分类'});
+    }
+    function del(id){
+        if(id=='' || id==0){
+            alert('请选择要删除的分类！');return false;
+        }
+        if( confirm("是否删除分类？") ){
+            $.post( '__URL__&act=doDelType',{id:id},function(res ){
+                var json =$.parseJSON(res);
+                if( json.status ==1 ){
+                    ui.success(json.info);
+                    $('#'+id).remove();
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+</script>

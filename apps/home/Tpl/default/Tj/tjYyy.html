@@ -1,0 +1,66 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul>
+    </div>
+    <div class="page_tit">摇一摇统计</div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l" style="width:80px;text-align:right;">日期</th>
+                <th class="line_l" style="text-align:right;">人数</th>
+                <th class="line_l" style="text-align:right;">次数</th>
+                <th class="line_l" style="text-align:right;">收入</th>
+                <th class="line_l" style="text-align:right;">支出</th>
+                <th class="line_l" style="text-align:right;">盈余</th>
+                <th class="line_l" style="width:50px;"></th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' style="text-align:right;">
+                    <td>{$vo.day}</td>
+                    <td><span class="cRed">免费：{$vo.free_users}</span>
+                        <?php if($vo['one_times']>0):?><br/><span class="cGreen">一元：{$vo.one_users}</span><?php endif;?>
+                        <?php if($vo['two_times']>0):?><br/><span class="cBlue">二元：{$vo.two_users}</span><?php endif;?>
+                        <?php if($vo['five_times']>0):?><br/><span class="cGray2">五元：{$vo.five_users}</span><?php endif;?>
+                        <br/><span class="b">总计：{$vo.users}</span>
+                    </td>
+                    <td><span class="cRed">{$vo.free_times}</span>
+                        <?php if($vo['one_times']>0):?><br/><span class="cGreen">{$vo.one_times}</span><?php endif;?>
+                        <?php if($vo['two_times']>0):?><br/><span class="cBlue">{$vo.two_times}</span><?php endif;?>
+                        <?php if($vo['five_times']>0):?><br/><span class="cGray2">{$vo.five_times}</span><?php endif;?>
+                        <br/><span class="b">{$vo.times}</span>
+                    </td>
+                    <td><span class="cRed">0.00</span>
+                        <?php if($vo['one_times']>0):?><br/><span class="cGreen">{$vo.one_times}.00</span><?php endif;?>
+                        <?php if($vo['two_times']>0):?><br/><span class="cBlue">{$vo['two_times']*2}.00</span><?php endif;?>
+                        <?php if($vo['five_times']>0):?><br/><span class="cGray2">{$vo['five_times']*5}.00</span><?php endif;?>
+                        <br/><span class="b">{$vo.moneyIn|money2xs}</span>
+                    </td>
+                    <td><span class="cRed">{$vo.free_moneyOut|money2xs}</span>
+                        <?php if($vo['one_times']>0):?><br/><span class="cGreen">{$vo.one_moneyOut|money2xs}</span><?php endif;?>
+                        <?php if($vo['two_times']>0):?><br/><span class="cBlue">{$vo.two_moneyOut|money2xs}</span><?php endif;?>
+                        <?php if($vo['five_times']>0):?><br/><span class="cGray2">{$vo.five_moneyOut|money2xs}</span><?php endif;?>
+                        <br/><span class="b">{$vo.moneyOut|money2xs}</span>
+                    </td>
+                    <td><span class="cRed"><?php echo money2xs(0-$vo['free_moneyOut']); ?></span>
+                        <?php if($vo['one_times']>0):?><br/><span class="cGreen"><?php echo money2xs(100*$vo['one_times']-$vo['one_moneyOut']); ?></span><?php endif;?>
+                        <?php if($vo['two_times']>0):?><br/><span class="cBlue"><?php echo money2xs(200*$vo['two_times']-$vo['two_moneyOut']); ?></span><?php endif;?>
+                        <?php if($vo['five_times']>0):?><br/><span class="cGray2"><?php echo money2xs(500*$vo['five_times']-$vo['five_moneyOut']); ?></span><?php endif;?>
+                        <br/><span class="b"><?php echo money2xs($vo['moneyIn']-$vo['moneyOut']); ?></span>
+                    </td>
+                    <td></td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录 </span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="_footer" />

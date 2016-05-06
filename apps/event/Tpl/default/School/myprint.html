@@ -1,0 +1,50 @@
+<include file="_header" />
+
+<div class="hd_c">
+    <div class="hd_print">
+        <div class="hd_print_list3">
+            <ul>
+                <li class="b" style="border-bottom:1px solid #dedede;">
+                    <div class="hd_print_list3_title">活动标题</div>
+                    <div class="hd_print_list3_time">打印时间</div>
+                    <div class="hd_print_list3_del">删除</div>
+                </li>
+                <?php $cnt=count($data);?>
+                <volist name="data" id='vo'>
+                <li<?php if($i==$cnt)echo'  class="print"'?> id="list_{$vo.id}">
+                    <div class="hd_print_list3_title b">
+                        <?php if($vo['is_orga']):?>
+                            <a href="{:U('/School/editPrint', array('id'=>$vo['id'],'uid'=>$mid))}" title="证书">【证书】</a>
+                        <?php else:?>
+                            <a href="{:U('/School/printView', array('id'=>$vo['id'],'uid'=>$mid))}" title="{$vo.title}">{$vo.title}</a>
+                        <?php endif;?>
+                    </div>
+                    <div class="hd_print_list3_time"><?php echo(date('Y-m-d H:i',$vo['cTime']));?></div>
+                    <div class="hd_print_list3_del"><a href="javascript:delPrint('{$vo.id}')">删除</a></div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="page">{$html}</div>
+    </div>
+<script type="text/javascript">
+function delPrint(id){
+    if(confirm("是否删除选中的打印？")){
+        $.post( U('event/School/doDelPrint'),{
+            id:id,
+        },function(text){
+            json = eval('('+text+')');
+            if( json.status == 1 ){
+                ui.success( json.info );
+                $('#list_'+id).remove();
+            }else{
+                ui.error( json.info );
+            }
+        });
+    }
+}
+</script>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

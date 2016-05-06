@@ -1,0 +1,182 @@
+<include file="_header" />
+<script src="../Public/js/vote.js?20131031" type="text/javascript"></script>
+<script>
+    function playFlash(vid){
+        ui.box.load(U('/Index/playFlash')+'&id='+vid,{title:'播放视频'});
+    }
+</script>
+
+<div class="content_sub1">
+    <div class="content_hd">
+        <div class="content_hd_menu b">{$event.title}</div>
+        <div class="content_hd_c">
+            <?php if(!$event['is_prov_event']):?>
+            <span class="b1">归属组织：</span>{$event.sid|getEventOrga}<br />
+            <?php endif; ?>
+            <?php if($event['gid']):?>
+            <span class="b1">发起组织：</span>{$event.gid|getGroupName}<br />
+            <?php endif; ?>
+            <span class="b1">活动分类：</span>{$category[$event['typeId']]}<br />
+            <span class="b1">活动地点：</span><a title="{$event.address}">{$event.address|getShort=###,18,'…'}</a><br />
+            <span class="b1">活动时间：</span><?php echo date('Y-m-d H:i', $event['sTime']) . " 至 " . date('Y-m-d H:i', $event['eTime']) ?><br />
+            <span class="b1">报名起止：</span><?php if($event['startline']>0){echo date( 'Y-m-d H:i',$event['startline'] );}?> 至<?php echo date('Y-m-d H:i', $event['deadline']) ?><br />
+            <span class="b1">参加费用：</span><a title="{$event.costExplain}">{$event.cost|getCost} ({$event.costExplain|getShort=###,38,'…'})</a><br />
+            <span class="b1">参加人数：</span>{$event.joinCount}&nbsp;
+            <span class="b1">剩余名额：</span><?php echo 5000000 < $event['limitCount'] ? "无限制" : $event['limitCount'] ?><br />
+            <?php if($event['id'] == 2170): ?>
+                <span class="b1">报名截止时间：</span>2013-10-23 17:00<br />
+                <span class="b1">联系方式：</span><a title="沈阳阳 0511-88780039, 13646103165 凌圆 025-83393586">沈阳阳 0511-88780039, 13646103165<br/>凌圆 025-83393586</a><br />
+            <?php elseif($event['contact']): ?>
+                <span class="b1">联系方式：</span><a title="{$event.contact}">{$event.contact|getShort=###,18,'…'}</a><br />
+            <?php endif; ?>
+<?php if($event['id'] == 12239 || $event['id'] == 25134 ||$event['id'] == 25139||$event['id'] == 25150): ?>
+<style>
+.app{ float:left; width:297px; margin-top:10px;border:1px solid #dedede;padding:8px;}
+.appIcon{ float:left; width:80px;}
+.appDetail{ float:left; margin-left:10px; display:inline; width:207px;}
+.appName{ float:left; font-size:14px}
+.appDesc{ float:left; color:#999;line-height:18px;}
+.downloadApp {background:#4CC9B6; margin-right: 5%;}
+.weiboApp {background:#FF6666;}
+.appBtn {color: #FFFFFF;display: inline-block; font-size:16px; height:30px; line-height:30px; margin-top: 10px; text-align:center;width: 45%;}
+.app a{ color:#fff;}
+.app a:hover{ color:#fff;text-decoration:none;}
+.app_banner{ float:right; width:513px; margin:10px 16px auto auto; display:inline;}
+</style>
+<div class="app">
+    <div class="appIcon"><img width="80" height="80" alt="apps" src="../Public/fimages/icon_mp.png"></div>
+    <div class="appDetail">
+    <div class="appName">秒拍</div>
+  <div class="appDesc">秒拍短视频，10秒记录青春，留住记忆，留住校园点点滴滴。</div>
+  <div class="clear"></div>
+  <a href="http://storage.video.sina.com.cn/apk/140226_wostore.apk?qq-pf-to=pcqq.c2c" class="downloadApp appBtn" target="_blank">体 验</a><a href="http://weibo.com/shoujipaike" class="weiboApp appBtn" target="_blank">微 博</a></div>
+</div>
+<?php endif; ?>
+        </div>
+    </div>
+            <div class="content_news">
+         <div class="content_news_menu">活动简介</div>
+         <div class="clear"></div>
+         <div class="content_jjdesc">
+                 {$event.description}
+         </div>
+        </div>
+    <div class="content_news">
+        <div class="content_news_menu">新闻中心</div>
+        <div class="content_news_more">
+            <a href="{:U('/Front/news',array('id'=>$eventId))}"><img src="../Public/fimages/more.gif" alt="" /></a>
+        </div>
+        <div class="content_news_list">
+            <ul>
+                <volist name="news" id='vo'>
+                    <li <php>if($i==count($data)){</php> class="i1"<php>}</php>>
+                        <div class="content_news_title">
+                            <a href="{:U('/Front/newsDetails',array('id'=>$eventId,'nid'=>$vo['id']))}" title="{$vo.title}">{$vo.title|getShort=###,40,'…'}</a></div>
+                        <div class="content_news_date">{$vo.cTime|date='Y-m-d',###}</div>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+    <?php if($event['id'] == 12239 || $event['id'] == 25134 ||$event['id'] == 25139||$event['id'] == 25150): ?>
+    <div class="app_banner"><a href="http://storage.video.sina.com.cn/apk/140226_wostore.apk?qq-pf-to=pcqq.c2c" target="_blank"><img src="../Public/fimages/miaopai.png" alt="" /></a></div>
+    <?php endif; ?>
+</div>
+<?php if($player):?>
+<div class="content_sub2">
+    <div class="sub2_menu">最新人气排行</div>
+    <div class="sub2_more"><a href="{:U('/Front/player/',array('id'=>$eventId))}">查看更多 >></a></div>
+    <div class="clear"></div>
+    <div class="sub2_desc">
+        <div class="sub2_list">
+            <ul>
+                <volist name="player" id='vo'>
+                <li>
+                    <div class="sub2_list_photo">
+                        <a href="{:U('/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id']))}" title="{$vo.realname}">
+                            <img src="{$vo.path|getThumb=###,117,145,c}" alt="" /></a></div>
+                    <div class="sub2_list_name1 b c3">
+                        <a href="{:U('/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id']))}" title="{$vo.realname}">{$vo.realname}</a></div>
+                    <div class="sub2_list_dw">{$vo.school}</div>
+                    <div class="sub2_list_count1">{$vo.ticket}票</div>
+                    <div class="sub2_list_count1">
+                        <a href="{:U('event/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id'],'tab'=>1)).'#tab1'}">
+                        <span style="color:#31AFFF">{$vo.imgCount}靓照</span></a>
+                        <a href="{:U('event/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id'],'tab'=>2)).'#tab2'}">
+                        <span style="color:#31AFFF">{$vo.flashCount}视频</span></a>
+                        <a href="{:U('event/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id'],'tab'=>3)).'#tab3'}">
+                        <span style="color:#31AFFF">{$vo.commentCount}评论</span></a>
+                    </div>
+                    <?php if($event['isTicket']):?>
+                    <?php if(!$event['isStart']): ?>
+                        <div class="sub2_list_vote i3">尚未开始</div>
+                    <?php elseif($vo['stoped'] || $event['isEnd']): ?>
+                        <div class="sub2_list_vote i3">终止投票</div>
+                    <?php else:?>
+                        <?php if(in_array($vo['id'],$bandVote)):?>
+                            <div class="sub2_list_vote i3">您已投票</div>
+                        <?php elseif($restVote<=0): ?>
+                            <div class="sub2_list_vote i3">票已投完</div>
+                        <?php else:?>
+                            <div class="sub2_list_vote" onclick='post_vote({$eventId},{$vo.id},"{$vo.realname}")'>投TA一票</div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <?php endif; ?>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+<?php endif;?>
+<?php if($hasVideo):?>
+<div class="content_sub2">
+    <div class="sub2_menu">活动视频</div>
+    <div class="sub2_more"><a href="{:U('/Front/video',array('id'=>$eventId))}">查看更多 >></a></div>
+    <div class="clear"></div>
+    <div class="sub2_desc">
+        <div class="sub2_list1">
+            <ul>
+                <volist name="video" id='vo'>
+                <li>
+                    <div class="sub2_list1_thumb">
+                        <a href="javascript:playFlash('{$vo.id}');" title="">
+                            <img src="{$vo.path|get_flash_img}" alt="" /></a></div>
+                    <div class="sub2_list1_star"><a href="javascript:playFlash('{$vo.id}');" title="点击播放"></a></div>
+                    <div class="sub2_list1_title">
+                        <a href="javascript:playFlash('{$vo.id}');" title="{$vo.title}">{$vo.title|getShort=###,10,'…'}</a></div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+<?php endif;?>
+<?php if($hasPhoto):?>
+<div class="content_sub3">
+    <div class="sub3_menu">{$orga.title}</div>
+    <div class="clear"></div>
+    <div class="sub3_desc">{$orga.content|htmlspecialchars_decode}</div>
+</div>
+<div class="content_sub4">
+    <div class="sub4_menu">活动照片</div>
+    <div class="sub4_more"><a href="{:U('/Front/photo',array('id'=>$eventId))}">更多>></a></div>
+    <div class="clear"></div>
+    <div class="sub4_desc">
+        <div class="sub4_list">
+            <ul>
+                <volist name="photo" id='vo'>
+                <li>
+                    <div class="sub4_list_thumb">
+                        <a href="{:U('/Front/details',array('id'=>$eventId,'img'=>$vo['id']))}" target="_blank" title="{$vo.title}"><img src="{$vo.path|getThumb=###,126,90}" alt="" /></a>
+                    </div>
+                    <div class="sub4_list_title">
+                        <a href="{:U('/Front/details',array('id'=>$eventId,'img'=>$vo['id']))}" target="_blank" title="{$vo.title}">{$vo.title|getShort=###,10,'…'}</a></div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+<?php endif;?>
+<include file="_footer" />

@@ -1,0 +1,68 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="../Public/js/laydate/laydate.js"></script>
+<div class="so_main">
+    <include file="../Public/trafficTabs" />
+    <div class="form2">
+          <form method="post" action="">
+        <div style="background-color:#E6E9ED;padding:10px 0px">
+        <dl class="">
+          <dt><span>*</span>运营商名称：</dt>
+          <dd>
+            <select name="name">
+                <?php foreach($ops as $item):?>
+				<option value="<?php echo $item['id']?>"><?php echo $item['name']?></option>
+				<?php endforeach;?>
+            </select>
+          </dd>
+        </dl>
+          <dl class="">
+            <dt><span>*</span>面值：</dt>
+            <dd>
+                ￥<input type="text" value="" name="face_value" />
+            </dd>
+          </dl>
+		  <dl class="">
+            <dt><span>*</span>实际售价：</dt>
+            <dd>
+                ￥<input type="text" value="" name="price" />
+            </dd>
+          </dl>
+          <dl class="">
+            <dt><span>*</span>流量值：</dt>
+            <dd>
+                 <input type="text" value="" name="flow_value" /> <select name="unit"><option value="M">M</option><option value="G">G</option></select>
+            </dd>
+          </dl>
+          <dl class="lineD">
+            <dt><span style="color: #F00">*</span>报价：</dt>
+            <dd>
+               ￥<input type="text" value="" name="quoted_price" />
+            </dd>
+          </dl>
+        <dl class="lineD">
+            <dt><span style="color: #F00">*</span>折扣：</dt>
+            <dd>
+              <input type="text" name="discount" value="10"  />折
+            </dd>
+          </dl>
+          <dl class="lineD">
+            <dt><span style="color: #F00">*</span>建议最低零售价</dt>
+            <dd>
+              ￥<input type="text" value="" name="zero_sale_price" />
+            </dd>
+          </dl>
+          <dl class="">
+            <dt><span>*</span>是否使用：</dt>
+            <dd>
+              是 <input type="radio" value="2" checked name="is_show"  />
+			  否 <input type="radio" value="1" name="is_show" />
+            </dd>
+          </dl>
+        </div>
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+      </form>
+    </div>
+</div>
+<include file="../Public/_footer" />

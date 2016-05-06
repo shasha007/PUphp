@@ -1,0 +1,38 @@
+<include file="_header" />
+<div class="kdl_mobile_page m_mb50">
+  <div class="kdl_mobile_header f18 bold tcenter">订单详情</div>
+  <a href="{:U('shop/PocketShop/myBankList')}"><div class="m_back"></div></a>
+  <div class="clear m_mt50"></div>
+  <div class="m_hr1"></div>
+  <if condition="$list['status'] eq 0">
+      <div class="m_state f16 fw mc2">审核中</div>
+  <elseif condition="$list['status'] eq 2"/>
+      <div class="m_state f16 fw">还款结束</div>
+  <else/>
+      <div class="m_state f16 fw mc1">还款中</div>
+  </if>
+  <div class="m_cdate fw f16">{$list.ctime}</div><!--此处时间为用户创建订单时间-->
+  <div class="clear"></div>
+<div class="m_username">收款人：{$blist.realname}&nbsp; {$blist.mobile}<br>身份证号：{$blist.ctf_id}<br>地址：{$blist.address}</div>
+<div class="clear"></div>
+<div class="m_c_infor">
+ <div class="m_c_infor_thumb"><img src="../Public/images/icon_cash.jpg"></div>
+ <div class="m_c_infor_desc">
+  <div class="m_c_infor_t f14">【口袋金】{$list.money}元</div>
+  <div class="m_c_infor_price">金额：{$list.money}元 {$list.staging}期</div>
+ </div>
+</div>
+<div class="clear"></div>
+<div class="m_c_price1">
+ <div class="m_c_price1_fq">期数：{$list.staging}个月<br>
+ 月供：￥{$list.stagMoney}（本金：￥{$list.benMoney}+服务费：￥{$list.service}）</div>
+</div>
+<div class="clear"></div>
+<!--<if condition="$list['status'] gt 0">
+    <div class="m_c_btn">
+
+                <a href="{:U('shop/PocketShop/lookRepayment')}&id={$list.id}"><div class="m_c_buy f16 bold">查看还款计划</div></a>
+            </div>
+</if>-->
+</div>
+<include file="_footer" />

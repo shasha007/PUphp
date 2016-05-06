@@ -1,0 +1,11 @@
+<div class="school_c" style="height: 280px;">
+    <div class="school_college">
+        <ul>
+            <volist name="list" id="vo">
+                <li><a href="{:U('shop/Donate/index',array($type=>$vo['id']))}">{$vo.title}</a></li>
+            </volist>
+        </ul>
+    </div>
+    <div class="school_close"><input name="close" type="button" value="关闭" class="school_btn" onclick="javascript:ui.box.close();" /></div>
+</div>
+

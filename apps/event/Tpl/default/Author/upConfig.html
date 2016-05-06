@@ -1,0 +1,120 @@
+<include file="_header" />
+<div class="member_c">
+    <form action="{:U('/Author/doUpConfig',array('id'=>$eventId))}" method="post">
+        <div class="red b"style="padding-left:15px;" >自定义选手上传资料时，输入框的名称。</div>
+            <table cellspacing="1" cellpadding="0" class="table neitable">
+                <tbody>
+                    <tr>
+                        <td class="list">输入框名称</td>
+                        <td class="list">说明</td>
+                        <td width="60" class="list">是否必填</td>
+                        <td width="60" class="list">是否在前台显示</td>
+                        <td class="list">操作</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;color:red" class="list-text" colspan="5">以下为必填项</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;" class="list-text">
+                            <input type="text" value="{$defaultName.realname}" class="text" name="realname"></td>
+                        <td style="text-align:center;" class="list-text">默认：选手名称</td>
+                        <td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" disabled></td>
+                        <td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" disabled></td>
+                        <td class="list-text list_left">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;" class="list-text">
+                            <input type="text" value="{$defaultName.school}" class="text" name="school"></td>
+                        <td style="text-align:center;" class="list-text">默认：选手院校</td>
+                        <td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" disabled></td>
+                        <td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" disabled></td>
+                        <td class="list-text list_left">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;" class="list-text">
+                            <input type="text" value="{$defaultName.content}" class="text" name="content"></td>
+                        <td style="text-align:center;" class="list-text">默认：简介</td>
+                        <td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" disabled></td>
+                        <td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" disabled></td>
+                        <td class="list-text list_left">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;" class="list-text">
+                            <input type="text" value="{$defaultName.path}" class="text" name="path"></td>
+                        <td style="text-align:center;" class="list-text">默认：头像+展示图片</td>
+                        <td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" disabled></td>
+                        <td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" disabled></td>
+                        <td class="list-text list_left">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;color:red" class="list-text" colspan="5">以下为可选项,简短：250字以内，无格式。 文本：大于250字，有格式</td>
+                    </tr>
+                    <tr class="mouse">
+                        <td class="list">输入框名称</td>
+                        <td class="list">说明</td>
+                        <td width="60" class="list">是否必填</td>
+                        <td width="60" class="list">是否在前台显示</td>
+                        <td class="list">操作</td>
+                    </tr>
+                    <volist name="parameter" key="k" id='vo'>
+                    <tr class="mouse">
+                        <td style="text-align:center;" class="list-text">
+                            <input type="text" value="{$vo[0]}" class="text" name="param_{$k}"></td>
+                        <td style="text-align:center;" class="list-text">
+                            <select name="type_{$k}">
+                            <option value="1" <?php if($vo[1]==1):?>selected="selected"<?php endif;?>>简短</option>
+                            <option value="2" <?php if($vo[1]==2):?>selected="selected"<?php endif;?>>文本</option>
+                            <option value="3" <?php if($vo[1]==3):?>selected="selected"<?php endif;?>>附件</option>
+                            <option value="4" <?php if($vo[1]==4):?>selected="selected"<?php endif;?>>视频</option>
+                            </select>
+                        </td>
+                        <td class="list-text"><input type="checkbox" <?php if($vo[2]==1):?>checked="checked"<?php endif;?> class="xz" value="1" name="wr_ok_{$k}"></td>
+                        <td class="list-text"><input type="checkbox" <?php if($vo[3]==1):?>checked="checked"<?php endif;?> class="xz" value="1" name="show_ok_{$k}"></td>
+                        <td class="list-text list_left">
+                            <a class="hovertips" onclick="delettr($(this));" href="javascript:;">删除</a>
+                        </td>
+                    </tr>
+                    </volist>
+                    <tr>
+                        <td style="text-align:left;color:red;padding-left:50px;" class="list-text" colspan="5">
+                            <a onclick="return addsave();" style="cursor:pointer;">+添加新字段</a>
+                            <input type="hidden" value="{$paramCount}" name="paramCount" id="paramCount" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;color:red;padding-left:50px;" class="list-text" colspan="5">
+                        <input class="member_btn1" type="submit" value="保存" /></td>
+                    </tr>
+                </tbody>
+            </table>
+    </form>
+</div>
+<script>
+var paramCount = <?php echo $paramCount;?>;
+function addsave() {
+    var dom = $("tr.mouse");
+    var at = dom.eq(dom.length - 1);
+    paramCount+=1;
+    $('#paramCount').val(paramCount);
+    var data= '<tr class="mouse">'+
+        '<td style="text-align:center;" class="list-text"><input type="text" value="" class="text" name="param_'+paramCount+'"></td>'+
+        '<td style="text-align:center;" class="list-text"><select name="type_'+paramCount+'">'+
+        '<option value="1">简短</option><option value="2">文本</option><option value="3">附件</option><option value="4">视频</option>'+
+        '</select></td>'+
+        '<td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" name="wr_ok_'+paramCount+'"></td>'+
+        '<td class="list-text"><input type="checkbox" checked="checked" class="xz" value="1" name="show_ok_'+paramCount+'"></td>'+
+        '<td class="list-text list_left"><a class="hovertips" onclick="delettr($(this));" href="javascript:;">撤销</a></td></tr>';
+    at.after(data);
+    return false;
+}
+function delettr(my) {
+    if(confirm('如有选手资料已上传，删除后可能会产生资料错位。确定删除?')){
+        my.parent('td').parent('tr').remove();
+    }
+}
+</script>
+<include file="_footer" />

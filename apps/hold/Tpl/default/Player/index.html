@@ -1,0 +1,30 @@
+<include file="../Public/_header" />
+<script src="../Public/js/vote.js" type="text/javascript"></script>
+
+<div class="news">
+    <div class="news_menu"><img src="../Public/images/menu_person.gif" alt="" /></div>
+    <?php if(isset($keyword)):?>
+    <div class="person_search">搜索“<span class="red b">{$keyword}</span>”的相关结果</div>
+    <?php endif;?>
+    <div class="person_list">
+        <ul>
+            <volist name="data" id='vo'>
+            <li>
+                <div class="person_list_photo">
+                    <a href="{:U('/player/details',array('id'=>$vo['id']))}" title="{$vo.realname}">
+                        <img src="{$vo.path|getThumb=###,163,204,c}" alt="" /></a></div>
+                <div class="person_list_name">{$vo.realname}</div>
+                <div class="person_list_count"><span class="red">{$vo.ticket}</span>票</div>
+                <?php if($vo['stoped']): ?>
+                    <div class="person_list_vote i4">终止投票</div>
+                <?php else:?>
+                    <div class="person_list_vote" onclick='post_vote({$vo.id},"{$vo.realname}")'>投TA一票</div>
+                <?php endif; ?>
+            </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+
+<include file="../Public/_footer" />

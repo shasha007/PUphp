@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{$Think.lang.finance_name}</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+</head>
+<body>
+<a href="{:U('pufinance/Bankcard/bindBankcard')}"><img src="../Public/img/003.jpg"></a>
+<div class="w-puOperat">
+    <div class="w-circle">
+        <div class="w-pTop">
+            <div id="ptop"></div>
+        </div>
+        <div class="w-pBottom">
+            <div id="pbottom"></div>
+        </div>
+        <div class="w-limitInfo">
+            <p>可用额度(元)</p>
+            <!--此处数字用2500.00,不要用2,500.00这样的格式,下同！-->
+            <p><b id="klimit">{$pucredit.usable_amount}</b></p>
+            <p><span>可用免息额度{$pucredit.free_usable_amount}</span></p>
+            <p><span>总额度<span id="zLimit">{$pucredit.all_amount}</span></span></p>
+            <a href="{:U('pufinance/PuCredit/showCreditLog')}">明细</a>
+        </div>
+    </div>
+    <p class="w-limlitLink">
+        <a href="{:U('pufinance/PuCredit/borrow')}">我要借款</a>
+        <a href="{:U('pufinance/PuCredit/repay')}">我要还款</a>
+    </p>
+</div>
+<a href="{:U('pufinance/PuCredit/monthLastAmount')}">
+<p class="w-indexGeneral">
+    本月应还
+    <span><gt name="month_last_etime" value="0">{$month_last_etime|date='m-d', ###}还款</gt></span>
+    <i>{$month_last_amount|number_format=###,2}元</i>
+</p>
+</a>
+<a href="{:U('pufinance/PuCredit/allLastAmount')}">
+<p class="w-indexGeneral">
+    全部待还
+    <i>{$all_last_amount|number_format=###,2}元</i>
+</p>
+</a>
+<a href="{:U('pufinance/UserPackage/index')}">
+<p class="w-indexGeneral">
+    提额包
+    <i></i>
+</p>
+</a>
+<a class="w-puFooter-lastA" href="{:U('pufinance/Order/index')}">
+    <p class="w-indexGeneral">
+        我的借款
+        <i></i>
+    </p>
+</a>
+<ul class="w-puFooter" id="w-puFooter">
+    <li class="w-select">
+        <img src="../Public/img/foot01.png">
+        {$Think.lang.finance_name}
+    </li>
+    <!--<li>
+        <img src="../Public/img/foot2.png">
+        去消费
+    </li>-->
+    <eq name="is_suzhou" value="1">
+        <!--<li>
+            <a href="{:U('shop/Bank/addPcard')}"><img src="../Public/img/foot3.png">
+                PU卡</a>
+        </li>-->
+    </eq>
+    <li>
+        <a href="{:U('pufinance/Help/index')}"><img src="../Public/img/foot4.png">
+            帮助</a>
+    </li>
+</ul>
+<script src="../Public/js/mainScript.js"></script>
+<script>
+    setActionBar('{$Think.lang.finance_name}', '', '');
+    limitScale();
+</script>
+</body>
+</html>

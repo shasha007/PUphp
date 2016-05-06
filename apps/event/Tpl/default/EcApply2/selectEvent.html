@@ -1,0 +1,48 @@
+<div style="width:600px;overflow-y:scroll;height:500px;">
+    <?php if($tree=='[]'):?>
+        <center>没有记录</center>
+    <?php else:?>
+    <ul id="treeDemo" class="ztree"></ul>
+    <center><input class="member_btn1" type="button" value="确定" onclick="qd();"></center>
+    <SCRIPT type="text/javascript">
+        <!--
+        var setting = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+        var sem = {$sem};
+        var maxNum = {$maxNum};
+        var zNodes = {$tree};
+        var oldV = $('#eventIds'+sem).val();
+
+        $(document).ready(function(){
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+        function qd(){
+            var treeObj=$.fn.zTree.getZTreeObj("treeDemo"),
+            nodes=treeObj.getCheckedNodes(true),
+            nodesLeng = nodes.length;
+            if(nodesLeng>(maxNum+1)){
+                alert('最多选择'+maxNum+'个');return;
+            }
+            var newV = '';
+            for(var i=0;i<nodesLeng;i++){
+                if(nodes[i].id!=0){
+                    newV+=nodes[i].id + ',';
+                }
+            }
+            if(oldV!=newV){
+                $('#eventIds'+sem).val(newV);
+            }
+            ui.box.close();
+        }
+        //-->
+    </SCRIPT>
+    <?php endif;?>
+</div>

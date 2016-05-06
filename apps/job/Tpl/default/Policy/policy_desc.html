@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>地方政策--创就业--Pocketuni</title>
+<link href="../Public/css/job.css" type="text/css" rel="stylesheet" />
+<link href="../Public/css/students.css" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+</head>
+
+<body>
+<include file="__THEME__/_holder_2014" />
+<div class="bg_job">
+ <div class="main_job">
+<include file="../Public/top" />
+  <div class="job_banner"><img src="../Public/images/bg_policy.jpg" alt="地方政策" /></div>
+  <div class="policy_submenu mt20">当前位置：<a href="#">创就业</a>&nbsp;---&nbsp;<a href="policy.html">地方政策</a>&nbsp;---正文</div>
+  <div class="policy_desctext tcenter f14 b c3 lh26 mt20">{$list.title}</div>
+  <div class="policy_descnote mt10 c9 tcenter">发布人：{$list.author}   发布时间：{$list['ctime'] | friendlyDate}</div>
+  <div class="policy_desctext mt20 lh22 pb50">
+      {$list.content}
+  </div>
+ </div>
+</div>
+
+
+<include file="__THEME__/footer" />
+</body>
+</html>

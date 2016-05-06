@@ -1,0 +1,186 @@
+ @charset "utf-8";
+
+.page_home{background:#BEE3FD url(../himages/body_bg.jpg) repeat-x center top;padding:57px 0 0 0;_padding:0}
+.header_holder{z-index:9999;position:fixed;_position:absolute;width:100%;min-width:1000px;background:url(../himages/head_bg.png) repeat-x 0 0 transparent;left:0;top:0;height:40px;}
+.logo_holder{width:760px;height:37px;float:left}
+.logo_holder .nav{float:left}
+
+#indt {
+right: 10px;
+top: 5px;
+color: #666;
+}
+.br3 p {
+padding: 5px 5px 0 5px;
+}
+.del, .del:hover {
+background: transparent url(../himages/close.gif) no-repeat;
+display: inline-block;
+}
+.del {
+width: 17px;
+height: 17px;
+background-position: 0 -85px;
+overflow: hidden;
+margin: 3px 5px 0 0;
+}
+
+.no_bg{background:none}
+
+
+.header_bg {z-index:9999;position:fixed;width:100%;min-width:1000px;left:0;top:0;_margin:0 0 20px 0}
+.header {height:37px;text-align:left;margin:0 auto;position:relative;width:980px;}
+.header .logo{float:left;width:150px}
+.header .logo a{height: 37px;width: 150px;display: block;text-decoration: none}
+.header .logo a:hover{display: block;text-decoration: none}
+/*左导航*/
+.header .nav {padding-left:10px}
+.header .nav ul{list-style-type:none;margin: 0px;height:37px}
+.header .nav ul li{font-size:14px;color:#fff;float:left;position:relative;display:block;margin:0 5px 0 0;list-style-type: none;z-index:999}
+.header .nav .person a{font-size:12px}
+
+/*右导航*/
+.header .person {padding-left:10px;float:right}
+.header .person{list-style-type:none;margin: 0px;height:37px}
+.header .person li{font-size:12px;color:#fff;float:left;position:relative;display:block;margin:0;list-style-type: none;z-index:9}
+.header .person li a.username{ overflow: hidden;text-overflow: ellipsis;white-space: nowrap;max-width: 80px}
+
+/*导航链接样式*/
+.header .nav ul li a.application{line-height:16px;padding:10px 8px;_padding:10px 5px;display: block;color:#fff}
+.header .person li a.application{line-height:16px;padding:10px 8px;_padding:10px 5px;display: block;color:#fff}
+.header .nav ul li.hover a.application{padding:8px 8px 11px;_padding:8px 5px 10px;color:#143149}
+.header .nav ul li.hover a.application:hover{padding:8px 8px 11px;_padding:8px 5px 10px;text-decoration:none}
+.header .person li.hover a.application{padding:9px 8px 10px;_padding:9px 5px 10px;color:#143149}
+.header .person li.hover a.application:hover{padding:9px 8px 10px;_padding:9px 5px 10px;text-decoration:none}
+
+/*导航下拉共用箭头小图标*/
+.header .nav ul li .ico_arrow,.header .person li .ico_arrow{background:url(../himages/ico_arrow_1.gif) no-repeat 0 0;*background:url(../himages/ico_arrow_1.gif) no-repeat 0 -2px;_background:url(../himages/ico_arrow_1.gif) no-repeat 0 0;width:13px;height:12px;display:inline-block}
+.header .nav ul li.hover .ico_arrow,.header .person li.hover .ico_arrow{background-image:url(../himages/ico_arrow_hover.gif);background-repeat:no-repeat;width:13px;height:12px;display:inline-block}
+.header .nav ul li .ico_new,.header .person li .ico_new{position:absolute;top:-10px;right:0px;z-index:10}
+
+/*导航当前状态样式*/
+.header .nav ul li a.fb14,.header .person li a.fb14{color:#ECF9FF;white-space:nowrap;line-height:16px;padding:10px;display: block}
+.header .nav ul li a.fb14:hover,.header .person li a.fb14:hover{background-color:#143149;text-decoration:none;white-space:nowrap;display: block;padding:10px}
+.header .nav ul li.on,.header .person li.on {background-color:#143149}
+.header .nav ul li.on a.fb14,.header .person li.on a.fb14{color:#fff}
+.header .nav ul li.hover a.fb14,.header .person li.hover a.fb14{color:#193E5C}
+
+/*导航搜索区*/
+.soso{float:right;height:24px;border:1px solid #2F769B;background-color:#fff;width:199px;position:relative;top:5px;box-shadow: 0 1px 0 0 #F0F0F0 inset}
+.soso label{padding-left: 5px; margin-top: 4px;position: absolute;color:#999;cursor: text;width:170px;background-color:#fff}
+.so_text{width:173px;*width:170px;border:0 none;background-color:#fff;color:#999;-moz-border-radius: 1px;-khtml-border-radius: 1px;-webkit-border-radius: 1px;border-radius: 1px;margin: 3px;outline: 0 none}
+.so_btn{background-position:-98px -55px;*background-position:-98px -55px;border:0 none;height:24px;width:24px;background-color:#fff;position:absolute;right:0;top:0}
+.so_btn:hover{background-color:#F0F4F7}
+
+/*导航下拉框共用样式*/
+.header .nav ul li .dropmenu,.header .person li .dropmenu{display:none;z-index: 9000;top: 35px;right:0;position: absolute}
+.header .nav ul li.hover .dropmenu,.header .person li.hover .dropmenu{background-color: #F8F8F8;z-index: 9000;top: 35px;right:-1px;_right:-2px;position: absolute;text-align: left; display: block;font-size: 12px;border: 1px solid #666;border-top:0 none;white-space:nowrap;box-shadow:1px 1px 3px rgba(0, 0, 0, 0.3);border-radius:0px 0px 3px 3px}
+.header .person li.hover .dropmenu a {line-height: 30px;font-size: 12px;background-color:#f8f8f8;font-weight: normal;display: block;padding: 0px 7px;color:#143149}
+.header .person li.hover .dropmenu a:hover,.header .nav ul li.hover .dropmenu a:hover{background-color: #e8e8e8;text-decoration: none}
+.header .nav ul li.hover .dropmenu a{line-height: 30px;font-size: 12px;background-color:#fff;font-weight: normal;display: block;padding: 0px 7px;color:#143149}
+.header .person li.hover,.header .nav ul li.hover {background: url(../himages/current_bg.png) repeat scroll 0 0 #fff;border-bottom: 0;-moz-border-radius-topright: 3px;-webkit-border-top-right-radius: 3px;
+-moz-border-radius-topleft: 3px;-webkit-border-top-left-radius: 3px;border-top-left-radius: 3px;border-top-right-radius: 3px;-moz-box-shadow: 1px -2px 3px rgba(0,0,0,.3);
+-webkit-box-shadow: 1px -2px 3px rgba(0,0,0,.3);box-shadow: 1px -2px 3px rgba(0,0,0,.3);margin-top:2px}
+
+/*应用列表*/
+.header .nav ul li.hover .dropmenu .app_list{color:#999;width:220px;overflow:hidden;border-bottom:1px solid #ccc}
+.header .nav ul li.hover .dropmenu .app_list_add{color:#999;text-align:right;clear:both;border-top:1px solid #fff}
+.header .nav ul li.hover .dropmenu .app_list_add a{background-color:#f8f8f8;color:#3B5998;_padding:7px}
+.header .nav ul li.hover .dropmenu .app_list_add a:hover{background:none;text-decoration:underline}
+/*广场列表*/
+.header .nav ul li.hover .dropmenu .square_list{color:#999;width:120px;clear:both}
+.header .nav ul li.hover .dropmenu .square_list dd a{line-height:30px;_line-height:20px;_padding:5px;display:block;white-space: nowrap;overflow:hidden;background-color:#f8f8f8}
+.header .person li.hover .dropmenu .square_list_add{border-top:1px solid #fff}
+/*群组列表*/
+.header .nav ul li.hover .dropmenu .group_list,.header .nav ul li.hover .dropmenu .group_list_add{width:150px;overflow:hidden}
+.header .nav ul li.hover .dropmenu .group_list{border-bottom:1px solid #ccc}
+.header .nav ul li.hover .dropmenu .group_list dd a,.header .nav ul li.hover .dropmenu .message dd a,.header .nav ul li.hover .dropmenu .setup dd a{line-height:30px;display:block;white-space: nowrap;overflow:hidden;background-color:#f8f8f8}
+.header .nav ul li.hover .dropmenu .group_list_add a{background-color:#f8f8f8;color:#3B5998;text-align:right;display:inline}
+.header .nav ul li.hover .dropmenu .group_list_add a:hover{background:none;display:inline;text-decoration:underline}
+
+/*群组列表*/
+.header .person li.hover .dropmenu .message dd a,.header .person li.hover .dropmenu .setup dd a{line-height:30px;_padding:5px;_line-height:20px;display:block;white-space: nowrap;overflow:hidden}
+.header .person li.hover .dropmenu .square_list_add dd a{line-height:30px;_padding:5px;_line-height:20px}
+
+/*导航列表页脚附标*/
+.header .person li.hover .dropmenu .message_list_add,.header .person li.hover .dropmenu .user_list_add,.header .nav ul li.hover .dropmenu .square_list_add,.header .nav ul li.hover .dropmenu .message_list_add,.header .nav ul li.hover .dropmenu .user_list_add
+{color:#999;width:120px;clear:both;border-top:1px solid #fff}
+.header .person li.hover .dropmenu .message dd,.header .person li.hover .dropmenu .setup dd,.header .nav ul li.hover .dropmenu .square_list dd,.header .nav ul li.hover .dropmenu .group_list dd,.header .nav ul li.hover .dropmenu .message dd,.header .nav ul li.hover .dropmenu .user_list dd{position:relative;overflow:hidden;height:30px}
+.header .nav ul li.hover .dropmenu .message,.header .nav ul li.hover .dropmenu .user_list,.header .person li.hover .dropmenu .setup{color:#999;width:120px;clear:both;border-bottom:1px solid #ccc}
+.header .nav ul li.hover .dropmenu .group_list dd a:hover,.header .nav ul li.hover .dropmenu .message dd a:hover,.header .nav ul li.hover .dropmenu .user_list dd a:hover,.header .nav ul li.hover .dropmenu .square_list dd a:hover{background-color:#e8e8e8}
+.header .nav ul li.hover .dropmenu .app_list dt,.header .nav ul li.hover .dropmenu .square_list dt,.header .nav ul li.hover .dropmenu .group_list dt,.header .nav ul li.hover .dropmenu .message dt,.header .nav ul li.hover .dropmenu .user_list dt,.header .person li.hover .dropmenu .message dt,.header .person li.hover .dropmenu .setup dt{padding:5px}
+.header .nav ul li.hover .dropmenu .app_list dd,.header .person li.hover .dropmenu .app_list dd {float:left;width:50%;position:relative;overflow:hidden;height:30px;*zoom:1}
+.header .nav ul li.hover .dropmenu .app_list dd a{line-height:30px;text-indent:20px;display:block;white-space: nowrap;overflow:hidden;background-color:#f8f8f8}
+.header .person li.hover .dropmenu .app_list dd a{line-height:30px;text-indent:20px;display:block;white-space: nowrap;overflow:hidden}
+.header .nav ul li.hover .dropmenu .app_list dd a:hover {background-color:#e8e8e8}
+
+/*新消息列表*/
+.header .person li.hover .dropmenu .message{color:#999;clear:both;border-bottom:1px solid #ccc;width:170px;padding:0}
+.header .person li.hover .dropmenu .message_list_new{border-bottom:1px solid #ccc;overflow:hidden;*zoom:1;*width:170px}
+.header .person li.hover .dropmenu .message_list_new li{color: #666;padding: 0 10px;}
+.header .person li.hover .dropmenu .message_list_new li a{display: inline;padding: 0 7px;color:#3B5998;}
+.header .person li.hover .dropmenu .message_list_new li a:hover{background:none;text-decoration:underline}
+
+/*次导航*/
+.header .nav_sub{background: none repeat scroll 0 0 #345A75; position: absolute; right: 0;top:0;white-space: nowrap;height:26px;overflow:hidden}
+.header .nav_sub a{color:#D5ECFF}
+.header .nav_sub_hover{height:auto}
+.header .nav_sub ul li{float:left}
+.header .nav_sub dl{padding:4px 5px 5px 5px}
+.header .nav_sub dl dt{padding:0 5px;margin-bottom:5px}
+.header .nav_sub dl dd{line-height:22px}
+.header .nav_sub dl dd a{display:block;padding:0 5px}
+.header .nav_sub dl dd a:hover{display:block;background-color:#274c66}
+.header .nav ul li .msg_top{background: url(../himages/msg.gif) no-repeat 0px 0px;display: block;height: 18px;text-align: center;padding-left: 8px;text-decoration: none;position: absolute;top:3px;left:47px;font-weight: bold}
+.header .nav ul li .msg_top a{display: block;background: url(../himages/msg.gif) no-repeat right 0px;height: 18px;padding-right: 9px;margin-right: -6px;text-decoration: none;line-height: 18px;float: left;color: #fff;white-space: nowrap;font-size:10px}
+.header .nav ul li.hover .msg_top{background: url(../himages/msg.gif) no-repeat 0px 0px;display: block;height: 18px;text-align: center;line-height: 18px;padding-left: 8px;color: #fff;text-decoration: none;position: absolute;top:3px;left:47px;}
+
+/*消息提醒框样式*/
+.header .layer_massage_box{background:url("../himages/layer_bg1.png") repeat scroll 0 0 transparent;border-radius:3px 3px 3px 3px;border:#797979 solid 1px;padding:10px;position:absolute;right:52px;top:37px;width:150px}
+.header .layer_massage_box .del{position:absolute;right:0;top:0}
+.header .layer_massage_box li{line-height:23px}
+
+.header .nav ul li a.fb14,.header .person li a.fb14 {height:20px;}
+
+.app_ico {
+width: 16px;
+height: 16px;
+display: inline-block;
+position: absolute;
+left: 5px;
+top: 7px;
+}
+
+.ico_app_add {
+background: transparent url(../himages/sicon.gif) no-repeat;
+display: inline-block;
+}
+
+.ico_app_add {
+height: 16px;
+width: 16px;
+background-position: -87px -35px;
+margin-top: -1px;
+vertical-align: middle;
+}
+
+.so_btn {
+	background: url(../himages/btn.gif) no-repeat left top;
+	display: inline-block;
+
+background-position: -98px -55px;
+border: 0 none;
+height: 24px;
+width: 24px;
+background-color: white;
+position: absolute;
+right: 0;
+top: 0;
+
+}
+/*提示信息*/
+.html_clew_box{border:5px solid #6b6d6b;color:#1b9103;position:absolute;z-index:999;background:#fff url(../himages/html_clew_box.gif) repeat-x 0 0;padding:0 25px 0 68px;margin-top:1px;float:left}
+.clew_error{background-position:0 bottom;color:#f00}
+.html_clew_box_close{clear:both;display:none}
+.html_clew_box_close a{background: url(images/pop_ico_x.gif) no-repeat 0 0;width:8px;height:8px;overflow: hidden;text-indent: 10px;display: block;float: right}
+.html_clew_box_con{font-size:14px; padding:20px 0;white-space: nowrap;font-weight: bold}

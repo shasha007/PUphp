@@ -1,0 +1,79 @@
+<include file="../Public/_header" />
+<div class="so_main">
+    <div class="page_tit">PU币发放</div>
+
+    <div class="form2">
+        <dl class="lineD">
+            <dt>提示：</dt>
+            <dd class="cRed">请上传excel表格，格式【学号,学校,PU币,姓名】。第一行必须是【学号,学校,PU币,姓名】这4格</dd>
+        </dl>
+        <form id="check" method="post" action="__URL__&act=checkPubiEmail" enctype="multipart/form-data">
+            <dl class="lineD">
+                <dt>上传附件：</dt>
+                <dd>
+                    <input type="file" id="file" name="file"/>
+                    <input type="button" class="btn_b" onclick="check()" value="检查" />
+
+                </dd>
+            </dl>
+        </form>
+        <form id="doit" method="post" action="__URL__&act=doPubi">
+        <dl class="lineD">
+            <dt>发放理由：</dt>
+            <dd>
+                <input type="text" id="reason" name="reason" size="30" value=""/>
+                <input type="hidden" id="tmpFile" name="filePath" value=""/>
+                <input type="button" class="btn_b" onclick="doit()" value="发放" />
+            </dd>
+        </dl>
+        </form>
+        <dl class="lineD">
+            <dt>结果：</dt>
+            <dd id="res"></dd>
+        </dl>
+    </div>
+</div>
+<script>
+    function check(){
+        if($('#file').val()==''){
+            alert('请先选择上传文件');return false;
+        }
+        $('#res').html('');
+        var options = {
+            success: function(txt) {
+                var json =$.parseJSON(txt);
+                if( json.status == 1 ){
+                    $('#tmpFile').val(json.data);
+                    $('#res').html('<span class="cGreen">'+json.info+'</span>');
+                }else{
+                    $('#res').html('<span class="cRed">'+json.info+'</span>');
+                }
+            }
+        };
+        $('#check').ajaxSubmit( options );
+    }
+    function doit(){
+        if($('#tmpFile').val()==''){
+            alert('请先通过检查');return false;
+        }
+        if($('#reason').val()==''){
+            alert('请填写发放理由');return false;
+        }
+        $('#res').html('');
+        var options = {
+            success: function(txt) {
+                var json =$.parseJSON(txt);
+                if( json.status == 1 ){
+                    $('#res').html(json.info);
+                    $('#tmpFile').val('');
+                    $('#file').val('')
+                }else{
+                    $('#res').html('<span class="cRed">'+json.info+'</span>');
+                }
+
+            }
+        };
+        $('#doit').ajaxSubmit( options );
+    }
+</script>
+<include file="../Public/_footer" />

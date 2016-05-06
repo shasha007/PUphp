@@ -1,0 +1,58 @@
+<include file="_header" />
+<div id="container" class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        专题配置
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l">专题分类</th>
+                <th class="line_l">开始时间</th>
+                <th class="line_l">结束时间</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist id="vo" name="list.data">
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td>{$vo.title}</td>
+                    <td> <input name="mon1" id="mon1" type="text" onfocus="rcalendar(this,'full');" readonly
+                                value="<?php $mon1 = empty($vo['sTime']) ? date( 'Y-m-d H:i:s') : $vo['sTime']; echo $mon1;?>"/></td>
+                    <td><input name="mon2" id="mon2" type="text" onfocus="rcalendar(this,'full');" readonly
+                               value="<?php $mon2 = empty($vo['eTime']) ? date( 'Y-m-d H:i:s') : $vo['eTime']; echo $mon2;?>"/</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="doSaveCategory('{$vo.id}');">保存</a>
+                    </td>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+    </div>
+</pre>
+</div>
+<include file="__THEME__/comm/_datepicker" />
+<script>
+    function doSaveCategory(id)
+    {
+        var domSelect = '#list_'+id;
+        var sTime = $(domSelect).children('td').children('input[name=mon1]').val();
+        var eTime = $(domSelect).children('td').children('input[name=mon2]').val();
+        $.post(
+                "{:U('home/Event/doConfig')}",
+                {id:id,sTime:sTime,eTime:eTime},
+                function(data){
+                    if(data.status == 0)
+                    {
+                        alert(data.msg);
+                    }
+                    else if(data.status == 1)
+                    {
+                        window.location.reload();
+                    }
+                },
+                'json'
+        );
+    }
+</script>
+<include file="_footer" />

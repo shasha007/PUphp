@@ -1,0 +1,35 @@
+<div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>学校</th>
+                <th>活动名称</th>
+                <th>发起人</th>
+                <th>状态</th>
+                <th>申请日期</th>         
+                <?php if($_GET['cid']=='reject'):?><th>驳回原因</th> <?php endif;?>
+                <th>审核人</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data['data']" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+              <td>{$vo.id}</td>
+                    <td>{$vo.sid}</td>
+                    <td><a href="{$vo.schoolUrl}" target="_blank">{$vo.eventName}</a></td>
+                    <td>{$vo.uid}</td>
+                    <td>{$state[$vo['state']]}</td>      
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <?php if($_GET['cid']=='reject'):?><td>{$vo.rejectReason}</td><?php endif;?>
+                    <td>{$vo.checker}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="detail({$vo.id});">查看</a>      
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>

@@ -1,0 +1,91 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Pocket/addLogo')}" class="btn_a"><span>添加广告</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>图片</th>
+                <th>链接</th>
+                <th>优先级</th>
+                <th>当前状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><img width="80" height="30" src="{$vo.pic|tsMakeThumbUp=###,80,30,'f'}"/></td>
+                    <td>{$vo.path}</td>
+                    <td><span id="ordernum_{$vo.id}" edit="on">{$vo.ordernum}</span> <a href="javascript:orderNum({$vo.id});">[修改]</a></td>
+                    <td>
+                        <if condition="$vo['isShow'] eq 1">已显示
+                        <else />未显示
+                        </if>
+                    </td>
+                    <td>
+                        <a href="__URL__&act=editLogo&id={$vo.id}" onclick="return confirm('确认修改该广告的显示状态？')">修改当前显示状态</a>
+                        <a href="__URL__&act=addLogo&id={$vo.id}">编辑</a>
+                        <a href="__URL__&act=delLogo&id={$vo.id}" onclick="return confirm('确认删除该广告？')">删除</a>
+                        <!--<a href="__URL__&act=addStaging&gid={$vo.id}">添加口袋乐商品</a>-->
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Pocket/addLogo')}" class="btn_a"><span>添加广告</span></a>
+    </div>
+</div>
+<script>
+     function orderNum(id){
+        var obj = $('#ordernum_'+id);
+        if($(obj).attr('edit')=='on'){
+            var inval=$(obj).html();
+            inval =inval.replace(/(^\s*)|(\s*$)/g, "");
+            if(!$('#edit'+id).val()){
+                $(obj).html("<input style='width:30px;' id='edit"+id+"'name='' value='"+inval+"'>");
+                $(obj).attr('edit','off');
+            }
+            $('#edit'+id).die().live("blur",function(){
+            });
+            $('#edit'+id).select();
+            $('#edit'+id).focus().live("blur",function(){
+                var editval=$(this).val();
+                var r = /^\d+$/;
+                $(obj).html(editval);
+                $(obj).attr('edit','on');
+                if(!r.test(editval)){
+                    ui.error('请输入数字');
+                    $(obj).html(inval);
+                    return false;
+                }
+                $.post('__URL__&act=changeLogoOrder',{id:id,ordernum:editval},function(data){
+                    var json=$.parseJSON(data);
+                    if(json.status==0){
+                        ui.error(json.info)
+                        $(obj).html(inval);
+                    }else{
+                        ui.success(json.info);
+                    }
+                });
+            });
+        }
+    }
+</script>
+<include file="_footer" />

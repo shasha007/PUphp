@@ -1,0 +1,81 @@
+<include file="_header" />
+
+<div class="member_c">
+    <div class="member_menu b"><eq name="type" value="edit">编辑<else/>添加</eq>成员</div>
+    <div class="member_back"><a href="{:U('/Backend/member',array('id'=>$id))}">返回成员列表</a></div>
+    <?php if($type=='edit' || $limitCount >0 ): ?>
+    <form action="{:U('/Backend/doAddUser',array('id'=>$eventId))}" enctype="multipart/form-data" method="post" onsubmit="return checkUser();">
+        <div class="member_add">
+            <table width="900" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="45"></td>
+                    <td align="right" width="70">姓名：<span class="red">*</span></td>
+                    <td width="15"></td>
+                    <td><input name="realname" type="text" class="member_input" value="{$holdUser.realname}"/> </td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+
+                <tr>
+                    <td width="45"></td>
+                    <td align="right" width="70">联系电话：<?php if($need_tel): ?><span class="red">*</span><?php endif;?></td>
+                    <td width="15"></td>
+                    <td><input name="tel" type="text" class="member_input" value="{$holdUser.tel}"/></td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+
+                <tr>
+                    <td></td>
+                    <td align="right">性别：</td>
+                    <td></td>
+                    <td>
+                        <label><input name="sex" type="radio" value="1" <eq name="user['sex']" value="1">checked</eq> >男</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><input name="sex" type="radio" value="0" <php>if(!isset($holdUser) || $holdUser['sex']==0){</php>checked<php>}</php> >女</label>
+                    </td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <?php if($type=='edit' && $holdUser['uid']==0):?>
+                <tr>
+                    <td></td>
+                    <td align="right">学校：</td>
+                    <td></td>
+                    <td>
+                        <input type="hidden" name="current" id="current" />
+                        <input name="school" id="selectarea" type="text" class="p_input2" value="{$holdUser.sid|tsGetSchoolTitle}"/>
+                        <input onclick="selectArea()" type="button" class="p_btn1" value="选择学校及校区" />
+                    </td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <?php endif;?>
+                <tr>
+                    <td></td>
+                    <td align="right">照片：</td>
+                    <td>
+                    </td>
+                    <td>
+                        <if condition="$holdUser">
+                            <img width="100" height="100" src="{$holdUser.path|getThumb=###,80,80}">
+                            <input name="uid" value="{$holdUser.id}" type="hidden"><br/>
+                        </if>
+                        <input name="files[]" id="face" type="file" class="member_input1">
+                        <br/><span style="color:#666;font-size:10px;"> 建议图片大小：160像素x200像素</span>
+                    </td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right">票数：</td>
+                    <td></td>
+                    <td><input type="text" name="ticket" value="<?php if($holdUser){echo $holdUser['ticket'];}else{echo 0;}?>"  class="member_input"/></td>
+                </tr>
+            </table>
+        </div>
+        <div class="member_btn">
+            <input type="submit" value="确定" class="member_btn1" />
+        </div>
+    </form>
+    <?php else: ?>
+        <li class="i3">名额已满</li>
+    <?php endif; ?>
+</div>
+
+<include file="_footer" />

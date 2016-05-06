@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>PocketUni-课件</title>
+<link href="../Public/css/main.css?20131111" rel="stylesheet" type="text/css" />
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" href="../Public/css/ie.css" />
+<![endif]-->
+<link href="__THEME__/css/ad_1.css" rel="stylesheet" type="text/css" />
+<include file="__THEME__/comm/_app" />
+<script type="text/javascript" src="__PUBLIC__/js/simplefoucs.js"></script>
+
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+</head>
+
+<body class="<php>if($type==0) { echo "body";} else { echo "nav";}</php>">
+        <include file="__THEME__/_holder_2014" />
+	<div class="wrapper">
+		<div class="myheader on-suggest">
+		<div class="header-top clearfix">
+                    <a href="{:U('/Index/index')}"><h1 class="header-logo"><img src="../Public/images/pu_logo.png" alt="" height="98" width="270" /></h1></a>
+		<div class="banner_right">
+			<div class="platform">
+			{$school}
+                        <span>[<a href="javascript:void(0)" onclick="changeSchool();">切换</a>]</span>
+			</div>
+
+		<div class="searchwrapper">
+			<form method="get" action="{:U('/Index/docs')}">
+			<input type="hidden" name="app" value="document">
+			<input type="hidden" name="mod" value="Index">
+			<input type="hidden" name="act" value="docs">
+			<table cellspacing="0" cellpadding="0" style="height:34px">
+			<tbody><tr>
+			<td class="scbar_icon_td"></td>
+			<td class="scbar_txt_td"><input type="text" name="keyword" id="scbar_txt" value="" autocomplete="off" class=" xg1"></td>
+			<td class="scbar_btn_td"><button type="submit" name="searchsubmit" id="scbar_btn" class="pn pnc" value="true"><strong class="xi2 xs2">搜索</strong></button></td>
+			</tr>
+			</tbody></table>
+
+			</form>
+		</div>
+		</div>
+		</div>
+
+
+	<div class="banner">
+
+		<div id="xxtMenu">
+			<div class="nav clearfix" id="nav">
+			    <ul>
+					<li class="<php>if($cid==0) {echo "on";}</php>"><a href="{:U('document/Index/index')}">课件首页</a></li>
+
+					<volist name="category_tree" id="category_top">
+						<li class="<php>if($cid==$category_top['a']) {echo "on";}</php>"><a href="{:U('document/Index/docs', array('cid'=>$category_top['a']))}">{$category_top['t']}</a></li>
+				    </volist>
+
+					<li class="right_item"><a href="{:U('document/Index/mydocs')}">我的课件</a></li>
+				</ul>
+		  	</div>
+
+
+
+				<php>if(isset($sub_category_tree)) {</php>
+		  		<div class="subnav">
+		    		<ul>
+
+						<volist name="sub_category_tree" id="category_top">
+		    				<li><a href="{:U('document/Index/docs', array('cid'=>$cid, 'cid1'=>$category_top['a']))}">{$category_top['t']}</a></li>
+						</volist>
+
+		    		</ul>
+		  		</div>
+				<php>}</php>
+                                <div class="bottom"></div>
+
+                </div>
+
+        </div>
+        <neq name="adhome" value=''>
+            <div class="kj_ad">
+                <div id="focus1">
+                    <ul>
+                        <volist name="adhome" id="vo">
+                            <li><a href="{$vo['url']}"  target="_blank" onclick="adRecord({$vo['id']})">
+                                    <img src="{$vo['coverId']|getImgAttachOri}" alt="{$vo.title}" /></a></li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+        </neq>
+	</div>
+            <script type="text/javascript">
+
+                function adRecord(adid){
+                    $.post("{:U('home/User/adRecord')}",{adid:adid});
+                }
+            </script>
+

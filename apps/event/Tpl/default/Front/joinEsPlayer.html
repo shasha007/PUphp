@@ -1,0 +1,219 @@
+<include file="_header" />
+<script type="text/javascript" src="../Public/js/event.js?20140507"></script>
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_apply.gif" alt="" /></div>
+    <div class="member_add">
+        <?php if( !$event['isLogin']): ?>
+            <div class="b">
+                <?php if($event['is_school_event']):?>
+                    <a href="{$event['is_school_event']|getUrlDomain}" >请先登录</a>
+                <?php else:?>
+                    <a href="{:U('home/Public/login')}" >请先登录</a>
+                <?php endif;?>
+            </div>
+        <?php elseif( $event['notInEventSchool']): ?>
+            <div class="b">该活动不向您所在学校开放报名</br>
+        <?php elseif($event['hasJoin'] ): ?>
+            <?php if($event['hasMember'] == 0): ?>
+                <div class="b">申请成功，该活动需要发起人审核，请耐心等待...</br>
+                <a href="javascript:EventDelAction( {$event['id']} )">取消申请</a></div>
+            <?php else: ?>
+                <div class="b">已报名成功</div>
+                <!--<li class="i3"><a href="javascript:EventDelAction( {$event['id']} )">取消参加</a></li>!-->
+            <?php endif; ?>
+        <?php elseif($event['startline']<time() && $event['deadline']>time() && $event['school_audit'] != 5): ?>
+            <?php if( $event['limitCount'] >0 ): ?>
+                <?php if($event['need_tel'] && !$user['mobile']):?>
+                    <div class="b">
+                        <a href="{:U('home/Account/security')}#mobile" >报名活动需手机号码，请前往绑定</a>
+                    </div>
+                <?php else:?>
+                <form action="{:U('/Front/doAddUser',array('id'=>$eventId))}" enctype="multipart/form-data" method="post">
+                    <table width="900" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="45"></td>
+                            <td align="right" width="70">姓名：<span class="red2">*</span></td>
+                            <td width="15"></td>
+                            <td>{$user.realname}</td>
+                        </tr>
+                        <tr>
+                            <td height="5" colspan="4"></td>
+                        </tr>
+                        <?php if($event['need_tel']):?>
+                        <tr>
+                            <td width="45"></td>
+                            <td align="right" width="70">联系电话：<?php if( $event['need_tel'] ): ?><span class="red2">*</span><?php endif;?></td>
+                            <td width="15"></td>
+                            <td>{$user['mobile']}</td>
+                        </tr>
+                        <?php endif; ?>
+                    </table>
+                <div class="member_btn">
+                    <input type="submit" value="确定" class="member_btn1" />
+                </div>
+                </form>
+                <?php endif; ?>
+            <?php else: ?><!-- limitCount -->
+                <div class="b">名额已满</div>
+            <?php endif; ?><!-- limitCount -->
+    <?php else: ?>
+        报名时间：<?php if($event['startline']>0){echo date( 'Y-m-d H:i',$event['startline'] );}?> 至 <?php echo date('Y-m-d H:i', $event['deadline']) ?>
+        <?php if($event['startline']>time()): ?>
+            <div class="b">报名未开始</div>
+        <?php else: ?>
+            <div class="b">报名已结束</div>
+        <?php endif; ?>
+    <?php endif; ?>
+    </div>
+    <?php if($player['showUpload']):?>
+        <div class="member_add">
+        <?php if($player['status']!=1):?>
+        <div class="b">已上传资料，状态：
+            <?php if($player['status']==3):?>
+            已通过 <a href="{:U('/Front/playerDetails',array('id'=>$eventId,'pid'=>$upload['id']))}">》点击查看《</a>
+            <?php else: ?>
+            待审核
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+            <br />
+        <?php if($esFlag > 0):?>
+            <div class="b">继续添加上传资料</div>
+            <form name="myform" action="{:U('/Front/doSavePlayer',array('id'=>$eventId,'playerId'=>$upload['id']))}" enctype="multipart/form-data" method="post">
+                <table width="900" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td align="right" width="180">{$defaultName.realname}：</td>
+                        <td width="15"><span class="red">*</span></td>
+                        <td><input size="40" type="text" name="realname" disabled="disabled" value="{$upload.realname}" maxlength="20" /></td>
+                    </tr>
+                    <tr><td height="8" colspan="20"></td></tr>
+                    <tr>
+                        <td align="right">{$defaultName.school}：</td>
+                        <td><span class="red">*</span></td>
+                        <td><input size="40" type="text" id="school" name="school" disabled="disabled" value="{$upload.school}"  maxlength="20"/></td>
+                    </tr>
+                    <tr><td height="8" colspan="20"></td></tr>
+                    <tr style="display: none;">
+                        <td align="right" width="70">{$defaultName.content}：</td>
+                        <td><span class="red">*</span></td>
+                        <td><textarea name="content" id="content" rows="5" cols="60">{$upload.content}</textarea></td>
+                    </tr>
+                    <tr><td height="8" colspan="20"></td></tr>
+                    <tr>
+                        <td align="right"> 图片资料：</td>
+                        <td><span class="red">*</span></td>
+                        <td>
+                            <div class="prov_thumblist"><ul id="uploaded_photos"></ul></div>
+                            <input type="button" onclick="openUpload();" value="添加图片"/>
+                            <br/>
+                        </td>
+                    </tr>
+                    <volist name="parameter" key="k" id='vo'>
+                        <if condition="$vo[1] eq 4">
+                            <tr><td height="8" colspan="20"></td></tr>
+                            <tr>
+                                <td align="right">{$vo[0]}：</td>
+                                <td><?php if($vo[2]):?><span class="red">*</span><?php endif; ?></td>
+                                <td>{:W('Parameter',array('type'=>$vo[1],'id'=>$k))}
+                                </td>
+                            </tr>
+                        </if>
+                    </volist>
+                </table>
+            <div class="member_btn">
+                <input type="hidden" name="paramCount" value="{$parameter|count}" />
+                <input type="submit" value="保存" class="member_btn1"/>
+            </div>
+            </form>
+            </div>
+<script type="text/javascript" src="__PUBLIC__/js/ui.core.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ui.sortable.js"></script>
+<script type="text/javascript">
+    var aid = '{$aid}';
+$(document).ready(
+    function () {
+        $("#uploaded_photos").sortable();
+        $("#uploaded_photos").disableSelection();
+    }
+);
+function checkFlash(str_url){
+    var a =  document.createElement('a');
+    a.href = str_url;
+    var dom = a.hostname;
+    if(str_url.indexOf('http://')==0&&
+        (dom.indexOf('youku.com')>= 0||dom.indexOf('ku6.com')>= 0||dom.indexOf('sina.com.cn')>= 0
+        ||dom.indexOf('yixia.com')>= 0||dom.indexOf('t.cn')>= 0)){
+        return true;
+    }else{
+        return false;
+    }
+}
+function serialize(){
+    var serial = $('#uploaded_photos').sortable("toArray");
+    var order = serial.join(',');
+    $.post( '{:U('/Manage/save_order')}' ,{order:order},function(result){
+        if(result == 1){
+            ui.success('保存成功');
+        }else{
+            ui.error('顺序无变化');
+        }
+    });
+};
+</script>
+        <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</div>
+<script>
+var imgCount = 0;
+var imgId = 0;
+function openUpload(){
+    restCount = 6-imgCount;
+    ui.box.load(U('home/Public/uploadImg')+'&isDel=1&attach_type=event_player&maximg='+restCount+'&w=100&h=125',{title:'上传图片'});
+}
+function openUploadFile(i){
+    ui.box.load(U('home/Public/uploadFile')+'&isDel=1&attach_type=event_player&maxfile='+1+'&fileId='+i,{title:'上传文件'});
+}
+//单图上传回调函数,返回上传完成文件的信息
+function ts_upload_success(serverData){
+    var data	=$.parseJSON(serverData);
+    if(data.status==true){
+        if(data.type=='file'){
+            var fileId = data.fileId;
+            $('#para'+fileId).html(data.file);
+            $('#file'+fileId).val(data.attachId);
+            $('#del'+fileId).html('<a onclick="delFile('+fileId+')" href="javascript:void(0)">删除</a>');
+        }else{
+            imgCount+=1;
+            imgId+=1;
+            var msg = '<li class="prov_link" id="img'+imgId+'">';
+            msg += '<div class="prov_thumb"><img src="'+data.src+'" alt="" /></div>';
+            msg += '<br/><span><a href="javascript:void(0)" onclick="delImg('+imgId+')">删除</a></span>';
+            msg += '<input type="hidden" name="attids[]" value="'+data.attid+'" />';
+            msg += '<input type="hidden" name="imgs[]" value="'+data.img+'" /></li>';
+            $('#uploaded_photos').append(msg);
+            $("#uploaded_photos").sortable();
+            $("#uploaded_photos").disableSelection();
+        }
+        return true;
+    }else{
+        if(data == '0'){
+            alert('上传失败，格式不允许');
+        }else{
+            alert(data.info);
+        }
+        isRedirect = false;
+        return false;
+    }
+}
+function delImg(id){
+    $('#img'+id).remove();
+    imgCount-=1;
+}
+function delFile(fileId){
+    $('#para'+fileId).html('');
+    $('#file'+fileId).val('');
+    $('#del'+fileId).html('');
+}
+</script>
+<include file="_footer" />

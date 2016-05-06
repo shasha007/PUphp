@@ -1,0 +1,225 @@
+<include file="_header" />
+<include file="__THEME__/comm/kindeditor" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <form action="{:U('shop/Pocket/doAddPocket')}" enctype="multipart/form-data" method="post" onsubmit="return check();">
+        <input type="hidden" name="id" value="{$id}" />
+        <div class="form2">
+            <dl class="lineD">
+                <dt>商品名称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="name" type="text" value="{$name}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>商品分类：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="cid">
+                    <if condition="$cid">
+                        <volist name="list" id="val">
+                            <option value="{$val.id}" <?php if($cid==$val['id']):?>selected<?php endif;?>>{$val.name}</option>
+                        </volist>
+                    <else />
+                        <option value="">--请选择--</option>
+                        <volist name="list" id="val">
+                            <option value="{$val.id}">{$val.name}</option>
+                        </volist>
+                    </if>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>商品利率：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="profitId" id="gprofit" onchange="getLowest()">
+                    <if condition="$profitId">
+                        <volist name="proList" id="val">
+                            <option value="{$val.id}" <?php if($profitId==$val['id']):?>selected<?php endif;?>>{$val.name}</option>
+                        </volist>
+                    <else />
+                        <option value="">--请选择--</option>
+                        <volist name="proList" id="val">
+                            <option value="{$val.id}">{$val.name}</option>
+                        </volist>
+                    </if>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>商品价格：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="price" type="text" value="{$price}" id="gprice" size="100" onchange="getLowest()">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>商品最低首付：</dt>
+                <dd>
+                    <input name="lowestShoufu" type="text" value="{$lowestShoufu}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>商品市场价：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="market" type="text" value="{$market}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>库存：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="stock" type="text" value="{$stock}" size="100">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>最低月供：</dt>
+                <dd>
+                    ￥<input name="lowest" type="text" id="plowest" value="{$lowest}" readonly size="10">*<input name="num" type="text" id="pnum" value="{$num}" readonly size="10">期
+                </dd>
+            </dl>
+            <dl class="lineD" id="mycolor">
+                <dt>商品颜色：</dt>
+                <dd>
+                    <a href="javascript:void(0);" onclick="addInput();">添加</a>
+                </dd>
+            </dl>
+
+                <if condition="$color">
+                    <foreach name="color" item="val">
+                        <dl class="lineD">
+                        <dt></dt>
+                        <dd>
+                            <input name="color[]" type="text" size="30" value="{$val}">
+                            <a href="javascript:void(0);" onclick="delInput(this);">删除</a>
+                        </dd>
+                        </dl>
+                    </foreach>
+                <else />
+                <dl class="lineD">
+                <dt></dt>
+                <dd>
+                    <input name="color[]" type="text" size="30">
+                    <a href="javascript:void(0);" onclick="delInput(this);">删除</a>
+                </dd>
+                </dl>
+                </if>
+
+            <dl class="lineD">
+                <dt>商品简介：</dt>
+                <dd>
+                    <textarea name="desc" id="content1" style="width:700px;height:200px">{$desc|htmlspecialchars_decode|br2nl}</textarea>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>商品详细内容：</dt>
+                <dd>
+                    <textarea name="content" id="content" style="width:700px;height:200px">{$content}</textarea>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>缩略图上传：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <if condition="$pic">
+                        <img id="thumb" src="{$pic|tsMakeThumbUp=###,80,80}">
+                    </if>
+                    <input name="upfile" type="file" size="40"/><span class="cGray2">（尺寸为160*160，大小2M，支持格式jpg,jpeg,png,gif。用于商城列表图片）</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>展示图上传：</dt>
+                <dd>
+                    <div class="prov_thumblist"><ul id="uploaded_photos">
+                            <?php if($imgs):?>
+                            <volist name="imgs" id="vo">
+                                <li class="prov_link" id="img{$i}">
+                                <div class="prov_thumb"><img src="{$vo|tsMakeThumbUp=###,80,80}" alt="" /></div>
+                                <div class="prov_thumb_del"><a href="javascript:void(0)" onclick="delImg({$i})">删除</a></div>
+                                <input type="hidden" name="imgs[]" value="{$vo}" />
+                                </li>
+                            </volist>
+                            <?php endif;?>
+                        </ul></div>
+                    <input type="button" onclick="openUpload();" value="添加展示图片"/><span class="cGray2">（建议上传长宽比例为1：1的图片）</span>
+                </dd>
+            </dl>
+
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+var imgCount = <?php if($imgs){echo count($imgs);}else{echo 0;} ?>;
+function openUpload(){
+    ui.box.load(U('home/Public/uploadImg')+'&attach_type=shop_yg',{title:'上传图片'});
+}
+function addInput(){
+    var html = '<dl class="lineD"><dt></dt><dd><input name="color[]" type="text" size="30"><a href="javascript:void(0);" onclick="delInput(this);">删除</a></dd></dl>';
+    $("#mycolor").after(html);
+}
+function delInput(obj){
+    $(obj).parent().parent().remove();
+}
+function check(){
+    if(!$( 'input[name="name"]' ).val()){
+        ui.error("商品名称不能为空");
+        return false;
+    }
+    if(!$( 'input[name="price"]' ).val()){
+        ui.error("商品价格不能为空");
+        return false;
+    }
+    if(!$( 'select[name="cid"]' ).val()){
+        ui.error("商品分类不能为空");
+        return false;
+    }
+    if(!$( 'select[name="profitId"]' ).val()){
+        ui.error("商品利率不能为空");
+        return false;
+    }
+    if(!$('input[name="id"]').val() && !$( 'input[name="upfile"]' ).val()){
+        ui.error("请上传缩略图");
+        return false;
+    }
+    return true;
+}
+
+//单图上传回调函数,返回上传完成文件的信息
+function ts_upload_success(serverData){
+    var data	=$.parseJSON(serverData);
+    if(data.status==true){
+        imgCount+=1;
+        var msg = '<li class="prov_link" id="img'+imgCount+'">';
+        msg += '<div class="prov_thumb"><img src="'+data.src+'" alt="" /></div>';
+        msg += '<div class="prov_thumb_del"><a href="javascript:void(0)" onclick="delImg('+imgCount+')">删除</a></div>';
+        msg += '<input type="hidden" name="imgs[]" value="'+data.img+'" /></li>';
+        $('#uploaded_photos').append(msg);
+        return true;
+    }else{
+        if(data == '0'){
+            alert('上传失败，格式不允许');
+        }else{
+            alert(data.info);
+        }
+        isRedirect = false;
+        return false;
+    }
+}
+function delImg(id){
+    $('#img'+id).remove();
+}
+function getLowest(){
+    var price=$('#gprice').val();
+    var profit=$('#gprofit').val();
+    if(price&&profit){
+        $.post('__URL__&act=getGoodLowest',{price:price,profit:profit},function(data){
+            if(data){
+                $('#plowest').attr('value',data['all']);
+                $('#pnum').attr('value',data['staging']);
+            }
+        },'json');
+    }
+}
+</script>
+<include file="_footer" />

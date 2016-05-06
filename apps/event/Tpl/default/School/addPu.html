@@ -1,0 +1,175 @@
+<include file="_header" />
+  <div class="hd_c">
+    <center><div class="intro_c_zt red b">【发起PU活动】</div></center>
+    <div class="publish">
+        <form method="post" action="{:U('event/School/doAddPu')}" onsubmit="return checkProv();">
+            <input type="hidden" id="editType" value="add"/>
+            <table width="600" border="0" cellspacing="0" cellpadding="0" class="editEvent">
+                <tr>
+                    <td width="15"><span class="red">*</span></td>
+                    <td width="80">活动名称：</td>
+                    <td width="10"></td>
+                    <td width="495"><input name="title" id="title" type="text" class="p_input1" maxlength="30"/></td>
+                </tr>
+               <tr>
+                    <td width="15"><span class="red">*</span></td>
+                    <td width="80">活动简介：</td>
+                    <td width="10"></td>
+                    <td width="495">
+                    <textarea id='textarea' name="description" style="width:300px;height:100px;border:1px solid #ccc;" onKeyUp="gbcount(this,250);"></textarea>
+                    <span  id='remain' style='color:green;'>250</span><span style='color:green;'>/250字</span>
+                    </td>
+                </tr>
+                {:W('EventInSchool')}
+                <tr id="addArea">
+                    <td></td>
+                    <td>活动地点：</td>
+                    <td></td>
+                    <td><input name="address" id="address" type="text" class="p_input2" maxlength="30"/></td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动分类：</td>
+                    <td></td>
+                    <td>
+                        <select name="typeId" id="type" class="text" onchange="changeType(this)">
+                        <option value="0" selected>请选择活动分类</option>
+                            <?php foreach($type as $k=>$cate): ?>
+                            <option value="{$k}" pid="<?php if($cate['pid']>0):?>{$cate.pid}<?php else:?>{$k}<?php endif?>"
+                                    banner="{$cate.banner}">{$cate.name}</option>
+                            <?php endforeach; ?>
+                      </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>参加费用：</td>
+                    <td></td>
+                    <td>
+                        <select name="cost" class="p_select">
+                            <option value="0" selected="selected">免费</option>
+                            <option value="1">AA制</option>
+                            <option value="2">50元以下</option>
+                            <option value="3">50-200元</option>
+                            <option value="4">200-500元</option>
+                            <option value="5">500-1000元</option>
+                            <option value="6">1000元以上</option>
+                        </select> 费用说明：<input name="costExplain" type="text" class="p_input2"  maxlength="30"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>活动标签：</td>
+                    <td></td>
+                    <td>
+                    	<php>foreach($taglist as $v){</php>
+                        	<input name="tags[]" type="checkbox" value="{$v['id']}" />&nbsp;{$v['title']}
+                        <php>}</php>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动时间</td>
+                    <td></td>
+                    <td>
+                        <input name="sTime" id="sTime" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly/>
+                        --
+                        <input name="eTime" id="eTime" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>报名起止：</td>
+                    <td></td>
+                    <td>
+                        <input name="startline" id="startline" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly />
+                        --
+                        <input name="deadline" id="deadline" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>定时上线</td>
+                    <td></td>
+                    <td>
+                        <input name="onlineTime" type="text" class="p_input2" onfocus="rcalendar(this,'houronly');" readonly/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动人数：</td>
+                    <td></td>
+                    <td><input name="limitCount" id="limitCount" type="text" class="p_input3" maxlength="5" value="无限制"/>
+                        <span class="cGray2">活动人数上限, 填整数或无限制</span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>联系方式：</td>
+                    <td></td>
+                    <td><input name="contact" id="contact" type="text" class="p_input1" maxlength="30"/> <span class="cGray2">如：张小姐，1346665XXXX </span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>活动选项：</td>
+                    <td></td>
+                    <td>
+                        <label><input type="checkbox" name="allow" id="allow" value="1" /> 报名活动需要审批</label>
+                        <label><input type="checkbox" name="need_tel" id="need_tel" value="1" /> 报名活动需填写联系电话</label>
+                        <label><input type="checkbox" name="free_attend" id="need_tel" value="1" /> 不报名也可签到</label>
+                        <label><input type="checkbox" name="isTicket" id="isTicket" value="1"  checked="checked"/> 打开投票功能</label>
+                    </td>
+                </tr>
+                <tr>
+                  <td><span class="red">*</span></td>
+                    <td>活动图标：</td>
+                    <td></td>
+                    <td>
+                        <div class="prov_thumblist"><ul id="uploaded_photos1"></ul></div>
+                        <input type="button" value="上传图标" onclick="openUploadImg(1);"> (尺寸为125*125)
+                    </td>
+                </tr>
+                <tr>
+                <td><span class="red">*</span></td>
+                    <td>活动海报：</td>
+                    <td></td>
+                    <td>
+                        <div class="prov_thumblist"><ul id="uploaded_photos2"></ul></div>
+                        <input type="button" value="上传海报" onclick="openUploadImg(2);"> (尺寸为1500*357如果没有，可根据活动分类选择下面一款推荐的默认海报)
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>推荐海报：<br/><input type="button" value="取消选择" onclick="clearRadio()"/></td>
+                    <td></td>
+                    <td id="bannerImg">请先选择【活动分类】</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" class="p_btn2" value="发起活动" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<script>
+    $(function(){
+       $('#type').bind('change', changeType);
+       changeType('#type');
+    });
+var imgCount = [0,0,0];
+var imgMax = [0,1,1];
+var fileCount = [0,0];
+var fileMax = [0,0];
+var thumbSizeW = [0,125,1500];
+var thumbSizeH = [0,125,357];
+var showW = [0,100,440];
+var showH = [0,100,100];
+var imgId = 0;
+var attach_type = 'event';
+</script>
+<include file="_footer" />
+<include file="__THEME__/comm/_datepicker" />
+<script  type="text/javascript" src="../Public/js/editEvent.js?20151211" ></script>
+<include file="__THEME__/comm/_upload_file" />

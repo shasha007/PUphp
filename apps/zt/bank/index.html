@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>智慧苏州一卡通在线申请</title>
+        <!-- Bootstrap core CSS -->
+        <link href="bootstrap.min.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->		
+        <script src="html5shiv.min.js"></script>
+        <script src="respond.min.js"></script>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.form.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug 
+        <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+        <style>
+            html,body {
+                margin:0;
+                padding:0;
+                height:100%;
+            }
+            #container {
+                min-height:100%;
+                position:relative;
+            }
+            #body {
+                padding-bottom:2.5em;	/* Height of the footer */
+            }
+            #footer {
+                position:absolute;
+                bottom:0;
+                width:100%;
+                height:2.5em;			/* Height of the footer */
+                background:#C0C0C0;
+                text-align:center;
+            }
+        </style>
+        <script language="javascript">
+            function loadimage() {
+                document.getElementById("randImage").src = "image.jsp?" + Math.random();
+            }
+        </script>
+        <script>
+            //页面加载
+            window.onload = function () {
+
+                document.getElementById("intro").value = getQueryString('intro');
+            }
+            //获取传入的参数
+            function getQueryString(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null)
+                    return unescape(r[2]);
+                return null;
+            }
+            //提交校验
+            function ok_onclick() {
+                //姓名字段不能为空
+                var name = document.getElementById("name").value;
+                if (name == '') {
+                    alert('姓名不能为空！');
+                    return;
+                }
+                //手机号字段不能为空
+                var mobil = document.getElementById("mobil").value;
+                if (mobil == '') {
+                    alert('手机号码不能为空！');
+                    return;
+                }
+                //证件号码字段不能为空
+                var creditname = document.getElementById("creditname").value;
+                if (creditname == '') {
+                    alert('证件号码不能为空！');
+                    return;
+                }
+                //提交表单
+                this.log_form.submit();
+            }
+            function doSubmit(){
+                var options = {
+                    success: function(txt) {
+                        var json =$.parseJSON(txt);
+                        $('#from_input').hide();
+                        if( json.status == 1 ){
+                            $('#from_ok').show();
+                        }else{
+                            $('#from_error').show();
+                        }
+                    }
+                };
+                $('#log_form').ajaxSubmit( options );
+            }
+            //姓名长度校验
+            function name_changed() {
+                //alert(getQueryString('intro2'));				
+                var name = document.getElementById("name").value;
+                if (name.length > 20) {
+                    alert('姓名不符合要求，长度超过20个字符！');
+                    document.getElementById("name").value = '';
+                }
+            }
+
+
+            //校验证件
+            function creditname_changed() {
+                var creditname = document.getElementById("creditname").value;
+                if (creditname.length > 30) {
+                    alert('证件号码不符合要求，长度超过30个字符！');
+                    document.getElementById("creditname").value = '';
+                    return;
+                }
+
+
+                //校验身份证校验位
+                var credittype = document.getElementById("credittype");
+                var index = credittype.selectedIndex;
+
+
+                if (credittype.options[index].value == 'P01') { //身份证
+                    if (creditname.length != 18) {
+                        alert('证件号码不符合要求，身份证长度应为18位！');
+                        document.getElementById("creditname").value = '';
+                        return;
+                    }
+
+                    //身份证校验位
+                    var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+                    var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+                    var nTemp = 0, i;
+                    for (i = 0; i < 17; i++)
+                    {
+                        nTemp += creditname.substr(i, 1) * arrInt[i];
+                    }
+
+                    valnum = arrCh[nTemp % 11];
+
+                    if (valnum != creditname.substr(17, 1).toUpperCase())
+                    {
+                        alert('身份证的校验码不正确,请重新填写！');
+                        document.getElementById("creditname").value = '';
+                        return;
+                    }
+
+                }
+
+            }
+            //手机号长度校验
+            function mobile_changed() {
+                var mobile = document.getElementById("mobil").value;
+                var regu = /^[1][0-9]{10}$/;
+                var re = new RegExp(regu);
+                if (re.test(mobile)) {
+
+                } else {
+                    alert('手机号码不符合要求，必须为11位数字！');
+                    document.getElementById("mobil").value = '';
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="body">
+                <div class="container-fluid">
+                    <form action="http://pocketuni.lo/index.php?app=home&mod=Public&act=jl" method="POST" class="form-horizontal" name="log_form" id="log_form">
+                        <input type="hidden" id="intro"	name="intro">								
+                        <input type="hidden" id="token" name="token" value="1439427677790">
+                        <div>
+                            <img src="cmb.jpg" class="img-responsive"	alt="Responsive image">
+                        </div>
+<div id="from_input">
+                        <div>
+                            <h4>
+                                智慧苏州一卡通在线申请
+                                <small class="text-danger">* 表示必填项</small>
+                            </h4>
+                        </div>
+
+                        <div class="form-group form-group-sm">
+                            <label for="name" class="col-xs-4 col-sm-4 col-md-4	col-lg-4 control-label text-right">
+                                姓名<span class="text-danger">*</span> 
+                            </label>
+                            <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4">
+                                <input type="text" class="form-control" id="name" name="name"  onchange="name_changed()">
+                            </div>
+                        </div>
+
+                        <div class="form-group form-group-sm">
+                            <label for="mobil" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label text-right">
+                                手机号码<span class="text-danger">*</span> 
+                            </label>
+                            <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4">
+                                <input type="text" class="form-control" id="mobil" name="mobil" onchange="mobile_changed()">
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label for="credittype" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label text-right">
+                                证件类别<span class="text-danger">*</span> 
+                            </label>
+                            <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4">
+                                <select class="form-control" name="credittype" id="credittype">
+                                    <option value="P01">居民身份证</option>
+                                    <!--  <option value="P02">学生证</option>
+                                    <option value="P03">临时居民身份证</option>
+                                    <option value="P04">军人证</option>
+                                    <option value="P08">武警身份证</option>
+                                    <option value="P16">居民户口簿</option>
+                                    <option value="P18">通行证</option>
+                                    <option value="P19">回乡证</option>
+                                    <option value="P22">监护人证件</option>
+                                    <option value="P23">居住证</option>
+                                    <option value="P24">暂住证</option>
+                                    <option value="P31">护照</option>
+                                    <option value="P99">个人其它证件</option>
+                                    <option value="H01">香港居民身份证</option>-->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label for="creditname" class="col-xs-4 col-sm-4 col-md-4	col-lg-4 control-label text-right">
+                                证件号码<span class="text-danger">*</span> 
+                            </label>
+                            <div class="col-xs-8 col-sm-6 col-md-4 col-lg-4">
+                                <input type="text" class="form-control" id="creditname" name="creditname" onchange="creditname_changed()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="button" class="col-xs-5 col-sm-5 col-md-5 col-lg-5 control-label"></label>
+                            <button type="button" class="btn btn-primary" onclick="doSubmit()">
+                                提交
+                            </button>
+                        </div>
+                    </form>
+</div>
+<div id="from_ok" style="display:none; width:94%; padding:0 3%; line-height:24px; margin-top:20px; color:#096; text-align:center;">
+    申请成功，请带上身份证、学生证去招商银行领卡！
+</div>
+<div id="from_error" style="display:none;width:94%; padding:0 3%; line-height:24px; margin-top:20px; color:#F00; text-align:center;">
+    对不起，重复提交！请刷新页面后重新填写！
+</div>
+                </div>
+                <!-- /bootstrap container-fluid -->
+            </div><!-- body -->
+
+            <div id="footer">
+                CopyRight@ 1997-2015 招商银行版权所有
+                <br>
+                ICP许可证号 粤B2-20040497
+            </div>
+        </div><!-- container -->	
+    </body>
+</html>

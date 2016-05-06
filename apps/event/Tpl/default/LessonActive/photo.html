@@ -1,0 +1,55 @@
+<include file="../Lesson/_header" />
+<div class="hd_c1">
+   <div class="intro_title b"><a href="{:U('/LessonActiveMember/detail',array('id'=>$id))}">{$title}</a></div>
+    <div class="intro_menu">
+        <ul>
+            <li <eq name="ACTION_NAME" value="index">class="i10"</eq>><a href="{:U('/LessonActive/index',array('id'=>$id))}">课程活动</a></li>
+            <li <eq name="ACTION_NAME" value="member">class="i10"</eq> ><a href="{:U('/LessonActive/member',array('id'=>$id))}">成员</a></li>
+            <li <eq name="ACTION_NAME" value="photo">class="i10"</eq>><a href="{:U('/LessonActive/photo',array('id'=>$id))}">图片</a></li>
+        </ul>
+    </div>
+    <div class="intro_c">
+        <form action="{:U('/LessonActive/photo',array('id'=>$courseId))}" method="post">
+            <div class="member_tab">
+                共{$totalRows}个图片&nbsp;&nbsp;
+                <a href="{:U('event/LessonActive/editPhoto',array('id'=>$courseId))}" class="btn_a"><span>添加图片</span></a>
+                <a href="{:U('event/LessonActive/multiPhoto',array('id'=>$courseId))}" class="btn_a"><span>批量添加图片</span></a>
+                <a href="javascript:delPhoto({$courseId});" class="btn_a"><span>删除图片</span></a>
+                &nbsp;&nbsp;图片标题：<input name="photoTitle" type="text" class="member_input"  value="{$photoTitle}"/>
+                <input type="submit" value="搜索" class="member_btn3" />
+            </div>
+        </form>
+        <div class="member_list1">
+            <form>
+                <table width="956" border="0" cellspacing="0" cellpadding="0">
+                    <tr class="member_tr1">
+                        <td width="30"><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0"></td>
+                        <td width="50">ID</td>
+                        <td width="150">图片</td>
+                        <td width="400">标题</td>
+                        <td width="139">发布时间</td>
+                        <td width="100">操作</td>
+                    </tr>
+                    <volist name="data" id='vo'>
+                        <tr class="member_tr3" id="list_{$vo.id}">
+                            <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                            <td>{$vo.id}</td>
+                            <td>
+                                <a href="{:U('/LessonActiveMember/photoDetail',array('id'=>$vo['courseId'],'img'=>$vo['id']))}" target="_blank" title="{$vo.title}">
+                                    <img src="{$vo.path|getThumb=###,80,80}"></a>
+                            </td>
+                            <td>{$vo.title|getShort=###,127,'…'}</td>
+                            <td>{$vo.cTime|friendlyDate}</td>
+                            <td>
+                                <a href="{:U('event/LessonActive/editPhoto',array('id'=>$courseId,'gid'=>$vo['id']))}" >编辑</a>
+                                <a href="javascript:delPhoto({$courseId},{$vo['id']});" >删除</a>
+                            </td>
+                        </tr>
+                    </volist>
+                </table>
+            </form>
+        </div>
+        <div class="page">{$html}</div>
+    </div>
+</div>
+<include file="../Lesson/_footer" />

@@ -1,0 +1,107 @@
+<include file="_header" />
+<script src="../Public/js/vote.js?20131031" type="text/javascript"></script>
+<script>
+    function playFlash(vid){
+        ui.box.load(U('/Index/playFlash')+'&id='+vid,{title:'播放视频'});
+    }
+</script>
+
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_person.gif" alt="" /></div>
+    <div class="person_desc">
+        <div class="person_left">
+            <div class="person_photo"><a href="{:PIC_URL}/data/uploads/{$app.path}">
+                <img src="{$app.path|getThumb=###,163,204,c}" alt="" /></a>
+            </div>
+            <?php if($event['isTicket']):?>
+            <?php if($app['stoped'] || $event['isEnd']): ?>
+                <div class="person_list_vote i4">终止投票</div>
+            <?php else:?>
+                <?php if(in_array($app['id'],$bandVote)):?>
+                        <div class="person_list_vote i4">您已投票</div>
+                <?php elseif($restVote<=0): ?>
+                        <div class="person_list_vote i4">票已投完</div>
+                <?php else:?>
+                    <div class="person_list_vote" onclick='post_vote({$eventId},{$app.id},"{$app.realname}")'>投TA一票</div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php endif; ?>
+        </div>
+        <div class="person_right">
+            <ul>
+            <li><span class="red1">{$app.realname}</span> &nbsp;&nbsp;&nbsp; <span class="red">{$app.ticket}</span>票</li>
+            <li>学 校：&nbsp;&nbsp;{$app.school}</li>
+            </ul>
+            <div class="person_right_dp">简介：&nbsp;&nbsp;{$app.content|htmlspecialchars_decode}</div>
+        </div>
+        <div class="player_menu">
+         <ul>
+          <li class="cur"><a href="#">视频</a></li>
+          <li><a href="#">靓照</a></li>
+          <li><a href="#">评论</a></li>
+         </ul>
+        </div>
+        <div class="player_details_con">
+        <!--视频展示区开始-->
+         <div class="person_desc_photo">
+<?php if($event['id'] == 12239): ?>
+<style>
+.app_icon{ float:left; width:80px;}
+      .app_list{ float:left; line-height:40px; font-weight:bold; margin-left:20px; display:inline; font-size:14px;}
+      .app_list ul{ float:left; width:100%;}
+      .app_list li{ float:left; width:100%}
+</style>
+<div class="app_icon"><a href="http://www.yixia.com/miaopai/" target="_blank"><img src="../Public/fimages/icon_mp.png" /></a></div>
+<div class="app_list">
+ <ul>
+  <li><a href="http://www.yixia.com/miaopai/" target="_blank">秒拍视频</a></li>
+  <li><a href="http://storage.video.sina.com.cn/apk/140226_wostore.apk?qq-pf-to=pcqq.c2c">秒拍体验</a></li>
+ </ul>
+ </div>
+<?php else:?>
+            <div class="person_desc_photo_title">视频：</div>
+<?php endif;?>
+            <div class="clear"></div>
+            <div class="person_desc_photo_list1">
+                <ul>
+                    <volist name="flash" id="vo">
+                    <li>
+                        <div class="person_desc_photo_list1_thumb">
+                            <a href="javascript:playFlash('{$vo.id}');" title="">
+                            <img src="{$vo.path|get_flash_img}" alt="" /></a></div>
+                        <div class="person_desc_photo_star"><a href="javascript:playFlash('{$vo.id}');" title="点击播放"></a></div>
+                    </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <!--视频展示区结束-->
+        <!--靓照展示区开始-->
+        <div class="person_desc_photo">
+            <div class="person_desc_photo_list">
+                <ul>
+                    <volist name="img" id="vo">
+                        <li>
+                            <a href="{:U('/Front/details',array('id'=>$eventId,'uid'=>$app['id'],'img'=>$vo['id']))}" target="_blank" title="{$vo.title}"><img src="{$vo.path|getThumb=###,190,238}" alt="" /></a>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <!--靓照展示区结束-->
+        <!--评论区开始-->
+
+        <!--评论区结束-->
+        </div>
+
+
+
+
+
+        <div>
+
+        </div>
+    </div>
+
+</div>
+<include file="_footer" />

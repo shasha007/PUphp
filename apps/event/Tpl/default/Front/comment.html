@@ -1,0 +1,11 @@
+<include file="_header" />
+<?php if(isset($mid)): ?>
+<div class="news">
+{:W('Comment',array('type'=>'event','appid'=>$event['id'],'author_uid'=>$event['uid'],'title'=>$event['title'],'url'=>U('event/Front/comment',array('id'=>$event['id'])),'table'=>'event','id_field'=>'id','comment_count_field'=>'commentCount'))}
+</div>
+<?php else: ?>
+<div class="member_add">
+    <div class="b"><a href="{:U('home/Public/login')}" >请先登录</a></div>
+</div>
+<?php endif; ?>
+<include file="_footer" />

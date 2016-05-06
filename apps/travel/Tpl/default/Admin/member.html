@@ -1,0 +1,38 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>学校</th>
+                <th>性别</th>
+                <th>费用</th>
+                <th>报名时间</th>
+                <th>联系方式</th>
+            </tr>
+            <volist name="list" id='vo'>
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.sid|tsGetSchoolName}</td>
+                    <td>
+                        <eq name="vo['sex']" value="1">
+                        男    
+                <else/>
+                女
+                </eq>
+                </td>
+                <td>{$vo.cost}元</td>
+                <td>{$vo.cTime|friendlyDate}</td>
+                <td>{$vo.tel}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+<include file="_footer" />

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>银行卡详情</title>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/style.css?v=001" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=001" rel="stylesheet">
+    <script src="../Public/js/mainScript.js"></script>
+    <script>
+        setActionBar('银行卡详情', '../Public/img/manage.png', '$("#h-card-manage").modal()');
+    </script>
+</head>
+<body>
+<div class="modal fade" id="h-card-manage" >
+    <div class="modal-dialog">
+        <div class="modal-content h-card-m-x">
+            <div class="modal-body h-color-red" data-dismiss="modal" data-toggle="modal"
+                 data-target="#h-card-remove">
+                解绑
+            </div>
+            <div class="modal-body"   data-dismiss="modal">
+                取消
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="h-card-remove" >
+    <div class="modal-dialog">
+        <div class="modal-content h-card-m-r clearfix">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    解绑此卡交易数据将永久清除
+                </h4>
+            </div>
+            <div class="modal-body ">
+                <a href="javascript:void(0);" id="unbind-bankcard" card-id="{$info.id}">解绑</a>
+            </div>
+            <div class="modal-body h-color-red" data-dismiss="modal">
+                取消
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="h-card-message" >
+    <div class="modal-dialog">
+        <div class="modal-content h-card-m-r clearfix">
+            <div class="modal-header">
+                <h4 class="modal-title" id="message-title">
+
+                </h4>
+            </div>
+            <div class="modal-body " data-dismiss="modal">
+                确定
+            </div>
+            <div class="modal-body h-color-red" data-dismiss="modal">
+                取消
+            </div>
+        </div>
+    </div>
+</div>
+<div class="h-card-info">
+    <ul class="">
+        <li class="clearfix container">
+            <div class="h-bank-card bank-{$info.bank_id} h-card">
+                <p class="clearfix container">
+                    <img class="img-responsive" src="../Public/img/testimg.jpg">
+                    <span>{$info.bank_name}储蓄卡</span>
+                </p>
+
+                <p><i class="h-point"></i>
+                    <i class="h-point"></i>
+                    <i class="h-point"></i>
+                    <i class="h-point"></i>
+                    &emsp13;
+                    <i class="h-point"></i>
+                    <i class="h-point"></i>
+                    <i class="h-point"></i>
+                    <i class="h-point"></i>
+                    &emsp13;
+                    <i class="h-point"></i>
+                    <i class="h-point"></i>
+                    <i class="h-point"></i>
+                    <i class="h-point"></i>
+                    <i>{$info.card_no|substr=###, -4}</i>
+                </p>
+            </div>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#unbind-bankcard').click(function () {
+            var cardid = $(this).attr('card-id');
+            $.post("{:U('pufinance/Bankcard/unbindBankcard')}", {'id' : cardid}, function (result) {
+                if (result.status) {
+                    location.href = '{:U("pufinance/Bankcard/index")}';
+                } else {
+                    $('#h-card-remove').modal('hide');
+                    $('#message-title').text(result.info);
+                    $('#h-card-message').modal();
+                }
+            }, 'json');
+        });
+    });
+</script>
+</body>
+</html>

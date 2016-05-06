@@ -1,0 +1,10 @@
+<div style="width:600px;overflow-y:scroll;height:500px;" class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="1px;">
+    <?php foreach($message as $v):?>
+    <tr>
+        <td>{$v.from_uid|getUserRealname}：</td>
+        <td>{$v.content|htmlspecialchars_decode}</td>
+    </tr>
+    <?php endforeach;?>
+    </table>
+</div>

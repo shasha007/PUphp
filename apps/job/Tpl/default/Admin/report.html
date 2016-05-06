@@ -1,0 +1,36 @@
+<style>
+    .img{width:60px;height:40px;}
+</style>
+<include file="_header" />
+
+
+<div class="so_main">
+    <include file="_tab" />
+
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>招聘ID</th>
+                <th>类型</th>
+                <th>详情原因</th>      
+                <th>时间</th>
+                <th>公司状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data.data" id='vo'>
+                <tr id="list_{$vo.postid}">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+</div>
+ <div class="page right">{$data.html}</div>
+<include file="_footer" />

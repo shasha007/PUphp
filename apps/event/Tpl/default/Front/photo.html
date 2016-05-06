@@ -1,0 +1,18 @@
+<include file="_header" />
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_hx.gif" alt="" /></div>
+    <div class="video_list">
+        <ul>
+            <volist name="data" id='vo'>
+                <li>
+                    <div class="video_list_thumb">
+                        <a href="{:U('/Front/details',array('id'=>$eventId,'img'=>$vo['id']))}" target="_blank" title="{$vo.title}"><img src="{$vo.path|getThumb=###,255,182}" alt="" /></a>
+                    </div>
+                    <div class="video_list_title"><a href="{:U('/Front/details',array('id'=>$eventId,'img'=>$vo['id']))}" target="_blank" title="{$vo.title}">{$vo.title|getShort=###,20,'…'}</a></div>
+                 </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<include file="_footer" />

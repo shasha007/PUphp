@@ -1,0 +1,119 @@
+<include file="../School/_header" />
+<div class="hd_c i1">
+    <center><div class="intro_c_zt red b">【{$topTitle[0]}】</div></center>
+    <div class="publish_f">
+        <form name="myform" method="post" action="{:U('event/EcApply/doEcApply')}"  enctype="multipart/form-data" onsubmit="return checkEcApply();">
+            <input type="hidden" name="type" value="{$type}"/>
+            <input type="hidden" name="gd" value="{$gd}"/>
+            <table width="900" border="0" cellspacing="0" cellpadding="0" class="editEvent">
+                <?php if($description):?>
+                <tr>
+                    <td align="right">申请要求：</td>
+                    <td></td>
+                    <td>
+                        <span id="req10" class="req red">{$description}</span>
+                    </td>
+                </tr>
+                <?php endif;?>
+                <?php if($type!=12):?>
+                <tr>
+                    <td align="right">{$topTitle[1]}：</td>
+                    <td><span class="red">*</span></td>
+                    <td>
+                        <input name="title" id="title" type="text" class="p_input1" maxlength="15"/> 15字以内
+                    </td>
+                </tr>
+                <?php endif;?>
+                <?php if($type==12):?>
+                <tr>
+                    <td align="right">相关说明：</td>
+                    <td><span class="red">*</span></td>
+                    <td>
+                        <input name="description" id="description" type="text" class="p_input1" maxlength="15"/> 15字以内，显示于第二成绩单上
+                    </td>
+                </tr>
+                <?php else:?>
+                <tr id="need_text">
+                    <td align="right">相关说明：</td>
+                    <td></td>
+                    <td><textarea name="description"  rows="5" cols="60"></textarea></td>
+                </tr>
+                <?php endif;?>
+                <tr>
+                    <td align="right">实践或获奖时间：</td>
+                    <td><span class="red">*</span></td>
+                    <td>
+                        <select name="stime" id="stime" class="text">
+                        <option value="0" selected>--请选时间--</option>
+                        <?php $ny=date('Y');$day = date('m-d'); for($i=1;$i<=4;$i++):?>
+                            <?php if($i>1 || $day>'08-16'):?>
+                            <option value="{$ny}1">{$ny} 下半学期</option>
+                            <?php endif;?>
+                            <?php if($i>1 || $day>'02-15'):?>
+                            <option value="{$ny}0">{$ny} 上半学期</option>
+                            <?php endif;?>
+                        <?php $ny-=1;?>
+                        <?php endfor;?>
+                        </select>
+                        上半学期：02月15-08月15，下半学期：08月16-02月14
+                    </td>
+                </tr>
+<tr>
+    <td align="right">申请细则：</td>
+    <td></td>
+    <td>
+        <?php $jianban=0;$checkZs=0; foreach($select as $k=>$v): $k+=1;?>
+            <?php if($v['half'])$jianban=$k;?>
+            <span class="red">*</span><b> {$v.title}</b><br/>{$v.zusatz}
+            <span style="padding-left:40px"></span>
+            <?php $radio = $gdRadioFunc($k);?>
+            <?php foreach($radio as $q=>$r): $q+=1;?>
+                <label><input i="{$k}" j="{$r.credit}" type="radio" value="{$q}" name="gd{$k}"
+                              <?php if($q==1):?>checked<?php endif;?>/> {$r.title}</label>
+                <?php if($r['input']): $checkZs=$k;?> 证书：<input name="{$r['input']}" id="zs" type="text" class="p_input1" maxlength="30"/><?php endif;?>
+                <?php if($r['br']): ?><?php for($b=1;$b<=$r['br'];$b++){echo'<br/>';}?><span style="padding-left:40px"></span><?php else:?><span style="padding-left:10px"></span><?php endif;?>
+            <?php endforeach;?>
+            <br/><?php if($r['tc']):?> ({$r['tc']})<?php else:?>实践学时：<span id="xf{$k}"></span><?php endif;?><br/>
+            <hr />
+        <?php endforeach;?>
+        <b>总实践学时：</b> <span id="xf"></span>
+        <hr />
+    </td>
+</tr>
+                <tr id="attachc">
+                    <td align="right">相关文件：</td>
+                    <td></td>
+                    <td>
+<div id="uploaded_files"></div>
+<input type="button" onclick="openUploadFile();" value="上传文件"/>
+<br /><span class="cGray2">（支持格式jpg,gif,png,jpeg,bmp,zip,rar,doc,xls,ppt,docx,xlsx,pptx,pdf）</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">审核人：</td>
+                    <td><span class="red">*</span></td>
+                    <td>
+                        <select name="audit" id="audit" class="text">
+                        <option value="0" selected>请选择审核人</option>
+                        <?php foreach($audit as $v):?>
+                        <option value="{$v.uid}">{$v.realname} ({$v.school})</option>
+                        <?php endforeach;?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" class="p_btn2" value="提交申请" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script  type="text/javascript">
+    var selectNum = {$selectNum};
+    var jianban = {$jianban};
+    var checkZs = {$checkZs};
+</script>
+<script  type="text/javascript" src="../Public/js/gd.js?150401" ></script>
+<include file="../School/_footer" />

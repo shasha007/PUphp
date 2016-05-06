@@ -1,0 +1,183 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/detail.js"></script>
+<link href="../Public/css/thumb.css?20131223" type="text/css" rel="stylesheet" />
+<script src="../Public/js/base.js" type=text/javascript></script>
+<script src="../Public/js/lib.js" type=text/javascript></script>
+<script src="../Public/js/163css.js" type=text/javascript></script>
+<div class="m_dream mt10">
+    <div class="m_d_menu m_bule f16 fw mt10">一元梦想</div>
+    <div class="m_d_desc">
+        <div class="m_desc1_title f14 b">
+            <span class="m_color2">(第{$times}期)</span>{$name}</div>
+        <ul id="wqhg">
+            <li><a href="javascript:void(0)">本商品往期一元梦想</a>
+                <ul>
+                    <volist name="historyYg" id="vo">
+                        <li><a href="{:U('shop/Yg/detail',array('id'=>$vo['id']))}">第{$vo.times}期</a></li>
+                    </volist>
+                </ul>
+            </li>
+        </ul>
+        <div class="clear"></div>
+        <div class="m_desc1_infor mt5">
+            <div id="preview">
+                <div class="jqzoom" id="spec-n1">
+                    <img height=350 src="{$imgs[0]|tsMakeThumbUp=###,350,350}" jqimg="{:PIC_URL}/data/uploads/{$imgs[0]}" width=350>
+                </div>
+                <div id="spec-n5">
+                    <div class="control" id="spec-left">
+                        <img src="../Public/images/thumb/left.gif" />
+                    </div>
+                    <div id="spec-list">
+                        <ul class="list-h">
+                            <volist name="imgs" id="vo">
+                                <li><img src="{$vo|tsMakeThumbUp=###,70,70}" jqimg="{:PIC_URL}/data/uploads/{$vo}"> </li>
+                            </volist>
+                        </ul>
+                    </div>
+                    <div class="control" id="spec-right">
+                        <img src="../Public/images/thumb/right.gif" />
+                    </div>
+                </div>
+            </div>
+            <div class="m_desc1_detail">
+                <div class="m_desc1_d_code">商品编号：{$product_id}</div>
+                <div class="m_desc1_d_code">市场参考价：￥{$price}</div>
+                <div class="m_desc1_d_code">PU币：1.00</div>
+                <div class="m_desc1_d_line"></div>
+                <div class="m_desc1_d_code mt5">已有 <span class="m_color2 b f18 fw">{$has_attended}</span> 人参与</div>
+                <div class="m_desc1_d_code mt5">总需 <span class="m_bule b f18 fw">{$need_attended}</span> 人次参与</div>
+                <?php if($win): ?>
+                <!--获奖者揭晓-->
+                <div class="m_award mt5">
+                 <div class="m_award_result f18 fw center ">本期商品获得者已揭晓</div>
+                 <div class="m_award_name">{$win|getUserRealName} {$win|tsGetSchoolByUid0}</div>
+                 <div class="m_award_name">幸运编号:{$codeRNO}</div>
+                 <div class="m_award_name">揭晓时间：{$over_date}</div>
+                </div>
+                <?php else: ?>
+                <div class="progress-bar"><em>进度</em>
+                    <p title="已完成{$progress['per']}%"><span style="width:{$progress['width']}px"></span></p>
+                </div>
+                <?php if($eday!='0000-00-00'): ?>
+                <div class="m_desc1_d_code mt5">到 <span class="m_color2 b f18 fw">{$eday} 03:00</span> 人数未满亦准时开奖 </div>
+                <?php endif; ?>
+                <div class="clear"></div>
+                <div class="m_desc1_d_btn mt10"><a href="{:U('shop/Yg/buy',array('id'=>$id))}"></a></div>
+                <?php endif; ?>
+                <div class="m_desc1_d_code mt10">当商品达到指定参与人次，即可揭晓商品获得者。<span class="m_red"><a href="{:U('shop/Myshop/ygguide')}">[帮助中心]</a></span></div>
+            </div>
+            <div class="m_d1_record">
+                <div class="m_d1_r_menu f14 b">最新参与记录</div>
+                <div class="m_d1_r_list">
+                    <volist name="buylist" id="vo">
+                    <li>{$vo.realname}刚刚买了{$vo.buyNum}个梦想编号</li>
+                    </volist>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m_d_step mt10"><img src="../Public/images/step.jpg" alt="" /></div>
+    <!--抽奖结果开始-->
+    <div class="m_d1_text">
+        <div class="m_d1_t_menu center f14 b">
+            <ul>
+                <li class="cur"><a href="javascript:void(0)" onclick="showTab(1,this)">商品详情</a></li>
+                <li><a href="javascript:void(0)" onclick="showTab(2,this)">商品评论</a></li>
+                <li><a href="javascript:void(0)" onclick="showTab(3,this)">什么是一元梦想</a></li>
+            </ul>
+        </div>
+        <div class="m_d1_t_con">
+            <!--商品详情开始-->
+            <div id="tab1" class="m_d1_con_1">{$content|htmlspecialchars_decode}</div>
+            <!--商品详情结束-->
+                    <!--商品评论开始-->
+                   <div id="tab2" class="m_d1_con_ruler" style="display:none;">
+                         <iframe src="{:U('shop/Yg/comment',array('id'=>$id))} "width='900px' height="1000px" style="background:#fff;" frameborder="0"></iframe>
+
+            </div>
+            <!--商品评论结束-->
+
+
+            <!--购买记录开始-->
+            <!--购买记录结束-->
+            <!--帮助介绍开始-->
+            <div id="tab3" class="m_d1_con_ruler" style="display:none;">
+                <div class="m_d1_con_rtitle m_color1 f16 fw">什么是一元梦想?</div>
+                <div class="m_d1_con_rtext"> 1元梦想是指一件商品被分成若干“等份”，您只需出其中一份的钱，获得一个编号，当这件商品所有“等份”被完全售出后，系统随机抽取一个编号作为“幸运编号”，此“幸运编号”的拥有者即可获得这件商品。<br />
+                    例如：一部4000元iPhone4手机，这部iPhone4将被“分”成4000份出售，每份“售价”1元。花1元钱后将买进一个编号，当这4000“份”全部被卖空时，系统将随机抽取一个 “幸运编号”，“幸运编号”拥有者就能获得这部手机。
+                    1元梦想是一种全新的互动购物体验方式，是时尚、潮流的风向标，能满足个性、年轻消费者的购物需求，是寄娱乐、购物一体化的一个全新的购物平台。<br />
+                    1元梦想以“快乐梦想，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。 随着互联网的发展及网购消费模式的多样化，1元梦想势必成为中国电子商务网站中最具活力的生力军及网民最爱的购物网，必将迅速崛起，成为互联网新时代的佼佼者！ </div>
+            </div>
+            <!--帮助介绍结束-->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //往期回顾JS
+    var timeout         = 500;
+    var closetimer		= 0;
+    var ddmenuitem      = 0;
+
+    function wqhg_open(){
+        wqhg_canceltimer();
+        wqhg_close();
+        ddmenuitem = $(this).find('ul').eq(0).css('visibility', 'visible');}
+
+    function wqhg_close(){
+        if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');}
+
+    function wqhg_timer(){
+        closetimer = window.setTimeout(wqhg_close, timeout);}
+
+    function wqhg_canceltimer(){
+	if(closetimer)
+        {	window.clearTimeout(closetimer);
+            closetimer = null;}}
+
+    $(document).ready(function(){
+	$('#wqhg > li').bind('mouseover', wqhg_open);
+        $('#wqhg > li').bind('mouseout',  wqhg_timer);
+    });
+    document.onclick = wqhg_close;
+
+    //图片功能JS
+$(function(){
+    $(".jqzoom").jqueryzoom({
+            xzoom:400,
+            yzoom:400,
+            offset:10,
+            position:"right",
+            preload:1,
+            lens:1
+        });
+        $("#spec-list").jdMarquee({
+            deriction:"left",
+            width:350,
+            height:56,
+            step:1,
+            delay:10,
+            control:true,
+            _front:"#spec-right",
+            _back:"#spec-left"
+        });
+        $("#spec-list img").bind("mouseover",function(){
+            var src=$(this).attr("jqimg");
+            $("#spec-n1 img").eq(0).attr({
+                src:src.replace("\/n5\/","\/n1\/"),
+                jqimg:src.replace("\/n5\/","\/n0\/")
+            });
+            $(this).css({
+                "border":"2px solid #f60",
+                "padding":"1px"
+            });
+        }).bind("mouseout",function(){
+            $(this).css({
+                "border":"1px solid #ccc",
+                "padding":"2px"
+            });
+        });
+    })
+
+</script>
+<include file="../Public/_footer" />

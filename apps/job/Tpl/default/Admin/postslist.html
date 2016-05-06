@@ -1,0 +1,71 @@
+<include file="_header" />
+
+
+<div class="so_main">
+    <include file="_tab" />
+
+    <div class="form2" style="padding-bottom: 10px">
+        <form action="__URL__&act=postslist" method="post">
+            岗位：<input name="postname" type="text" value="{$_POST['postname']}">
+
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>岗位标题</th>
+                <th>发布公司</th>
+                <th>申请数</th>
+                <th>发布时间</th> 
+                <th>结束时间</th>
+                <th>状态</th>           
+                <th>推荐</th>
+                <th>轮播</th>
+                <th>编辑</th>
+                <th>通过</th>
+            </tr>
+            <volist name="data.data" id='vo'>
+                <tr id="list_{$vo.postid}">
+                    <td>{$vo.postid}</td>
+                    <td><a href="__URL__&act=detail&id={$vo.postid}">{$vo.positionname|getShort=###,15,'…'}</a></td>
+                    <td>{$vo.fullname}</td>             
+                    <td>{$vo.applynum}</td>
+                    <td><?php echo date('Y-m-d H:i',$vo['ctime'])?></td>         
+                    <td><?php echo date('Y-m-d H:i',$vo['endtime'])?></td>
+                    <td class='state_{$vo.postid}'>{$state[$vo['state']]}</td>
+                    <td><a href="javascript:void(0);" onclick="">推荐</a> </td>
+                    <td><a href="javascript:void(0);" onclick="">轮播</a> </td>
+                    <td><a href="javascript:void(0);" onclick="">编辑</a> </td>        
+                    <td class='ch_{$vo.postid}'><if condition="$vo['state'] eq 0 || $vo['state'] eq 3"><a href="javascript:void(0);" onclick="through_stop({$vo.postid},1)">通过</a><elseif condition="$vo['state'] eq 1" /><a href="javascript:void(0);" onclick="through_stop({$vo.postid},2)">停止</a><else />已结束</if></td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+</div>
+        <div class="page right">{$data['html']}</div>
+<script>
+    //招聘 通过/停止 type1通过 2停止
+   function  through_stop(postid,type){
+          $.post('__URL__&act=through_stop_ajax',{postid:postid,type:type},function(json){
+              if(json == 1){
+                  ui.success('通过成功');
+                  $('.state_'+postid).html('已结束');
+                  $('.ch_'+postid).html('已结束');
+              }else if(json == 2){
+                   ui.success('通过成功');
+                    $('.state_'+postid).html('发布中');
+                    $('.ch_'+postid).html('<a href="javascript:void(0);" onclick="through_stop('+postid+',2)">停止</a>');
+              }else if(json == 3){
+                  ui.success('停止成功');
+                    $('.state_'+postid).html('停止');
+                    $('.ch_'+postid).html('<a href="javascript:void(0);" onclick="through_stop('+postid+',1)">通过</a>');
+              }else{
+                  ui.error('操作失败');
+              }
+       });
+    }
+</script>
+<include file="_footer" />

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>test</title>
+   <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+   <script src="https://code.jquery.com/jquery.js"></script>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+   <style type="text/css">
+   article{
+      width: 100%;
+      margin: 0 auto;
+   }
+   article img{
+      width: 100%;
+      margin: 0 auto;
+   }
+   </style>
+</head>
+
+<body>
+   <article>
+      <img src="images/gg.jpg">
+   </article>
+   <button id="btn_1">跳转</button>
+</body>
+</html>
+<script type="text/javascript">  
+window.onload = function(){  
+   // if (/android/i.test(navigator.userAgent)){
+      document.getElementById('btn_1').addEventListener('click', onBtnClick, false);  
+      // var _int_value = window.ncp.callOnJs();  
+      // alert("get int from java:" + _int_value );     
+   // }else if(/ipadiphonemac/i.test(navigator.userAgent)){
+
+   // }
+
+}  
+function onBtnClick() {  
+    // if (/android/i.test(navigator.userAgent)){
+   window.Android.openInternalPage("showfield", "1", "秀场名字","10", "","","" );    
+   // }else if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+   // window.Android.openInternalPage("makefriends", "", "","", "","","" );
+   // }
+}  
+</script>

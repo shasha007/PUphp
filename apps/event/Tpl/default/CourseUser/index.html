@@ -1,0 +1,179 @@
+<include file="../CoursePass/_header" />
+<script>
+    var sid = {$editSid};
+    function selectSchool(){
+        var typevalue = $("#current").val();
+        ui.box.load(U('event/School/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择学校',noCheck:'yes'});
+    }
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <!-------- 搜索用户 -------->
+    <div id="searchUser_div" <neq name="type" value="searchUser">style="display:none;"</neq>>
+        <div class="page_tit">搜索用户 [ <a href="javascript:void(0);" onclick="searchUser();">隐藏</a> ]</div>
+        <div class="form2">
+            <form method="post" action="{:U('event/CourseUser/doSearchUser')}">
+
+                <dl class="lineD">
+                    <dt>院系：</dt>
+                    <dd>
+                        <input type="text" id="selectarea" class="text" value="" readonly="true" OnFocus="selectSchool()" />
+                        <input type="hidden" id="current" name="sid1"/>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>学号：</dt>
+                    <dd><input name="number" id="email" type="text" value="{$number}"></dd>
+                </dl>
+                <php>if($type != 'searchUser') $uid = '';</php>
+                <dl class="lineD">
+                    <dt>姓名：</dt>
+                    <dd>
+                        <input name="realname" id="realname" type="text" value="{$realname}">
+                    </dd>
+                </dl>
+<!--                <dl class="lineD">
+                    <dt>权限：</dt>
+                    <dd>
+
+                        <label><input name="can_add_event" type="checkbox" value="1" <eq name="can_add_event" value="1">checked</eq>>添加课程</label>
+
+                        <label><input name="can_event" type="checkbox" value="1" <eq name="can_event" value="1">checked</eq>>课程审核</label>
+
+
+                    </dd>
+                </dl>-->
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-------- 用户列表 -------->
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+            <span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+        </a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0" />
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">ID</th>
+                <th class="line_l">真实姓名</th>
+                <th class="line_l">用户信息</th>
+                <th class="line_l">院系</th>
+                <th class="line_l"><a href="javascript:void(0);" class="list_order" title="排序" id="order_course_credit">课时</a></th>
+                <th class="line_l">课时详情</th>
+                <th class="line_l">注册时间</th>
+                <!--                <th class="line_l">操作</th>-->
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' id="user_{$vo['uid']}">
+                <if condition="0 == $vo['admin_level'] && $mid != $vo['uid']">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.uid}"></td>
+                    <else />
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" value="" disabled></td>
+                </if>
+                <td>{$vo.uid}</td>
+                <td>{$vo.realname}</td>
+                <td>
+                    <div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;""><img src="{$vo.uid|getUserFace='s'}" width="30"></div>
+                    <div style="float:left">{$vo['uname']}<br>{$vo.email}</div>
+                </td>
+                <td>
+                    {$vo.sid|tsGetSchoolName}<br />
+                    {$vo.sid1|tsGetSchoolName}<br />
+                    {$vo.year}<br />
+                    {$vo.major}
+                </td>
+                <td>{$vo.course_credit}</td>
+                <td><a href="{:U('event/CourseUser/credit')}&num={$vo.email|getUserEmailNum}">查看</a></td>
+                <td>{$vo.ctime|date="Y-m-d H:i",###}</td>
+<!--                <td>
+                    <a href="{:U('event/CourseUser/editUser', array('uid'=>$vo['uid']))}">编辑</a>
+                </td>-->
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+            <span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+        </a>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        var orderKey = "<?php echo $orderKey;?>";
+        var orderType = "<?php echo $orderType;?>";
+        if(orderKey != ''){
+            $('#order_'+orderKey).addClass('order_'+orderType);
+        }
+        $('.list_order').hover(
+            function(){
+                if($(this).hasClass('order_asc')){
+                    $(this).removeClass("order_asc");
+                    $(this).addClass("order_desc");
+                }else if($(this).hasClass('order_desc')){
+                    $(this).removeClass("order_desc");
+                    $(this).addClass("order_asc");
+                }
+            }
+        );
+        $('.list_order').click(
+            function(){
+                if($(this).hasClass('order_desc')){
+                    window.location.href = "{:U('event/CourseUser/index')}&orderKey=course_credit&orderType=desc";
+                }else{
+                    window.location.href = "{:U('event/CourseUser/index')}&orderKey=course_credit&orderType=asc";
+                }
+            }
+        );
+    });
+    //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+        function () {
+            $(this).addClass("bg_hover");
+        },
+        function () {
+            $(this).removeClass("bg_hover");
+        }
+    );
+    });
+
+    //搜索用户
+    var isSearchHidden = <neq name="type" value="searchUser">1<else/>0</neq>;
+    function searchUser() {
+        if(isSearchHidden == 1) {
+            $("#searchUser_div").slideDown("fast");
+            $(".searchUser_action").html("搜索完毕");
+            isSearchHidden = 0;
+        }else {
+            $("#searchUser_div").slideUp("fast");
+            $(".searchUser_action").html("搜索用户");
+            isSearchHidden = 1;
+        }
+    }
+
+    function folder(type, _this) {
+        $('#search_'+type).slideToggle('fast');
+        if ($(_this).html() == '展开') {
+            $(_this).html('收起');
+        }else {
+            $(_this).html('展开');
+        }
+
+    }
+</script>
+
+<include file="../CoursePass/_footer" />

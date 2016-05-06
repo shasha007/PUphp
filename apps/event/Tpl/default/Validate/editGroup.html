@@ -1,0 +1,113 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit">编辑部落</div>
+    <form method="post" action="{:U('event/Validate/doEditGroup&id='.$id)}">
+            <input type="hidden" name="uid" value="{$uid}" id="hidden" />
+            <div class="form2">
+                <dl class="lineD">
+                    <dt>部落名称：</dt>
+                    <dd>
+                        <input type="text" class="text" name='title' value="{$name}""/>
+
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>主席：</dt>
+                    <dd>
+                        {$uid | getUserRealName}
+                    </dd>
+
+                </dl>
+
+
+      <dl class="lineD" >
+                    <dt>部门：<span class="red">*</span></dt>
+                    <dd>
+                        <select  name='category' id="cat">
+                            <option value="">请选择</option>
+                            <option value="1" <?php if($category==1):?>selected="selected"<?php endif;?> >学生部门</option>
+                            <option value="2" <?php if($category==2):?>selected="selected"<?php endif;?> >团支部</option>
+                            <option value="3" <?php if($category==3):?>selected="selected"<?php endif;?> >学生社团</option>
+                        </select>
+                    </dd>
+                </dl>
+
+                   <dl class="lineD" >
+                    <dt>学院：<span class="red">*</span></dt>
+                    <dd>
+                        <select  name='sid1' >
+                              <option value="">请选择</option>
+                               <option value="-1"<?php if($sid1==-1):?>selected="selected"<?php endif;?>  >校级</option>
+                            <?php foreach($addSchool as $value): ?>
+                                <option value="{$value.id}" <?php if($sid1==$value['id']):?>selected="selected"<?php endif;?> >{$value.title}</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </dd>
+                </dl>
+
+                         <dl class="lineD" >
+                    <dt>年级：</dt>
+                    <dd>
+                        <select  name='year' >
+                            <option value="">请选择</option>
+                            <volist name="years" id="vo">
+                            <option value="{$vo}"  <?php if($year==$vo):?>selected="selected"<?php endif;?> >{$vo}级</option>
+                            </volist>
+                        </select>
+                    </dd>
+                         </dl>
+
+                         <dl class="lineD" >
+                             <dt>分类：<span class="red">*</span></dt>
+                             <dd>
+                                 <select  name='cat' >
+                                     <volist name="cat" id="vo" >
+                                         <option value="{$vo['id']}" <?php if($cid0==$vo['id']):?>selected="selected"<?php endif;?>  >{$vo.title}</option>
+                                     </volist>
+                                 </select>
+                             </dd>
+                         </dl>
+                <dl class="lineD" id="cs_orga">
+                    <dt>评定部落星级：</dt>
+                    <dd>
+                        <select name="stern" id="stern">
+                            <option value="0" <?php if($vStern==0):?>selected="selected"<?php endif;?>>无星级</option>
+                            <option value="1" <?php if($vStern==1):?>selected="selected"<?php endif;?>>1星</option>
+                            <option value="2" <?php if($vStern==2):?>selected="selected"<?php endif;?>>2星</option>
+                            <option value="3" <?php if($vStern==3):?>selected="selected"<?php endif;?>>3星</option>
+                            <option value="4" <?php if($vStern==4):?>selected="selected"<?php endif;?>>4星</option>
+                            <option value="5" <?php if($vStern==5):?>selected="selected"<?php endif;?>>5星</option>
+                        </select>
+                    </dd>
+
+                </dl>
+
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </div>
+        </form>
+</div>
+<script>
+
+     $(function(){
+        $('#cat').change(function(){
+               $("#cat2").show();
+            $('#cat2 option').not(0).remove();
+            var val=$('#cat option:selected').val();
+            $.post("{:U('/Validate/catTree')}" ,{cat:val},function(data) {
+                var obj =  $.parseJSON(data);
+                var option = "<option value=\"\">请选择...</option>";
+                $.each(obj, function(k,v)
+                {
+                    option += "<option value=\"" + v['id'] + "\">" + v['title'] + "</option>";
+                });
+                $("#cat2").append(option);
+            });
+        });
+    });
+
+
+</script>
+<include file="../Teacher/_footer" />

@@ -1,0 +1,31 @@
+<include file="../CoursePass/_header" />
+<div id="container" class="so_main">
+    <include file="_tab" />
+    <div class="form2">
+        <a style="float:right;"href="{:U('event/CourseAnalyse/lonexls',array('id'=>$id,'title'=>$title))}">导出Excel</a>
+        <table width='65%' align='center' style="border:1px solid #aaa;border-collapse:collapse;"border='1'>
+            <caption style="margin: 25px 0;"><h1>{$title}</h1></caption>
+            <tr  height='50px' style="font-size:15px;background:#ddd;font-weight: bold" align="center"><td>序号</td><td width="30%">姓名</td><td>学号</td><td>学院</td></tr>
+            <volist name="data" id='vo'>
+                <tr align="center" height=35px' class="jun"><td>{$i}</td><td><a href="#">{$vo.realname}</a></td><td>{$vo.studentId}</td> 
+                    <td>
+                        <?php if($vo['uid']):?>{$vo['uid']|tsGetSchoolByUid=###,'<br/>'}
+                        <?php else:?>{$vo.sid|tsGetSchoolTitle=###,$schools}<?php endif;?>
+                    </td></tr>
+            </volist>		
+
+        </table>
+    </div>
+</div>
+<div class="page right">{$html}</div>
+
+<script>
+    $(function(){
+        $('.jun').hover(function(){
+            $(this).css('background','#eee');
+        },function(){
+            $(this).css('background','');
+        });
+    });
+</script>
+<include file="../CoursePass/_footer" />

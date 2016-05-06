@@ -1,0 +1,23 @@
+
+<include file="_header" />
+<include file="__THEME__/comm/_header_old" />
+<include file="__THEME__/editor" />
+<div class="so_main">
+    <include file="_tab" />
+     <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="__URL__&act=gover&cid=addcompany" class="btn_a"><span>添加公司</span></a>     
+        <a href="__URL__&act=gover&cid=addpost" class="btn_a"><span>添加职位</span></a>
+        <a href="__URL__&act=gover&cid=addpolicy" class="btn_a"><span>添加政策</span></a>
+    </div>
+    {$inner}
+    
+</div>
+
+<include file="_footer" />
+
+<script>
+$(document).ready(function(){
+	loadEditor("content");
+});
+</script> 

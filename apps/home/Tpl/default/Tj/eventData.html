@@ -1,0 +1,86 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul>
+    </div>
+    <div class="page_tit">2. 活动统计</div>
+    <div class="list">
+        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr><td colspan="2"><a href='{:U("home/Tj/eventType")}'> 各类活动数量</a></td></tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/every_month_shcool_count')}" onsubmit="return checkMon(1);">
+                <td>1. <input type="submit" value='导出'></td>
+                <td>月份	 | 学校	| 年级 | 发起活动总数 | 完结活动总数 | 报名人数 | 签到人数 &nbsp;&nbsp;&nbsp;&nbsp;
+                月份<input size="10"  type='text' id='mon1' name='mon' value="">格式2014-12</td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/eventDetail_every')}" onsubmit="return checkMon(2);">
+                <td>2. <input type="submit" value='导出'></td>
+                <td>月份	 | 学校	| 学生部门 | 学生社团 | 团支部(活动数) &nbsp;&nbsp;&nbsp;&nbsp;
+                月份<input size="10" type='text' id='mon2' name='mon' value="">格式2014-12</td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/eventDetail')}" onsubmit="return checkMon(3);">
+                <td>3. <input type="submit" value='导出'></td>
+                <td>活动明细表 学校 | 活动标题 | 人数 &nbsp;&nbsp;&nbsp;&nbsp;
+                    月份<input size="10" type='text' id='mon3' name='mon' value="">格式2014-12</td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/eventCount')}">
+                <td>4. 各校活动总数<input type="submit" value='导出'></td>
+                <td> 学校 | 活动总数 | 总完结活动数 | 总报名人数 | 总签到人数 </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/eventMember')}">
+                <td>5. 各类型活动签到人数<input type="submit" value='导出'></td>
+                <td> 类型 | 活动总数 | 报名数 | 10级签到人数 | 11级签到人数 | 12级签到人数 | 13级签到人数 | 14级签到人数  </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/eventAll')}">
+                <td>6. 所有活动信息<input type="submit" value='导出'></td>
+                <td> 学校 | 活动标题 | 发起组织 | 发起时间 | 活动状态 | 报名人数 | 签到人数 | 活动类型&nbsp;&nbsp;
+                页码：<select name="page">
+                    <?php for($i=1;$i<=$num;$i++){ ?>
+                        <option value="{$i}">{$i}</option>
+                    <?php }?>
+                </select></td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/ptxCount')}">
+                <td>7. 扑天下阅读数<input type="submit" value='导出'></td>
+                <td> 名称 | 阅读数 </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/growCount')}">
+                <td>8. 成长服务超市阅读数<input type="submit" value='导出'></td>
+                <td> 频道 | 类别 | 阅读数 </td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/allSchoolYear')}">
+                <td>9. 学校学年数<input type="submit" value='导出'></td>
+                <td> 学校名称 | 学年 </td>
+            </form>
+            </tr>
+        </table>
+    </div>
+    </div>
+<include file="__THEME__/comm/_datepicker" />
+<script type="text/javascript">
+    function checkMon(i){
+        if($('#mon'+i).val() == ''){
+            alert('请输入月份');
+            $('#mon'+i).focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<include file="_footer" />

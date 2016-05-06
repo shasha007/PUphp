@@ -1,0 +1,67 @@
+<include file="../Teacher/_header" />
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+</script>
+<div class="so_main">
+    <include file="_tab" />
+
+    <div class="Toolbar_inbox">
+        部落数据导出
+    </div>
+
+    <div class="list">
+        <table id="blog_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr overstyle='on'>
+                <th>项目</th>
+                <th></th>
+                <th>操作</th>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/groupSum')}">
+                    <td>1、部落总数</td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <input type="submit" value="导出" />
+                    </td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/groupCate')}">
+                    <td>2、社团分类人数</td>
+                    <td></td>
+                    <td><input type="submit" value="导出"></td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/groupEvent')}">
+                    <td>3、部落活动数</td>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="导出" />
+                    </td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/groupDetail')}">
+                    <td>4、部落详细统计</td>
+                    <td></td>
+                    <td><input type="submit" value="导出"></td>
+                </form>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<include file="../Teacher/_footer" />

@@ -1,0 +1,50 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <div class="page_tit">更新数据库</div>
+  <div class="Toolbar_inbox">
+    <a href="javascript:void(0);" class="btn_a" onclick="doSql();"><span>执行全部sql</span></a>
+    <a href="javascript:void(0);" class="btn_a" onclick="upSqlCache();"><span>更新model缓存</span></a>
+  </div>
+  
+  <div class="list">
+  <table id="area_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th class="line_l">开发者</th>
+    <th class="line_l">sql文件</th>
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="list">
+      <tr overstyle='on' id="area_{$vo.area_id}">
+        <td>{$vo.uname}</td>
+        <td>{$vo.file}</td>
+        <td>
+            <a href="javascript:void(0);" onclick="look('{$vo.uname}','{$vo.file}');">查看</a> 
+        </td>
+      </tr>
+  </volist>
+  </table>
+  </div>
+  <div>
+      <div id='wait' style="display:none"><img src="__THEME__/newimages/loading.gif"/>请等待 ...</div>
+      <span  id='doSql'></span>
+  </div>
+</div>
+<script>
+    function look(uname,file){
+        ui.box.load('__URL__&act=ajaxSqlFile&uname='+uname+'&file='+file,{title:'sql文件'});
+    }
+    function doSql(){
+        $('#wait').show();
+        $.post( '__URL__&act=doSql',{},function(text){
+            $('#wait').hide();
+            $('#doSql').html(text);
+        });
+    }
+    function upSqlCache(){
+        $('#wait').show();
+        $.post( '__URL__&act=upSqlCache',{},function(text){
+            $('#wait').hide();
+            $('#doSql').html(text);
+        });
+    }
+</script>

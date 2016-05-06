@@ -1,0 +1,163 @@
+<include file="_header" />
+<div class="intro_c">
+    <div class="member_tab">
+        <div class="member_cz">
+            共{$totalRows}个选手&nbsp;&nbsp;
+            <a href="{:U('/Author/addPlayer',array('id'=>$eventId))}" class="btn_a"><span>添加选手</span></a>&nbsp;&nbsp;
+            <a href="javascript:config( '{$eventId}');" class="btn_b" >投票设定</a>
+            &nbsp;&nbsp;&nbsp;<span id="upload">
+                <?php if($player_upload):?>
+                <a href="javascript:changeUpload( '{$eventId}','close');">选手上传已打开</a>
+                <?php else:?>
+                <a href="javascript:changeUpload( '{$eventId}','open');">选手上传已关闭</a>
+                <?php endif?>
+            </span>
+            &nbsp;&nbsp;&nbsp;<a href="{:U('/Author/upConfig',array('id'=>$eventId))}" class="btn_b" >上传配置</a>
+        </div>
+        <div class="member_search">
+            <form action="{:U('/Author/player',array('id'=>$eventId))}" method="post">
+            选手：<input name="realname" type="text" class="member_searchinput"  value="{$realname}"/>
+            <input type="submit" value="搜索" class="member_btn3" />
+            </form>
+        </div>
+    </div>
+    <div class="member_list">
+        <form>
+            <table width="956" border="0" cellspacing="0" cellpadding="0">
+                <tr class="member_tr1">
+                    <td width="5"><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0"></td>
+                    <td width="30">id</td>
+                    <?php if($tuanjy ==1){echo '<td width="15">排序</td>';}?>
+                    <td width="80">照片</td>
+                    <td width="90">学校</td>
+                    <td width="95">选手</td>
+                    <td width="30"><a href="javascript:void(0);" class="list_order" title="排序" id="order_uid">UID</a></td>
+                    <td width="110"><a href="javascript:void(0);" class="list_order" title="排序" id="order_ticket">票数/投票</a></td>
+                    <td width="110">靓照</td>
+                    <td width="110">视频</td>
+                    <td width="100">操作</td>
+                  </tr>
+                <volist name="data" id='vo'>
+                <tr class="member_tr2" id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <?php if($tuanjy ==1){echo "<td><input type='text' value='$vo[sort]' class='sort' style='width:50px;' data-id='$vo[id]'></td>";}?>
+                    <td class="member_thumb"><img width="80" height="80" src="{$vo.path|getThumb=###,80,80}"></td>
+                    <td>{$vo.school}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.uid}</td>
+                    <td>
+                        {$vo.ticket}
+                        <php>
+                          if( $vo['stoped'] == 1 ){
+                            $button = "已关闭";
+                            $act    = 'open';
+                          }else{
+                            $button = "已打开";
+                            $act    = 'close';
+                          }
+                          </php>
+                          <span id="vote{$vo['id']}" ><a href="javascript:changeVote({$eventId},{$vo['id']},'{$act}');" >{$button}</a></span>
+                    </td>
+                    <td>
+                        <a href="{:U('/Author/playerImg', array('id'=>$eventId, 'uid'=>$vo['id']))}">编辑靓照</a>
+                    </td>
+                    <td>
+                        <a href="{:U('/Author/playerFlash', array('id'=>$eventId, 'uid'=>$vo['id']))}">编辑视频</a>
+                    </td>
+                    <td>
+                        <a href="javascript:showPlayer('{$eventId}', '{$vo.id}');">查看</a>
+                        <a href="{:U('/Author/editPlayer', array('id'=>$eventId, 'pid'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:delPlayer( '{$vo.id}','{$eventId}');">删除</a>
+                        <?php // if($showRecomm && !$vo['isRecomm']):?>
+                        <!-- <span id="recomm{$vo.id}"><br/><a href="javascript:recommPlayer( '{$vo.id}','{$eventId}');">推荐至上级活动</a></span> -->
+                        <script type="text/javascript">
+                            /*function recommPlayer(pid,eventId ){
+                                if(confirm("是否推荐选手至活动【{$recommName}】？")){
+                                    $.post( U('event/Author/recommPlayer'),{pid:pid,id:eventId},function(text){
+                                        var json =$.parseJSON(text);
+                                        if( json.status == 1 ){
+                                            ui.success( json.info );
+                                            $('#recomm'+pid).remove();
+                                        }else{
+                                            ui.error( json.info );
+                                        }
+                                    });
+                                }
+                            }*/
+                        </script>
+                        <?php //endif;?>
+                        <?php if(!$vo['isRecomm'] && $jingying == 1):?>
+                            <span><br/><a href="javascript:showProvEvent('{$eventId}','{$vo.id}');">推荐至上级活动</a></span>
+                        <?php endif;?>
+                    </td>
+                </tr>
+                </volist>
+            </table>
+        </form>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<include file="_footer" />
+
+<script type="text/javascript">
+    function showPlayer(eventId,id){
+        ui.box.load(U('event/Author/showPlayer') + '&id=' + eventId + '&pid='+id,{title:'选手详细'});
+    }
+    function config(id){
+        ui.box.load(U('event/Author/ticketConfig')+'&id='+id,{title:'投票设定',noCheck:'yes'});
+    }
+    function showProvEvent(eventId,playid)
+    {
+        ui.box.load(U('event/Author/provEvent')+'&id='+eventId + '&playid='+playid,{title:'上级活动列表'});
+    }
+    $(function(){
+        var orderKey = "<?php echo $orderKey;?>";
+        var orderType = "<?php echo $orderType;?>";
+        if(orderKey != ''){
+            $('#order_'+orderKey).addClass('order_'+orderType);
+        }
+        $('.list_order').hover(
+            function(){
+                if($(this).hasClass('order_asc')){
+                    $(this).removeClass("order_asc");
+                    $(this).addClass("order_desc");
+                }else if($(this).hasClass('order_desc')){
+                    $(this).removeClass("order_desc");
+                    $(this).addClass("order_asc");
+                }
+            }
+        );
+        $('.list_order').click(
+            function(){
+                if($(this).hasClass('order_desc')){
+                    window.location.href = "{:U('event/Author/player',array('id'=>$eventId))}&orderKey=" + $(this).attr('id').substring(6) + '&orderType=desc';
+                }else{
+                    window.location.href = "{:U('event/Author/player',array('id'=>$eventId))}&orderKey=" + $(this).attr('id').substring(6) + '&orderType=asc';
+                }
+            }
+        );
+    });
+    $('.sort').change(function(){
+        var id = $(this).data('id') ;
+        var sort = $(this).val() ;
+        $.ajax({
+            url: "{:U('event/Author/dosort')}",
+            type: 'post',
+            dataType: 'JSON',
+            data: {
+                id : id+"",
+                sort: sort+""
+            },
+            error: function () {
+                alert("error");
+            },
+            success: function (data) {
+                if (data === '0') {
+                    alert('修改失败') ;
+                }
+                window.location.reload() ;
+            }
+        });       
+    })
+</script>          

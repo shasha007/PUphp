@@ -1,0 +1,140 @@
+<include file="_header" />
+
+<div class="hd_c">
+    <div class="hd_c_left">
+        <include file="_search" />
+        <?php if($top1):?>
+        <div class="hd_submenu color4 f14 b">全省菁英活动</div>
+        <div class="hd_more h24"><a href="{:U('event/School/board', array('cat'=>'jy'))}">更多>></a></div>
+        <div class="hd_list">
+            <ul>
+                <volist name="top1" id="vo">
+                <?php $cntTop=count($top1)?>
+                <li <?php if($cntTop<3||$i>2)echo' class="b_n"'?>>
+                    <div class="hd_l_thumb">
+                        <a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">
+                            <img width="125px" height="125px" src="{$vo['coverId']|tsGetCover}" /></a>
+                    </div>
+                    <div class="hd_l_infor">
+                        <div class="hd_l_title b f14 h24"><a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a></div>
+                        <div class="hd_l_desc">时间：<?php echo date('Y-m-d', $vo['sTime'])?>至<?php echo date('Y-m-d', $vo['eTime'])?></div>
+                        <div class="hd_l_desc">分类：{$category[$vo['typeId']]}</div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+        <?php endif;?>
+        <?php if($purec):?>
+        <div class="hd_submenu color4 f14 b">PU推荐活动</div>
+        <div class="hd_more h24"><a href="{:U('event/Index/index')}">更多>></a></div>
+        <div class="hd_list">
+            <ul>
+                <volist name="purec" id="vo">
+                <?php $cntTop=count($top)?>
+                <li <?php if($cntTop<3||$i>2)echo' class="b_n"'?>>
+                    <div class="hd_l_thumb">
+                        <a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">
+                            <img width="125px" height="125px" src="{$vo['coverId']|tsGetCover}" /></a>
+                    </div>
+                    <div class="hd_l_infor">
+                        <div class="hd_l_title b f14 h24"><a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a></div>
+                        <div class="hd_l_desc">时间：<?php echo date('Y-m-d', $vo['sTime'])?>至<?php echo date('Y-m-d', $vo['eTime'])?></div>
+                        <div class="hd_l_desc">分类：{$category[$vo['typeId']]}</div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+        <?php endif;?>
+        <?php if($top):?>
+        <div class="hd_submenu color4 f14 b">学校推荐活动</div>
+        <div class="hd_more h24"><a href="{:U('event/School/board', array('cat'=>'top'))}">更多>></a></div>
+        <div class="hd_list">
+            <ul>
+                <volist name="top" id="vo">
+                <?php $cntTop=count($top)?>
+                <li <?php if($cntTop<3||$i>2)echo' class="b_n"'?>>
+                    <div class="hd_l_thumb">
+                        <a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">
+                            <img width="125px" height="125px" src="{$vo['coverId']|tsGetCover}" /></a>
+                    </div>
+                    <div class="hd_l_infor">
+                        <div class="hd_l_title b f14 h24"><a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a></div>
+                        <div class="hd_l_desc">时间：<?php echo date('Y-m-d', $vo['sTime'])?>至<?php echo date('Y-m-d', $vo['eTime'])?></div>
+                        <div class="hd_l_desc link">归属组织：<a>{$vo.sid|getEventOrga}</a></div>
+                        <div class="hd_l_desc">分类：{$category[$vo['typeId']]}</div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+        <?php endif;?>
+        <div class="hd_submenu i13 color4 f14 b">感兴趣的活动</div>
+        <?php if($mid&&$user['sid']==$school['id']):?><div class="hd_set h24 link"><a href="javascript:eventFav()">[个性设置]</a></div><?php endif;?>
+        <div class="hd_more h24"><a href="{:U('event/School/board', array('cat'=>'fav'))}">更多>></a></div>
+        <div class="clear"></div>
+        <div class="hd_list b_n">
+            <ul>
+                <volist name="fav" id="vo">
+                <li>
+                    <div class="hd_l_thumb">
+                        <a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">
+                            <img width="125px" height="125px" src="{$vo['coverId']|tsGetCover}" /></a>
+                    </div>
+                    <div class="hd_l_infor">
+                        <div class="hd_l_title b f14 h24"><a href="{:U('/Front/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a></div>
+                        <div class="hd_l_desc">时间：<?php echo date('Y-m-d H:i', $vo['sTime'])?></div>
+                        <div class="hd_l_desc link">归属组织：<a>{$vo.sid|getEventOrga}</a></div>
+                        <div class="hd_l_desc">分类：{$category[$vo['typeId']]}</div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<?php if($guide): ?>
+<div id="guide-step">
+    <div id="step1" class="userguide" style="display: none;">
+        <div class="userguide_next"><a href="javascript:void(0);" onclick="nextStep(2);">下一步</a></div>
+    </div>
+    <div id="step2" class="userguide fq1" style="display: none;">
+        <div class="userguide_next fq2"><a href="javascript:void(0);" onclick="nextStep(3);">下一步</a></div>
+    </div>
+    <div id="step3" class="userguide fq3" style="display: none;">
+        <div class="userguide_next fq4"><a href="javascript:void(0);" onclick="entStep();">结 束</a></div>
+    </div>
+</div>
+<script>
+    $(function(){
+        var toppx = $('.hd_c_publish').offset().top;
+        toppx = parseInt(toppx);
+        if(toppx != 344){
+            $('#step1').css('top',toppx);
+            $('#step2').css('top',383-344+toppx);
+            $('#step3').css('top',285-344+toppx);
+        }
+        var position = $.browser.msie && $.browser.version == '6.0' && !$.support.style ? "absolute" : "fixed";
+        $("#guide-step").before("<div id='searchTipBg' style='width:100%; height:100%; left:0px; top:0px; z-index:999; background-color:#000; opacity:0.55; filter:alpha(opacity=55);position:"+ position +"'></div>");
+        $("#step1").show();
+    })
+    function nextStep(next){
+        $(".userguide").hide();
+        $("#step"+next).show();
+    }
+    function entStep(){
+        $("#searchTipBg").hide();
+        $(".userguide").hide();
+        $.post(U('event/School/endGuide'));
+    }
+</script>
+<?php endif; ?>
+<script>
+    function eventFav(){
+        ui.box.load( '{:U("event/School/fav")}',{title:'个性设置',noCheck:'yes'});
+    }
+</script>
+<include file="_footer" />

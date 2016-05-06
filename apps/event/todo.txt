@@ -1,0 +1,17 @@
+schoolAction board()
+if ($this->sid != 505) {
+//                    $eventIds = D('EventSchool')->getEventIds($this->sid);
+//                    $map['id'] = array('in', $eventIds);
+                }
+
+IndexAction _rightSide() index()
+
+EventModel getProv() getHoneEvent($sid)
+
+学分排名 credit1 2 3 太多索引问题
+
+十佳申请上传图片附件限制及isDel=1
+
+
+
+

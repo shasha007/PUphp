@@ -1,0 +1,86 @@
+<include file="_header" />
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">中奖纪录</div>
+            <div class="consumer_records1">
+                <div class="good_fl">分类：
+                    <a href="{:U('shop/Myshop/zj')}" <?php if(!$_GET['type'])echo' class="cur"';?>>所有</a>
+                    <?php foreach($types as $k=>$v):?>
+                        <a href="{:U('shop/Myshop/zj',array('type'=>$k))}"<?php if($_GET['type']==$k)echo' class="cur"';?>>{$v}</a>
+                    <?php endforeach;?>
+                </div>
+                <div class="good_menu center">
+                    <ul>
+                        <li class="g374">奖品礼券</li>
+                        <li>分类/来源</li>
+                        <li>状态</li>
+                        <li>操作</li>
+                    </ul>
+                </div>
+                <div class="good_list1">
+                    <ul>
+<?php if(empty($data)):?>
+<li class="notFound">查无记录</li>
+<?php else:?>
+<volist name="data" id='vo'>
+<li>
+    <div class="good_list1_infor c_r_link">
+        <ul class="center">
+            <li class="g374">
+                <a href="{:U('shop/Myshop/zjDetail',array('id'=>$vo['id']))}">{$vo['name']}</a>
+                <br/>{$vo.description|msubstr=0,60}
+            </li>
+            <li>{$vo.typeName}<br/>{$vo.zjfrom}</li>
+            <li>
+                <?php if($vo['type']==1):?>
+                    {$vo.order_state|orderState}
+                <?php else:?>
+                    <?php if($vo['status']=='有效'):?>
+                    <span class="m_color3">{$vo.status}</span>
+                    <?php else:?>
+                    <span class="m_color2">{$vo.status}</span>
+                    <?php endif;?>
+                    <?php if($vo['gtime']!=''):?>
+                    <br/>{$vo.gtime}
+                    <?php endif;?>
+                <?php endif;?>
+            </li>
+            <li><a href="{:U('shop/Myshop/zjDetail',array('id'=>$vo['id']))}">查看详情</a>
+    <?php if($vo['type']==3&&$vo['status']=='有效'):?>
+    </br><span class="prize_do_btn ml15 mt5 b center"><a href="javascript:getYgId({$vo.ygid})">前往使用</a></span>
+    <?php endif;?>
+    <?php if($vo['type']==1):?>
+        <?php if($vo['order_state']==0):?>
+        </br><span class="prize_do_btn ml15 mt5 b center"><a href="{:U('shop/Myshop/zjDetail',array('id'=>$vo['id']))}">完善配送信息</a></span>
+        <?php elseif($vo['order_state']==2):?>
+        </br><span class="prize_do_btn ml15 mt5 b center"><a href="{:U('shop/Myshop/zjDetail',array('id'=>$vo['id']))}">确认收货</a></span>
+        <?php endif;?>
+    <?php endif;?>
+            </li>
+        </ul>
+    </div>
+</li>
+</volist>
+<?php endif;?>
+                    </ul>
+                    <div class="page">{$html}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function getYgId(id){
+        $.post(U('shop/Myshop/ygId'), {id:id}, function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else if(json.status==1){
+                window.location.href = U('shop/Yg/detail')+'&id=' + json.info;
+            }
+        });
+    }
+</script>
+<include file="../Public/_footer" />

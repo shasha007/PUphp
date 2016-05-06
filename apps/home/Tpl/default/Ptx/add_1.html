@@ -1,0 +1,160 @@
+<include file="_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+
+<link href="__PUBLIC__/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/setavatar/jquery.imgareaselect.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="list" width="44%">
+        <table id="document_list" width="700px" border="1" cellspacing="0" cellpadding="0" text-align="center">
+            <if condition="$ptx_list neq null">
+                <tr>
+                <if condition="$list.rtime neq 0">
+                    <th colspan="2">发布日期:{$list.rtime|date="Y-m-d H:i:s",###}</th>
+                    <else />
+                    <th colspan="2">发布日期: -未发布-</th>
+                </if>
+                </tr>
+                <foreach name="ptx_list" item="val">
+                    <tr id="{$val.id}">
+                    <if condition="$val.isbig eq 1">
+                        <th><img width="100%" height="140px;" src="{$val.img|tsMakeThumbUp=###,900,500}" /><br/>{$val.title}</th>
+                        <th width="10%"><a href="__URL__&act=add&list_id={$val.id}">修改</a></th>
+                        <else />
+                        <th><span>{$val.title}</span><img width="60px;" height="60px;" src="{$val.img|tsMakeThumbUp=###,200,200}" style="float: right;"></th>
+                        <th width="10%"><a href="__URL__&act=add&list_id={$val.id}">修改</a></th>
+                    </if>
+                    <td><a href="javascript:void(0)" class="ico_top" onclick="move('{$val['id']}','up');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>&nbsp;&nbsp;
+                        <a href="javascript:void(0)" class="ico_btm" onclick="move('{$val['id']}','down');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>
+                    </td>
+                    </tr>
+                </foreach>
+            </if>
+        </table>
+    </div>
+    <div>
+                <form enctype="multipart/form-data" class="form_validator" method="post" name="upform" dotype="ajax"
+                      callback="dosaveface" target="_blank" action="{:U('home/Public/dosave')}">
+                    <input type="hidden" name="picurl">
+                    <input type="hidden" name="x1">
+                    <input type="hidden" name="y1">
+                    <input type="hidden" name="x2">
+                    <input type="hidden" name="y2">
+                    <input type="hidden" name="w">
+                    <input type="hidden" name="h">
+                    <div style="clear:left; padding-top:20px;"> <input type="submit" class="btn_b" value="保存" />
+                        <input type="button" class="btn_w" value="取消" onclick="unSetFace()" /></div>
+                </form>
+            <form enctype="multipart/form-data" class="form_validator" method="post" id="uploadpic" name="upform" dotype="ajax"
+                  callback="uploadpic" target="upload_target" action="{:U('home/Public/upload')}">
+                <input type="file" name="Filedata" onchange="douploadpic()" id="Filedata"/>
+                <span style="display:none;" id="loading_gif">
+                    <img src="__THEME__/newimages/loading.gif" align="absmiddle" />上传中，请稍侯......</span>
+            </form>
+            <div class="picSettings">
+                <div id="photo" class="left" style="width:330px; height:330px; border-right:1px solid #E5E5E5"></div>
+            </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var wx = 90;
+    var hy = 50;
+    var scale = '9:5';
+    function callback(fun,argum){
+        fun(argum);
+    }
+
+    function dosaveface(txt){
+        if (txt=='-1') {
+            ui.error('更新失败');
+        }else {
+            alert('更新成功');
+            location.reload();
+        }
+    }
+
+    function douploadpic(){
+        $('#loading_gif').show();
+        $('input[name="Filedata"]').hide();
+        var options = {
+            success: function(txt) {
+                uploadpic(txt);
+            }
+        };
+        $('#uploadpic').ajaxSubmit(options);
+        return false;
+    }
+    var imgrs;
+    function uploadpic(txt){
+        txt = eval('('+txt+')');
+        if(txt.code==1){
+            var tmpDate = new Date();
+            set_UP_W_H(txt.data['picwidth'],txt.data['picheight']);
+            var defautlv = ( txt.data['picwidth'] > txt.data['picheight']) ?txt.data['picheight']:txt.data['picwidth'];
+            //		$("#photo").attr('src',txt.data['picurl']+'?t='+ tmpDate.getTime());
+            $("#photo").html("<img id='photo_img' src="+txt.data['picurl']+'?t='+ tmpDate.getTime()+">");
+            $("input[name=picurl]").attr('value',txt.data['picurl']);
+            $("#photo_big").attr('src',txt.data['picurl']+'?t='+ tmpDate.getTime());
+
+            imgrs = $('#photo_img').imgAreaSelect({
+                x1: 0,
+                y1: 0,
+                x2: wx,
+                y2: hy,
+                handles: true,
+                onInit:preview,
+                onSelectChange:preview,
+                onSelectEnd:onSelectEnd,
+                aspectRatio: scale,
+                instance: true,
+                parent:$('#photo')
+            });
+            $('#loading_gif').hide();
+        }else{
+            alert(txt.message);
+        }
+    }
+
+    //重新上传图片
+    function unSetFace(){
+        var defaultpic = "{$mid|getUserFace=b}"
+        $('input[name="Filedata"]').show();
+
+        if($("#photo").html()!=''){
+            imgrs.setOptions({ remove:true });
+            imgrs.update();
+        }
+        document.getElementById("uploadpic").reset()
+        $("#photo").html("");
+        $("input[name=picurl]").attr('value','');
+        $("#photo_big").attr('src',defaultpic);
+        $('#photo_big').attr('style','position: relative;');
+    }
+    function onSelectEnd(img,selection){
+        if(doNothing()){
+            return false;
+        }
+        $('input[name=x1]').val(selection.x1);
+        $('input[name=y1]').val(selection.y1);
+        $('input[name=x2]').val(selection.x2);
+        $('input[name=y2]').val(selection.y2);
+        $('input[name=w]').val(selection.width);
+        $('input[name=h]').val(selection.height);
+    }
+    function doNothing(){
+        if(selection.width && selection.height){
+            return true;
+        }
+        return false;
+    }
+</script>
+<include file="_footer" />

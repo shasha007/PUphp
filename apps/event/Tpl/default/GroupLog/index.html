@@ -1,0 +1,51 @@
+<include file="../GroupPublic/_mhead" />
+<div class="st_m1 mt10 ml20 st_link">
+    <div class="st_submenu h24 ml10">
+        <li <eq name="on" value="all">class="st_cur2"</eq>>
+            <a href="{:U('event/GroupLog/index', array('gid'=>$gid))}">全部</a>
+        </li>
+            </li>
+        <li <eq name="on" value="member">class="st_cur2"</eq>>
+            <a href="{:U('event/GroupLog/member', array('gid'=>$gid,'type'=>'member'))}">成员管理</a>
+        </li>
+        <li <eq name="on" value="setting">class="st_cur2"</eq>>
+            <a href="{:U('event/GroupLog/setting', array('gid'=>$gid,'type'=>'setting'))}" >部落设置</a>
+        </li>
+    </div>
+    <div class="st_m4_l mt10">
+        <ul>
+            <volist name="logList['data']" id="log">
+                <li class="hover_div" id="list_{$log.id}">
+                    <div class="st_m4_thumb"><space uid="log['uid']" target="_blank">{uavatar=m}</space></div>
+                    <div class="st_m4_text c9">
+                        <a class="hover del" callback="delLog({$log.id})" onclick="ui.confirm(this,'确定要删除该日志?')" href="javascript:void(0);"></a>
+                        {$log.ctime|friendlyDate}</div>
+                    <div class="st_m4_text mt5">{$log.content}</div>
+                </li>
+            </volist>
+        </ul>
+        <div id="pages" class="page">{$logList['html']}</div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    var gid = {$gid};
+    function delLog(ids) {
+        ids = ids ? ids : getChecked();
+        ids = ids.toString();
+        if (ids == '') return false;
+        $.post(U('event/GroupLog/doDel'), {ids:ids,gid:gid}, function(res){
+            if (res == '1') {
+                ui.success('删除成功');
+                ids = ids.split(',');
+                for(i = 0; i < ids.length; i++) {
+                    $('#list_'+ids[i]).remove();
+                }
+            }else {
+                ui.error('删除失败');
+            }
+        });
+    }
+</script>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

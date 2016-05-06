@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>校邮汇迎新-{$document.title}</title>
+<link href="../Public/css/style.css" rel="stylesheet" type="text/css" />
+<!--[if IE]> 
+<link rel="stylesheet" type="text/css" href="../Public/css/ie.css" /> 
+<![endif]-->
+</head>
+
+<body>
+<div class="view_header"></div>
+<div class="view_banner">
+    <div class="view_banner01"></div>
+    <div class="view_banner02">
+        <div class="view_jionus_box">
+            <a href="{:U('newcomer/Index/register')}"></a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="view_content">
+	<div class="content_box view_news">
+		<div>
+			<div class="leftbox">
+	            <div class="box_header">
+	            	<span class="box_title">迎新快讯: {$document.category0|getDocCategoryName}</span>                
+	            </div>
+	            <div class="box_content">
+	            	<div class="text_box">
+						<ul>
+						<php>foreach( $documents['data'] as $d ){</php>
+		            	<li class="news_title">
+							<a href="{:U('newcomer/Index/news',array(id=>$d['document_id']))}">
+							<php>echo "[".date("m",$d['mtime'])."-".date("d",$d['mtime'])."]";</php>
+                        	{$d['title']|t|getShort=###,12,'……'}</a>
+                        </li>
+						<php>}</php>
+						</ul>
+						&nbsp;
+	                </div>
+	            </div>
+	            <div class="box_bottom"></div>
+				</div>
+		    	<div class="rightbox">
+		            <div class="box_header">
+						<a class="box_back" href="{:U('newcomer/Index/index')}">返回首页</a>
+		            	<span class="box_title">资讯正文</span>                
+		            </div>
+		            <div class="box_content">
+		            	<div class="text_box">
+		            		<div class="text_title">{$document.title}</div>
+		                    <div class="text_param">{$document.mtime|friendlyDate} 浏览次数：{$document.readCount}</div>
+		                    <div class="text_content">
+
+								{$document.content}
+								
+								<br />&nbsp;
+		                  </div>
+		                </div>
+		            </div>
+		            <div class="box_bottom"></div>
+		        </div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="pics">
+			<php>foreach( $photos['data'] as $d ){</php>	
+            <div class="pic">
+				<a href="{:U('newcomer/Index/news',array(id=>$d['document_id']))}"><img src="{$d['icon']|get_document_url}" /></a>
+			</div>
+			<php>}</php>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+	<div class="footer_box">
+        <div class="copyright">
+        	校邮汇版权所有 苏ICP证050725号
+        </div>
+        <div class="menu">
+            <a href="{:U('home/Public/document',array(id=>1))}" target="_blank">常见问题</a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="{:U('home/Public/document',array(id=>2))}" target="_blank">关于校邮汇</a>
+        </div>
+        <div class="clearfix"></div>
+	</div>
+</div>
+</body>
+</html>

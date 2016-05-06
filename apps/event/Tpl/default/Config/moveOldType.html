@@ -1,0 +1,45 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+    <include file="_tab" />
+    首次自定义分类，需完成【步骤2】后方可生效<br/>
+    <div class="Toolbar_inbox">
+        <a href="__URL__&act=typeList" class="btn_a"><span>步骤1.添加分类</span></a> >>
+        <a href="__URL__&act=moveOldType" class="btn_a"><span class="cRed">步骤2.整合旧分类</span></a> >> 完成！
+    </div>
+    <div class="list">
+        <form method="post" action="__URL__&act=doMoveOldType">
+            <table width="50%;" border="1" cellspacing="0" cellpadding="10">
+                <tr>
+                    <td style="width:100px;">【旧活动的分类】</td>
+                    <td style="width:50px;">修改为</td>
+                    <td>【新分类】</td>
+                </tr>
+                <?php foreach($oldType as $v): ?>
+                    <tr>
+                        <td>{$v.name}</td>
+                        <td>=></td>
+                        <td>
+                            <select name="newIds[]" class="text">
+                            <option value="0">--请选择新分类--</option>
+                            <?php foreach($newType as $k): ?>
+                                <option value="{$k.id}">{$k.name}</option>
+                            <?php endforeach; ?>
+                            </select>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td><span class="cRed">此操作不可逆，而且是唯一的一次性执行（今后将不会出现该页面），<br/>请谨慎操作！！！</span>
+                        <br/><input type="submit" class="btn_b" value="提 交"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<include file="../Teacher/_footer" />
+<script>
+
+</script>

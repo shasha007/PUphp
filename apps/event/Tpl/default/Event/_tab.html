@@ -1,0 +1,42 @@
+<div class="page_tit">活动管理</div>
+<div class="tit_tab">
+<ul>
+    <li><a <eq name="ACTION_NAME" value="index">class="on"</eq>
+            href="__URL__&act=index">活动介绍</a></li>
+    <li><a <eq name="ACTION_NAME" value="eventlist">class="on"</eq>
+            <eq name="ACTION_NAME" value="editEvent">class="on"</eq>
+            href="__URL__&act=eventlist">活动管理</a></li>
+    <?php if($province == 1){ ?>
+    <li><a <eq name="ACTION_NAME" value="SpecialEvenLlist">class="on"</eq>
+            href="__URL__&act=SpecialEvenLlist">专题活动管理</a></li>
+    <?php } ?>
+    <?php if($showAudit1):?>
+    <li>
+        <a <eq name="ACTION_NAME" value="audit1">class="on"</eq> href="__URL__&act=audit1">待初审
+            <?php if($auditCount1):?><strong style="color: #F00;">(<span  id="auditCount">{$auditCount1}</span>)</strong><?php endif;?>
+        </a>
+    </li>
+    <?php endif;?>
+    <?php if($showAudit2):?>
+    <li>
+        <a <eq name="ACTION_NAME" value="audit2">class="on"</eq> href="__URL__&act=audit2">待终审
+            <?php if($auditCount2):?><strong style="color: #F00;">(<span  id="auditCount">{$auditCount2}</span>)</strong><?php endif;?>
+        </a>
+    </li>
+    <?php endif;?>
+    <li><a <eq name="ACTION_NAME" value="finish">class="on"</eq> href="__URL__&act=finish">待完结
+        <?php if($finishCount):?><strong style="color: #F00;">(<span  id="finishCount">{$finishCount}</span>)</strong><?php endif;?>
+        </a></li>
+    <?php if($eventAdmin):?>
+    <li><a <eq name="ACTION_NAME" value="newsList">class="on"</eq> href="__URL__&act=newsList">新闻</a></li>
+    <li><a <eq name="ACTION_NAME" value="flashList">class="on"</eq> href="__URL__&act=flashList">视频</a></li>
+    <li><a <eq name="ACTION_NAME" value="imgList">class="on"</eq> href="__URL__&act=imgList">图片</a></li>
+    <?php endif;?>
+    <?php if($aufeAuditUrl):?>
+        <li><a href="{$aufeAuditUrl}" target="__blank">[经费活动审核]</a></li>
+    <?php endif;?>
+    <?php if($editStuPracticeTeam):?>
+        <li><a href="{$editStuPracticeTeam}" target="__blank">[假期社会实践]</a></li>
+    <?php endif;?>
+</ul>
+</div>

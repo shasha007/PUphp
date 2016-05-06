@@ -1,0 +1,87 @@
+<include file="_header" />
+<div class="kdl_mobile_page m_mb50">
+ <div class="kdl_mobile_header">
+  <div class="kdl_m_header f14 bold tcenter">
+      <a href="{:U('shop/PocketShop/addPrice')}"><li class="cur">口袋金</li></a><a href="{:U('shop/PocketShop/index')}"><li>分期商城</li></a>
+  </div>
+  <!--<a href="{:U('shop/PocketShop/myList')}"><div class="kdl_dd"></div></a>-->
+  </div>
+  <div class="clear"></div>
+  <div class="m_hr1"></div>
+  <div class="m_cash_thumb m_mt50"><img src="../Public/images/icon_cash.jpg"></div>
+  <form action="{:U('shop/PocketShop/doAddPrice')}" method="post">
+<div class="m_cash f14">金额：<span class="m_color1 bold">（请选择借贷的金额）</span>
+<div class="m_cash_option">
+    <input type="hidden" name="price" id="price">
+    <foreach name="priceList" item="val">
+    <li onclick="change(this);" m="{$val}">￥{$val}.00</li>
+    </foreach>
+
+</div>
+</div>
+<div class="clear"></div>
+<div class="m_cash f14">期数：<span class="m_color1 bold">（请选择还款的月数）</span>
+<div class="m_cash_option1">
+    <input type="hidden" name="staging" id="staging">
+    <foreach name="stagingList" item="val">
+    <li onclick="changestag(this);">{$val}</li>
+    </foreach>
+    </div>
+<div class="clear"></div>
+</div>
+
+<div class="m_cash f14">申请理由：<select name="reasonId" class="m_cash_select">
+        <option>--请选择--</option>
+        <foreach name="list" item="val">
+        <option value="{$val.id}">{$val.name}</option>
+        </foreach>
+
+    </select></div>
+<div class="m_cash f14">详情：</div>
+<div class="m_hr1"></div>
+<div class="m_cash_desc">
+<p>生活费有限，需求无限大，怎么办？</p>
+<p>是创业，是报培训课程，还是去旅游，不用再取舍，不用再纠结，口袋金帮你来搞定！</p>
+<p>口袋金是专门为大学生提供创业基金，助学基金等多项服务的一款金融产品。</p>
+<img src="../Public/images/cash_note2.jpg"></div>
+
+
+<div class="clear"></div>
+   <div class="m_c_buy f18"><input type="submit" value="确定" class="m_btn"></div>
+   </form>
+   </div>
+   <script type="text/javascript">
+
+       function change(obj){
+           //alert(obj);
+
+           var bm = $(obj).siblings();
+           //alert(bm);
+            for(var i =0;i<bm.length;i++){
+                $(bm[i]).removeClass("cur");
+            }
+            $(obj).addClass("cur");
+            var m = $(obj).attr("m")
+            //alert(m);
+            var pr = $('#price');
+            pr.val(m);
+
+       }
+
+        function changestag(obj){
+           //alert(obj);
+
+           var sbm = $(obj).siblings();
+           //alert(bm);
+            for(var i =0;i<sbm.length;i++){
+                $(sbm[i]).removeClass("cur");
+            }
+            $(obj).addClass("cur");
+            var sm = $(obj).text();
+            //alert(m);
+            var str = $('#staging');
+            str.val(sm);
+
+       }
+   </script>
+<include file="_footer" />

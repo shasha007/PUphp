@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="../Public/js/jquery-2.1.1.min.js"></script>
+    <script src="../Public/js/bootstrap.min.js"></script>
+    <title>元宵节</title>
+    <style>
+        html {
+            font-size: 62.5%;
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+        img{max-width: 100%;height: auto}
+        a,
+        a:active,a:link,a:visited,a:hover {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: inherit;
+            border:none;
+            box-shadow:none;
+        }
+        .modal-dialog {
+            position: absolute;
+            width: auto;
+            margin: 10px;
+        }
+        .question-index img{
+            position:fixed;
+            height:100%;
+            width: 100%;
+            z-index: 0;
+        }
+        .question-footer{
+            position: absolute;
+            width: 50%;
+            left: 25%;
+            bottom: 8%;
+            z-index: 1;
+        }
+        .question-button{
+            width: 100%;
+            height: 30px;
+            margin: 0 auto;
+            color: #000;
+            text-align: center;
+            line-height: 30px;
+            background-color: #fbd437;
+            box-shadow: 2px 2px 5px #9d9d9d;
+            border-radius: 3px;
+        }
+        .rule{
+            display: block;
+            margin: 0 auto;
+            padding-top: 10px;
+            text-decoration:  underline;
+            text-align: center;
+        }
+        #alert-close {
+            position: absolute;
+            width: 10%;
+            top: 0%;
+            left: 0%;
+            z-index: 3;
+        }
+        #alert-close-1{
+            position: absolute;
+            width: 10%;
+            top: 10%;
+            left: 85%;
+            z-index: 3;
+        }
+        .modal-dialog{
+
+        }
+    </style>
+</head>
+
+<body>
+<div class="question-index">
+    <img class="img-responsive" src="../Public/images/Asking/index.png">
+</div>
+<footer class="question-footer">
+<div class="question-button"><span id="start-game" href="">开始游戏</span></div>
+<a class="rule">活动规则</a>
+</footer>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <img class="img-responsive" id="rule-pic" src="../Public/images/Asking/rule.png">
+            </div>
+            <img class="img-responsive" id="alert-close" src="../Public/images/Asking/close_1.png">
+        </div>
+    </div>
+
+<div class="modal fade" id="over-alert" >
+    <div class="modal-dialog" style="top: 25%;">
+        <div class="modal-content">
+            <img class="img-responsive" id="over-pic" src="../Public/images/Asking/over.png">
+        </div>
+            <img class="img-responsive" id="alert-close-1" src="../Public/images/Asking/close.png">
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(".rule").click(function () {
+        $('#myModal').modal('show');
+
+    })
+    $("#alert-close-1").click(function () {
+        $("#over-alert").modal("hide");
+    });
+    $("#alert-close").click(function () {
+        $("#myModal").modal("hide");
+    });
+
+    $(function () {
+        $("#start-game").click(function () {
+            $.ajax({
+                url: "/index.php?app=wap&mod=Asking&act=index&id=1",
+                type: 'post',
+                dataType : "json",
+                data: {
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.status);
+                    console.log(XMLHttpRequest.readyState);
+                    console.log(textStatus);
+                },
+                success: function (data) {
+                    if(data.leftTimes!=0){
+                        window.location.href="/index.php?app=wap&mod=Asking&act=question";
+                    }else{
+                        $('#over-alert').modal('show');
+                    }
+                }
+            });
+        });
+    })
+</script>

@@ -1,0 +1,73 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Pocket/puOrderList')}" class="btn_a"><span>特卖商品订单</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>学校</th>
+                <th>商品名称</th>
+                <th>首付</th>
+                <th>分期数</th>
+                <th>每月还款</th>
+                <th>下单时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.school}</td>
+                    <td>{$vo.goods}</td>
+                    <td>{$vo.shoufu}</td>
+                    <td>{$vo.staging}</td>
+                    <td>{$vo.stagPrice}</td>
+                    <td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+                    <td>
+                        <if condition="$vo['status'] eq 1">审核通过
+                        <elseif condition="$vo['status'] eq 2"/>驳回
+                        <else />待审核
+                        </if>
+                    </td>
+                    <td>
+                        <a href="javascript:;" onclick="edit('{$vo['id']}')">查看订单详情</a>
+                        <if condition="$vo['status'] eq 0">
+                            <a href="__URL__&act=doOrder&id={$vo.id}" onclick="return confirm('确认该订单审核成功？')">通过审核</a>
+                            <a href="__URL__&act=editOrder&id={$vo.id}">驳回</a>
+                        </if>
+                        <!--<a href="__URL__&act=addStaging&gid={$vo.id}">添加口袋乐商品</a>-->
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+
+    </div>
+</div>
+<script>
+
+function edit(id)
+{
+    ui.box.load('__URL__&act=userInfo&id='+id,{title:'详情'});
+}
+</script>
+<include file="_footer" />

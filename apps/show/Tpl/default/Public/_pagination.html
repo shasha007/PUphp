@@ -1,0 +1,22 @@
+<php>if($totalPages > 1) { </php>
+    <div class="plist_up"><a href="{$url}&p=<?php echo max(array($nowPage - 1,1)) ?>">上一页</a></div>
+    <div class="plist_common">
+        <?php $start = 1;$end = $totalPages;
+            if($totalPages > 9){
+                $left = $nowPage-4;
+                $start = ($left >= 1)?$left:1;
+                $end = min(array($start+8,$end));
+                if($end-$start+1<9){
+                    $start = max($end-8,1);
+                }
+            }
+            for ($i = $start; $i <= $end; $i++): ?>
+                <?php if ($i == $nowPage) :?>
+                    <span class="ipage"><a class="ipage" href="{$url}&p=<?php echo $i ?>"><?php echo $i ?></a></span>
+                <?php else: ?>
+                    <a class="ipage" href="{$url}&p=<?php echo $i ?>"><?php echo $i ?></a>
+                <?php endif; ?>
+       <?php endfor; ?>
+    </div>
+    <div class="plist_down"><a href="{$url}&p=<?php echo min(array($nowPage + 1,$totalPages)) ?>">下一页</a></div>
+<php>}</php>

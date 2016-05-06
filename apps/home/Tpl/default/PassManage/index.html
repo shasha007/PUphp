@@ -1,0 +1,174 @@
+<include file="_header" />
+<div class="so_main">
+  <div class="page_tit">用户管理</div>
+  <!-------- 搜索用户 -------->
+  <div id="searchUser_div" <neq name="type" value="searchUser">style="display:none;"</neq>>
+  	<div class="page_tit">搜索用户 [ <a href="javascript:void(0);" onclick="searchUser();">隐藏</a> ]</div>
+	<div class="form2">
+	<form method="post" action="{:U('home/PassManage/doSearchUser')}">
+    <dl class="lineD">
+      <dt>学号：</dt>
+      <dd>
+          <input name="num" id="num" type="text" value="{$num}">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学校：&nbsp;&nbsp;
+        <select class="chosen" name="sid" id='sid'>
+            <option value="">全部</option>
+            <volist name="tree" id="vo">
+                <option value="{$vo.a}"
+                <?php if($vo['a']==$sid) echo 'selected' ?>>{$vo.pinyin} - {$vo.t}</option>
+            </volist>
+        </select>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;院校：&nbsp;&nbsp;
+        <span id="pid1">
+            <select name="sid1" id='sid1'>
+                <option value=''>全部</option>
+            </select>
+        </span>
+          </dd>
+    </dl>
+    <dl class="lineD">
+        <dt>年级：</dt>
+        <dd>
+            <input name="year" id="year" type="text" value="">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名：&nbsp;&nbsp;
+              <input name="realname" id="realname" type="text" value="{$realname}">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称：&nbsp;&nbsp;
+              <input name="uname" id="uname" type="text" value="{$uname}">
+        </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>身份：</dt>
+      <dd>
+      	<input name="event_level" type="radio" value="" <eq name="event_level" value="">checked</eq>>全部
+        <input name="event_level" type="radio" value="20" <eq name="event_level" value="20">checked</eq>>学生
+        <input name="event_level" type="radio" value="1" <eq name="event_level" value="1">checked</eq>>老师
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>性别：</dt>
+      <dd>
+      	<input name="sex" type="radio" value="" <eq name="sex" value="">checked</eq>>全部
+        <input name="sex" type="radio" value="1" <eq name="sex" value="1">checked</eq>>男
+        <input name="sex" type="radio" value="0" <eq name="sex" value="0">checked</eq>>女
+      </dd>
+    </dl>
+
+	<dl class="lineD">
+      <dt>是否初始化：</dt>
+      <dd>
+      	<input name="is_init" type="radio" value="" <eq name="is_init" value="">checked</eq>>全部
+        <input name="is_init" type="radio" value="1" <eq name="is_init" value="1">checked</eq>>是
+        <input name="is_init" type="radio" value="0" <eq name="is_init" value="0">checked</eq>>否
+      </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+
+  <!-------- 用户列表 -------->
+  <div class="Toolbar_inbox">
+      <span>共{$totalRows}条记录</span>
+  	<div class="page right">{$html}</div>
+	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+	</a>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+		<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+    	<label for="checkbox"></label>
+	</th>
+    <th class="line_l">ID</th>
+    <th class="line_l">用户信息</th>
+    <th class="line_l">学校</th>
+    <th class="line_l">注册时间</th>
+    <th class="line_l">状态</th>
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="data">
+	  <tr overstyle='on' id="user_{$vo['uid']}">
+            <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.uid}"></td>
+	    <td>{$vo.uid}</td>
+	    <td>
+                <div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;""><img src="{$vo.uid|getUserFace='s'}" width="30"></div>
+                <div style="float:left"><space uid="vo.uid" class="fn" target="_blank">{realname}</space><br>{$vo.email}</div>
+            </td>
+            <td>
+                <php>if(empty($vo['school'])){</php>暂无学校信息<php>}</php>
+                {$vo['school']}<br />
+            </td>
+	    <td>{$vo.ctime|date="Y-m-d H:i",###}</td>
+	    <td><eq name="vo['is_init']" value="0">未初始化<else/>初始化</else></eq></td>
+	    <td>
+                <a href="{:U('home/PassManage/editUser', array('uid'=>$vo['uid']))}">编辑</a>
+            </td>
+	  </tr>
+  </volist>
+  </table>
+  </div>
+  <div class="Toolbar_inbox">
+      <span>共{$totalRows}条记录 </span>
+	<div class="page right">{$html}</div>
+	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+	</a>
+  </div>
+</div>
+
+<script>
+
+    /**
+     * 下拉选择搜索
+     */
+    (function($){
+        $('select.chosen').chosen({width: "500px",search_contains:true});
+    })(jQuery);
+
+//搜索用户
+var isSearchHidden = <neq name="type" value="searchUser">1<else/>0</neq>;
+function searchUser() {
+        if(isSearchHidden == 1) {
+                $("#searchUser_div").slideDown("fast");
+                $(".searchUser_action").html("搜索完毕");
+                isSearchHidden = 0;
+        }else {
+                $("#searchUser_div").slideUp("fast");
+                $(".searchUser_action").html("搜索用户");
+                isSearchHidden = 1;
+        }
+}
+
+function folder(type, _this) {
+        $('#search_'+type).slideToggle('fast');
+        if ($(_this).html() == '展开') {
+                $(_this).html('收起');
+        }else {
+                $(_this).html('展开');
+        }
+
+}
+$(function(){
+    $('#sid').change(function(){
+             $('#academy').show();
+           $('#sid1 option').not(0).remove();
+
+        var val=$('#sid option:selected').val();
+        $.get( U('home/PassManage/childTree') ,{sid:val},function(data) {
+            var obj=  $.parseJSON(data);
+            var option = "<option value=''>请选择····</option>";
+            $.each(obj, function(k, v){
+                option += "<option value=\"" + v['a'] + "\">" + v['t'] + "</option>";
+            });
+            $("#sid1").append(option);
+        });
+   });
+});
+</script>
+
+<include file="_footer" />

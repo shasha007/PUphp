@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>奖品信息</title>
+        <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+        <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../Public/css/style.css?201511252" rel="stylesheet">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta charset="utf-8" />
+        <style type="text/css">
+            html {font-size: 62.5%;}
+            body {font-family: "Microsoft Yahei", 微软雅黑, "Helvetica Neue", Arial, sans-serif;color: #777;background-color: #fff;}
+        </style>
+    </head>
+    <body>
+        <header class="award_header">
+            实物领取,一元梦想使用请登录网站【管理中心/中奖纪录】进行操作
+        </header>
+        <div class="container">
+            <div class="award_tittle">{$name}</div>
+            <div class="award_infor">
+                <p>来源 ：<span>{$zjfrom}</span></p>
+                <p>类型：<span>{$type}</span></p>
+                <p>中奖日期：<span>{$ctime}</span></p>
+                <p>奖品描述：<span>{$description}</span></p>
+            </div>
+        <article class="award_article">
+            {$content}
+        </article>
+          </div>
+    </body>
+    <script>
+    		$(document).ready(function() {
+			var htm = $('.award_article').html();
+//			清除style
+			htm = htm.replace(/[ \t]*style[ \t]*=[ \t]*("[^"]+")|('[^']+')/ig, "");
+			htm = htm.replace(/[ \t]*width[ \t]*=[ \t]*("[^"]+")|('[^']+')/ig, "");
+			htm = htm.replace(/[ \t]*height[ \t]*=[ \t]*("[^"]+")|('[^']+')/ig, "");
+			htm = htm.replace(/[ \t]*width[ \t]*=[ \t]*[^ \t]+/ig, "");
+			htm = htm.replace(/[ \t]*height[ \t]*=[ \t]*[^ \t]+/ig, "");
+			//清除style
+			$('.award_article').html(htm);
+		});
+    </script>
+</html>

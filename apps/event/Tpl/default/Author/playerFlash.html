@@ -1,0 +1,35 @@
+<include file="_header" />
+
+<div class="intro_c">
+    <div class="member_menu b">{$member.realname}</div>
+    <div class="member_back"><a href="{:U('/Author/player',array('id'=>$id))}">返回选手列表</a></div>
+    <div class="member_tab">
+        <a href="javascript:void(0);" class="btn_a" onclick="addFlash({$eventId},{$member['id']})"><span>添加视频</span></a>&nbsp;&nbsp;
+        <a href="javascript:void(0);" class="btn_a" onclick="delFlash({$eventId})"><span>删除视频</span></a>
+    </div>
+    <div class="member_list1">
+        <table width="956" border="0" cellspacing="0" cellpadding="0">
+            <tr class="member_tr1">
+                <td width="30"><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0"></td>
+                <td width="30">ID</td>
+                <td width="100">视频预览图</td>
+                <td width="566">标题</td>
+                <td width="139">发布时间</td>
+                <td width="100">操作</td>
+            </tr>
+            <volist name="data" id='vo'>
+            <tr class="member_tr3" id="list_{$vo.id}">
+                <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                <td>{$vo.id}</td>
+                <td><a href="javascript:playFlash('{$vo.id}');" title=""><img width="80" height="80" src="{$vo.path|get_flash_img}"></a></td>
+                <td>{$vo.title|getShort=###,127,'…'}</td>
+                <td>{$vo.cTime|friendlyDate}</td>
+                <td><a href="javascript:delFlash({$eventId},{$vo.id});" >删除</a></td>
+            </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+
+<include file="_footer" />

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+<title>幸运抽奖</title>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta name="author" content="pocketuni.net"/>
+<meta name="revisit-after" content="1 days"/>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+
+<link href="../Public/css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../Public/js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="../Public/js/awardRotate.js"></script>
+
+<script type="text/javascript">
+$('.tip').hide();
+var turnplate={
+		restaraunts:[],				//大转盘奖品名称
+		colors:[],					//大转盘奖品区块对应背景颜色
+		outsideRadius:192,			//大转盘外圆的半径
+		textRadius:155,				//大转盘奖品位置距离圆心的距离
+		insideRadius:68,			//大转盘内圆的半径
+		startAngle:0,				//开始角度
+
+		bRotate:false				//false:停止;ture:旋转
+};
+
+$(document).ready(function(){
+	//动态添加大转盘的奖品与奖品区域背景颜色
+	turnplate.restaraunts = [<php>echo $prizeJs</php>];
+	turnplate.colors = [<php>echo $prizeColorJs</php>];
+
+
+	var rotateTimeOut = function (){
+		$('#wheelcanvas').rotate({
+			angle:0,
+			animateTo:2160,
+			duration:8000,
+			callback:function (){
+				alert('网络超时，请检查您的网络设置！');
+			}
+		});
+	};
+
+	//旋转转盘 item:奖品位置; txt：提示语;
+	var rotateFn = function (item, txt,strHtml){
+		var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length*2));
+		if(angles<270){
+			angles = 270 - angles;
+		}else{
+			angles = 360 - angles + 270;
+		}
+		$('#wheelcanvas').stopRotate();
+		$('#wheelcanvas').rotate({
+			angle:0,
+			animateTo:angles+1800,
+			duration:8000,
+			callback:function (){
+                $('.tip').html(strHtml);
+                $('.tip').show();
+                showOverlay();
+				turnplate.bRotate = !turnplate.bRotate;
+			}
+		});
+	};
+
+	$('.pointer').on("click",function(){
+
+		if(turnplate.bRotate)return;
+		turnplate.bRotate = !turnplate.bRotate;
+		//获取奖品
+		$.ajax
+		({
+			type		:'POST',
+			url			:'/?app=api&mod=Activity&act=getPrize',
+			dataType    :'json',
+			data		:{act_id:<php>echo $act_id</php>,oauth_token:<php>echo "'".$oauth_token."'"</php>,oauth_token_secret:<php>echo "'".$oauth_token_secret."'"</php>},
+			success		:function(str)
+			{
+
+                            if(str.data){
+                                strHtml = str.data.html;
+                            }
+                if(str.code == '1') {
+                	var prizename = $('#prizename').text();
+                	item = str.data.sort;
+                    rotateFn(item, turnplate.restaraunts[item-1],strHtml);
+                } else {
+                    alert(str.msg);exit;
+                	item = 7;
+                        rotateFn(item, turnplate.restaraunts[item-1],str.msg);
+                }
+                $('#surpCount').html(str.data.surpCount);
+			}
+		});
+
+	});
+});
+
+function closeTip()
+{
+	$('.tip').hide();
+	hideOverlay();
+}
+
+function getprize()
+{
+	prizename = $('#prizename').text();
+	prize_id = $('#prize_id').val();
+	win_prize_id = $('#win_prize_id').val();
+	id = <php>echo $act_id</php>;
+
+	//获取奖品
+	$.ajax
+	({
+		type		:'POST',
+		url			:'/?app=api&mod=Activity&act=addInfoHtml',
+		dataType    :'json',
+		data		:{prizename:prizename,prize_id:prize_id,win_prize_id:win_prize_id,oauth_token:<php>echo "'".$oauth_token."'"</php>,oauth_token_secret:<php>echo "'".$oauth_token_secret."'"</php>},
+		success		:function(str)
+		{
+			if(str.code == '1') {
+            	$('.tip').html(str.data.html);
+            	showOverlay();
+            } else {
+            	alert('获取失败');
+            	hideOverlay();
+            }
+		}
+	});
+}
+
+function addInfo()
+{
+	if($("#realname").length >0) {
+		var realname = $('#realname').val();
+		if(!realname) {
+			alert('请填写姓名');
+			return false;
+		}
+	} else {
+		var realname = '';
+	}
+	if($("#tel").length >0) {
+		var tel = $('#tel').val();
+		if(!tel) {
+			alert('请填写手机号码');
+			return false;
+		}
+	} else{
+		var tel = '';
+	}
+	if($("#address").length >0) {
+		var address = $('#address').val();
+		if(!address) {
+			alert('请填写联系地址');
+			return false;
+		}
+	} else {
+		var address = '';
+	}
+
+	var act_id = $('#act_id').val();
+	var prize_id = $('#prize_id').val();
+	var win_prize_id = $('#win_prize_id').val();
+
+	$.ajax
+	({
+		type		:'POST',
+		url			:'/?app=api&mod=Activity&act=addInfo',
+		dataType    :'json',
+		data		:{act_id:act_id,prize_id:prize_id,win_prize_id:win_prize_id,realname:realname,tel:tel,address:address,oauth_token:<php>echo "'".$oauth_token."'"</php>,oauth_token_secret:<php>echo "'".$oauth_token_secret."'"</php>},
+		success		:function(str)
+		{
+			if(str.code == '1') {
+            	alert('提交成功');
+            	$('.tip').hide();
+            } else {
+            	alert(str.msg);
+            	return false;
+            }
+			hideOverlay();
+		}
+	});
+}
+
+function rnd(n, m){
+	var random = Math.floor(Math.random()*(m-n+1)+n);
+	return random;
+
+}
+
+
+//页面所有元素加载完毕后执行drawRouletteWheel()方法对转盘进行渲染
+window.onload=function(){
+	drawRouletteWheel();
+};
+
+function drawRouletteWheel() {
+  var canvas = document.getElementById("wheelcanvas");
+  if (canvas.getContext) {
+	  //根据奖品个数计算圆周角度
+	  var arc = Math.PI / (turnplate.restaraunts.length/2);
+	  var ctx = canvas.getContext("2d");
+	  //在给定矩形内清空一个矩形
+	  ctx.clearRect(0,0,422,422);
+	  //strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式
+	  ctx.strokeStyle = "#FFBE04";
+	  //font 属性设置或返回画布上文本内容的当前字体属性
+	  ctx.font = '16px Microsoft YaHei';
+	  for(var i=0; i<turnplate.restaraunts.length;i++) {
+		  var angle = turnplate.startAngle + i * arc;
+		  ctx.fillStyle = turnplate.colors[i];
+		  ctx.beginPath();
+		  //arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）
+		  ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);
+		  ctx.arc(211, 211, turnplate.insideRadius, angle + arc, angle, true);
+		  ctx.stroke();
+		  ctx.fill();
+		  //锁画布(为了保存之前的画布状态)
+		  ctx.save();
+
+		  //----绘制奖品开始----
+		  ctx.fillStyle = "#E5302F";
+		  var text = turnplate.restaraunts[i];
+		  var line_height = 17;
+		  //translate方法重新映射画布上的 (0,0) 位置
+		  ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
+
+		  //rotate方法旋转当前的绘图
+		  ctx.rotate(angle + arc / 2 + Math.PI / 2);
+
+		  /** 下面代码根据奖品类型、奖品名称长度渲染不同效果，如字体、颜色、图片效果。(具体根据实际情况改变) **/
+		  if(text.length>10){
+			  text = text.substring(0,10)+"||"+text.substring(10);
+			  var texts = text.split("||");
+			  for(var j = 0; j<texts.length; j++){
+				  ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+			  }
+		  }else{
+			  ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+		  }
+
+		  ctx.restore();
+	  }
+  }
+}
+</script>
+</head>
+<body style="background:#e84144;overflow-x:hidden;">
+ <div class="bg">
+  <div class="main">
+   <div class="lucky_header"><img src="../Public/images/lucky_header.png" /></div>
+    <img src="../Public/images/1.png" id="shan-img" style="display:none;" />
+    <img src="../Public/images/2.png" id="sorry-img" style="display:none;" />
+	<div class="banner mt15">
+		<div class="turnplate" style="background-image:url(../Public/images/turnplate-bg2.png);background-size:100% 100%;">
+			<canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+			<img class="pointer" src="../Public/images/turnplate-pointer.png"/>
+		</div>
+	</div>
+    <div class="lucky_count">您还有<span class="yellow" id='surpCount'>{$surpCount}</span>次抽奖机会</div>
+    <div class="my_record my_record"><a href="/index.php?app=shop&mod=Activity&act=winlist&act_id=<php>echo $act_id</php>">中奖记录</a></div>
+    <div class="lucky_note">活动说明</div>
+    <div class="lucky_notedesc">{$activity.rule}</div>
+
+    <div id='overlay'>
+   <div class="tip">
+   </div>
+   </div>
+
+
+  </div>
+ </div>
+</body>
+<script>
+/* 显示遮罩层 */
+function showOverlay() {
+    $("#overlay").height(pageHeight());
+    $("#overlay").width(pageWidth());
+
+    // fadeTo第一个参数为速度，第二个为透明度
+    // 多重方式控制透明度，保证兼容性，但也带来修改麻烦的问题
+    $("#overlay").fadeTo(200, 0.9);
+}
+
+/* 隐藏覆盖层 */
+function hideOverlay() {
+    $("#overlay").fadeOut(200);
+}
+
+/* 当前页面高度 */
+function pageHeight() {
+    return document.body.scrollHeight;
+}
+
+/* 当前页面宽度 */
+function pageWidth() {
+    return document.body.scrollWidth;
+}
+/* 定位到页面中心 */
+function adjust(id) {
+    var w = $(id).width();
+    var h = $(id).height();
+
+    var t = scrollY() + (windowHeight()/2) - (h/2);
+    if(t < 0) t = 0;
+
+    var l = scrollX() + (windowWidth()/2) - (w/2);
+    if(l < 0) l = 0;
+
+    $(id).css({left: l+'px', top: t+'px'});
+}
+
+//浏览器视口的高度
+function windowHeight() {
+    var de = document.documentElement;
+
+    return self.innerHeight || (de && de.clientHeight) || document.body.clientHeight;
+}
+
+//浏览器视口的宽度
+function windowWidth() {
+    var de = document.documentElement;
+
+    return self.innerWidth || (de && de.clientWidth) || document.body.clientWidth
+}
+
+/* 浏览器垂直滚动位置 */
+function scrollY() {
+    var de = document.documentElement;
+
+    return self.pageYOffset || (de && de.scrollTop) || document.body.scrollTop;
+}
+
+/* 浏览器水平滚动位置 */
+function scrollX() {
+    var de = document.documentElement;
+
+    return self.pageXOffset || (de && de.scrollLeft) || document.body.scrollLeft;
+}
+
+</script>
+</html>

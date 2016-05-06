@@ -1,0 +1,16 @@
+   <div class="fund_left">
+    <div class="fund_left_menu b f14 lh26 c1">赞助动态</div>
+    <div class="fund_left_back"><a href="{:U('fund/Index/index')}"/>返回&gt;&gt;</a></div>
+    <div class="fund_newslist mt10">
+     <ul>
+       <volist name="data" id="vo">
+       <li>
+        <div class="fund_r_list_thumb"><img src="{$vo.attachId|getImgAttach=###,100,100}" alt="" /></div>
+        <div class="fund_newslist_title f14">{$vo.company}赞助主活动基金<span class="c1">{$vo.actualFund}元</span></div>
+        <div class="fund_newslist_date c9">{$vo['actualTime'] | friendlyDate=###,'ymd'}</div>
+       </li>
+       </volist>
+     </ul>
+     <div class="fund_page">{$html}</div>
+    </div>
+   </div>

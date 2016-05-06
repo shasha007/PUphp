@@ -1,0 +1,44 @@
+<include file="_header" />
+<div class="kdl_mobile_page">
+  <div class="kdl_mobile_header f18 bold tcenter">订单管理</div>
+  <a href="{:U('shop/Bank/bankPrice')}"><div class="m_back"></div></a>
+  <div class="clear"></div>
+  <div class="m_order_menu fw m_mt50">
+   <a href="__URL__&act=myBankList"><?php if(!$status){ ?><div class="m_order_submenu cur"><?php }else{echo"<div class='m_order_submenu'>";}?>全部</div></a>
+   <a href="__URL__&act=myBankList&status=1"><?php if($status==1){ ?><div class="m_order_submenu cur"><?php }else{echo"<div class='m_order_submenu'>";}?>还款中</div></a>
+   <a href="__URL__&act=myBankList&status=2"><?php if($status==2){ ?><div class="m_order_submenu cur"><?php }else{echo"<div class='m_order_submenu'>";}?>还款结束</div></a>
+
+  </div>
+  <div class="clear"></div>
+  <div class="m_hr1"></div>
+  <div class="clear"></div>
+
+<foreach name="list" item="vo">
+<a href="__URL__&act=bankListDetail&id={$vo.id}">
+<div class="m_c_infor">
+ <div class="m_c_infor_thumb"><img src="../Public/images/icon_cash.jpg"></div>
+ <div class="m_c_infor_desc">
+  <div class="m_c_infor_t f14">【口袋金】{$vo.money}元</div>
+  <div class="m_c_infor_price">金额：{$vo.money}元 期数：{$vo.staging}期</div>
+  <div class="m_c_infor_price"><if condition="$vo['status'] eq 0">
+          <span class="m_color1 bold">
+          <elseif condition="$vo['status'] eq 2"/>
+          <span class="bold">
+          <else/>
+          <span class="m_color2 bold">
+          </if>{$vo.sta}</span></div>
+ </div>
+</div>
+<div class="clear"></div>
+<div class="m_order_list">
+ <div class="m_order_half3 m_color1">
+ 分期：￥{$vo.stagMoney}（本金：￥{$vo.benMoney}+服务费：￥{$vo.service}）×{$vo.staging}<br/>
+
+ </div>
+
+</div>
+</a>
+<div class="clear"></div>
+</foreach>
+</div>
+<include file="_footer" />

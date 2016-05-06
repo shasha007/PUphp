@@ -1,0 +1,162 @@
+
+<div class="g_rank_menu f16 fw">部落活力排行榜</div>
+<div class="g_rank_submenu1 tcenter f14">
+ <ul>
+  <li class="cur" id="provtop">总排行</li>
+  <li class="ml1" id="schooltop">全校排行</li>
+ </ul>
+</div>
+<div class="g_rank_submenu2 tcenter f14">
+ <ul>
+  <li class="cur" id="category1">学生部门</li>
+  <li class="ml1" id="category2">团支部</li>
+  <li class="ml1" id="category3">学生社团</li>
+ </ul>
+</div>
+ <div class="g_rank_list" id="grouplist">
+  <ul>
+  <foreach name="pai" item="val">
+      <if condition="$val.mark eq 1">
+   <li>
+    <div class="g_rank_list_thumb1"><img src="{$val.logo|getGroupThumb=###,100,100}" /></div>
+    <div class="g_rank_list_title1 fw">{$val.name}</div>
+    <div class="g_rank_list_school">{$val.school}</div>
+   </li>
+   </if>
+      <if condition="$val.mark eq 2">
+   <li>
+    <div class="g_rank_list_thumb2"><img src="{$val.logo|getGroupThumb=###,64,64}" /></div>
+    <div class="g_rank_list_title2 fw">{$val.name}</div>
+    <div class="g_rank_list_school">{$val.school}</div>
+   </li>
+   </if>
+      <if condition="$val.mark eq 3">
+   <li>
+    <div class="g_rank_list_title3">{$val.name}</div>
+    <div class="g_rank_list_school">{$val.school}</div>
+   </li>
+   </if>
+      </foreach>
+  </ul>
+  <div class="g_rank_num" id="groupnum"></div>
+ </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#provtop').bind('click', function() {
+            $('#provtop').removeClass();
+            $('#schooltop').removeClass();
+            var name = $('.cur').html();
+            if(name=='学生部门'){
+                var cid = 1;
+            }else if(name=='团支部'){
+                var cid = 2;
+            }else{
+                var cid = 3;
+            }
+            $('#provtop').addClass("cur");
+            $('#schooltop').addClass("ml1");
+            getTop10(1,cid);
+        });
+
+        $('#schooltop').bind('click', function() {
+            //var classn = $('#provtop').html();
+            $('#schooltop').removeClass();
+            $('#provtop').removeClass();
+            var name = $('.cur').html();
+            if(name=='学生部门'){
+                var cid = 1;
+            }else if(name=='团支部'){
+                var cid = 2;
+            }else{
+                var cid = 3;
+            }
+            $('#schooltop').addClass("cur");
+            $('#provtop').addClass("ml1");
+            getTop10(2,cid);
+        });
+
+        $('#category1').bind('click', function() {
+            //var classn = $('#provtop').html();
+            $('#category1').removeClass();
+            $('#category2').removeClass();
+            $('#category3').removeClass();
+            var name = $('.cur').html();
+            if(name=='总排行'){
+                var tid = 1;
+            }else{
+                var tid = 2;
+            }
+            $('#category1').addClass("cur");
+            $('#category2').addClass("ml1");
+            $('#category3').addClass("ml1");
+            getTop10(tid,1);
+        });
+
+        $('#category2').bind('click', function() {
+            //var classn = $('#provtop').html();
+            $('#category1').removeClass();
+            $('#category2').removeClass();
+            $('#category3').removeClass();
+            var name = $('.cur').html();
+            if(name=='总排行'){
+                var tid = 1;
+            }else{
+                var tid = 2;
+            }
+            $('#category2').addClass("cur");
+            $('#category1').addClass("ml1");
+            $('#category3').addClass("ml1");
+            getTop10(tid,2);
+        });
+
+        $('#category3').bind('click', function() {
+            //var classn = $('#provtop').html();
+            $('#category1').removeClass();
+            $('#category2').removeClass();
+            $('#category3').removeClass();
+            var name = $('.cur').html();
+            if(name=='总排行'){
+                var tid = 1;
+            }else{
+                var tid = 2;
+            }
+            $('#category3').addClass("cur");
+            $('#category2').addClass("ml1");
+            $('#category1').addClass("ml1");
+            getTop10(tid,3);
+        });
+        $('#provtop').click();
+    });
+
+    function getTop10(type,cate){
+        $.post(U('event/GroupIndex/groupTop'),{type:type,category:cate},function(data){
+            var ullist = $('#grouplist');
+            ullist.empty();
+            var html = '<ul>';
+            if(data==0){
+                html += '<li><div class="g_rank_list_title1 fw">没有数据</div></li></ul>';
+                //$('div').detach('#groupnum');
+            }else{
+                for(var i=0;i<data.length;i++){
+                    if(i==0){
+                        html += '<li><div class="g_rank_list_thumb1">';
+                        html += '<img src="'+data[i]['logo']+'"/></div>';
+                        html += '<div class="g_rank_list_title1 fw">'+data[i]['name']+'</div>';
+                        html += '<div class="g_rank_list_school">'+data[i]['school']+'</div></li>';
+                    }else if((i==1)||(i==2)){
+                        html += '<li><div class="g_rank_list_thumb2">';
+                        html += '<img src="'+data[i]['logo']+'"/></div>';
+                        html += '<div class="g_rank_list_title2 fw">'+data[i]['name']+'</div>';
+                        html += '<div class="g_rank_list_school">'+data[i]['school']+'</div></li>';
+                    }else{
+                        html += '<li><div class="g_rank_list_title3">'+data[i]['name']+'</div>';
+                        html += '<div class="g_rank_list_school">'+data[i]['school']+'</div></li>';
+                    }
+                }
+                html += '</ul><div class="g_rank_num" id="groupnum"></div>';
+            }
+
+            ullist.append(html);
+        },'json');
+    }
+</script>

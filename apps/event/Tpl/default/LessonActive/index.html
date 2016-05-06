@@ -1,0 +1,62 @@
+<include file="../Lesson/_header" />
+<div class="hd_c1">
+    <div class="intro_title b"><a href="{:U('/LessonActiveMember/detail',array('id'=>$id))}">{$title}</a></div>
+    <div class="intro_menu">
+        <ul>
+            <li <eq name="ACTION_NAME" value="index">class="i10"</eq>><a href="{:U('/LessonActive/index',array('id'=>$id))}">课程活动</a></li>
+            <li <eq name="ACTION_NAME" value="member">class="i10"</eq> ><a href="{:U('/LessonActive/member',array('id'=>$id))}">成员</a></li>
+            <li <eq name="ACTION_NAME" value="photo">class="i10"</eq>><a href="{:U('/LessonActive/photo',array('id'=>$id))}">图片</a></li>
+        </ul>
+    </div>
+    <div class="intro_c">
+        <div class="intro_c_thumb"><img src="{$logoId|getCover}" alt="" /></div>
+        <div class="intro_c_infor">
+            <?php if($status == 1): ?>
+            <span class="intro_c_zt red b">等待审核 ......</php></span>
+            <?php elseif($status == 0): ?>
+            <span class="intro_c_zt red b">课程活动被驳回 ......</php></span>
+            <?php elseif($status == 2): ?>
+            <?php if($eTime<=time()): ?>
+            <div class="intro_c_zt red b">课程活动已结束</div>
+            <?php elseif( $deadline>time()): ?>
+            <div class="intro_c_zt green b" id="event_satus">此课程活动正在进行中……</div>
+            <?php else: ?>
+            <div class="intro_c_zt red b">报名已结束</div>
+            <?php endif; ?>
+            <?php endif; ?>
+
+            <div class="intro_c_font"> 活动名称：<span class="b red">{$title}</span><br />
+                活动分类：{$category[$typeId]}<br />
+                活动地点：{$address}<br />
+                活动时间：<?php echo date('Y-m-d H:i', $sTime) . " 至 " . date('Y-m-d H:i', $eTime) ?><br />
+                报名截止时间：<?php echo date('Y-m-d H:i', $deadline) ?><br />
+                活动经费：{$cost|getCost}<br />
+                活动人数：{$joinCount}<br />
+                联系方式：{$contact}<br />
+                <strong>需要联系电话：</strong><?php if( $need_tel ) {echo'是';}else{echo'否';}?><br />
+                <div class="intro_c_btn">
+                    <ul>
+                        <?php if($status == 0): ?>
+                        <li class="i11"><a href="javascript:renew()">重新申请</a></li>
+                        <?php endif; ?>
+                        <li class="i12"><a href="{:U('/LessonActive/editCourse',array('id'=>$id))}">编辑活动</a></li>
+                        <?php if($status != 2): ?>
+                        <li class="i12">   <a href="javascript:del()">删除活动</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script>
+            function renew(){
+                if(confirm('是否重新申请课程活动审核?')){
+                       location.href = "{:U('event/LessonActive/renew',array('id'=>$courseId))}";
+                }
+            }
+            function del(){
+                if(confirm('是否删除该课程活动?')){
+                    location.href = "{:U('event/LessonActive/courseDel',array('id'=>$courseId))}";
+                }
+            }
+        </script>
+        <include file="../Lesson/_footer" />

@@ -1,0 +1,55 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="Toolbar_inbox">
+        <a href="{$_SESSION['admin_activityApply_url']}" > <<返回 </a>
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>活动名称</th>
+                 <th>学校</th>
+                <th>承办人</th>
+                <th>承办部落</th>
+                 <th>申请时间</th>
+                <th>申请金额</th>
+                <th>核准金额</th>
+                <th>附件下载</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.eventName}</td>
+                    <td>{$vo.sid|tsGetSchoolName}</td>
+                    <td><a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" target="_blank">{$vo.uid|getUserField=###,'realname'}</a></td>
+                    <td>{$vo.gname}</td>
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <td>{$vo.amount}</td>
+                    <td>{$vo.amount2}</td>
+                    <td>{$vo.attachId|getAttachHtml2}</td>
+                    <td><?php if($vo['state']==1):?><span class="cGreen">已通过</span>
+                        <?php elseif($vo['state']==-1):?><span class="cGray2">被驳回</span>
+                        <?php else:?><span class="cRed">待审核</span>
+                        <?php endif;?>
+                    </td>
+                    <td>
+                         <a href="javascript:void(0);" onclick="detail({$vo.id});">详情/审核</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <a href="{$_SESSION['admin_activityApply_url']}" > <<返回 </a>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="_footer" />
+<script>
+    function detail(id){
+        ui.box.load("__URL__&act=activityCheckDetail&id="+id, {title:'承办详情'});
+    }
+</script>

@@ -1,0 +1,108 @@
+@charset "utf-8";
+/* CSS Document */
+*{ padding:0;margin:0;list-style:none;}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+table,td{margin:auto;padding:inherit;}
+select, input, img{ vertical-align:middle;}
+a{ text-decoration:none;}
+a:link {color:#666;}
+a:visited{ color:#666;}
+a:hover,a:active, a:focus {color:#999; text-decoration:none;}
+body {
+	font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+	font-size: 12px;
+	line-height:160%;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	color: #666;
+	text-decoration: none;
+	background-color:#FFF;
+	background-image: none;
+	background-repeat: no-repeat;
+	letter-spacing: normal;
+	text-align: left;
+	word-spacing: normal;
+	white-space: normal;
+	display: block;
+	clear: both;
+	float: none;
+	width: auto;
+	position: static;
+	height: auto;
+	top: auto;
+	clip: rect(auto,auto,auto,auto);
+}
+.bg{width:100%;}
+.main{ margin:auto; width:100%;}
+img {max-width: 100%; height: auto; width: auto\9; /* ie8 */}
+.mt10{ margin-top:10px;}
+.mt20{ margin-top:20px;}
+.mb50{ margin-bottom:50px;}
+.f12{ font-size:12px;}
+.f14{ font-size:14px;}
+.f16{ font-size:16px;}
+.f18{ font-size:18px;}
+.b{ font-weight:bold;}
+.fund_red{ color:#F00;}
+.fund_ccc{ color:#CCC;}
+
+.video embed, .video object, .video iframe {width: 100%;height: auto;}
+@media screen and (max-width: 980px) {
+}
+input[type="submit"],
+input[type="text"],
+input[type="select"],
+input[type="reset"],
+input[type="button"],
+button {
+-webkit-appearance: none;
+}
+
+/*基金规则*/
+.f_rulemenu{ width:96%; padding:0 2%; height:30px; line-height:30px; border-bottom:2px solid #dedede;}
+.f_rulemenu ul{ width:100%;}
+.f_rulemenu li{ float:left; width:25%; text-align:center;}
+.f_rulemenu li.cur{ color:#ff4900; width:25%; border-bottom:2px solid #f04e26;}
+.f_rulemenu li a{ width:100%; height:30px; display:block;}
+.f_rulemenu li a:hover{}
+.f_rulemenu li.cur a{color:#ff4900;}
+.f_rulelist{ width:94%; padding:0 3%; line-height:24px;}
+.f_rulelist ul{ width:100%;}
+.f_rulelist li{ border-bottom:1px dashed #dedede; padding:2px 0; width:100%;}
+
+/*申请内容*/
+.f_bidcon_title{ width:94%; color:#333; padding:0 3%; line-height:26px;text-align:center; font-size:16px;border-bottom:1px solid #ddd;}		
+.f_bidcon_date{width:94%; padding:3px 3%; text-align:center; color:#888;}
+.f_bidcon_thumb{ width:94%; padding:0 3%; text-align:center; }
+.f_bidcon_thumb img{ width:200px; height:200px;}
+.f_bidcon_desc{width:94%; padding:0 3%; line-height:22px;}
+.f_bidcon_btn{ width:94%; background:#ff4900; margin:10px 3%; height:40px; text-align:center; line-height:40px; border-radius:3px;}
+.f_bidcon_btn a{ width:100%; height:40px; display:block; color:#fff;}
+h4{ color:#eb6848;}
+.f_bidcon_desc p{ text-indent:20px;}
+/*经费申请*/
+.fund_fullbtn{height:40px;/* margin-top:10px;*/ line-height:40px; width:100%; text-align:center; background:#ff4900;color:#fff; border:none; cursor:pointer; border-radius:0;}
+.fund_fullbtn a{ color:#fff; width:100%; height:40px; display:block;}
+.fund_fullbtn a:hover{ color:#fff; text-decoration:none;}
+.fund_key{ width:90%; padding:3px 5% 3px 5%; color:#444; line-height:24px; font-size:16px;}
+.fund_key.i1{ color:#999; font-size:12px; line-height:18px;}
+.fund_key.i2{ color:#f00; font-size:12px; line-height:18px; padding:0 5% 3px 5%;}
+.fund_input{ background:#f6f6f6; font-size:14px; height:30px; line-height:30px; padding:0 2%; color:#666; border:1px solid #dfdfdf; width:96%; border-radius:4px;}
+.fund_select{ background:#f6f6f6; height:32px; font-size:14px; line-height:32px; color:#666; padding:0; text-indent:2%; border:1px solid #dfdfdf; width:100%;border-radius:4px;}
+.fund_btnline{ height:40px; position:fixed; bottom:0; width:100%;}
+.fund_btn_back{ height:40px; line-height:40px; width:100%; text-align:center; background:#e5e6e8; float:left;}
+.fund_btn_back a{ color:#333; width:50%; height:40px; display:block;}
+.fund_btn_back a:hover{ text-decoration:none;}
+.fund_btn_submit{ width:50%; float:right;}
+.fund_btn2{ height:40px; margin-top:-40px; line-height:40px; width:100%; text-align:center; background:#ff4900; float:left; border:none; color:#fff; }
+.fund_btn_next{ height:40px; line-height:40px; margin-top:-40px; width:50%; text-align:center; background:#ff4900; float:right;}
+.fund_btn_next a{ color:#fff; width:100%; height:40px; display:block;}
+.fund_btn_next a:hover{color:#fff; text-decoration:none;}
+.fund_upload{ height:30px;}
+/*改版基金规则*/
+.rule_title{color:#ff4900; width:92%; margin:0 2%; padding:5px 2%; border-bottom:2px solid #f04e26;}
+.rule_enter{ width:90%; padding:0 5%; text-align:right; margin-top:5px; text-indent:5px;}
+.rule_enter a{ color:#F00; text-decoration:underline;}
+.rule_enter a:hover{ color:#F00;}

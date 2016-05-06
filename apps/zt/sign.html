@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <title>Minimum Setup</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/reset.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/calendar.css">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="//cdn.bootcss.com/underscore.js/1.8.3/underscore.js"></script>
+    <script type="text/javascript" src="js/calendar.js?v=20161181"></script>
+    <script type="text/javascript" src="js/language/zh-CN.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        body{
+            height: 100%;
+        }
+        .modal-footer{
+            padding: 5px 15px;
+        }
+        #calendar{
+            padding: 3px;
+        }
+        .cal-year-box [class*="span"], .cal-month-box [class*="cal-cell"]{
+            max-height: 50px;
+            min-height: 50px;
+            border: none;
+        }
+        .cal-month-box, .cal-year-box, .cal-week-box{
+            border : 2px solid #bf8d5e;
+        }
+        .cal-year-box .row-fluid, .cal-month-box .cal-row-fluid{
+            border: none;
+        }
+        .cal-month-day{
+            height: 50px;
+        }
+        .cal-month-box .cal-day-today span[data-cal-date]{
+            font-size: 1.2em;
+            display: block;
+            width:100%;
+            text-align: center;
+        }
+        span[data-cal-date]{
+            width:100%;
+            display: block;
+            text-align: center;
+            margin-right: 0;
+            font-weight: bolder;
+        }
+        .cal-month-box .cal-day-today span[data-cal-date]{
+        }
+        .cal-year-box .row-fluid:hover, .cal-row-fluid:hover{
+            background-color: transparent;
+        }
+        [class*="cal-cell"]:hover{
+            background-color: transparent;
+        }
+        .cal-day-today{
+            background-color: transparent;
+        }
+        .cal-day-outmonth{
+            color: #0A5EA6;
+        }
+        .showpic{
+            padding: 0;
+        }
+        @media screen and (max-width: 400px)  {
+            .sign-button{
+                position: relative;
+                height: 100%;
+                width: 60%;
+                left: 5%;
+                top:-60px;
+                margin-bottom: -60px;
+            }
+        }
+        @media screen and (min-width: 401px)  {
+            .sign-button{
+                position: relative;
+                height: 100%;
+                width: 60%;
+                left: 5%;
+                top:-80px;
+                margin-bottom: -80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" data-sign="0">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body sign-info">
+                确定签到？
+            </div>
+            <div class="modal-footer">
+                <button id="cancel" type="button" class="btn btn-default"
+                        data-dismiss="modal">取消
+                </button>
+                <button id="sign" type="button"  class="btn btn-primary">
+                    确定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" data-sign="0">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body showpic">
+
+            </div>
+        </div>
+    </div>
+</div>
+<img class="img-responsive" src="images/z4.png">
+<div id="calendar" class=""></div>
+<img class="img-responsive" src="images/z5.png">
+<div class="sign-button">
+    <img id="btn_1" class="img-responsive" src="images/z2.png">
+</div>
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>
+<script>
+    var signday = "";
+    var issign = false;
+
+    $(function () {
+        var calendar = $("#calendar").calendar(
+                {
+                    tmpl_path: "../tmpls/",
+                    events_source: function () { return []; },
+                    language: 'zh-CN',
+                    view: 'month',
+                    tmpl_cache: false
+                });
+
+        setsign();
+
+        $(".cal-day-inmonth").click(function () {
+            var now_day = $(".cal-day-today span").data("cal-date")+"";
+            var today = document.getElementById('myModal');
+            today.dataset.sign = $(this).children("span").data("cal-date");
+            signday = $(this).children("span").data("cal-date")+"";
+            var sd=new Date(signday);
+            var nd=new Date(now_day);
+            if(sd>=nd) {
+                if (!issign && ($(this).css("background-color")!="rgb(239, 239, 110)")) {
+                    $('#myModal').modal('show');
+                } else {
+                    $(".sign-info").html("您已签到!");
+                    $("#cancel").html("确认");
+                    $("#cancel").removeClass("btn-default");
+                    $("#cancel").addClass("btn-primary");
+                    $("#sign").hide();
+                    $('#myModal').modal('show');
+                }
+            }else{
+
+            }
+        });
+    });
+    //获取签到天数
+    function setsign(){
+        $.ajax({
+            url: '/index.php?app=checkIn&mod=index&act=ajaxIndex',
+            type: 'post',
+            dataType: 'JSON',//here,
+            data: {type_id:1},
+            error: function() {
+            },
+            success: function(data) {
+                if(data.status==1){
+                    for(var i=0;i<data.data.length;i++){
+                        $('[data-cal-date='+data.data[i].check_in_date+']').parent().css("background-color","#EFEF6E");
+                    }
+                }
+            }
+        });
+    }
+    window.onload = function(){
+        document.getElementById('btn_1').addEventListener('click', onBtnClick, false);
+        var _int_value = window.ncp.callOnJs();
+    }
+    function onBtnClick() {
+        window.Android.openInternalPage("pschool", "1", "扑校园","", "","","" );
+
+    }
+
+    $("#sign").click(function(){
+        //签到
+        var date = $("#myModal").data("sign");
+        $.ajax({
+            url: '/index.php?app=checkin&mod=Index&act=checkIn',
+            type: 'post',
+            dataType: 'JSON',//here,
+            data: {
+                type_id: 1  //签到类别
+            },
+            error: function() {
+            },
+            success: function(data) {
+                if(data.status==1){
+                    issign = true;
+                    $('[data-cal-date='+signday+']').parent().css("background-color","#EFEF6E");
+                    //需要返回签到总日数
+                    showpic(data.data);
+
+                }else{
+                    $(".sign-info").html(data.info);
+                    $("#cancel").html("确认");
+                    $("#cancel").removeClass("btn-default");
+                    $("#cancel").addClass("btn-primary");
+                    $("#sign").hide();
+                    $('#myModal').modal('show');
+                }
+            }
+        });
+        $('#myModal').modal('hide');
+    });
+    function showpic(date){
+        switch(true)
+        {
+            case date<3:
+                $(".showpic").html('<img class="img-responsive" src="images/lv1.png">');
+                break;
+            case date<9:
+                $(".showpic").html('<img class="img-responsive" src="images/lv2.png">');
+                break;
+            case date<17:
+                $(".showpic").html('<img class="img-responsive" src="images/lv3.png">');
+                break;
+            case date<25:
+                $(".showpic").html('<img class="img-responsive" src="images/lv4.png">');
+                break;
+            case date<30:
+                $(".showpic").html('<img class="img-responsive" src="images/lv5.png">');
+                break;
+            case date<35:
+                $(".showpic").html('<img class="img-responsive" src="images/lv6.png">');
+                break;
+            case date<100:
+                $(".showpic").html('<img class="img-responsive" src="images/lv7.png">');
+                break;
+        }
+        $('#myModal1').modal('show');
+    }
+</script>

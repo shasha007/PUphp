@@ -1,0 +1,26 @@
+<dl class="lineD">
+    <dt>选择：</dt>
+    <dd>
+        <input type="radio" name="status" value="1" checked> 白名单
+        <input type="radio" name="status" value="2"> 黑名单
+    </dd>
+</dl>
+<div class="page_btm">
+    <input type="button" class="btn_b" onclick="doSetUserStatus('{$uid}')" value="确定" />
+    <input type="button" class="btn_w" onclick="ui.box.close();" value="取消" />
+</div>
+<script type="text/javascript">
+    function doSetUserStatus(uid) {
+        var status = $('input[name="status"]:checked').val();
+        $.post("{:U('pufinance/Admin/doSetUserStatus')}", {'uid' : uid, 'status' : status}, function(result) {
+            if (result.status) {
+                ui.box.close();
+                ui.success('保存成功');
+                setTimeout(function(){location.reload();}, 1500);
+            } else {
+                ui.box.close();
+                ui.error(result.info);
+            }
+        }, 'json');
+    }
+</script>

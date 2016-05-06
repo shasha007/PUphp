@@ -1,0 +1,168 @@
+<?php if($msg):?>
+<div class="fund_success_con f14 tcenter mt20 c3">{$msg}<br/><br/></div>
+<?php else:?>
+<form action="__URL__&act=doapplyFund" method="POST" onsubmit="return fund_apply();">
+    <div class="fund_pop">
+        <div class="fund_popcon">
+            <div class="fund_popcon_fill">
+                    <table width="550" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="100" class="c3 f14 tright"><span class="c1 b">*</span>活动：</td>
+                            <td width="10"></td>
+                            <td>
+                                <select class="fund_popcon_input1" name="eventId" id="eventId">
+                                    <option value="0">-请选择活动-</option>
+                                    <?php foreach($events as $v): ?>
+                                    <option value="{$v.id}">{$v.title}</option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="5"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td width="100" class="c3 f14 tright"><span class="c1 b">*</span>职位：</td>
+                            <td width="10"></td>
+                            <td><input name="position" type="text" class="fund_popcon_input"  id="position"/></td>
+                        </tr>
+                        <tr>
+                            <td height="5"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="c3 f14 tright"><span class="c1 b">*</span>电话：</td>
+                            <td></td>
+                            <td><input name="telephone" type="text" class="fund_popcon_input" id="telephone" /></td>
+                        </tr>
+                        <tr>
+                            <td height="5"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="c3 f14 tright">QQ：</td>
+                            <td></td>
+                            <td><input name="qq" type="text" class="fund_popcon_input"  /></td>
+                        </tr>
+                        <tr>
+                            <td height="5"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="c3 f14 tright"><span class="c1 b">*</span>支付宝账号：</td>
+                            <td>&nbsp;</td>
+                            <td><input name="alipayAccount" type="text" class="fund_popcon_input"  id="alipayAccount" /></td>
+                        </tr>
+                        <tr>
+                            <td height="5"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="c3 f14 tright">部落外联负责人姓名及电话：</td>
+                            <td>&nbsp;</td>
+                            <td><input name="responsibleInfo" type="text" class="fund_popcon_input" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td height="5"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="c3 f14 tright"><span class="c1 b">*</span>活动范围：</td>
+                            <td></td>
+                            <td><select class="fund_popcon_input1" name="range">
+                                    <option value="1">校级</option>
+                                    <option value="2">院级</option>
+                                    <option value="3">团支部</option>
+                                    <option value="4">其他</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td height="5"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="c3 f14 tright">预计报名人数：</td>
+                            <td></td>
+                            <td><input name="eRegistration" type="text" class="fund_popcon_input1"  /></td>
+                        </tr>
+                        <tr>
+                            <td height="5"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="c3 f14 tright">预计签到人数：</td>
+                            <td></td>
+                            <td><input name="eSign" type="text" class="fund_popcon_input1"  /></td>
+                        </tr>
+                        <tr>
+                            <td height="5"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="c3 f14 tright"><span class="c1 b">*</span>申请金额：</td>
+                            <td></td>
+                            <td><input name="fund" type="text" class="fund_popcon_input" id="money" />
+                            <br/>校级【0-1000】元，院级【0-500】元，团支部【0-200】元，其他请自行填写
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+            </div>
+            <div class="fund_popcon_btn tcenter b f14"><input type="submit" value="确认申请" class="fund_popcon_btn1"></div>
+        </div>
+    </div>
+</form>
+<script>
+    //提交JS验证
+    function fund_apply(){
+        var isTrue = true;
+        var formId = ['#eventId','#position','#telephone','#alipayAccount','#money'];
+        var formError = ['请选择活动','请填写职位','请填写电话','请填写支付宝账号','请填写申请金额'];
+        $.each(formId,function(i,v) {
+            var checkInput = $(v).val();
+            if(v!='#eventId'){
+                checkInput = checkInput.length;
+            }
+            if(checkInput ==0){
+                show_hidden(v,formError[i]);
+                isTrue = false;
+            }else{
+                show_hidden(v,'');
+            }
+        });
+        if(isTrue){
+            return true;
+        }
+        return false;
+    }
+
+    //提示
+    function show_hidden(type,str){
+        if(str!=''){
+            str = '<font color="red">'+str+'</font>';
+        }
+        $(type).parent().parent().next('tr').find('td').eq(2).html(str);
+    }
+
+</script>
+<?php endif;?>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加载中</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+</head>
+<body>
+<div class="h-background"></div>
+<div class="h-loading">
+    <div class="h-animate"></div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    var mid,token;
+//    mid = 2775311;
+//    token = 'HS2K13W9BtkMYWJN7rwuB1eliNMV40V7tNe/KhxMXRPaDZCpaTlWylC2+ETQiUSZ0t/F+3gtfSca+CiPPT/NUnCsLbKPamfJ';
+    mid = Android.getUid();
+    token = Android.getToken();
+    location.href = "{$_GET['refer']}&mid=" + mid + '&token=' + encodeURIComponent(token);
+</script>
+</body>
+</html>

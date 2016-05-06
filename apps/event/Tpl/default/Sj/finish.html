@@ -1,0 +1,85 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <center><a href="{:U('event/Index/sj')}" target="_blank">前往前台投票页面</a></center>
+    <div class="list">
+        <include file="_search" />
+    <div class="page right">{$list['html']}</div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>名称</th>
+                <th>申报类别</th>
+                <th>申请人</th>
+                <?php if($school['id'] == 505):?>
+                <th>学校</th>
+                <?php endif;?>
+                <th>状态</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td><a href="javascript:void(0)" onclick="details({$vo.id})">{$vo['title']}</a></td>
+                    <td>{$vo.type|sjType}</td>
+                    <td>{$vo.uid|getUserRealName}</td>
+                    <?php if($school['id'] == 505):?>
+                    <td>{$vo.sid|tsGetSchoolName}</td>
+                    <?php endif;?>
+                    <td id="status_{$vo.id}">{$vo.status|sjStatus}</td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td id="opt_{$vo.id}">
+                        <?php if($school['id'] != 505 && $vo['status'] == 3):?>
+                        <a href="javascript:void(0)" onclick="back({$vo.id},1)">撤回</a>
+                        <?php endif;?>
+                        <?php if($school['id'] != 505 && $vo['status'] == 4):?>
+                        <a href="javascript:void(0)" onclick="pass({$vo.id},1)">重新申请</a>
+                        <?php endif;?>
+                        <?php if($school['id'] == 505):?>
+                        <a href="javascript:void(0)" onclick="back({$vo.id},3)">撤回</a>
+                        <?php endif;?>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+<div class="Toolbar_inbox">
+    <span>共{$totalRows}条记录</span>
+    <div class="page right">{$html}</div>
+</div>
+</div>
+<script>
+    function details(id){
+        ui.box.load( '{:U('event/Sj/details')}' + '&id=' + id,{title:'申报详情'});
+    }
+    function back(id,status){
+        if(confirm('撤回上报团省委的申请？')){
+            $.post(U('event/Sj/back'),{id:id,status:status},function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else{
+                    ui.success('撤回成功');
+                    ui.box.close();
+                    $('#list_'+id).remove();
+                }
+            });
+        }
+    }
+    function pass(id){
+        if(confirm('确定审核通过？')){
+            $.post(U('event/Sj/doPass'),{id:id},function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else{
+                    ui.success('审核成功');
+                    ui.box.close();
+                    $('#list_'+id).remove();
+                }
+            });
+        }
+    }
+</script>
+<include file="../Teacher/_footer" />

@@ -1,0 +1,144 @@
+<include file="_header" />
+<script src="../Public/js/vote.js?20131031" type="text/javascript"></script>
+<?php if($flag != 1):?>
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_person.gif" alt="" /></div>
+    <?php if(isset($keyword)):?>
+    <div class="person_search">搜索“<span class="red b">{$keyword}</span>”的相关结果</div>
+    <?php endif;?>
+    <div class="member_add">
+        <?php if($event['isEnd'] || !$event['isTicket']):?>
+            <span class="red b">投票已关闭</span>
+        <?php else:?>
+            投票规则：每人最多可投{$event['maxVote']}票、
+            <?php if(!$event['repeated_vote']):?>不<?php endif;?>可重复投票、
+            <?php if(!$event['repeatTicket']):?>不<?php endif;?>可每日投票、
+            <?php if($event['allTicket']):?>票必须全部投完才生效<?php else:?>票不必全部投完<?php endif;?>
+        <?php endif;?>
+    </div>
+    <div class="person_list">
+        <ul>
+            <volist name="data" id='vo'>
+            <li>
+                <div class="person_list_photo">
+                    <a href="{:U('/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id']))}" title="{$vo.realname}">
+                        <img src="{$vo.path|getThumb=###,163,204,c}" alt="" /></a></div>
+                <div class="person_list_prov b c3">{$vo.realname}</div>
+                <div class="person_list_prov">{$vo.school}</div>
+                <div class="person_list_prov">
+                    <span class="red">{$vo.ticket}</span>
+                    票
+                </div>
+                <div class="person_list_prov">
+                    <a href="{:U('event/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id'],'tab'=>1)).'#tab1'}">
+                    <span style="color:#31AFFF">{$vo.imgCount}靓照</span></a>
+                    <a href="{:U('event/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id'],'tab'=>2)).'#tab2'}">
+                    <span style="color:#31AFFF">{$vo.flashCount}视频</span></a>
+                    <a href="{:U('event/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id'],'tab'=>3)).'#tab3'}">
+                    <span style="color:#31AFFF">{$vo.commentCount}评论</span></a>
+                </div>
+                <?php if($event['isTicket']):?>
+                <?php if(!$event['isStart']): ?>
+                    <div class="person_list_vote i4">尚未开始</div>
+                <?php elseif($vo['stoped'] || $event['isEnd']): ?>
+                        <div class="person_list_vote i4">终止投票</div>
+                <?php else:?>
+                    <?php if(in_array($vo['id'],$bandVote)):?>
+                        <div class="person_list_vote i4">您已投票</div>
+                    <?php elseif($restVote<=0): ?>
+                        <div class="person_list_vote i4">票已投完</div>
+                    <?php else:?>
+                        <div class="person_list_vote" onclick='post_vote({$eventId},{$vo.id},"{$vo.realname}")'>投TA一票</div>
+                <?php endif; ?>
+                <?php endif; ?>
+                <?php endif; ?>
+            </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<?php else:?>
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_person.gif" alt="" /></div>
+    <?php if(isset($keyword)):?>
+    <div class="person_search">搜索“<span class="red b">{$keyword}</span>”的相关结果</div>
+    <?php endif;?>
+    <div class="member_add">
+        <form name="myform" action="" method="post">
+            <tr>
+                <td align="right" width="180">请选择申报类型：</td>
+                <td width="15"><span class="red">*</span></td>
+                <td>
+                    <select name="c_type">
+                        <option <?php if($_GET['c_type'] == 1){echo 'selected=selected';} ?> value="1">个人申报</option>
+                        <option <?php if($_GET['c_type'] == 2){echo 'selected=selected';} ?> value="2">组织推荐</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" width="180">请选择活动类型：</td>
+                <td width="15"><span class="red">*</span></td>
+                <td>
+                    <select name="e_type">
+                        <option <?php if($_GET['e_type'] == 1){echo 'selected=selected';} ?> value="1">思想引领类</option>
+                        <option <?php if($_GET['e_type'] == 2){echo 'selected=selected';} ?> value="2">勤奋励志类</option>
+                        <option <?php if($_GET['e_type'] == 3){echo 'selected=selected';} ?> value="3">创新创业类</option>
+                        <option <?php if($_GET['e_type'] == 4){echo 'selected=selected';} ?> value="4">实践公益类</option>
+                        <option <?php if($_GET['e_type'] == 5){echo 'selected=selected';} ?> value="5">文体宣传类</option>
+                        <option <?php if($_GET['e_type'] == 6){echo 'selected=selected';} ?> value="6">其他类</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input type="submit" value="搜索" />
+                </td>
+            </tr>
+        </form>
+    </div>
+    <div class="person_list">
+        <ul>
+            <volist name="data" id='vo'>
+                <li>
+                    <div class="person_list_photo">
+                        <a href="{:U('/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id']))}" title="{$vo.realname}">
+                            <img src="{$vo.path|getThumb=###,163,204,c}" alt="" /></a></div>
+                    <div class="person_list_prov b c3">{$vo.realname}</div>
+                    <div class="person_list_prov">{$vo.school}</div>
+                    <div class="person_list_prov">
+                        <span class="red">{$vo.ticket}</span>
+                        个赞
+                    </div>
+                    <div class="person_list_prov">
+                        <a href="{:U('event/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id'],'tab'=>1)).'#tab1'}">
+                            <span style="color:#31AFFF">{$vo.imgCount}靓照</span></a>
+                        <a href="{:U('event/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id'],'tab'=>2)).'#tab2'}">
+                            <span style="color:#31AFFF">{$vo.flashCount}视频</span></a>
+                        <a href="{:U('event/Front/playerDetails',array('id'=>$eventId,'pid'=>$vo['id'],'tab'=>3)).'#tab3'}">
+                            <span style="color:#31AFFF">{$vo.commentCount}评论</span></a>
+                    </div>
+                    <?php if($event['isTicket']):?>
+                    <?php if(!$event['isStart']): ?>
+                    <div class="person_list_vote i4">尚未开始</div>
+                    <?php elseif($vo['stoped'] || $event['isEnd']): ?>
+                    <div class="person_list_vote i4">终止点赞</div>
+                    <?php else:?>
+                    <?php if(in_array($vo['id'],$bandVote)):?>
+                    <div class="person_list_vote i4">您已点赞</div>
+                    <?php elseif($restVote<=0): ?>
+                    <div class="person_list_vote i4">您无权点赞</div>
+                    <?php else:?>
+                    <div class="person_list_vote" onclick='post_vote({$eventId},{$vo.id},"{$vo.realname}")'>给TA点赞</div>
+                    <?php endif; ?>
+                    <?php endif; ?>
+                    <?php endif; ?>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<?php endif; ?>
+
+<include file="_footer" />

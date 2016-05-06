@@ -1,0 +1,256 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+    <div class="page_tit"><eq name="type" value="edit">编辑用户<else/>添加用户</eq></div>
+    <eq name="type" value="add">
+    <form method="post" action="{:U('event/User/doAddUser')}">
+    <else/>
+    <form method="post" action="{:U('event/User/doEditUser')}">
+        <input type="hidden" name="uid" value="{$uid}" />
+    </eq>
+        <div class="form2">
+            <?php if($canEditRole):?>
+            <dl class="lineD">
+                <dt>身份：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="event_level">
+                        <option value="">请选择</option>
+                        <?php foreach($roles as $key=>$vo) :?>
+                            <option value="{$key}" <?php if($event_level==$key) echo 'selected' ?>>{$vo}</option>
+                        <?php endforeach; ?>
+                    </select>
+                </dd>
+            </dl>
+            <?php endif;?>
+            <dl class="lineD">
+                <dt>院系：&nbsp;&nbsp;</dt>
+                <dd>
+                    <input type="text" id="selectarea" class="text" value="{$sidName}" readonly="true" OnFocus="selectSchool()"  style="width:300px;"/>
+                    <input type="hidden" id="current" name="sid1" value="{$sid1}"/>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>年级：</dt>
+                <dd>
+                    <input name="year" type="text" value="{$year}" maxlength="2">
+                    <p>例如 09，10，11<p>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>专业：</dt>
+                <dd>
+                    <input name="major" type="text" value="{$major}">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>学号：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="number" type="text" value="{$number}">
+                    <p>用户进行登录的帐号</p>
+            </dl>
+            <?php if($type == 'add' || $showPassword == 1){ ?>
+                <dl class="lineD" >
+            <?php }else{ ?>
+                <dl class="lineD" style="display: none;" >
+            <?php } ?>
+                <dt>密码：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="password" id="password" type="text">
+                    <p>用户进行登录的密码</p>
+            </dl>
+            <dl class="lineD">
+                <dt>昵称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="uname" id="uname" type="text" value="{$uname}">
+                    <p>2-10位个中英文、数字、下划线和中划线组成</p>
+            </dl>
+            <dl class="lineD">
+                <dt>真实姓名：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="realname" id="realname" type="text" value="{$realname}">
+            </dl>
+            <dl class="lineD">
+                <dt>性别：</dt>
+                <dd>
+                    <label><input name="sex" type="radio" value="1" <eq name="sex" value="1">checked</eq>>男</label>
+                    <label><input name="sex" type="radio" value="0" <neq name="sex" value="1">checked</neq>>女</label>
+            </dl>
+            <dl class="lineD" style="display: none;">
+                <dt>手机号码：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="mobile" id="mobile" type="text" value="{$mobile}">
+            </dl>
+            <?php if($thinkSnsAdmin||$user['can_admin']):?>
+            <dl class="lineD">
+                <dt>权限：</dt>
+                <dd>
+                    <?php if($thinkSnsAdmin):?>
+                    <label><input name="can_admin" type="checkbox" value="1" <eq name="can_admin" value="1">checked</eq>>超级管理员</label>
+                    <?php endif; ?>
+                    <?php if(!isTuanRole($school['id'])):?>
+                        <label><input name="can_add_event" id='addEvent' type="checkbox" value="1" <eq name="can_add_event" value="1">checked</eq>>发起活动</label>
+                    <?php else:?>
+                        <label><input name="can_prov_news" type="checkbox" value="1" <eq name="can_prov_news" value="1">checked</eq>>发布新闻</label>
+                        <label><input name="can_prov_work" type="checkbox" value="1" <eq name="can_prov_work" value="1">checked</eq>>发布作业</label>
+                        <label><input name="can_add_event" type="checkbox" value="1" <eq name="can_add_event" value="1">checked</eq>>发起内部活动</label>
+                        <label><input name="can_prov_event" type="checkbox" value="1" <eq name="can_prov_event" value="1">checked</eq>>发起全省活动</label>
+                    <?php endif;?>
+                    <?php if($school['id'] == 473):?>
+                        <label><input name="can_prov_event" type="checkbox" value="1" <eq name="can_prov_event" value="1">checked</eq>>发起全省活动</label>
+                    <?php endif;?>
+                    <label><input name="can_event" id="can_event" type="checkbox" value="1" <eq name="can_event" value="1">checked</eq>>活动初级审核</label>
+                    <label><input name="can_event2" type="checkbox" value="1" <eq name="can_event2" value="1">checked</eq>>活动终极审核</label>
+                    <label><input name="can_gift" type="checkbox" value="1" <eq name="can_gift" value="1">checked</eq>>兑换管理</label>
+                    <label><input name="can_print" type="checkbox" value="1" <eq name="can_print" value="1">checked</eq>>打印证书</label>
+                    <label><input name="can_group" type="checkbox" value="1" <eq name="can_group" value="1">checked</eq>>部落管理</label>
+                    <label><input name="can_announce" type="checkbox" value="1" <eq name="can_announce" value="1">checked</eq>>校内通知</label>
+                    <!--<label><input name="can_available" id="can_available" type="checkbox" value="1" <eq name="can_available" value="1">checked</eq>>文件分发</label>-->
+                    <?php if(showEcAudit($school['id'])):?>
+                    <label><input name="can_credit" id="can_credit" type="checkbox" value="1" <eq name="can_credit" value="1">checked</eq>>{$webconfig.cradit_name}认定</label>
+                    <?php endif;?>
+            </dl>
+
+            <neq name="gids" value="">
+              <dl class="lineD addGroup"  style="display:none">
+                <dt>发起部落活动：</dt>
+                <dd>
+                    <volist name="gids" id="vo" key='k'>
+                    <label><input name="addGroupEvent[]"  type="checkbox" value="{$vo['id']}"<php> if(in_array($vo['id'],$checkgids)) echo 'checked'</php>>{$vo.name}</label>
+                    </volist>
+                </dd>
+            </dl>
+            </neq>
+
+            <dl class="lineD addGroup" >
+                <dt>授权人数：</dt>
+                <dd>
+                    <neq name="codelimit" value="">
+                    <input name="codelimit"  type="text" value="{$codelimit}"/>
+                <else/>
+                <input name="codelimit"  type="text" value="5"/>
+                </neq>
+                <p>发起人能授权多少人使用活动码，进行活动签到。 默认是5人(包括本人)。第6人使用该活动码将无法进行签到</p>
+            </dl>
+            <dl id="csOrga" class="school_flist lineD pb8" style="display:none;">
+                <dt>初级审核人归属组织：</dt>
+                <dd>
+                    <?php foreach($schoolOrga as $value): ?>
+                    <?php $sorga=0-$value['id']; ?>
+<label class="school_list"><input name="orga[]" type="checkbox" value="{$sorga}"
+              <?php if(in_array($sorga,$userOrags))echo ' checked';?>>{$value.title}</label>
+                    <?php endforeach; ?>
+                    <div class="clear"></div>
+                    <?php foreach($addSchool as $value): ?>
+<label class="school_list"><input name="orga[]" type="checkbox" value="{$value['id']}"
+              <?php if(in_array($value['id'],$userOrags))echo ' checked';?>>{$value.title}</label>
+                    <?php endforeach; ?>
+                </dd>
+            </dl>
+            <dl id="ecType" class="school_flist lineD pb8" style="display:none;">
+                <dt>{$webconfig.cradit_name}认定类别：</dt>
+                <dd>
+                    <?php if(empty($ecTypes)): ?>
+                    <span class="cRed">还没有申请类别，请超管【{$webconfig.cradit_name}认定】【申请类别设置】</span>
+                    <?php else: ?>
+                        <?php foreach($ecTypes as $v): ?>
+                            <label class="school_list"><input name="ecTypes[]" type="checkbox" value="{$v.id}"
+                            <?php if(in_array($v['id'],$userEcTypes))echo ' checked';?>>{$v.title}</label>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>权限备注信息：</dt>
+                <dd>
+                    <input name="event_role_info" id="event_role_info" type="text" value="{$event_role_info}" size="40">
+                    <p>例如：某某学院宣传部</p>
+            </dl>
+            <?php elseif($user['can_event']): ?>
+            <dl class="lineD">
+                <dt>权限：</dt>
+                <dd>
+                    <label><input name="can_add_event" id='addEvent' type="checkbox" value="1" <eq name="can_add_event" value="1">checked</eq>>发起活动</label>
+            </dl>
+            <neq name="gids" value="">
+              <dl class="lineD addGroup"  style="display:none">
+                <dt>发起部落活动：</dt>
+                <dd>
+                    <volist name="gids" id="vo" key='k'>
+                    <label><input name="addGroupEvent[]"  type="checkbox" value="{$vo['id']}"<php> if(in_array($vo['id'],$checkgids)) echo 'checked'</php>>{$vo.name}</label>
+                    </volist>
+                </dd>
+            </dl>
+            </neq>
+
+            <dl class="lineD addGroup" >
+                <dt>授权人数：</dt>
+                <dd>
+                    <neq name="codelimit" value="">
+                    <input name="codelimit"  type="text" value="{$codelimit}"/>
+                <else/>
+                <input name="codelimit"  type="text" value="5"/>
+                </neq>
+                <p>发起人能授权多少人使用活动码，进行活动签到。 默认是5人(包括本人)。第6人使用该活动码将无法进行签到</p>
+            </dl>
+            <dl class="lineD">
+                <dt>权限备注信息：</dt>
+                <dd>
+                    <input name="event_role_info" id="event_role_info" type="text" value="{$event_role_info}" size="40">
+                    <p>例如：某某学院宣传部</p>
+            </dl>
+            <?php endif; ?>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    var sid = {$editSid};
+    function selectSchool(){
+        var typevalue = $("#current").val();
+        ui.box.load(U('event/School/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择学校',noCheck:'yes'});
+    }
+    $(function(){
+       csOrga();
+       $('#can_event').bind('click', csOrga);
+       ecType();
+       $('#can_credit').bind('click', ecType);
+       addGroup();
+       $('#addEvent').bind('click', addGroup);
+        $('#can_available').bind('click',function()
+        {
+            if($('#can_available').is(":checked"))
+            {
+                var mobile = $('input[name=mobile]').val();
+                if(mobile.trim() == '')
+                {
+                    ui.error('文件分发的时候需要手机号码进行短信验证，<br />所以强烈建议绑定手机号码后再赋予权限！');
+                }
+            }
+        });
+
+    });
+    function csOrga(){
+        if ($('#can_event').is(":checked")) {
+            $('#csOrga').show();
+        }else{
+            $('#csOrga').hide();
+        }
+    }
+    function ecType(){
+        if ($('#can_credit').is(":checked")) {
+            $('#ecType').show();
+        }else{
+            $('#ecType').hide();
+        }
+    }
+    function addGroup(){
+        if ($('#addEvent').is(":checked")) {
+            $('.addGroup').show();
+        }else{
+            $('.addGroup').hide();
+        }
+    }
+</script>
+<include file="../Teacher/_footer" />

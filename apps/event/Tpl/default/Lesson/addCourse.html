@@ -1,0 +1,197 @@
+<include file="_header" /> 
+<div class="kc_content">
+    <div class="c_left">
+        <div class="c_fl">
+            <div class="c_fl_menu l_30 b f_14">发起课程</div>
+            <div class="p_style b f_14">发起课程
+            </div>
+            <div class="publish">
+                <form  method='post' action="{:U('event/Lesson/doAddCourse')}" enctype="multipart/form-data" onsubmit="return checkCourse();">
+                    <table width="500" border="0" cellspacing="0" cellpadding="0" id="jun_1">
+                        <tr>
+                            <td width="15"><span class="red">*</span></td>
+                            <td width="100">课程名称：</td>
+                            <td width="5"></td>
+                            <td width="380"><input name="title" id="title"  type="text" class="p_input1" /></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程简介：</td>
+                            <td></td>
+                        <td><textarea id='info' name="description" style="width:300px;height:100px;border:1px solid #ccc;" onKeyUp="gbcount(this,200);"></textarea>
+                        <span  id='remain' style='color:green;'>200</span><span style='color:green;'>/200字</span>
+                    </td>
+                    </tr>
+                    <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>授课老师：</td>
+                            <td></td>
+                            <td><input name="teacher" type="text" class="p_input2" id="teacher"  /> </td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程地点：</td>
+                            <td></td>
+                            <td><input name="address" type="text" class="p_input2" id="address"/> </td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程分类：</td>
+                            <td></td>
+                            <td>
+                                <select name="typeId" class="p_select"  id="type">
+                                    <option value="0" selected>请选择活动分类</option>
+                                    <?php foreach($type as $k=>$v){ ?>
+                                    <option value="{$k}">{$v}</option>
+                                    <?php } ?>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程时间</td>
+                            <td></td>
+                            <td>
+                                <input name="sTime" id="sTime" type="text" class="p_input3" onfocus="rcalendar(this,'full');" readonly/>
+                                --
+                                <input name="eTime" id="eTime" type="text" class="p_input3" onfocus="rcalendar(this,'full');" readonly/>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>截止报名：</td>
+                            <td></td>
+                            <td><input name="deadline" type="text" class="p_input3"  id="deadline" onfocus="rcalendar(this,'full');" readonly/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>课程人数：</td>
+                            <td></td>
+                            <td><input name="count" type="text" class="p_input3" /> 课程人数上限 设0表示无限制</td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课时：</td>
+                            <td></td>
+                            <td><input name="credit" type="text" class="p_input3"  id="cre"/></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程图片：</td>
+                            <td></td>
+                            <td><input name="logo"  type="file" id='logo'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>（尺寸为125*125，用于课程列表图片）</td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>联系方式:</td>
+                            <td></td>
+                            <td><input name="contact" id="contact" type="text" class="p_input1"  maxlength="30"/>
+                                填写联系人电话，如：张小姐，1346665XXXX</td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>课程选项：</td>
+                            <td></td>
+                            <td><input name="need_tel" type="checkbox" value="" /> 课程参加人员需要手机号码
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="60"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><input name="fabu" type="submit" class="p_btn2" value="发起课程" /></td>
+                        </tr>
+                    </table>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="c_right">
+        <include file="_right" />
+    </div>
+    <include file="_footer" />
+    <include file="__THEME__/comm/_datepicker" />

@@ -1,0 +1,72 @@
+<include file="header" />
+<div class="sub {$class}">
+    <div class="sub_infor">
+     <div class="sub_title">{$ts['site']['page_title']}</div>
+    </div>
+    <div class="sub_desc">{$desc}</div>
+ </div>
+<div class="list2">
+    <ul id="cjlist">
+    <volist name="list" id="vo">
+        <li>{$vo.num}</li>
+    </volist>
+    </ul>
+</div>
+<div id="start" class="btn"></div>
+<script>
+    var type = {$type};
+    var maxNum = {$maxNum}+1;
+    var restTime = {$restTime};
+    $(function(){
+        if(restTime<=0){
+            $('#start').hide();
+        }else{
+            $('#start').click(function(){
+                $('#start').slideToggle("slow");
+                post_cj();
+            });
+        }
+    })
+    var cj_i = 1;
+    function post_cj(){
+        $.post(U('event/Admin/cj'),{type:type},function(txt){
+            json = eval('('+txt+')');
+            if( json.status == 1 ){
+                cj_i = 0;
+                showCj(json.data);
+            }else{
+                ui.error( json.info );
+            }
+        });
+    }
+    function showCj(data){
+        $('#roll').remove();
+        if(cj_i<data.length){
+            showRandom();
+            setTimeout(function(){
+                $('#cjlist').append('<li id="ppp">'+data[cj_i]+'</li>');
+                var size = $("#ppp").css('font-size');
+                $("#ppp").animate({ fontSize: "160px" }, 1000 )
+                .animate({ fontSize: "160px" }, 500 )
+                .animate({ fontSize: size }, 1000 );
+                $("#ppp").removeAttr('id');
+                cj_i = cj_i +1;
+                showCj(data);
+            },2500);
+        }else{
+            //$('#end').hide();
+            restTime = restTime - 1;
+            if(restTime>0){
+                $('#start').slideToggle("slow");
+            }
+        }
+    }
+    function showRandom(){
+        $('#cjlist').append('<li id="roll"></li>');
+        setInterval(function(){
+            var num = Math.floor(Math.random()*maxNum);
+            $("#roll").html(num);
+        },100);
+    }
+</script>
+<include file="footer" />

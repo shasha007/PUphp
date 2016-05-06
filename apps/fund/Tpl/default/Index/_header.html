@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>活动基金--PU口袋校园</title>
+        <link href="../Public/css/fund.css?20150811" type="text/css" rel="stylesheet" />
+        <script type="text/javascript">
+            var _UID_   = '{$uid}';
+            var _MID_   = '{$mid}';
+            var _ROOT_  = '__ROOT__';
+            var _THEME_ = '__THEME__';
+            var _PUBLIC_ = '__PUBLIC__';
+        </script>
+        <include file="__THEME__/comm/_app" />
+        <script type="text/javascript" src="../Public/js/jquery.marquee.js"></script>
+        <script type="text/javascript">
+            var _UID_   = '{$uid}';
+            $(function(){
+                //滚动代码
+                $("#scrollDiv1").marquee({
+                    direction:"up",
+                    step:1,
+                    pause:0
+                });
+                $("#scrollDiv2").marquee({
+                    direction:"up",
+                    step:1,
+                    pause:0
+                });
+                $("#scrollDiv3").marquee({
+                    direction:"up",
+                    step:1,
+                    pause:0
+                });
+            })
+        </script>
+    </head>
+
+    <body>
+        <include file="__THEME__/_holder_2014" />
+        <div class="back"></div>
+        <div class="bg">
+            <div class="main">

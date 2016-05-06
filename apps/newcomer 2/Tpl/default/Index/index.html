@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>校邮汇迎新</title>
+<link href="../Public/css/style.css" rel="stylesheet" type="text/css" />
+<!--[if IE]> 
+<link rel="stylesheet" type="text/css" href="../Public/css/ie.css" /> 
+<![endif]-->
+</head>
+
+<body>
+<div class="header"></div>
+<div class="banner">
+    <div class="banner01"></div>
+    <div class="banner02"></div>
+    <div class="banner03">
+        <div class="jionus_box">
+            <a href="{:U('newcomer/Index/register')}"></a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="banner04"></div>
+</div>
+<div class="content">
+	<div class="content_box">
+    	<div class="news">
+            <div class="box_header">
+            	<span class="box_title">迎新快讯</span>
+            </div>
+            <div class="box_content" style="height:560px;">
+            <!--新闻列表 开始-->
+				<php>foreach( $documents['data'] as $d ){</php>
+            	<div class="news_item">
+                	<div class="news_date"><php>echo date("m",$d['mtime'])."月<br />".date("d",$d['mtime'])."日";</php></div>
+                	<div class="news_content">
+                    	<div class="news_title">
+                        	<a href="{:U('newcomer/Index/news',array(id=>$d['document_id']))}">{$d['title']}</a>
+                        </div>
+                        <div class="news_intro">
+					        <php>$d['content'] = real_strip_tags($d['content']);</php>
+                        	<a href="{:U('newcomer/Index/news',array(id=>$d['document_id']))}">{$d['content']|t|getShort=###,80,'……'}</a>
+                        </div>
+                    </div>
+                </div>
+				<php>}</php>			
+                <!--新闻列表  结束-->
+				<div class="page">{$documents['html']}</div>
+            </div>
+            <div class="box_bottom"></div>
+        </div>
+    	<div class="sidebar">
+            <div class="guide">
+                <div class="box_header">
+                	<span class="box_title">新生指南</span>
+                </div>
+                <div class="box_content">
+                <!--指南列表 开始-->
+                	<div class="guide_row" >
+                    	<a class="item01" href="{:U('newcomer/Index/news',array(id=>1))}"></a>
+                        <a class="item02" href="{:U('newcomer/Index/news',array(id=>2))}"></a>
+                        <a class="item03" href="{:U('newcomer/Index/news',array(id=>3))}"></a>
+                        <a class="item04" href="{:U('newcomer/Index/news',array(id=>4))}"></a>
+                        <a class="item05" href="{:U('newcomer/Index/news',array(id=>5))}"></a>
+                        <a class="item06" href="{:U('newcomer/Index/news',array(id=>6))}"></a>
+                        <a class="item07" href="{:U('newcomer/Index/news',array(id=>7))}"></a>
+                        <a class="item08" href="{:U('newcomer/Index/news',array(id=>8))}"></a>
+                    </div>
+                <!--指南列表 结束-->
+                </div>
+                <div class="box_bottom"></div>
+            </div>
+            <div class="links">
+                <div class="box_header">
+                	<span class="box_title">校园官网</span>
+                </div>
+                <div class="box_content" style="height:318px;">
+                <!--校园官网 开始-->
+                <div class="links_row" >
+                    	<a class="item01" href="http://www.suda.edu.cn" target=_blank></a>
+                        <a class="item02" href="http://www.usts.edu.cn" target=_blank></a>
+                        <a class="item03" href="http://www.jssvc.edu.cn" target=_blank></a>
+                        <a class="item04" href="http://www.siit.edu.cn" target=_blank></a>						
+                 </div>
+                <!--校园官网 结束-->
+	            </div>
+                <div class="box_bottom"></div>
+            </div>
+			<div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="pics">
+			<php>foreach( $photos['data'] as $d ){</php>	
+            <div class="pic">
+				<a href="{:U('newcomer/Index/news',array(id=>$d['document_id']))}"><img src="{$d['icon']|get_document_url}" /></a>
+			</div>
+			<php>}</php>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+	<div class="footer_box">
+        <div class="copyright">
+        	校邮汇版权所有 苏ICP证050725号
+        </div>
+        <div class="menu">
+            <a href="{:U('home/Public/document',array(id=>1))}" target="_blank">常见问题</a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="{:U('home/Public/document',array(id=>2))}" target="_blank">关于校邮汇</a>
+        </div>
+        <div class="clearfix"></div>
+	</div>
+</div>
+</body>
+</html>

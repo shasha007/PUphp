@@ -1,0 +1,156 @@
+<include file="_header" />
+<script>
+    //搜索用户
+    var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+    function searchObject() {
+        if(isSearchHidden == 1) {
+            $("#searchObject_div").slideDown("fast");
+            $(".searchObject_action").html("搜索完毕");
+            isSearchHidden = 0;
+        }else {
+            $("#searchObject_div").slideUp("fast");
+            $(".searchObject_action").html("搜索活动");
+            isSearchHidden = 1;
+        }
+    }
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+        <div class="page_tit">搜索商品 [ <a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+        <div class="form2">
+            <form action="__URL__&act=eventlist" method="POST">
+                <input type="hidden" name="isSearch" value="1"/>
+                <php>if($isSearch != '1') $uid = '';</php>
+                <dl class="lineD">
+                    <dt>商品标题：</dt>
+                    <dd>
+                        <input name="title" class="txt" value="{$title}" /><span> 支持模糊查询。</span>
+                    </dd>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>推荐：</dt>
+                    <dd>
+                        <input name="isTop" type="radio" value="" <eq name="isTop" value="">checked</eq>>全部
+                        <input name="isTop" type="radio" value="1" <eq name="isTop" value="1">checked</eq>>是
+                        <input name="isTop" type="radio" value="0" <eq name="isTop" value="0">checked</eq>>否
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>幻灯：</dt>
+                    <dd>
+                        <input name="isHot" type="radio" value="" <eq name="isHot" value="">checked</eq>>全部
+                        <input name="isHot" type="radio" value="1" <eq name="isHot" value="1">checked</eq>>是
+                        <input name="isHot" type="radio" value="0" <eq name="isHot" value="0">checked</eq>>否
+                    </dd>
+                </dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>添加商品需另一人帮助审核。审核通过后自动开始云购。如需强制开奖时间，到【正在云购】页设定</div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Admin/editYg')}" class="btn_a"><span>添加商品</span></a>
+        <a href="{:U('shop/Admin/yg',array('cat'=>2))}" class="btn_a"><span>上架的商品</span></a>
+        <a href="{:U('shop/Admin/yg',array('cat'=>1))}" class="btn_a"><span>待审核商品</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>图片</th>
+                <th width="30%">商品名称</th>
+                <th>发起人</th>
+                <th>审核人</th>
+                <th>市场价格</th>
+                <th>所需参与人数</th>
+                <th>结束期数</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><img width="30" height="30" src="{$vo.pic|tsMakeThumbUp=###,30,30,'f'}"/></td>
+                    <td>
+                        <?php if($vo['lastYgId']):?>
+                            <a href="{:U('/Yg/detail', array('id'=>$vo['lastYgId']))}" target="_blank">{$vo['name']}</a>
+                        <?php else: ?>
+                            {$vo['name']}
+                        <?php endif; ?>
+                    </td>
+                    <td>{$vo.uid|getUserRealName}</td>
+                    <td>{$vo.audit|getUserRealName}</td>
+                    <td>{$vo.price}</td>
+                    <td>{$vo.need_attended}</td>
+                    <td>{$vo.over_times}</td>
+                    <td>{$vo.state}
+                    <?php if($vo['restart']): ?>
+                    <br/><a href="javascript:void(0)" onclick="restart({$vo.id})">重新激活</a>
+                    <?php endif; ?>
+                    </td>
+                <td>
+                    <?php if($vo['audit']): ?>
+                        <a href="{:U('/Admin/editYg', array('id'=>$vo['id']))}">编辑</a>
+                    <?php else: ?>
+                        <?php if($vo['uid']==$mid): ?>
+                            待审核
+                        <?php else: ?>
+                            <a style="color:red;" href="{:U('/Admin/audit', array('id'=>$vo['id']))}">二次审核</a>
+                        <?php endif; ?>
+                        <a href="{:U('/Admin/editYg', array('id'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:void(0)" onclick="delProduct({$vo.id})">删除</a>
+                    <?php endif; ?>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Admin/editYg')}" class="btn_a"><span>添加商品</span></a>
+        <a href="{:U('shop/Admin/yg',array('cat'=>2))}" class="btn_a"><span>上架的商品</span></a>
+        <a href="{:U('shop/Admin/yg',array('cat'=>1))}" class="btn_a"><span>待审核商品</span></a>
+    </div>
+</div>
+<script>
+function delProduct(id){
+    if(confirm("是否删除商品?")){
+        $.post( '{:U('/Admin/deleteProduct')}',{id:id},function(text){
+            if( text == 1 ){
+                ui.success( "删除成功" );
+                $('#list_'+id).remove();
+            }else{
+                ui.error( "删除失败" );
+            }
+        });
+    }
+}
+function restart(id){
+    if(confirm("确定激活，继续该一元梦想?")){
+        $.post( '{:U('/Admin/restartYg')}',{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                setTimeout(function(){location.reload();},1500);
+            }
+        });
+    }
+}
+</script>
+<include file="_footer" />

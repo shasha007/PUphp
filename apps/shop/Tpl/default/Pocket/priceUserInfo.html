@@ -1,0 +1,46 @@
+<div style="height:200px;width:400px;margin:10px auto 30px auto;overflow-y:scroll;">
+    <table width="100%" border="1" cellspacing="0" cellpadding="0">
+        <tr>
+            <th>用户名</th>
+            <td>{$list.name}</td>
+        </tr>
+        <tr>
+            <th>地址</th>
+            <td>{$list.address}</td>
+        </tr>
+        <tr>
+            <th>身份证号</th>
+            <td>{$list.identity}</td>
+        </tr>
+        <tr>
+            <th>联系电话</th>
+            <td>{$list.tel}</td>
+        </tr>
+        <tr>
+            <th>邮编</th>
+            <td>{$list.zipCode}</td>
+        </tr>
+        <tr>
+            <th>借款金额</th>
+            <td>{$result.price}</td>
+        </tr>
+        <tr>
+            <th>分期数</th>
+            <td>{$result.staging}</td>
+        </tr>
+        <tr>
+            <th>分期还款金额</th>
+            <td>{$result.stagPrice}</td>
+        </tr>
+        <tr>
+            <th>借款原因</th>
+            <td>{$res.name}</td>
+        </tr>
+        <if condition="$reason neq null">
+        <tr>
+            <th>驳回原因</th>
+            <td>{$reason}</td>
+        </tr>
+        </if>
+    </table>
+</div>

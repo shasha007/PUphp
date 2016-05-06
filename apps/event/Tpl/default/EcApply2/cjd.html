@@ -1,0 +1,58 @@
+<include file="../School/_header" />
+<div class="hd_c i1">
+    <div class="ranktab1">
+        <div class="clear"></div>
+        <div id="tabcon" class="tabcon">
+            <table width="940" border="0" cellspacing="0" cellpadding="0">
+                <tr class="b" style="color:#333; height:36px; line-height:36px;">
+                    <td colspan="2" class="rank4 f14"> 第二课堂成绩单
+                        <a href="/index.php?app=event&mod=EcApply2&act=myEc" style="color:#3b5998;">【我的申请】</a>
+                        <a href="/index.php?app=event&mod=School&act=credit" style="color:#3b5998;">【学时明细】</a>
+                    </td>
+                </tr>
+                <tr class="b" style="color:#333; height:32px; line-height:32px;">
+                    <td style="width:500px;">类别</td>
+                    <td style="width:400px;">筛选</td>
+                </tr>
+                <tr>
+                    <td>活动参与类（PU平台活动）</td>
+                    <td>默认学分最大的前25个
+                        <a href="javascript:void(0)" style="color:#3b5998;" onclick="selectEvent(0)">[筛选]</a>
+                    </td>
+                </tr>
+                <?php foreach($folder as $vo):?>
+                <tr>
+                    <td>{$vo.title}</td>
+                    <td>默认学分最大的前{$cntApply}个
+                        <a href="javascript:void(0)" style="color:#3b5998;" onclick="selectEvent({$vo.id})">[筛选]</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <tr class="b" style="color:#333; height:36px; line-height:36px;">
+                    <td colspan="2" class="f14"><input type="button" onclick="doExcel()" value="导出EXCEL" />
+                    </td>
+                </tr>
+            </table>
+            <form id="excel" method="post" action="__URL__&act=printExcel">
+                <input type="hidden" name="eventIds0" id="eventIds0" value=""/>
+                <?php foreach($folder as $vo):?>
+                    <input type="hidden" name="eventIds{$vo.id}" id="eventIds{$vo.id}" value=""/>
+                <?php endforeach; ?>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function selectEvent(sem){
+        var typevalue = $("#eventIds"+sem).val();
+        ui.box.load('__URL__&act=selectEvent&sem='+sem+'&selected='+typevalue,{title:'筛选'});
+    }
+    function doExcel(){
+        $("#excel").submit();
+    }
+</script>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/js/ztree/zTreeStyle.css" />
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.core-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.excheck-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.exedit-3.5.min.js" ></script>
+<include file="../School/_footer" />

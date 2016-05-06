@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>全部待还</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+    <script src="../Public/js/mainScript.js" ></script>
+    <script>
+        setActionBar('全部待还', '', '');
+    </script>
+</head>
+<body bgcolor="#F3F1EE">
+<volist name="order_list.list" id="vo">
+    <div class="w-repayGeneral">
+        <div>
+            <if condition="isset($_SESSION['checked_order'][$vo['id']]) && count($_SESSION['checked_order'][$vo['id']]) == count($order_list['list'][$vo['id']]['stage_list'])">
+            <img class="chkbox" check="1" src="../Public/img/sel01.png" data-id="{$vo.id}">
+            <else />
+                <img class="chkbox" check="0" src="../Public/img/sel1.png" data-id="{$vo.id}">
+            </if>
+            <if condition="$vo['bank_card_id']">
+                <div class="w-bank bank-{$bank_list[$vo['bank_card_id']]['bank_id']}">
+                    <p><img src="../Public/img/bank/bank-{$bank_list[$vo['bank_card_id']]['bank_id']}.png"><span>{$bank_list[$vo['bank_card_id']]['bank_name']}储蓄卡</span></p>
+                    <p>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i style="margin-right: 7px;"></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i style="margin-right: 7px;"></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i style="margin-right: 7px;"></i>
+                        <em>{$bank_list[$vo['bank_card_id']]['card_no']|substr=###, -4}</em>
+                    </p>
+                </div>
+                <div class="w-bankInfo">
+                    <p>￥ {$vo['amount']|number_format=###,2}</p>
+                    <p class="w-repaySum">￥ {$vo['last_amount']|number_format=###,2}</p>
+                </div>
+            <else />
+                <div class="w-wallet">
+                    <img src="../Public/img/wallet.png">
+                    <span>PU 币</span>
+                </div>
+                <div class="w-walletInfo">
+                    <p>￥ {$vo['amount']|number_format=###,2}</p>
+                    <p class="w-repaySum">￥ {$vo['last_amount']|number_format=###,2}</p>
+                </div>
+            </if>
+
+        </div>
+        <p class="w-sum">
+            <span></span>
+            <a href="{:U('pufinance/PuCredit/showOrder', array('id' => $vo['id']))}"><span>(本金{$vo['amount']|number_format=###,2}+服务费{$vo['interest']|number_format=###,2}
+                    <gt name="vo.all_last_overdue" value="0">
+                        +逾期{$vo.all_last_overdue}
+                    </gt>
+                    )</span></a>
+        </p>
+    </div>
+
+
+</volist>
+
+
+<!--<div class="w-repayGeneral">
+    <div>
+        <img src="../Public/img/sel1.png">
+        <div class="w-proImg">
+            <img src="../Public/img/proimg.png">
+            <p>苹果 iPhone6 Apple6s 每个ID限定一单</p>
+        </div>
+        <div class="w-proInfo">
+            <p>￥ 1000.00</p>
+            <p class="w-repaySum">￥ 1000.00</p>
+        </div>
+    </div>
+    <p class="w-sum">
+        <span>8/12期</span>
+        <span>(本金600+逾期14+服务费13)</span>
+    </p>
+</div>-->
+<p class="w-repayNext">
+    <a>已选<span id="shouldRepay">{$checked_amount}</span>元</a>
+    <a href="javascript:void(0);" id="sendRepay">立即还款</a>
+</p>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        // 勾选
+        $('.w-repayGeneral > div').click(function() {
+            var img = $(this).find('img.chkbox');
+            if (img.attr('check') == 1) {
+                img.attr({
+                    'check': 0,
+                    'src' : '../Public/img/sel1.png'
+                });
+            } else {
+                img.attr({
+                    'check': 1,
+                    'src' : '../Public/img/sel01.png'
+                });
+            }
+
+            $.get("{:U('pufinance/PuCredit/changeCheckedOrder')}",{'id' : img.attr('data-id'), 'check' : img.attr('check')}, function (result) {
+                $('#shouldRepay').text(result.data);
+            }, 'json');
+        });
+
+        // 提交
+        $('#sendRepay').click(function() {
+            var amount = $('#shouldRepay').text();
+            if (amount == 0) {
+                alert('请选择还款的订单');
+                return false;
+            }
+            location.href = '{:U("pufinance/PuCredit/repay")}&t=all';
+        });
+
+    });
+    function addNum(num1, num2) {
+        var sq1,sq2,m;
+        try {
+            sq1 = num1.toString().split(".")[1].length;
+        }
+        catch (e) {
+            sq1 = 0;
+        }
+        try {
+            sq2 = num2.toString().split(".")[1].length;
+        }
+        catch (e) {
+            sq2 = 0;
+        }
+        m = Math.pow(10,Math.max(sq1, sq2));
+        return (num1 * m + num2 * m) / m;
+    }
+</script>
+
+</body>
+</html>

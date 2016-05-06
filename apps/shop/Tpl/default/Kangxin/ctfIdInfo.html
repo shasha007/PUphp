@@ -1,0 +1,163 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+
+        <form method="post" action="__URL__&act=ctfIdInfo">
+            &nbsp;&nbsp;身份证号：<input type="text" name="ctf_id">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+
+    <div class="list">
+        <table width="80%" border="1" cellspacing="0" cellpadding="0">
+            <tr>
+                <th colspan="6">个人信息</th>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td>{$ulist.realname}</td>
+                <td>性别</td>
+                <td>{$ulist.sex}</td>
+                <td>民族</td>
+                <td>{$info.nation}</td>
+            </tr>
+            <tr>
+                <td>身份证号</td>
+                <td colspan="2">{$ulist.ctf_id}</td>
+                <td>家庭住址</td>
+                <td colspan="2">{$info.home}</td>
+            </tr>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <td>学校</td>
+                <td>{$ulist.school}</td>
+                <td>院系</td>
+                <td>{$ulist.department}</td>
+                <td>专业</td>
+                <td>{$ulist.major}</td>
+            </tr>
+            <tr>
+                <td>年级</td>
+                <td>{$ulist.grade}</td>
+                <td>学号</td>
+                <td>{$ulist.no}</td>
+                <td>学历</td>
+                <td>{$info.education}</td>
+            </tr>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <td>手机</td>
+                <td>{$ulist.mobile}</td>
+                <td>QQ/微信</td>
+                <td>{$info.qq}</td>
+                <td>邮箱</td>
+                <td>{$ulist.email_bill}</td>
+            </tr>
+            <tr>
+                <td>宿舍地址</td>
+                <td colspan="5">{$ulist.address}</td>
+            </tr>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <td>联系人姓名</td>
+                <td>{$info.d_name}</td>
+                <td>关系</td>
+                <td>父亲/母亲</td>
+                <td>手机</td>
+                <td>{$ulist.d_mobile}</td>
+            </tr>
+            <tr>
+                <td>单位名称</td>
+                <td colspan="3">{$info.d_company}</td>
+                <td>单位电话</td>
+                <td>{$info.dc_mobile}</td>
+            </tr>
+            <tr>
+                <td>联系人姓名</td>
+                <td>{$info.classmate}</td>
+                <td>关系</td>
+                <td>同学</td>
+                <td>手机</td>
+                <td>{$info.class_mobile}</td>
+            </tr>
+            <tr>
+                <td>宿舍地址</td>
+                <td colspan="5">{$info.class_address}</td>
+            </tr>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <th colspan="6">借款信息</th>
+            </tr>
+            <tr>
+                <td>授信合同号</td>
+                <td>{$arr.contract}</td>
+                <td>借款金额</td>
+                <td>{$arr.count}</td>
+                <td>借款笔数</td>
+                <td>{$arr.sum}</td>
+            </tr>
+            <tr>
+                <td>提款合同号</td>
+                <td>日期</td>
+                <td>金额</td>
+                <td>期数</td>
+                <td>余额</td>
+                <td>逾期情况</td>
+            </tr>
+            <volist name="list" id='vo'>
+                <tr>
+                    <td>{$vo.ptm}</td>
+                    <td>{$vo.stime}</td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.staging}</td>
+                    <td>{$vo.remainMoney}</td>
+                    <td>{$vo.overdue}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+    var mytype=$('#mytype');
+    var myval=$('#myval');
+    function getclist(){
+        var type = mytype.val();
+
+        if(type=='all'){
+            exit;
+        }
+        $.post('__URL__&act=getCondition',{type:type},function(data){
+            myval.empty();
+            myval.append('<option value="0">--请选择--</option>');
+            if(data){
+                for(var i=0;i<data.length;i++){
+                    var option = document.createElement('option');
+                    if(type=='school'){
+                        option.innerHTML = data[i]['title'];
+                    }else{
+                        option.innerHTML = data[i]['city'];
+                    }
+                    option.value = data[i]['id'];
+                    myval.append(option);
+                }
+            }
+        },'json');
+    }
+</script>
+<include file="_footer" />

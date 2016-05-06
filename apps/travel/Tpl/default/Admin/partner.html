@@ -1,0 +1,51 @@
+<include file="_header" />
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="{:U('travel/Admin/editPartner')}" class="btn_a"><span>添加网站</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="delPartner()"><span>删除网站</span></a>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>logo</th>
+                <th>网站名称</th>
+                <th>排序</th>
+                <th>操作</th>
+            </tr>
+            <volist name="list" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><if condition="$vo['pic']"><img width="150" height="50" src="{$vo.pic|tsMakeThumbUp=###,150,50,'f'}"/></if></td>
+                    <td><a href="{$vo.url}" target="_blank">{$vo.title}</a></td>
+                    <td>{$vo.display_order}</td>
+                         <td>
+                             <a href="{:U('/Admin/editPartner', array('id'=>$vo['id']))}">编辑</a>
+                             <a href="javascript:void(0);" onclick="delPartner({$vo['id']})">删除</a>
+                         </td>
+                    </tr>
+                </volist>
+            </table>
+        </div>
+
+        <div class="Toolbar_inbox">
+            <div class="page right">{$html}</div>
+            <a href="{:U('travel/Admin/editPartner')}" class="btn_a"><span>添加网站</span></a>
+            <a href="javascript:void(0);" class="btn_a" onclick="delPartner()"><span>删除网站</span></a>
+        </div>
+    </div>
+    <script type="text/javascript">
+       function delPartner(id){
+           delList(U('travel/Admin/delPartner'),id);
+        }
+    </script>
+    <include file="_footer" />

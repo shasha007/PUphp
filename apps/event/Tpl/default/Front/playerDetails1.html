@@ -1,0 +1,82 @@
+<include file="_header" />
+<script src="../Public/js/vote.js?20131031" type="text/javascript"></script>
+<script>
+    function playFlash(vid){
+        ui.box.load(U('/Index/playFlash')+'&id='+vid,{title:'播放视频'});
+    }
+</script>
+
+<div class="news">
+    <div class="news_menu"><img src="../Public/fimages/menu_person.gif" alt="" /></div>
+    <div class="person_desc">
+        <div class="person_left">
+            <div class="person_photo"><a href="{:PIC_URL}/data/uploads/{$app.path}">
+                <img src="{$app.path|getThumb=###,163,204,c}" alt="" /></a>
+            </div>
+            <?php if($event['isTicket']):?>
+            <?php if($app['stoped'] || $event['isEnd']): ?>
+                <div class="person_list_vote i4">终止投票</div>
+            <?php else:?>
+                <?php if($restVote<=0): ?>
+                    <div class="person_list_vote i4">您已投票</div>
+                <?php else:?>
+                    <div class="person_list_vote" onclick='post_vote({$eventId},{$app.id},"{$app.realname}")'>投TA一票</div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php endif; ?>
+        </div>
+        <div class="person_right">
+            <ul>
+            <li><span class="red1">{$app.realname}</span> &nbsp;&nbsp;&nbsp; <span class="red">{$app.ticket}</span>票</li>
+            <li>学 校：&nbsp;&nbsp;{$app.school}</li>
+            </ul>
+            <div class="person_right_dp">简介：&nbsp;&nbsp;{$app.content|htmlspecialchars_decode}</div>
+        </div>
+        <div class="person_desc_photo">
+            <style>
+          .app_icon{ float:left; width:80px;}
+		  .app_list{ float:left; line-height:40px; font-weight:bold; margin-left:20px; display:inline; font-size:14px;}
+		  .app_list ul{ float:left; width:100%;}
+		  .app_list li{ float:left; width:100%}
+          </style>
+            <div class="app_icon"><img src="../Public/fimages/icon_mp.png" /></div>
+            <div class="app_list">
+             <ul>
+              <li>秒拍视频</li>
+              <li><a href="http://miaopai.yixia.com">秒拍体验</a></li>
+             </ul>
+             </div>
+            <div class="clear"></div>
+            <div class="person_desc_photo_list1">
+                <ul>
+                    <volist name="flash" id="vo">
+                    <li>
+                        <div class="person_desc_photo_list1_thumb">
+                            <a href="javascript:playFlash('{$vo.id}');" title="">
+                            <img src="{$vo.path|get_flash_img}" alt="" /></a></div>
+                        <div class="person_desc_photo_star"><a href="javascript:playFlash('{$vo.id}');" title="点击播放"></a></div>
+                    </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="person_desc_photo">
+            <div class="person_desc_photo_title">靓照：</div>
+            <div class="clear"></div>
+            <div class="person_desc_photo_list">
+                <ul>
+                    <volist name="img" id="vo">
+                        <li>
+                            <a href="{:U('/Front/details',array('id'=>$eventId,'uid'=>$app['id'],'img'=>$vo['id']))}" target="_blank" title="{$vo.title}"><img src="{$vo.path|getThumb=###,190,238}" alt="" /></a>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div>
+
+        </div>
+    </div>
+
+</div>
+<include file="_footer" />

@@ -1,0 +1,41 @@
+        </div>
+<div class="clear"></div>
+<div class="c_footer" style="background:#fff;">
+<div class="c_footercon center">
+    <include file="__THEME__/_footer_icp" />
+</div>
+</div>
+
+  </div>
+</div>
+<script type="text/javascript" src="../Public/js/event_school.js?141118"></script>
+<script>
+$(document).ready(function () {
+    $('.platform2').bind('mouseover', function() {
+        $('.platform-menu2').removeClass('hidden');
+    });
+
+    $('.platform2').bind('mouseout', function() {
+        $('.platform-menu2').addClass('hidden');
+    });
+});
+</script>
+<script type="text/javascript">
+$(function(){
+	$('#menu li').hover(function(){
+		$(this).children('ul').stop(true,true).show('fast');
+	},function(){
+		$(this).children('ul').stop(true,true).hide('fast');
+	});
+        $('.platform').bind('mouseover', function() {
+            $('.platform-menu').removeClass('hidden');
+        });
+
+        $('.platform').bind('mouseout', function() {
+            $('.platform-menu').addClass('hidden');
+        });
+});
+</script>
+</body>
+</html>
+

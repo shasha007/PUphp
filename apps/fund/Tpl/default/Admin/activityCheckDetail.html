@@ -1,0 +1,92 @@
+<div style="width:800px;overflow-y:scroll;height:500px;">
+    <center><div class="b cRed f18px">{$title}</div></center>
+    <dl>
+        <dt class="left alR b clear" style="width:100px;"> 活动：</dt>
+        <dd class="left alL">{$eventName}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:100px;"> 承办部落：</dt>
+        <dd class="left alL">{$gname}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:100px;"> 联系人：</dt>
+        <dd class="left alL">{$uid|getUserField=###,'realname'}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:100px;"> 电话：</dt>
+        <dd class="left alL">{$telephone}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:100px;"> QQ：</dt>
+        <dd class="left alL">{$qq}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:100px;"> 支付宝账号：</dt>
+        <dd class="left alL">{$alipayAccount}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:100px;"> 承办金额：</dt>
+        <dd class="left alL">{$amount}</dd>
+    </dl>
+    <div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="clear">
+        <dl>
+            <?php if($state==0):?>
+            <dt class="left alR b clear" style="text-align:left;">
+            核准金额： <input type="text" id="amount2" name="amount2" value="" size="10" onkeyup="clearNoNum(this)"/>
+            <input type="button" class="btn_a" onclick="through({$id})" value="通过" />
+            </dt>
+            <dd class="left alL">
+                驳回原因：
+        <textarea  style='width:200px;height:100px;' id='rej'></textarea>
+        <input type="button" class="btn_a" onclick="reject({$id})" value="驳回" />
+            </dd>
+            <?php elseif($state==1):?>
+            <dt class="left alR b clear" style="width:100px;"> 核准金额：</dt>
+            <dd class="left alL">{$amount2}</dd>
+            <?php else:?>
+            <dt class="left alR b clear" style="width:100px;"> 驳回原因：</dt>
+            <dd class="left alL">{$rejectReason}</dd>
+            <?php endif;?>
+        </dl>
+    </div>
+</div>
+<?php if($state==0):?>
+<script>
+    function through(id){
+        var amount2 = $('#amount2').val();
+        if(amount2.length==0){
+            $('#amount2').focus();
+            alert('请输入核准金额');
+        }else if(confirm('确定审核通过？核准金额：'+amount2)){
+            $.post('__URL__&act=activity_check_throughAjax',{id:id,amount2:amount2},function(txt){
+                json = $.parseJSON(txt);;
+                if( json.status){
+                    ui.box.close();
+                    setTimeout(function(){location.reload();},1000);
+                    ui.success( json.info );
+                }else{
+                    ui.error( json.info );
+                }
+            });
+        }
+    }
+
+    function reject(id){
+        var reason = $('#rej').val();
+        if(reason.length <= 1){
+            alert('请填写驳回理由');
+            return ;
+        }
+        $.post( '__URL__&act=activity_check_rejectAjax',{id:id,reason:reason},function(txt){
+            json = $.parseJSON(txt);;
+            if( json.status){
+                ui.box.close();
+                setTimeout(function(){location.reload();},1000);
+                ui.success( json.info );
+            }else{
+                ui.error( json.info );
+            }
+        });
+    }
+</script>
+<?php endif;?>

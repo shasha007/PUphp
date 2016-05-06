@@ -1,0 +1,15 @@
+<div class="page_tit">用户管理</div>
+<div class="tit_tab">
+<ul>
+    <li><a <eq name="ACTION_NAME" value="index">class="on"</eq>
+           <eq name="ACTION_NAME" value="addUser">class="on"</eq>
+           <eq name="ACTION_NAME" value="editUser">class="on"</eq>
+            href="__URL__&act=index">用户</a></li>
+    <li><a <eq name="ACTION_NAME" value="credit">class="on"</eq>
+            href="__URL__&act=credit">活动分数明细</a></li>
+    <?php if(isEcApplySchool($school['id'])):?>
+    <li><a <eq name="ACTION_NAME" value="apply">class="on"</eq>
+            href="__URL__&act=apply">申请{$webconfig.cradit_name}明细</a></li>
+    <?php endif;?>
+</ul>
+</div>

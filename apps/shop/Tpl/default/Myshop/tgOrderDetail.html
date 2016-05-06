@@ -1,0 +1,146 @@
+<include file="_header" />
+<script type="text/javascript" src="../Public/js/orderDetail.js"></script>
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">订单号：{$order_id} </div>
+            <input type="hidden" id="oid" value="{$order_id}" />
+            <div class="good_confirm">
+                <div class="flow_steps b center f14">
+                    <ul class="num5">
+                        <?php if($order_state==3):?>
+                            <li class="current"><span class="first">1.已付定金</span></li>
+                            <li>2.支付尾款</li>
+                            <li>3.确认收货地址</li>
+                            <li>4.卖家发货</li>
+                            <li class="last">5.确认收货</li>
+                        <?php elseif($order_state==4):?>
+                            <li class="done current-prev"><span class="first">1.已付定金</span></li>
+                            <li class="current">2.支付尾款</li>
+                            <li>3.确认收货地址</li>
+                            <li>4.卖家发货</li>
+                            <li class="last">5.确认收货</li>
+                        <?php elseif($order_state==0):?>
+                            <li class="done"><span class="first">1.已付定金</span></li>
+                            <li class="done current-prev">2.支付尾款</li>
+                            <li class="current">3.确认收货地址</li>
+                            <li>4.卖家发货</li>
+                            <li class="last">5.确认收货</li>
+                        <?php elseif($order_state==1):?>
+                            <li class="done"><span class="first">1.已付定金</span></li>
+                            <li class="done">2.支付尾款</li>
+                            <li class="done current-prev">3.确认收货地址</li>
+                            <li class="current">4.卖家发货</li>
+                            <li class="last">5.确认收货</li>
+                        <?php elseif($order_state==2):?>
+                            <li class="done"><span class="first">1.已付定金</span></li>
+                            <li class="done">2.支付尾款</li>
+                            <li class="done">3.确认收货地址</li>
+                            <li class="done current-prev">4.卖家发货</li>
+                            <li class="last-current">5.确认收货</li>
+                        <?php elseif($order_state==10):?>
+                            <li class="done"><span class="first">1.已付定金</span></li>
+                            <li class="done">2.支付尾款</li>
+                            <li class="done">3.确认收货地址</li>
+                            <li class="done">4.卖家发货</li>
+                            <li class="done">5.确认收货</li>
+                        <?php elseif($order_state==11):?>
+                            <li class="done"><span class="first">1.已付定金</span></li>
+                            <li class="done">2.支付尾款</li>
+                            <li class="done">3.确认收货地址</li>
+                            <li class="done current-prev">4.卖家发货</li>
+                            <li class="last-current">5.确认收货</li>
+                        <?php endif;?>
+
+                    </ul>
+                </div>
+                <div class="center">
+                    <span class="m_color2">结束后7天 </span>
+                        仍未付尾款，完善配送信息，将被默认为您已经放弃)</div>
+                <div class="order_address">
+                    <div class="order_address_staus b f14 m_color3">当前状态：{$order_state|orderState} </div>
+                    <div class="order_address_tip mt10">客服工作时间为（8:30--18:00）在此期间您可以致电0512-69330052。</div>
+                    <?php if($order_state==0):?>
+                        <?php if(!empty($address)):?>
+                        <div class="order_address_list pl50 mt20">
+                            <volist name="address" id='vo'>
+                            <label>
+                                <input type="radio" name="address_id" class="mt-3" value="{$vo.address_id}" />
+                                <span class="pl10">{$vo.city} {$vo.shipAddress}</span></label>
+                            <br />
+                            </volist>
+                            <div class="order_address_btn1 center b mt10"><a id="setOrderAddress" href="javascript:void(0)">确认地址</a></div>
+                            <div class="order_address_btn1 center b mt10" style="margin-left:10px;"><a href="javascript:void(0)" onclick="addAdd()">其它地址</a></div>
+                        </div>
+                        <?php else:?>
+                            <div class="order_address_btn1 ml50 center b mt10"><a href="{:U('shop/Myshop/address')}">添加地址</a></div>
+                        <?php endif;?>
+                    <?php elseif($order_state==2):?>
+                        <div class="order_address_btn1 ml50 center b mt10"><a id="recevier" href="javascript:void(0)">确认收货</a></div>
+                    <?php elseif($order_state==3):?>
+                        <div class="order_address_tip mt10">团购结束后，我们会通过站内消息和手机短信通知您前来支付尾款。</div>
+                    <?php elseif($order_state==4):?>
+                        <div class="order_address_btn1 center b ml50 mt10"><a href="{:U('shop/Myshop/tgPay',array('id'=>$order_id))}">支付尾款</a></div>
+                    <?php endif;?>
+                    <volist name="log" id='vo'>
+                        <div class="order_message mt10">
+                            <div class="o_m_time">{$vo.optime}</div>
+                            <div class="o_m_prompt">{$vo.oplog}</div>
+                            <div class="o_m_name">操作：{$vo.opuser}</div>
+                        </div>
+                    </volist>
+                </div>
+                <div class="o_title b mt20">商品信息</div>
+                <div class="o_good_infor mt10">
+                    <div class="o_good_infor1 center">
+                        <ul>
+                            <li class="good">商品</li>
+                            <li>当前价（PU币）</li>
+                            <li class="b_n">数量</li>
+                        </ul>
+                    </div>
+                    <div class="o_good_infor2 center">
+                        <ul>
+                            <li class="good">
+                                <div class="o_good_thumb">
+                                    <a href="{:U('shop/Tg/detail',array('id'=>$product['id']))}"><img src="{$product['pic']|tsMakeThumbUp=###,70,70}" alt="" /></a>
+                                </div>
+                                <div class="o_good_text c_r_link"><a href="{:U('shop/Tg/detail',array('id'=>$product['id']))}">{$product['name']}</a></div>
+                                <div class="o_good_text">开团时间：{$product.eday} 早上10点</div>
+                            </li>
+                            <li>
+                                <?php echo $product['cprice']/100?>
+                            </li>
+                            <li class="b_n">{$buyNum}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="o_title b mt20">配送信息</div>
+                <?php if($trans):?>
+                <div class="o_express mt10">
+                    <div class="o_express_infor1 center">
+                        <li>快递单号</li>
+                        <li>快递公司</li>
+                        <li class="b_n">备注</li>
+                    </div>
+                    <div class="o_express_infor2 center">
+                        <li>{$trans.transport_num}</li>
+                        <li>{$trans.transport_name}</li>
+                        <li>{$trans.transport_time}</li>
+                        <li class="b_n">{$trans.transport_mark}</li>
+                    </div>
+                </div>
+                <?php endif;?>
+                <div class="o_title b mt20">收货信息</div>
+                <?php if($orderAddress):?>
+                <div class="o_consignee mt10"> 收 货 人：{$orderAddress.shipName}<br />
+                手机：{$orderAddress.shipMobile} 座机：{$orderAddress.shipTel}<br />
+                收货地址：{$orderAddress.shipZip},{$orderAddress.city} {$orderAddress.shipAddress}<br />
+                订单备注：(第{$yg['times']}期) {$product['name']}</div>
+                <?php endif;?>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="../Public/_footer" />

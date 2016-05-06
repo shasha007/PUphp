@@ -1,0 +1,59 @@
+<include file="_header" />
+            <div class="kdl_mobile_header f18 bold tcenter">商品详情</div>
+            <a href="{:U('shop/PocketShop/index')}"><div class="m_back"></div></a>
+            <div class="clear"></div>
+
+            
+<!--            <a href="#"><div class="m_c_key1 detail">
+                <div class="m_c_keydesc1 m_b_left">商品详情</div>
+            </div></a>-->
+            <div class="m_hr"></div>
+            <div class="m_c_keydesc"><!--{$opt.content}-->
+             品牌：Casio/卡西欧&nbsp;型号：EX-TR550&nbsp;特殊功能：蓝牙、广角、高清摄像&nbsp;上市时间：2015年4月<br><img src="../Public/images/cash_note.jpg">          
+            </div>
+            <div class="clear"></div>
+            <form method="post" action="{:U('shop/PocketShop/addAddress')}">
+                <input type="hidden" name="id" value="{$obj.id}">
+                <input type="hidden" name="color" id="mycolor">
+                <div class="m_c_buy f18"><input type="submit" value="立即购买" class="m_btn"></div>
+            
+            </form>
+        <script type="text/javascript" src="../Public/js/touchScroll.js"></script>
+        <script type="text/javascript" src="../Public/js/touchslider.dev.js"></script>
+        <script type="text/javascript">
+            var active=0,
+            as=document.getElementById('pagenavi').getElementsByTagName('a');
+
+            for(var i=0;i<as.length;i++){
+                (function(){
+                    var j=i;
+                    as[i].onclick=function(){
+                        t2.slide(j);
+                        return false;
+                    }
+                })();
+            }
+
+            var t1=new TouchScroll({id:'wrapper','width':5,'opacity':0.7,color:'#555',minLength:20});
+
+            var t2=new TouchSlider({id:'slider', speed:600, timeout:6000, before:function(index){
+                    as[active].className='';
+                    active=index;
+                    as[active].className='active';
+                }});
+
+           function change(obj){
+           var mcolor = $(obj).siblings();
+           //alert(bm);
+            for(var i =0;i<mcolor.length;i++){
+                $(mcolor[i]).removeClass("click");
+            }
+            $(obj).addClass("click");
+            var sm = $(obj).text();
+            //alert(m);
+            var str = $('#mycolor');
+            str.val(sm);
+
+           }
+        </script>
+<include file="_footer" />

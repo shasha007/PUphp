@@ -1,0 +1,107 @@
+<include file="../School/_header" />
+<div class="hd_c">
+<div class="hd_c_left">
+    <div class="hd_fl color4 link">
+        <span class="b" >频道：</span>
+        <a  <?php if($_SESSION['group_searchCat']['cat']=='')echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('cat'=>all))}">全部</a> &nbsp;&nbsp;
+        <a  <?php if($_SESSION['group_searchCat']['cat']=='manage')echo' class="f_s b"';?>  href="{:U('/GroupIndex/index', array('cat'=>manage))}">我管理的</a> &nbsp;&nbsp
+        <a <?php if($_SESSION['group_searchCat']['cat']=='join')echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('cat'=>join))}">我加入的</a> &nbsp;&nbsp;
+<!--        <a  <?php if($_SESSION['group_searchCat']['cat']=='attend')echo' class="f_s b"';?>  href="#">我关注的</a> --><br />
+ <span class="b">部门：</span>
+        <a  <?php if($_SESSION['group_searchCat']['category']=='')echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('category'=>all))}">全部</a> &nbsp;&nbsp;
+        <eq name='domain' value='tzb'>
+        <a  <?php if($_SESSION['group_searchCat']['category']==1)echo' class="f_s b"';?>  href="{:U('/GroupIndex/index', array('category'=>1))}">哲学社科</a> &nbsp;&nbsp
+        <a <?php if($_SESSION['group_searchCat']['category']==2)echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('category'=>2))}">科技发明制作</a> &nbsp;&nbsp;
+        <a <?php if($_SESSION['group_searchCat']['category']==3)echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('category'=>3))}">自然科学</a> &nbsp;&nbsp;
+        <else/>
+        <a  <?php if($_SESSION['group_searchCat']['category']==1)echo' class="f_s b"';?>  href="{:U('/GroupIndex/index', array('category'=>1))}">学生部门</a> &nbsp;&nbsp
+        <a <?php if($_SESSION['group_searchCat']['category']==2)echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('category'=>2))}">团支部</a> &nbsp;&nbsp;
+        <a <?php if($_SESSION['group_searchCat']['category']==3)echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('category'=>3))}">学生社团</a> &nbsp;&nbsp;
+ </eq>
+        </br>
+<span class="b">院系：</span>
+        [<a href="javascript:void(0)" onclick="changeSubSchool('event/GroupIndex/index');">切换</a>]&nbsp;&nbsp;<a class="f_s b">{$schoolname}</a>
+        <br/> <span class="b">年级：</span>
+    <a  <?php if($_SESSION['group_searchCat']['year']=='')echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('year'=>all))}">全部</a> &nbsp;&nbsp;
+   <volist name='year' id='vo'>
+    <a  <?php if($_SESSION['group_searchCat']['year']==$vo)echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('year'=>$vo))}">{$vo}级</a> &nbsp;&nbsp;
+   </volist>
+    <br/>   <span class="b">分类：</span>
+     <a  <?php if($_SESSION['group_searchCat']['cid0']=='')echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('cid0'=>all))}">全部</a> &nbsp;&nbsp;
+       <volist name='catList' id='vo'>
+     <a  <?php if($_SESSION['group_searchCat']['cid0']==$vo['id'])echo' class="f_s b"';?>   href="{:U('/GroupIndex/index', array('cid0'=>$vo['id']))}">{$vo.title}</a> &nbsp;&nbsp;
+     </volist>
+    </div>
+
+    <div class="hd_search">
+        <form action="{:U('/GroupIndex/index')}" method="POST">
+            <input name="title" value="{$searchTitle}" type="text" class="hd_s_input f14 f_wr" placeholder="输入关键字" />
+            <input name="submit" type="submit" class="hd_s_b f_wr" value="找校园部落" />
+        </form>
+    </div>
+    <!--校园部落信息完善提示开始-->
+    <div class="st_tip mt5 ml10" id="jun" <neq name="uninit" value='uninit'> style='display:none;'</neq>>
+        <div class="st_tip_m b">友情提示:</div>
+        <div class="st_tip_close red"><a onClick="$('#jun').hide()">关闭</a></div>
+        <div class="st_tip_list ml10" >
+            <ul>
+                <volist name="init" id='vo'>
+                <li>{$uid|getUserRealName}，<strong>{$vo.name} </strong>校园部落信息需要您的完善，<a  href="{:U('/GroupManage/index', array('gid'=>$vo['id']))}">点击此处进入</a>！</li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+    <!--校园部落信息完善提示结束-->
+    <div class="st_list">
+        <ul>
+            <a href="{:U('/GroupIndex/add')}"><li style="height:181px; background:#0073c6;"><img src="../Public/images/st/create.jpg" /></li></a>
+            <volist  name="data" id='vo'>
+                <li>
+                    <div class="st_l_thumb"><a href="{:U('/GroupAnnounce/index', array('gid'=>$vo['id']))}" title="{$vo['name']}  |  {$vo['intro']|getShort=###,30,'…'}"><img src="{$vo['logo']|getGroupThumb=###,100,100}" alt="" /></a></div>
+
+                    <div class="st_l_infor ml10">
+                        <div class="st_l_title b f14 h24"><a href="{:U('/GroupAnnounce/index', array('gid'=>$vo['id']))}" title="{$vo['name']}  |  {$vo['intro']|getShort=###,30,'…'}">{$vo.name}</a></div>
+                        <div class="st_l_fl red">分类：{$vo.category}</div>
+                        <div class="st_l_m">成员：{$vo.membercount}人</div>
+                        <div class="st_l_m">星级：<?php if($vo['vStern']):?><img  src="../Public/images/star_{$vo['vStern']}.png" /><?php else:?>无<?php endif;?></div>
+                        <div class="st_l_m">院系：{$vo.schoolName}</div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="group_score_left"></div>
+                    <div class="group_score">活力值:{$vo.activ_num}</div>
+                    <div class="group_score_right"></div>
+                     <div class="clear"></div>
+                    <div class="st_l_btn iscore">
+                        <?php if($smid) :?>
+                        <ul>
+                            <!--<li class="st1"><a href="#">取消关注</a></li>-->
+                            <if condition="$vo['isMember'] gt 0">
+                                <php>if($vo['isMember']==3){</php>
+                                <li class="st1">已加入</li>
+                                <php>} else {</php>
+                                <li class="st1"><a href="{:U('/GroupManage/index', array('gid'=>$vo['id']))}">管理校园部落</a></li>
+                                <php>}</php>
+                                <else />
+                                <li><a href="javascript:joingroup({$vo['id']})">加入校园部落</a></li>
+                            </if>
+                        </ul>
+                        <?php endif;?>
+                    </div>
+                </li>
+            </volist>
+        </ul>
+        <div class="page">{$html}</div>
+    </div>
+</div>
+
+<include file="../GroupPublic/_right" />
+<script>
+    // 加入校园部落
+    function joingroup(gid) {
+        ui.box.load(U('event/GroupTopic/joinGroup')+'&gid='+gid,{title:'加入校园部落'});
+    }
+    function changeSubSchool(url){
+   ui.box.load(U('event/GroupIndex/newSubSchool')+'&url='+url,{title:'选择院系',noCheck:'yes'});
+}
+</script>
+<include file="../School/_footer" />

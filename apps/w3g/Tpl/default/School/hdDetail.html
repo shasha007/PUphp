@@ -1,0 +1,53 @@
+<include file="header" />
+        <div id="chrome">
+            <div id="container">
+                <!-- toolbar header -->
+                <div class="toolbar">
+                    <div class="kc_menu mt10">
+                        <a href="{:U('w3g/School/kc')}">课  程</a>
+                        <a href="{:U('w3g/School/hd')}"><span class="btn_kc cur ml15">课程活动</span></a>
+                        &nbsp;{$user.uname|getShort=###,4,''}
+                        <a class="tit_rig" href="{:U('w3g/SchoolPublic/logout')}">退出</a>
+                    </div>
+                </div>
+                <div class="scroller" id="kc">
+                    <div id="content">
+                        <div class="kc_intro_menu mt5">课程活动介绍</div>
+                        <div class="kc_list">
+                            <div class="kc_t mt10"><a href="#">{$title}</a></div>
+                            <div class="kc_style">分类：{$category[$typeId]}</div>
+                            <div class="kc_field">活动时间：<?php echo date('Y-m-d H:i', $sTime) . " 至 " . date('Y-m-d H:i', $eTime) ?></div>
+                            <div class="kc_field">报名时间：<?php echo date('Y-m-d H:i', $deadline) ?> 截止</div>
+                            <div class="kc_field">活动地点：{$address}</div>
+                            <div class="kc_field">课时：{$credit}</div>
+                            <div class="kc_field">参加人数（{$joinCount}） 剩余名额：{$limitCount} </div>
+                            <div class="C"></div>
+                            <?php if($joined): ?>
+                            <div class="kc_bm1 mt5">您已报名</div>
+                            <?php elseif($deadline<time()): ?>
+                            <div class="kc_bm1 mt5">报名已截止</div>
+                            <?php elseif($limitCount< 1): ?>
+                            <div class="kc_bm1 mt5">名额已满</div>
+                            <?php elseif($smid): ?>
+                            <div class="kc_bm1 mt5">
+                                <a href="{:U('w3g/School/joinHd', array('id'=>$id))}" style="color:white">我要报名</a>
+                            </div>
+                            <?php endif; ?>
+                            <div class="C"></div>
+                            <div class="kc_text mt10">简述：{$description}
+                            </div>
+
+                        </div>
+                        <div>
+
+                        </div>
+                    </div><!-- end content -->
+                </div><!-- end kc -->
+
+                <!-- toolbar tabs -->
+                <div class="tabs">PocketUni版权所有	 苏ICP备12046592号-4</div>
+
+            </div><!-- end container -->
+        </div><!-- end chrome -->
+        <script type="text/javascript" src="__PUBLIC__/js/touch.js"></script>
+<include file="footer" />

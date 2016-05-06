@@ -1,0 +1,15 @@
+div {
+	overflow:hidden;
+}
+
+.register_box {
+	width:330px;
+}
+.pics .pic{
+width:214px;
+}
+
+.news_content{
+	display:inline-block;
+	margin:0;
+}

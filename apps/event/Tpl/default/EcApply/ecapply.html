@@ -1,0 +1,219 @@
+<include file="../School/_header" />
+  <div class="hd_c">
+<div class="hd_c_left">
+    <center><div class="intro_c_zt red b">【{$webconfig.cradit_name}申请】</div></center>
+    <div class="publish">
+        <form name="myform" method="post" action="{:U('event/EcApply/doEcApply')}"  enctype="multipart/form-data" onsubmit="return checkEcApply();">
+            <table width="600" border="0" cellspacing="0" cellpadding="0" class="editEvent">
+                <tr>
+                    <td width="60" align="right">申请类别：</td>
+                    <td width="10"></td>
+                    <td width="300">
+                        <select name="type" id="type" class="text" onchange="changeType(this)">
+                        <option value="0" selected>请选择申请类别</option>
+                        <?php foreach($EcType as $v): ?>
+                            <option value="{$v.id}" need_text="{$v.need_text}" imgc="{$v.img}" attachc="{$v.attach}">{$v.title}</option>
+                        <?php endforeach; ?>
+                      </select>
+                    </td>
+                </tr>
+                <tr id="reqtr" style="display:none">
+                    <td align="right">申请要求：</td>
+                    <td></td>
+                    <td>
+                        <?php foreach($EcType as $v): ?>
+                        <span id="req{$v.id}" class="req red">{$v.description}</span>
+                        <?php endforeach; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">名称：</td>
+                    <td><span class="red">*</span></td>
+                    <td>
+                        <input name="title" id="title" type="text" class="p_input1" maxlength="30"/>
+                    </td>
+                </tr>
+                <tr id="need_text" style="display:none">
+                    <td align="right">相关说明：</td>
+                    <td><span class="red">*</span></td>
+                    <td><textarea name="description"  rows="5" cols="60"></textarea></td>
+                </tr>
+                <tr id="imgc" style="display:none">
+                    <td align="right">相关图片：</td>
+                    <td></td>
+                    <td>
+<div id="uploaded_photos" class="img_div"></div>
+<div class="clear"></div>
+<input type="button" onclick="openUpload();" value="添加图片"/>
+                    </td>
+                </tr>
+                <tr id="attachc" style="display:none">
+                    <td align="right">相关文件：</td>
+                    <td></td>
+                    <td>
+<div id="uploaded_files"></div>
+<input type="button" onclick="openUploadFile();" value="上传文件"/>
+<br /><span class="cGray2">（不大于100MB,支持格式jpg,gif,png,jpeg,bmp,zip,rar,doc,xls,ppt,docx,xlsx,pptx,pdf）</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">审核人：</td>
+                    <td><span class="red">*</span></td>
+                    <td>
+                        <select name="audit" id="audit" class="text">
+                        <option value="0" selected>请选择审核人</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" class="p_btn2" value="提交申请" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div class="hd_c_right">
+    <include file="../School/_right" />
+</div>
+<script>
+var utype = eval({$utype});
+$(function(){
+   changeType('#type');
+});
+var imgCount = 0;
+var imgId = 0;
+var maxImg = 10;
+function openUpload(){
+    restCount = maxImg-imgCount;
+    if(restCount<=0){
+        alert('最多上传'+maxImg+'个图片');
+    }else{
+        ui.box.load(U('home/Public/uploadImg')+'&isDel=1&attach_type=ecapply&maximg='+restCount+'&w=100&h=125',{title:'上传图片'});
+    }
+}
+var attachCount = 0;
+var attachId = 0;
+var maxAttach = 5;
+function openUploadFile(i){
+    restCount = maxAttach-attachCount;
+    if(restCount<=0){
+        alert('最多上传'+maxAttach+'个文件');
+    }else{
+        ui.box.load(U('home/Public/uploadFile')+'&isDel=1&attach_type=ecapply&maxfile='+restCount,{title:'上传文件'});
+    }
+}
+var need_text = 0;
+var need_img = 0;
+var need_attach = 0;
+function changeType(o){
+    var typeId = $(o).val();
+    if(typeId != 0){
+        if(typeId==10){
+            $('.gd').show();
+        }
+        var ahtml = '<option value="0" selected>请选择审核人</option>';
+        if(typeof(utype[typeId])!='undefined'){
+            $.each( utype[typeId], function(i,n){
+                ahtml += '<option value="'+n.uid+'">'+n.realname+' ('+n.school+')'+'</option>';
+            });
+        }
+        $('#audit').html(ahtml);
+
+        $('#reqtr').show();
+        $('.req').hide();
+        $('#req'+typeId).show();
+        $('#need_text').hide();
+         need_text = 0;
+         need_img = 0;
+         need_attach = 0;
+        if($(o).find("option:selected").attr("need_text")>0){
+            $('#need_text').show();
+            need_text = 1;
+        }
+        $('#imgc').hide();
+        if($(o).find("option:selected").attr("imgc")>0){
+            $('#imgc').show();
+            need_img = 1;
+        }
+        $('#attachc').hide();
+        if($(o).find("option:selected").attr("attachc")>0){
+            $('#attachc').show();
+            need_attach = 1;
+        }
+    }
+}
+function ts_upload_success(serverData){
+    var data=$.parseJSON(serverData);
+    if(data.status==true){
+        if(data.type=='file'){
+            attachCount+=1;
+            attachId+=1;
+            var msg = '<div class="attach_span" id="attach'+attachId+'">';
+            msg += '<input name="attach[]" type="hidden" value="'+data.attachId+'" />';
+            msg += '<span class="attach_title">'+data.file+'</span><a onclick="delFile('+attachId+')" href="javascript:void(0)">删除</a></div>';
+            $('#uploaded_files').append(msg);
+        }else{
+            imgCount+=1;
+            imgId+=1;
+            var msg = '<span class="img_span" id="img'+imgId+'">';
+            msg += '<div class="prov_thumb"><img src="'+data.src+'" alt="" /></div>';
+            msg += '<br/><span><a href="javascript:void(0)" onclick="delImg('+imgId+')">删除</a></span>';
+            msg += '<input type="hidden" name="attids[]" value="'+data.attid+'" />';
+            msg += '<input type="hidden" name="imgs[]" value="'+data.img+'" /></span>';
+            $('#uploaded_photos').append(msg);
+        }
+        return true;
+    }else{
+        if(data == '0'){
+            alert('上传失败，格式不允许');
+        }else{
+            alert(data.info);
+        }
+        isRedirect = false;
+        return false;
+    }
+}
+function delImg(id){
+    $('#img'+id).remove();
+    imgCount-=1;
+}
+function delFile(id){
+    $('#attach'+id).remove();
+    attachCount-=1;
+}
+
+function checkEcApply(){
+    if (document.myform.type.value<=0) {
+        alert('请选择申请类别');
+        document.myform.type.focus();
+        return false;
+    }
+    if (document.myform.title.value.length == 0) {
+        alert('名称 不能为空');
+        document.myform.title.focus();
+        return false;
+    }
+    if(need_text ==1 && document.myform.description.value.length == 0){
+        alert('相关说明 不能为空');
+        document.myform.description.focus();
+        return false;
+    }
+//    if(need_img ==1 && imgCount < 1){
+//        alert('相关图片 不能为空');
+//        return false;
+//    }
+//    if(need_attach ==1 && attachCount<1){
+//        alert('相关文件 不能为空');
+//        return false;
+//    }
+    if (document.myform.audit.value<=0) {
+        alert('请选择审核人');
+        document.myform.audit.focus();
+        return false;
+    }
+}
+</script>
+<include file="../School/_footer" />

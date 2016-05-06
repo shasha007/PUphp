@@ -1,0 +1,37 @@
+<div style="width:600px;overflow-y:scroll;height:500px;">
+<ul id="treeDemo" class="ztree"></ul>
+<center><input class="member_btn1" type="button" value="确定" onclick="javascript:ui.box.close();"></center>
+</div>
+<SCRIPT type="text/javascript">
+    var setting = {
+        check: {
+            enable: true
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback:{
+            onCheck:onCheck
+        }
+    };
+
+    var zNodes = {$tree};
+
+    $(document).ready(function(){
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    });
+    function onCheck(e,treeId,treeNode){
+        var treeObj=$.fn.zTree.getZTreeObj("treeDemo"),
+        nodes=treeObj.getCheckedNodes(true),
+        v="";
+        for(var i=0;i<nodes.length;i++){
+            v+=nodes[i].id + ",";
+        }
+        $('#showSids').val(v);
+        if(window.treeCheckDiy) {
+            treeCheckDiy(nodes);
+        }
+    }
+</SCRIPT>

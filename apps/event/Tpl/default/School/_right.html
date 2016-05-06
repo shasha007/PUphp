@@ -1,0 +1,233 @@
+<?php if($showFund):?>
+<div class="fund_btn"><a href="{:U('fund/Index/index')}">校园活动基金</a></div>
+<?php endif;?>
+<?php if($rightNews):?>
+
+<div class="hd_c_right_menu i2">最新活动新闻</div>
+<div class="hd_c_right_list">
+    <ul>
+        <volist name="rightNews" id="vo">
+            <li>
+                <a href="{:U('/Front/newsDetails',array('id'=>$vo['eventId'],'nid'=>$vo['id']))}"
+                   title="{$vo.title}">{$vo.title|getShort=###,20,'…'}</a>
+            </li>
+        </volist>
+    </ul>
+</div>
+<?php endif;?>
+<?php if($jyrcNews||$jyrcWork):?>
+<div class="r_task">
+    <div class="r_task_menu">
+        <ul>
+            <li id="one1" onclick="setTab('one',1,2)" class="hover">新闻</li>
+            <li id="one2" onclick="setTab('one',2,2)">
+                <?php if($newWork):?><span class="new">作业</span><?php else:?>作业<?php endif;?>
+            </li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="r_task_con">
+        <div id="con_one_1" >
+            <div class="r_task_list" >
+                <ul>
+                    <volist name="jyrcNews" id="vo">
+                        <li><a href="{:U('event/School/news',array('id'=>$vo['id']))}" title="{$vo.title}">{$vo.title|getShort=###,20,'…'}</a></li>
+                    </volist>
+                </ul>
+                <?php if($jyrcNews):?>
+                <div class="r_task_more b"><a href="{:U('event/School/newsList')}">查看更多新闻</a></div>
+                <?php endif;?>
+            </div>
+        </div>
+        <div id="con_one_2" style="display:none;" >
+            <div class="r_task_list" >
+                <ul>
+                    <volist name="jyrcWork" id="vo">
+                        <li><a href="{:U('event/School/work',array('id'=>$vo['id']))}" title="{$vo.title}">{$vo.title|getShort=###,20,'…'}</a></li>
+                    </volist>
+                </ul>
+                <?php if($jyrcWork):?>
+                <div class="r_task_more b"><a href="{:U('event/School/workList')}">查看更多作业</a></div>
+                <?php endif;?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif;?>
+<?php if(ACTION_NAME=='jf'):?>
+<div class="hd_c_right_menu i2">学校积分排行</div>
+<div class="hd_more">
+<a href="{:U('event/School/scorerank')}">更多>></a>
+</div>
+<div class="ranktab2">
+    <div class="tabcon2">
+        <div >
+            <ul>
+                <li>
+                    <table width="296" border="0" cellspacing="0" cellpadding="0">
+                        <tr class="b" style="color:#333; height:24px; line-height:24px;">
+                            <td>排行</td>
+                            <td>姓名</td>
+                            <td>学号</td>
+                            <td class="rank4">学校积分</td>
+                        </tr>
+                        <?php foreach($scoreTop as $key=>$vo):?>
+                        <tr>
+                            <td><?php echo $key+1?></td>
+                            <td>{$vo['uid']|getUserRealName}</td>
+                            <td>{$vo['uid']|getCacheUserEmail|getUserEmailNum}</td>
+                            <td class="rank4">{$vo.score}</td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<?php else:?>
+<div class="hd_c_right_menu i2">{$webconfig.cradit_name}排行</div>
+<div class="hd_more">
+<a href="{:U('event/School/rank')}">更多>></a>
+</div>
+<div class="ranktab2">
+    <div class="tabtag2" style="position:relative;">
+        <ul>
+            <li id="top1" class="hover">月排名</li>
+            <li id="top2">学期排名</li>
+            <li id="top3">年度排名</li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="tabcon2">
+        <div >
+            <ul>
+                <li>
+                    <table id="side1" width="296" border="0" cellspacing="0" cellpadding="0">
+                        <tr class="b" style="color:#333; height:24px; line-height:24px;">
+                            <td>排行</td>
+                            <td>姓名</td>
+                            <td>学号</td>
+                            <td class="rank4">{$webconfig.cradit_name}</td>
+                        </tr>
+                        <?php foreach($mon as $key=>$vo):?>
+                        <tr>
+                            <td><?php echo $key+1?></td>
+                            <td>{$vo['uid']|getUserRealName}</td>
+                            <td>{$vo['uid']|getCacheUserEmail|getUserEmailNum}</td>
+                            <td class="rank4">{$vo.note}</td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                    <table id="side2" style="display: none" width="296" border="0" cellspacing="0" cellpadding="0">
+                        <tr class="b" style="color:#333; height:24px; line-height:24px;">
+                            <td>排行</td>
+                            <td>姓名</td>
+                            <td>学号</td>
+                            <td class="rank4">{$webconfig.cradit_name}</td>
+                        </tr>
+                        <?php foreach($semester as $key=>$vo):?>
+                        <tr>
+                            <td><?php echo $key+1?></td>
+                            <td>{$vo['uid']|getUserRealName}</td>
+                            <td>{$vo['uid']|getCacheUserEmail|getUserEmailNum}</td>
+                            <td class="rank4">{$vo.note}</td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                    <table id="side3" style="display: none" width="296" border="0" cellspacing="0" cellpadding="0">
+                        <tr class="b" style="color:#333; height:24px; line-height:24px;">
+                            <td>排行</td>
+                            <td>姓名</td>
+                            <td>学号</td>
+                            <td class="rank4">{$webconfig.cradit_name}</td>
+                        </tr>
+                        <?php foreach($year as $key=>$vo):?>
+                        <tr>
+                            <td><?php echo $key+1?></td>
+                            <td>{$vo['uid']|getUserRealName}</td>
+                            <td>{$vo['uid']|getCacheUserEmail|getUserEmailNum}</td>
+                            <td class="rank4">{$vo.note}</td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<?php endif;?>
+<div class="hd_c_right_menu i2">积分商城推荐礼品</div>
+<div class="hd_c_right_list1">
+    <ul>
+        <?php $cnt=count($rightGift);?>
+        <volist name="rightGift" id="vo">
+            <li<?php if($i==$cnt)echo'  class="i7"'?>>
+                <div class="jf_right_thumb">
+                    <a href="{:U('/School/gift', array('id'=>$vo['id']))}"  title="{$vo.title}"><img src="{$vo.path|getThumb1=###,124,124}" alt="" /></a>
+                </div>
+                <div class="jf_infor">
+                    <div class="jf_title b">
+                        <a href="{:U('/School/gift', array('id'=>$vo['id']))}" title="{$vo.title}">{$vo.title|getShort=###,24,''}</a>
+                    </div>
+                    <div class="jf_desc">所需积分：<span class="red_1">{$vo.cost}分</span></div>
+                </div>
+            </li>
+        </volist>
+    </ul>
+</div>
+
+<?php if($install_app):?>
+<div class="hd_c_right_menu i2">更多应用</div>
+<div class="c1_list2_sublist">
+<ul>
+    <volist name="install_app" id="vo">
+        <li>
+            <a href="{$vo.app_entry}" title="{$vo.description}" class="user_app_link" target="_blank">
+            <div class="c1_list2_sublist_thumb">
+                <img width="44px;" height="44px;" src="{$vo.large_icon_url}" alt="" />
+            </div>
+            <div class="c1_list2_sublist_title">{$vo.app_alias}</div>
+            </a>
+        </li>
+    </volist>
+</ul>
+</div>
+</div>
+<?php endif;?>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#top1').bind('click', function() {
+            $('#top1').addClass('hover');
+            $('#top2').removeClass('hover');
+            $('#top3').removeClass('hover');
+            $('#side1').show();
+            $('#side2').hide();
+            $('#side3').hide();
+        });
+        $('#top2').bind('click', function() {
+            $('#top1').removeClass('hover');
+            $('#top2').addClass('hover');
+            $('#top3').removeClass('hover');
+            $('#side1').hide();
+            $('#side2').show();
+            $('#side3').hide();
+        });
+        $('#top3').bind('click', function() {
+            $('#top1').removeClass('hover');
+            $('#top2').removeClass('hover');
+            $('#top3').addClass('hover');
+            $('#side1').hide();
+            $('#side2').hide();
+            $('#side3').show();
+        });
+    });
+    function setTab(name,cursel,n){
+      for(i=1;i<=n;i++){
+          var menu=document.getElementById(name+i);
+          var con=document.getElementById("con_"+name+"_"+i);
+          menu.className=i==cursel?"hover":"";
+          con.style.display=i==cursel?"block":"none";
+      }
+  }
+</script> 

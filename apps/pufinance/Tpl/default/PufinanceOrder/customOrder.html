@@ -1,0 +1,89 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+    <div class="page_tit">人工订单</div>
+    <form action="{:U('pufinance/PufinanceOrder/doCustomOrder')}" method="post">
+        <input type="hidden" name="uid" value="{$pu_user.uid}" />
+        <div class="form2">
+            <dl class="lineD">
+                <dt>真实姓名：</dt>
+                <dd>
+                    {$pu_user.realname}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>手机号码：</dt>
+                <dd>
+                    {$mobile} &nbsp;
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>身份证号码：</dt>
+                <dd>
+                    {$pu_user.ctfid}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>借款银行卡：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="bank_card_id">
+                        <volist name="bankcards" id="vo">
+                            <option value="{$vo.id}">{$banks[$vo['bank_id']]['bank_name']}({$vo.card_no})</option>
+                        </volist>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>还款银行卡：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="repay_bank_card_id">
+                        <volist name="bankcards" id="vo">
+                            <option value="{$vo.id}">{$banks[$vo['bank_id']]['bank_name']}({$vo.card_no})</option>
+                        </volist>
+                    </select>
+                </dd>
+            </dl>
+
+            <dl class="lineD">
+                <dt>借款金额：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="amount" type="text" value="" size="50">
+                </dd>
+            </dl>
+
+            <dl class="lineD">
+                <dt>分期数：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="stage" type="text" value="" size="50">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>事由：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="reson" type="text" value="" size="50">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>订单类型：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="type" id="type">
+                        <option value="3">提现</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>创建时间：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="ctime" type="text" value="{:date('Y-m-d H:i:s')}" size="50"> <span style="color: #F00">该值会影响分期起止时间</span>
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<include file="../Public/footer" />

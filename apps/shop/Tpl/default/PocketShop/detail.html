@@ -1,0 +1,185 @@
+<include file="_header" />
+<div class="kdl_mobile_page m_mb50">
+  <div class="kdl_top">
+  <div class="kdl_mobile_header f18 bold tcenter">基本信息</div>
+  <a href="javascript:history.back( -1 )"><div class="m_back"></div></a>
+  <div class="clear m_mt60"></div>
+  <div class="swipe">
+    <ul id="slider">
+      <li style="display:block"><img width="235" height="235" src="{$obj.pic|tsMakeThumbUp=###,600,600,'c'}" alt="" /></li>
+      <foreach name="opt.imgs" item="val">
+        <li><img width="235" height="235" src="{$val|tsMakeThumbUp=###,600,600,'c'}" alt="" /></li>
+      </foreach>
+    </ul>
+    <div id="pagenavi">
+      <a href="javascript:void(0);" class="active">1</a>
+      <foreach name="opt.imgs" item="vo">
+        <a href="javascript:void(0);">{$i}</a>
+      </foreach>
+    </div>
+  </div>
+  <div class="m_c_title f14 bold"><p>{$obj.name}</p></div>
+  <div class="clear"></div>
+  <div class="m_c_price m_color1 f16 bold">￥{$obj.price}<?php if($obj['market']!=0){ ?>
+    &nbsp;<span class="m_price1">市场价：<span style="text-decoration:line-through;">￥{$obj.market}</span></span><?php }?></div>
+    <div class="clear"></div>
+
+    <if condition="$opt[color] neq 0">
+      <div class="m_c_key1">
+       <div class="m_c_keyword m_b_left">颜色</div>
+       <div class="clear"></div>
+       <div class="m_c_key_color">
+        <foreach name="opt.color" item="val">
+          <div class="m_c_key_style" onclick="change(this);">{$val}</div>
+        </foreach>
+      </div>
+    </div>
+  </if>
+</div>
+<div class="kdl_bottom">
+  <div class="m_c_key1">
+    <div class="m_c_keyword m_b_left">商品参数</div>
+    <div class="m_c_keydesc">{$opt.desc|htmlspecialchars_decode}</div>
+  </div>
+
+              <div class="clear"></div>
+              <form method="post" action="{:U('shop/PocketShop/addAddress')}">
+                <input type="hidden" name="id" value="{$obj.id}" id="choseId">
+                <input type="hidden" name="color" id="mycolor">
+                <if condition="$obj['isHot'] neq 1">
+                    <!---->
+                <div class="f14 m_money">首付：<input name="first" class="m_input2" id="firstP" onchange="getlist()" placeholder="{$obj.lowestShoufu}起" type="text" onkeyup="value=value.replace(/[a-zA-Z]/g,'')">&nbsp;元&nbsp;&nbsp;
+                  分期：<select name="staging" id="stagG" onchange="getlist()" class="m_select">
+                  <foreach name="arr" item="val"><option value="{$val}">{$val}</option></foreach>
+                </select>&nbsp;个月</div>
+                <div class="f14 m_money_note m_color1">注意：PU币购买不支持分期付款</div>
+                    </if>
+                <div class="m_color1 m_money" id="list_good1"></div>
+                
+
+                <div class="kdl-shangla" data-ishide="0">
+                  上拉查看图文详情
+                </div>
+
+                <div class="kdl_mobile_page kdl-hide">
+                 <!--  <div class="kdl_mobile_header f18 bold tcenter">商品详情</div>
+                  <a href="javascript:history.go(-1);"><div class="m_back"></div></a> -->
+                  <div class="clear "></div>
+                  <div id="detailContent" class="m_c_keydesc "></div>
+                  <div class="clear"></div>
+                </div>
+
+                <div class="m_c_btn">
+                  <if condition="$obj['isHot'] neq 1">
+                    <div class="m_c_btn1 f16 bold"><input type="submit" value="立即申请" class="m_btn i1 bold" /></div>
+                  </if>
+                  <if condition="$obj['isHot'] eq 1 or $obj['isPu'] eq 1">
+                    <div class="m_c_btn2 f16 bold">
+                      <if condition="$opt[color] neq 0">
+                        <a href="" id="goPu" onclick="check()">PU币购买</a>
+                        <else />
+                        <a href="{:U('shop/PocketShop/addAddress1')}&gid={$obj.id}" id="goPu">PU币购买</a>
+                      </if>
+                    </div>
+                  </if>
+                </div>
+              </form>
+              </div>
+            </div>
+            <script type="text/javascript" src="../Public/js/touchScroll.js"></script>
+            <script type="text/javascript" src="../Public/js/touchslider.dev.js"></script>
+
+            <script type="text/javascript">
+            $(window).scroll(function(){
+              　　var scrollTop = $(this).scrollTop();
+              　　var scrollHeight = $(document).height();
+              　　var windowHeight = $(this).height();
+                  var ishide = $(".kdl-shangla").data("ishide");
+                  console.log(ishide);
+              　　if((scrollTop + windowHeight == scrollHeight)&&(ishide=='0')){　
+
+                setTimeout(function () {
+                  $(".kdl-shangla").hide();
+                  var gid = $('#choseId').val();
+                  $.get('__URL__&act=ajaxContent',{gid:gid},function(data){
+                      $('#detailContent').html(data);
+                  });
+                  $(".kdl_mobile_page").show();
+                  var topL0 = $(".kdl_mobile_page").offset().top;
+                   $("html,body").animate({scrollTop:(scrollHeight-152)},500);
+                }, 500);
+                 $(".kdl-shangla").data("ishide","1");
+          　　}
+        });
+            var active=0,
+            as=document.getElementById('pagenavi').getElementsByTagName('a');
+
+            for(var i=0;i<as.length;i++){
+              (function(){
+                var j=i;
+                as[i].onclick=function(){
+                  t2.slide(j);
+                  return false;
+                }
+              })();
+            }
+
+            var t1=new TouchScroll({id:'wrapper','width':5,'opacity':0.7,color:'#555',minLength:20});
+
+            var t2=new TouchSlider({id:'slider', speed:600, timeout:6000, before:function(index){
+              as[active].className='';
+              active=index;
+              as[active].className='active';
+            }});
+
+            function change(obj){
+             var mcolor = $(obj).siblings();
+           //alert(bm);
+           for(var i =0;i<mcolor.length;i++){
+            $(mcolor[i]).removeClass("click");
+          }
+          $(obj).addClass("click");
+          var sm = $(obj).text();
+            //alert(m);
+            var str = $('#mycolor');
+            str.val(sm);
+            var myv = $('#choseId').val();
+            //var myhref = $('#goPu').attr('href');
+            var myhref = "{:U('shop/PocketShop/addAddress1')}&gid="+myv+"&color="+sm;
+            $('#goPu').attr('href',myhref);
+            //alert(myhref);
+          }
+
+          function getlist(){
+           var firstP=$('#firstP');
+           var stagG=$('#stagG');
+           var choseId=$('#choseId');
+           var m=firstP.val();
+           var n=stagG.val();
+           var gid=choseId.val();
+           if(m){
+             $.post('__URL__&act=getGoodPrice',{id:gid,m:m,n:n},function(data){
+
+              if(data){
+                var ldiv=$('#list_good1');
+                        //alert(ldiv.text());
+                        ldiv.text( '月供：￥'+data['all']+'（本金：￥'+data['eveprice']+'+服务费：￥'+data['service']+'）') ;
+
+                      }
+                    },'json');
+           }
+
+         }
+
+         function check(){
+          var myxa=$('#goPu');
+          var ahref=myxa.attr('href');
+          if(!ahref){
+            alert('请选择颜色');
+          }
+        }
+
+        </script>
+
+        
+        <include file="_footer" />

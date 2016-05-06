@@ -1,0 +1,23 @@
+</div>
+</div>
+     <div class="clear"></div>
+   <div class="footer">
+    <div class="footerLine"></div>
+    <div class="pu_f_note">
+       <php>
+        foreach($ts['footer_document'] as $k => $v) {
+            $v['url'] = isset($v['url']) ? $v['url'] : U('home/Public/document',array('id'=>$v['document_id']));
+            $ts['footer_document'][$k] = '<a href="'.$v['url'].'" target="_blank">'.$v['title'].'</a>';
+        }
+        echo implode('&nbsp;&nbsp;|&nbsp;&nbsp', $ts['footer_document']);
+        </php>
+	</div>
+    {:W('FooterIcp')}
+    <php>if($school['id']==1 && isMobile())</php>
+   </div>
+  </div>
+ </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<include file="_header" />
+<script>
+    $(document).ready(function(){
+        setTimeout('loadEditor("content")',500);
+    });
+</script>
+<div class="hd_c">
+    <div class="task_desc">
+        <div class="news_back"><a href="javascript:history.back( -1 )">&lt;&lt;返回上一页</a>
+            &nbsp;&nbsp;&nbsp;<a href="{:U('event/School/workList')}">[作业列表]</a></div>
+        <div class="clear"></div>
+        <div class="task_title f14 b">{$work.title}</div>
+        <div class="task_note">发布者：<space uid="work.uid" class="null" target="_blank">{realname}</space>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  发布时间：{$work.cTime|friendlyDate}</div>
+        <div class="task_text">
+            <div class="task_pf b f14 red">评分：
+                <?php if($back['status']==2):?><span style="font-size: 26px">{$back.note}</span>分<?php else:?>未评分<?php endif;?>
+            </div>
+            作业要求：{$work.description}
+            <br/><span class="red b">截止时间：{$work.eTime|friendlyDate}
+                <?php if($back['cTime']):?>&nbsp;&nbsp;&nbsp;&nbsp;提交时间：{$back.cTime|friendlyDate}<?php endif;?></span>
+        </div>
+        <?php if($back):?>
+        <div id="show">
+            <div class="task_write" id="quotes">{$back.content|htmlspecialchars_decode}</div>
+            <?php if($attach):?>
+            <div class="task_list">已上传的附件：
+                <volist name="attach" id='vo'>
+                    <a href="{:PIC_URL}/data/uploads/{$vo.fileurl}">{$vo.name}</a>
+                </volist>
+            </div>
+            <?php endif;?>
+            <?php if($canEdit):?>
+            <div class="task_tj"><input type="button" value="修 改" class="task_btn b f14" onclick="$('#formEdit').show();$('#show').hide();"/></div>
+            <?php endif;?>
+        </div>
+        <?php endif;?>
+        <?php if($canEdit):?>
+        <form id="formEdit" method="post" action="{:U('event/School/doWorkBack', array('wid'=>$work['id']))}" <?php if($back):?> style="display: none"<?php endif;?>>
+        <div class="task_write">
+            <div class="task_w_t b">在下面输入框中填入答案：</div>
+            <textarea name="content" id="content" style="width:600px;height:400px" class="task_textarea">{$back.content}</textarea>
+        </div>
+        <div class="task_upload">上传答案附件：(文件大小不超过100M){:W('UploadAttach', array('attach'=>$attach,'wid'=>$work['id']))}</div>
+        <div class="task_tj"><input type="submit" value="提 交" class="task_btn b f14" /></div>
+        </form>
+        <?php endif;?>
+    </div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

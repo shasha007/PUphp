@@ -1,0 +1,19 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="../Public/js/laydate/laydate.js"></script>
+<div class="so_main">
+    <include file="../Public/tabs" />
+	<include file="countTab" />
+	<hr>
+    <div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=credit">
+			状态: <select name="status" id="">
+				<option value="all">--请选择名单状态--</option>
+				<?php foreach($status as $k=>$item):?>
+				<option value="<?php echo $k;?>"><?php echo $item;?></option>
+				<?php endforeach;?>
+			</select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="导出名单" />
+        </form>
+    </div>	
+</div>
+<include file="../Public/footer" />

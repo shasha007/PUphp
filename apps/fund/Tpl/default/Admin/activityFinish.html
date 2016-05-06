@@ -1,0 +1,83 @@
+<div style="width:800px;overflow-y:scroll;height:500px;">
+    <table width="600">
+        <tr valign="top">
+            <td>
+                <h2>【申请详情】</h2>
+                <dl>
+                    <dt class="left alR b clear" style="width:100px;"> 联系人：</dt>
+                    <dd class="left alL">{$contact}</dd>
+                </dl>
+                <dl>
+                    <dt class="left alR b clear" style="width:100px;"> 电话：</dt>
+                    <dd class="left alL">{$telephone}</dd>
+                </dl>
+                <dl>
+                    <dt class="left alR b clear" style="width:100px;"> QQ：</dt>
+                    <dd class="left alL">{$qq}</dd>
+                </dl>
+                <dl>
+                    <dt class="left alR b clear" style="width:100px;"> 支付宝账号：</dt>
+                    <dd class="left alL">{$alipayAccount}</dd>
+                </dl>
+                <dl>
+                    <dt class="left alR b clear" style="width:100px;"> 承办金额：</dt>
+                    <dd class="left alL">{$amount}</dd>
+                </dl>
+                <dl>
+                    <dt class="left alR b clear" style="width:100px;"> 核准金额：</dt>
+                    <dd class="left alL">{$amount2}</dd>
+                </dl>
+            </td>
+            <td>
+                <h2>【完结详情】</h2>
+                <dl>
+                    <dt class="left alR b clear" style="width:100px;"> 完结图片：</dt>
+                    <dd class="left alL">
+                        <img src="{$print_img|tsMakeThumbUp=###,125,125}" alt="" />
+                    </dd>
+                </dl>
+                <dl>
+                    <dt class="left alR b clear" style="width:100px;"> 总结：</dt>
+                    <dd class="left alL">{$print_text|htmlspecialchars_decode}</dd>
+                </dl>
+                <dl>
+                    <dt class="left alR b clear" style="width:100px;"> 经费：</dt>
+                    <dd class="left alL">{$pay}  元</dd>
+                </dl>
+            </td>
+        </tr>
+    </table>
+    <div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="clear">
+        <dt class="left alR b clear">
+        实际发放：
+        <?php if($finished==0):?>
+        <input type="text" id="amount3" name="amount3" value="" size="10" onkeyup="clearNoNum(this)"/>
+        <input type="button" class="btn_a" onclick="through({$applyId})" value="通过" />
+        <?php else:?>
+        {$amount3}
+        <?php endif;?>
+        </dt>
+    </div>
+</div>
+<?php if($finished==0):?>
+<script>
+    function through(applyId){
+        var amount3 = $('#amount3').val();
+        if(amount3.length==0){
+            $('#amount3').focus();
+            alert('请输入实际发放');
+        }else if(confirm('确定完结通过？实际发放：'+amount3)){
+            $.post('__URL__&act=activity_do_finish',{applyId:applyId,amount3:amount3},function(txt){
+                json = $.parseJSON(txt);;
+                if( json.status){
+                    ui.box.close();
+                    setTimeout(function(){location.reload();},1000);
+                    ui.success( json.info );
+                }else{
+                    ui.error( json.info );
+                }
+            });
+        }
+    }
+</script>
+<?php endif;?>

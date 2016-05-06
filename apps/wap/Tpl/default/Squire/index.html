@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/square.css?v=2016224" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=20160126" rel="stylesheet">
+    <link href="../Public/css/public_header.css?v=20160202" rel="stylesheet">
+    <title>校园广场</title>
+    <style>
+        .square-list{
+            background-color: #f3f1ed;
+            overflow: hidden;
+            margin-top: 0;
+        }
+        a{
+            display: block;
+        }
+    </style>
+    <script>
+        $(function () {
+            var uid = Android.getUid();
+            $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+                if(data.status == 2)
+                {
+                    window.location.reload();
+                }
+            },'json');
+        });
+    </script>
+</head>
+
+<body>
+            <header class="square-header">
+                <ul>
+                    <?php foreach($themes as $key=>$value){ ?>
+                    <li>
+                        <a class="clearfix container" href="{:U('wap/Topic/index','themes_id='.$value['id'])}">
+                            <div class="square-list-l pull-left">
+                                <img class="img-responsive" src="<?php echo PIC_URL.'/data/uploads/'.$value['pic']; ?>" onerror="this.src='/apps/wap/Tpl/default/Public/images/img_default.png'">
+                            </div>
+                            <div class="square-list-r pull-left">
+                                <p><?php echo '#'.$value['name'].'#'; ?></p>
+                                <p><?php echo '#'.$value['intro'].'#'; ?></p>
+                            </div>
+                        </a>
+                    </li>
+                    <?php } ?>
+                </ul>
+            </header>
+            <div id="top-back">
+                <!--<div class="glyphicon glyphicon-circle-arrow-up"></div>-->
+                <img class="img-responsive" src="../Public/images/return_top.png">
+            </div>
+            <div class="publish-topic" data-themeid=""><img class="img-responsive" src="../Public/images/publish_weibo.png"></div>
+            <div class="square-list">
+                <ul>
+                    <?php foreach ($list as $key=>$value) { ?>
+                        <li class="square-list-li container" data-topicids="<?php echo $value['weibo_id']; ?>">
+                            <header class="clearfix">
+                                <!--跳转个人主页-->
+                                <div class="square-li-l"><a <?php echo $value['isHide']?'':'class="to-user-home"'; ?> data-userid="{$value[uid]}"><img class="img-responsive" src="<?php echo $value['face']; ?>"></a></div>
+                                <div class="square-li-c" style="width: 60%;">
+                                    <!--todo-->
+                                    <!--有female和male两个class 根据性别的不同span的class也需要改变-->
+                                    <p><?php echo $value['uname']; ?>
+                                        <?php if($value['sex']=='1'){
+                                            echo '<span class="male">♂</span>' ;
+                                        }else{
+                                            echo '<span class="female">♀</span>' ;
+                                        } ?>
+
+                                    </p>
+
+                                    <p><span><?php echo $value['schoolname']; ?></span></p>
+                                </div>
+
+                                <?php if($value['is_friend']>0){ ?>
+                                    <div class="square-li-addfirend"><span class=" added-friend" style="color: #ccc;border: 1px solid #ccc;">已添加</span></div>
+                                <?php }elseif($user_id != $value['uid']){ ?>
+                                    <div class="square-li-addfirend">
+                                         <span id="<?php echo $value['uid']; ?>" class="added-friend" style="display:none;color: #ccc;border: 1px solid #ccc;">已添加</span>
+                                        <span onclick="mkfriend(<?php echo $value['uid']; ?>)">+好友</span>
+                                    </div>
+                                <?php }else{ ?>
+                                <div class="square-li-addfirend">
+                                       <span onclick="deletetopic(<?php echo $value['weibo_id']; ?>)">删除</span>
+                                </div>
+                                <?php } ?>
+
+                            </header>
+
+                            <a class="" data-weiboidd="<?php echo $value['weibo_id']; ?>" href="{:U('wap/WeiboContent/index','weibo_id='.$value['weibo_id'])}">
+                                <div class="square-li-con">
+                                    <?php 
+                                        if($value['isTop'] == 0){
+                                            echo $value['content'];    
+                                        }else{
+                                            echo "<span class='tips-toutiao'>头条</span>$value[content]" ;
+                                        }
+                                         
+                                    ?>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="square-li-pic container">
+                                    <div class="row">
+                                        <?php if(count($value['type_data'])>1){ ?>
+                                                <?php  foreach($value['type_data'] as $k=>$v) { ?>
+                                                    <div class="col-my-<?php
+                                                    switch(count($value['type_data'])){
+                                                        case 2:
+                                                            echo 6 ;
+                                                            break ;
+                                                        case 4:
+                                                            echo 6 ;
+                                                            break ;
+                                                        default:
+                                                            echo 4 ;
+                                                            break ;
+                                                    }    
+                                                     ?> padding-5" style="background: url('<?php echo $v['thumbmiddleurl']; ?>') repeat-x;background-size: cover;height: 150px;" onerror="this.style.background='url(/apps/wap/Tpl/default/Public/images/img_default.png) repeat-x'">
+                                                    </div>
+                                                <?php } ?>
+                                        <?php }elseif(count($value['type_data'])==1){ ?>
+                                            <!--只有一个图片的情况 todo-->
+                                            <div class="col-xs-12">
+                                                <img class="img-responsive"  src= <?php echo $value['type_data'][0]['thumbmiddleurl']; ?> >
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+
+                            <footer>
+                                <span class="pull-left"><?php echo $value['ctime']; ?></span>
+                                <p><?php
+                                        if($value['isHeart']==1){
+                                            echo "<span class='glyphicon glyphicon-heart liked' data-status='0' data-weiboid='$value[weibo_id]'>&emsp13;$value[heart]</span>" ;
+                                        }else{
+                                            echo "<span class='glyphicon glyphicon-heart' data-status='1' data-weiboid='$value[weibo_id]'>&emsp13;$value[heart]</span>" ;
+                                        }
+                                     ?>
+                                    <span class="glyphicon glyphicon-comment">&emsp13;<?php echo $value['comment']; ?></span></p>
+                            </footer>
+                            </a>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+            <div class="modal fade" id="delete">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            是否删除话题?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">取消
+                            </button>
+                            <button id="delete-topic"type="button" class="btn btn-primary">
+                                删除
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</body>
+
+</html>
+<script src="../Public/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script src="../Public/js/publicjs.js?v=2016222"></script>
+<script>
+    var  ready = false;
+    var loadingShow = false;
+    var page = 2;
+    var loadingStr = '<div class="spinner"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
+    $(function () {
+        //        //隐藏安卓actionbar
+      settitle("话题","","");
+        for(var i=2;sessionStorage.getItem("data"+i)!=null;i++){
+            $(".square-list ul").append(sessionStorage.getItem("data"+i));
+            dopicerror();
+        }
+        if(sessionStorage.getItem("page")!=null){
+            page = sessionStorage.getItem("page");
+        }
+        if(sessionStorage.getItem("scroll")!=null){
+            $(document).scrollTop(sessionStorage.getItem("scroll"));
+        }
+    });
+    $(window).scroll(function(){
+        var document = window.document;
+        var top = document.body.scrollTop || document.documentElement.scrollTop
+                || 0;
+        top += document.documentElement.clientHeight;
+        var height = document.documentElement.scrollHeight;
+        if (height - top < 100) {
+            if (!loadingShow) {
+                $(".square-list ul").append(loadingStr);
+                loadingShow = true;
+                getAjaxNews();
+            }
+        }
+
+    });
+
+    function getAjaxNews() {
+        setTimeout(function () {
+            console.log(page) ;
+            //删除loading提示
+            $.ajax({
+            url: '{:U("wap/Squire/page")}',
+            type: 'get',
+            data: {
+                page: page
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data!=='0') {
+                    loadingShow = false;
+                    $(".square-list ul").append(data);
+                    $(".spinner").remove();
+                    //处理图片
+                    dopicerror();
+                    sessionStorage.setItem("data"+page, data);
+                    page++;
+                    sessionStorage.setItem("page", page);
+                }
+                else {
+                    $(".spinner").remove();
+                    $(".square-list ul").append(noneStr);
+
+                }
+            }
+        });
+        }, 1000);
+    }
+    $(document).on("click",".square-li-con-a", function () {
+        var weiboid = $(this).data("weiboidd");
+        location.href = "{:U('wap/WeiboContent/index',array('weibo_id'=>"+weiboid+"))}";
+
+    });
+//
+    function deletetopic(weiboid){
+        $("#delete").modal("show");
+        $("#delete-topic").click(function(){
+            $("#delete").modal('hide');
+            dodel(weiboid);
+        });
+    }
+    //确定删除
+    function dodel(weibo_id ){
+        //删除ajax
+        $.ajax({
+            url: "{:U('wap/Squire/delete_weibo')}",
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                weibo_id: weibo_id
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if(data==1)
+                {
+                    $('[data-topicids="'+weibo_id+'"]').hide();
+                }
+            }
+        });
+    }
+    function mkfriend(uid){
+        $.ajax({
+            url: "{:U('wap/MakeFriend/index')}",
+            type: 'get',
+            dataType: 'JSON',
+            data: {
+                fid: uid+""
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data.status==0) {
+                    alert(data.msg) ;
+                }else{
+                    $("#"+uid).next("span").hide();
+                    $("#"+uid).show();
+                }
+            }
+        });
+    }
+
+</script>

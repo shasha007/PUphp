@@ -1,0 +1,101 @@
+<include file="_header1" />
+<script>
+    function playFlash(vid){
+        ui.box.load(U('event/Index/playTsFlash')+'&id='+vid,{title:'播放视频'});
+    }
+</script>
+
+<div class="news">
+        <div class="news_menu"><img src="../Public/fimages/menu_person.gif" alt="" /></div>
+        <div class="news_back"><a href="{:U('event/Front/player')}&id={$_GET['id']}"><<返回投票列表</a></div>
+        <div class="person_desc">
+          <div class="person_left">
+            <div class="person_photo"><img src="{$topImg|getImgAttach=###,163,204,'c'}" alt="" /></div>
+            <div class="clear"></div>
+            <span id="vote_{$app.id}">
+            <?php if($sjVote): ?>
+                <?php if($voted): ?>
+                    <div class="person_list_vote i4">您已投票</div>
+                <?php else:?>
+                    <div class="person_list_vote" onclick='post_vote({$eventId},{$app.id})'>投TA一票</div>
+                <?php endif; ?>
+          <?php else:?>
+                <div class="person_list_vote i4">投票已结束</div>
+          <?php endif; ?>
+          </span>
+          </div>
+          <div class="person_right">
+           <ul>
+            <li><span class="red1">{$app.title}</span> &nbsp;&nbsp;&nbsp; <span class="red">{$app.ticket}</span>票</li>
+            <li>学 校：&nbsp;&nbsp;{$app.sid|tsGetSchoolName}</li>
+            <li>院 系：&nbsp;&nbsp;{$app.sid1}</li>
+            <li>学 号：&nbsp;&nbsp;{$app.title2}</li>
+            <li>所在团队：&nbsp;&nbsp;{$app.zusatz}</li>
+           </ul>
+            <div class="person_right_dp">事迹简介：&nbsp;&nbsp;{$app.description}</div>
+          </div>
+          <div class="person_desc_photo">
+            <div class="person_desc_photo_title">视频：</div>
+            <div class="clear"></div>
+            <div class="person_desc_photo_list1">
+              <ul>
+                <volist name="flash" id="vo">
+                <li>
+                    <div class="person_desc_photo_list1_thumb">
+                        <a href="javascript:playFlash('{$vo.id}');" title="">
+                        <img src="{$vo.path|get_flash_img}" alt="" /></a></div>
+                    <div class="person_desc_photo_star"><a href="javascript:playFlash('{$vo.id}');" title="点击播放"></a></div>
+                </li>
+                </volist>
+              </ul>
+            </div>
+          </div>
+          <div class="person_desc_photo">
+            <div class="person_desc_photo_title">靓照：</Div>
+            <div class="clear"></div>
+            <div class="person_desc_photo_list">
+              <ul>
+                <volist name="img" id="vo">
+                    <li>
+                        <?php $attach=getAttach($vo['attachId']);  $path= $attach['savepath'].$attach['savename']?>
+                        <a href="{:U('event/Front/details',array('id'=>$eventId,'uid'=>$app['id'],'img'=>$vo['attachId']))}" target="_blank">
+                            <img src="{$path|tsMakeThumbUp=###,190,238}" alt="" /></a>
+                    </li>
+                </volist>
+              </ul>
+            </div>
+          </div>
+          <div> </div>
+        </div>
+      </div>
+<script>
+    var mid = {$mid};
+    var restCount = {$restCount};
+    function post_vote(id,pid){
+        if(mid==0){
+            ui.error('请先登录！');
+            return;
+        }
+        if(restCount==0){
+            ui.error('您已投满了10票! 每人每评选最多投10票！');
+            return;
+        }
+        if(confirm('限投10票，且必须投满才生效。您还有【'+restCount+'】票。确定要投票?')){
+            $.post(U('event/Front/vote1'),{id:id,pid:pid},function(txt){
+                json = $.parseJSON(txt);;
+                if( json.status == 1 ){
+                    ui.success( json.info );
+                    setTimeout(function(){location.reload();},1500);
+                }else if( json.status == 2 ){
+                    restCount -= 1;
+                    $('#vote_'+pid).html('<div class="person_list_vote i4">您已投票</div>');
+                    ui.success( json.info );
+                }else{
+                    ui.error( json.info );
+                }
+            });
+        }
+    }
+</script>
+
+<include file="_footer" />

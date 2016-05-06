@@ -1,0 +1,67 @@
+<dl style="margin:10px 10px 5px; height:22px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 活动：</dt>
+    <dd class="left alL">{$title}</dd>
+</dl>
+<dl style="margin:10px 10px 5px; height:22px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 参加人数：</dt>
+    <dd class="left alL">{$joinCount}人 &nbsp;&nbsp;实际签到：{$attCount}人 &nbsp;&nbsp;
+    <a href="{:U('event/Author/member',array('id'=>$id))}" target="_blank"> 【点此前往查看人员明细】</a>
+    <a href="{:U('event/Author/member',array('id'=>$id))}" target="_blank"> 【差异化加分】</a></dd>
+</dl>
+<dl style="margin:10px 10px 5px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 图片：</dt>
+    <dd class="left alL"><a href="{$print_img|get_photo_url}" target="_blank"><img src="{$print_img|getThumb=###,125,125}" alt="" /></a></dd>
+</dl>
+<dl style="margin:10px 10px 50px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 总结：</dt>
+    <dd class="left alL">{$print_text|htmlspecialchars_decode}</dd>
+</dl>
+<dl style="margin:10px 10px 50px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 经费：</dt>
+    <dd class="left alL">{$pay}  元</dd>
+</dl>
+<?php if($endattach):?>
+<dl style="margin:10px 10px 50px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 附件：</dt>
+    <dd class="left alL">{$endattach|getAttachHtml}</dd>
+</dl>
+<?php endif;?>
+<div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="clear">
+    <input type="button" class="btn_a" onclick="dofinish({$id},5,1,'是否 【通过】，并发放学分和积分？')" value="通过，发放积分" />
+    <input type="button" class="btn_a" onclick="del({$id})" value="驳回修改" />
+    <input type="button" class="btn_a" onclick="dofinish({$id},5,0,'是否 【结束活动，不发放积分】？')" value="结束活动，不发放积分" />
+    <a class="btn_a" href="{:U('event/Author/editFinish',array('id'=>$id))}" target="_blank">编辑申请</a>
+</div>
+<div class="cRed">完结后，学分积分将在凌晨统一计算发放</div>
+<script type="text/javascript">
+function dofinish(id,code,give,msg) {
+    if(confirm(msg)){
+      $.post( '{:U('/Event/doFinish')}',{gid:id,code:code,give:give},function(text){
+         if( text == 2 ){
+              cancel();
+              ui.success( "操作成功" );
+              $('#list_'+id).remove();
+              var finishCount = $('#finishCount').html();
+              finishCount = finishCount -1;
+              $('#finishCount').html(finishCount)
+          }else{
+              ui.error( "操作失败" );
+          }
+      });
+    }
+}
+function cancel() {
+	ui.box.close();
+}
+ function del(id)
+    {
+        ui.box.close();
+    	var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            ui.error("请选择要驳回的活动");
+            return false;
+        }
+        ui.box.load( '{:U('/Event/doFinishAudit')}' + '&id=' + id,{title:'驳回完结'});
+    }
+</script>

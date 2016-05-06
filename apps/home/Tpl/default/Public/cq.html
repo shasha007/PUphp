@@ -1,0 +1,42 @@
+<include file="__THEME__/header" />
+<style>
+    .zy{font-size:16px;color:red;text-align:center;}
+    table tr{height:26px;line-height:26px;}
+    table th{text-align:center;}
+    table td{padding:10px 20px;}
+</style>
+<div class="content" style="padding:30px;font-size:24px;">
+    <h1 class="cBlue ad_c1">法律庭辩大赛抽签</h1>
+    <div class="zy">(请各校超管账号登陆进行抽签)</div>
+            <table width="50%" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th>学校</th><th style="width:100px;">分组</th>
+                </tr>
+                <volist id="vo" name="list">
+                <tr>
+                    <td>{$vo.school}</td>
+                    <td id="sid_{$vo['sid']}">
+                    <?php if($vo['status']):?>
+                        {$vo.n1}
+                    <?php elseif($adminSid==$vo['sid']):?>
+                        <a class="btn_b" href="javascript:void(0)" onclick="docq({$adminSid})">点此抽签</a>
+                    <?php endif;?>
+                    </td>
+                </tr>
+                </volist>
+            </table>
+        </div>
+        <script type="text/javascript">
+            function docq(sid){
+                $.post( '__URL__&act=docq',{sid:sid},function( text ){
+                    var json =$.parseJSON(text);
+                    if( json.status == 1 ){
+                        ui.success('抽签成功');
+                        $('#sid_'+sid).html(json.info);
+                    }else{
+                        ui.error( json.info );
+                    }
+                });
+            }
+        </script>
+<include file="__THEME__/footer" />

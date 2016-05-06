@@ -1,0 +1,67 @@
+<include file="_header" />
+<script type="text/javascript" src="__PUBLIC__/js/kindeditor/kindeditor.js"></script>
+<form method="post" action="{:U('event/Sjsq/doAddT6')}" enctype="multipart/form-data">
+<div class="prov_ftitle p_c3 b f14">优秀调研报告申报</div>
+<div class="prov_back prov_link"><a href="{:U('event/Sjsq/index/')}">返回</a></div>
+<div class="clear"></div>
+<div class="prov_fcon mt10">
+    <ul>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 报告题目：</div>
+            <div class="prov_fcon_d"><input name="title" type="text" class="prov_input" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 报告作者：</div>
+            <div class="prov_fcon_d"><input name="title2" type="text" class="prov_input" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 报告文档：<br />(5000字)&nbsp;</div>
+            <div class="prov_fcon_d prov_link">上传word版本附件<br />（.doc或.docx,不超过{$maxSize}MB) <input name="p_file" type="file" class="prov_input1" /></div>
+        </li>
+        <li class="prov_fcon_b"><input type="button" value="提 交" onclick="submitForm(this.form);" class="prov_btn" /></li>
+    </ul>
+</div>
+</form>
+<script>
+function checkform(v_form){
+    var titleLength = getLength(v_form.title.value);
+    if(titleLength == 0) {
+            v_form.title.focus();
+            ui.error('报告题目不能为空');
+            return false;
+    }
+    if(titleLength > 100) {
+            v_form.title.focus();
+            ui.error('报告题目不能超过100个字');
+            return false;
+    }
+    var title2Length = getLength(v_form.title2.value);
+    if(title2Length == 0) {
+            v_form.title2.focus();
+            ui.error('报告作者不能为空');
+            return false;
+    }
+    if(title2Length > 100) {
+            v_form.title2.focus();
+            ui.error('报告作者不能超过100个字');
+            return false;
+    }
+    var pFile = v_form.p_file.value;
+    pFile = pFile+'';
+    var fileLength = getLength(pFile);
+    if(fileLength == 0) {
+            v_form.p_file.focus();
+            ui.error('请上传报告文档');
+            return false;
+    }
+    var fileArr = pFile.split('.');
+    fileLast = fileArr.length-1;
+    if(fileArr[fileLast] != 'doc' && fileArr[fileLast] != 'docx') {
+            v_form.p_file.focus();
+            ui.error('请上传doc或docx格式的报告文档');
+            return false;
+    }
+    return true;
+}
+</script>
+<include file="_footer" />

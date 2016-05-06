@@ -1,0 +1,124 @@
+<include file="_header" />
+<script>
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked '), function(i, n){
+            if($(n).val()!=0){
+                ids.push( $(n).val() );
+            }
+        });
+        return ids;
+    }
+
+
+var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(eventId){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要拒绝的用户");
+                return false;
+            }
+            if( confirm("是否拒绝该用户？") ){
+              $.post( '__URL__&act=batchDelMember',{mids:id,id:eventId},function(text){
+                    var json = $.parseJSON(text)
+                       if( json.status == 1 ){
+                        ui.success(json.info);
+                        var id_list = id.split( ',' );
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove();
+                             location.reload();
+                        }
+                    }else{
+                      ui.error(json.info);
+                    }
+                });
+            }
+        },
+      allow:function(eventId){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要通过的用户");
+                return false;
+            }
+            if( confirm("是否通过该用户？") ){
+                $.post( '__URL__&act=batchAllowMember',{mids:id,id:eventId},function(text){
+                    var json = $.parseJSON(text)
+                    if( json.status == 1 ){
+                        ui.success(json.info);
+                        var id_list = id.split( ',' );
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove();
+                        }
+                        location.reload();
+                    }else{
+                        ui.error(json.info);
+                    }
+                });
+            }
+        }
+    }
+    var c = null;
+</script>
+<div class="intro_c">
+    <div class="member_tab">
+        <div class="member_cz">
+            待审核人数（{$count}）
+                &nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0);" onclick="c.allow({$eventId})">批量通过</a>  &nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0);" onclick="c.del({$eventId})" >批量拒绝</a>
+        </div>
+        <div class="member_search">
+            <form action="{:U('/Author/memberAudit',array('id'=>$eventId))}" method="post">
+                姓名：<input name="realname" type="text" class="member_searchinput"  value="{$realname}"/>
+                <input type="submit" value="搜索" class="member_btn3" />
+            </form>
+        </div>
+    </div>
+    <div class="member_list">
+        <form>
+            <table width="956" border="0" cellspacing="0" cellpadding="0">
+                <tr class="member_tr1">
+                    <td width="30"><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0"></td>
+                    <td width="30">UID</td>
+                    <td width="100">姓名</td>
+                    <if condition='$need_tel eq 1'>
+                        <td width="100">电话</td>
+                    </if>
+                    <td width="80">诚信度</td>
+                    <td width="30">性别</td>
+                    <td width="180">学校</td>
+                    <td width="100">操作</td>
+                  </tr>
+                <volist name="data" id='vo'>
+                <tr class="member_tr2" id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.uid}</td>
+                    <td>{$vo.realname}</td>
+                    <if condition='$need_tel eq 1'>
+                        <td>{$vo.tel}</td>
+                    </if>
+                    <td><?php if($vo['total']){echo ceil($vo['attend']*100/$vo['total']).'%';}else{echo'暂无';}?></td>
+                    <td><eq name="vo['sex']" value="1">男<else/>女</eq></td>
+                    <td>{$vo['uid']|tsGetSchoolByUid=###,'<br />'}<br />
+                        {$vo.year} </br>
+                        {$vo.major}
+                    </td>
+                    <td>
+                        <a href="javascript:auditUser('{$vo.id}','{$eventId}')" >通过</a>
+                        <a href="javascript:adminDelAction( '{$vo.id}','{$eventId}');">拒绝</a>
+                    </td>
+                </tr>
+                </volist>
+            </table>
+        </form>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+    <script type="text/javascript">
+        var c = new ctrl();
+    </script>
+<include file="_footer" />

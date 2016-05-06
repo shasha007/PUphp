@@ -1,0 +1,45 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <!-------- 用户列表 -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$html}</div>
+        <form method="get">
+            <input type="hidden" name="app" value="event" />
+            <input type="hidden" name="mod" value="User"/>
+            <input type="hidden" name="act" value="userGroup"/>
+            学号：<input type="text" value="{$_GET.num}" name="num" />
+            <input class="btn_b" type="submit" value="搜索">
+            <?php if($userInfo):?>
+            &nbsp;&nbsp;{$userInfo.realname}
+            <?php endif;?>
+        </form>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th class="line_l">部落名称</th>
+    <th class="line_l">角色</th>
+    <th class="line_l">备注</th>
+    <th class="line_l">参加时间</th>
+  </tr>
+  <volist id="vo" name="data">
+  <tr>
+      <td>{$vo.name}</td>
+      <td>
+          <if condition="$vo['level'] eq 1">
+                 超级管理员
+              <elseif condition="$vo['level'] eq 2"/>
+                  管理员
+                   <elseif condition="$vo['level'] eq 3"/>
+                              普通成员
+          </if>
+       </td>
+      <td>{$vo.remark}</td>
+      <td>{$vo.cTime|date="Y-m-d",###}</td>
+  </tr>
+  </volist>
+  </table>
+  </div>
+</div>
+<include file="../Teacher/_footer" />

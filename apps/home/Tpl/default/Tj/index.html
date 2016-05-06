@@ -1,0 +1,27 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="page_tit">统计报表</div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <?php if($tzFlag == 1) : ?>
+                <tr>
+                    <td width="200px;"><a href='{:U("home/Tj/userActive")}'>用户数统计</a></td>
+                </tr>
+            <?php else:?>
+                <tr><td width="200px;"><a href='{:U("home/Tj/userActive")}'>1. 用户数统计</a></td>
+                    <td width="200px;"><a href='{:U("home/Tj/eventData")}'>2. 活动统计</a></td>
+                    <td width="200px;"><a href='{:U("home/Tj/paopao")}'>3. 吐泡泡统计</a></td>
+                    <td width="200px;"><a href='{:U("home/Tj/weibo")}'>4. 微博统计</a></td>
+                    <td><a href='{:U("home/Tj/yyy")}'>5. 摇一摇统计</a></td>
+                </tr>
+                <tr><td><a href='{:U("home/Tj/group")}'>6. 部落统计</a></td>
+                    <td><a href='{:U("home/Tj/legou")}'>7. 乐购统计</a></td>
+                    <td><a href='{:U("home/Tj/game")}'>8. 小游戏</a></td>
+                    <td><a href='{:U("home/Tj/yiYuanLieBao")}'>9. 一元猎宝</a></td>
+                    <td></td>
+                </tr>
+            <?php endif; ?>
+        </table>
+    </div>
+</div>
+<include file="_footer" />

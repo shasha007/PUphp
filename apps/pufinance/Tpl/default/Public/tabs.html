@@ -1,0 +1,31 @@
+<div class="page_tit">{$Think.lang.finance_name}</div>
+<div class="tit_tab">
+    <ul>
+        <li><a href="{:U('pufinance/Admin/index')}"
+			<?php if(MODULE_NAME == "Admin"):?>
+			class="on"
+			<?php endif;?>
+		>用户管理</a>
+        </li>
+		<li><a href="{:U('pufinance/PuPackage/index')}" <?php if(MODULE_NAME=="PuPackage"):?>
+            class="on"
+            <?php endif;?>>提额包管理</a>
+        </li>
+        <li><a href="{:U('pufinance/PufinanceOrder/orderList')}" <?php if(MODULE_NAME=="PufinanceOrder"):?>
+            class="on"
+            <?php endif;?>>订单中心</a>
+        </li>
+        <li>
+            <a href="{:U('pufinance/PufinanceOrderStage/stageOrderList')}" <?php if(MODULE_NAME=="PufinanceOrderStage"):?>
+            class="on"
+            <?php endif;?>
+            >逾期订单中心</a>
+        </li>
+		<li>
+            <a href="{:U('pufinance/PufinanceCount/index')}" <?php if(MODULE_NAME=="PufinanceCount"):?>
+            class="on"
+            <?php endif;?>
+            >统计中心</a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,202 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <a href="javascript:add_tab(0);" class="btn_a">
+            <span class="ytree_btn_close"></span><span>添加分类</span></a>
+        <a href="javascript:add_file(0);" class="btn_a">
+            <span class="ytree_btn_newadd"></span><span>添加申请表</span></a>
+    </div>
+    <div class="list">
+        <table id="event_list" width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+            <tr>
+                <th class="line_l"></th>
+                <th class="line_l">名称</th>
+                <th class="line_l">排序</th>
+                <th class="line_l">适用年级<br/>(例如12,13 英文逗号隔开。<br/>不填表示适用所有年级)</th>
+                <th class="line_l">状态</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist name="folder" id='vo'>
+                <tr id="tr_{$vo.id}">
+                    <td> {$vo.id}</td>
+                    <td>
+                        <?php if(!empty($vo['files'])):?>
+                        <a href="javascript:loadSub({$vo.id});" class="btn_a">
+                        <span id="sub_{$vo.id}" class="ytree_btn_minus"></span></a>
+                        <?php else:?>
+                        <span class="ytree_ml14"></span>
+                        <?php endif;?>
+                        <?php if($vo['is_folder']):?>
+                            <span class="ytree_btn_open"></span>
+                        <?php else:?>
+                            <span class="ytree_btn_file"></span>
+                        <?php endif;?>
+                        {$vo.title}
+                        <?php if($vo['is_folder']):?>
+                        <a href="javascript:add_file({$vo.id});" class="btn_a" title="在此目录下添加申请表"><span class="ytree_btn_newadd"></span></a>
+                        <?php endif;?>
+                    </td>
+                    <td><span id="ordernum_{$vo.id}" edit="on">{$vo.ordernum}</span> <a href="javascript:edit_title('ordernum',{$vo.id});">[修改]</a></td>
+                    <td>
+                        <?php if(!$vo['is_folder']):?>
+                        <span id="years_{$vo.id}" edit="on">{$vo.years|rtrim=###,','}</span> <a href="javascript:edit_title('years',{$vo.id})">[修改]</a>
+                        <?php endif;?>
+                    </td>
+                    <td><?php if(!$vo['is_folder']):?>
+                            <?php if($vo['isRelease']):?><span class="cGreen">已发布</span>
+                            <?php else:?><span class="cRed">草稿</span>
+                            <?php endif;?>
+                        <?php endif;?>
+                    </td>
+                    <td>
+                        <?php if($vo['is_folder']):?>
+                        <a href="javascript:edit_tab({$vo['id']})">编辑</a> <a href="javascript:delFolder({$vo['id']})">删除</a>
+                        <?php else:?>
+                        <a href="javascript:edit_file({$vo['id']})">编辑</a> <a href="javascript:delFile({$vo['id']})">删除</a>
+                        <?php endif;?>
+                    </td>
+                </tr>
+                <?php foreach($vo['files'] as $w):?>
+                <tr id="tr_{$w.id}" class="pid_{$vo.id}">
+                    <td> </td>
+                    <td>
+                        <span class="ytree_btn_file ytree_ml35"></span>
+                        {$w.title}</td>
+                    <td><span id="ordernum_{$w.id}" edit="on">{$w.ordernum}</span> <a href="javascript:orderNum({$w.id});">[修改]</a></td>
+                    <td><span id="years_{$w.id}" edit="on">{$w.years}</span> <a href="javascript:edit_title('years',{$w.id})">[修改]</a></td>
+                    <td><?php if($w['isRelease']):?><span class="cGreen">已发布</span><?php else:?><span class="cRed">草稿</span><?php endif;?></td>
+                    <td><a href="javascript:edit_file({$w['id']})">编辑</a> <a href="javascript:delFile({$w['id']})">删除</a>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+            </volist>
+        </table>
+    </div>
+</div>
+<include file="../Teacher/_footer" />
+<script>
+    function add_tab(id){
+        ui.box.load('__URL__&act=addEcFolder&pid='+id,{title:'添加'});
+    }
+    function edit_tab(id){
+        ui.box.load('__URL__&act=addEcFolder&id='+id,{title:'编辑'});
+    }
+    function add_file(pid){
+        ui.box.load('__URL__&act=addEcFile&pid='+pid,{title:'添加申请表',closeable:false});
+    }
+    function edit_file(id){
+        ui.box.load('__URL__&act=addEcFile&id='+id,{title:'编辑申请表1',closeable:false});
+    }
+    function loadSub(pid){
+        var node = $('.pid_'+pid);
+        if(node.is(":hidden")){
+            $('#sub_'+pid).attr('className','ytree_btn_minus');
+        }else{
+            $('#sub_'+pid).attr('className','ytree_btn_plus');
+        }
+        $('.pid_'+pid).toggle();
+    }
+    function edit_title(type,id){
+        var obj = $('#'+type+'_'+id);
+        if($(obj).attr('edit')=='on'){
+            var oldval=$(obj).html();
+            oldval =oldval.replace(/(^\s*)|(\s*$)/g, "");
+            if(!$('#'+type+'_input').val()){
+                $(obj).html("<input id='"+type+"_input' type='text' class='txt_vote' value='"+oldval+"'/>");
+                $(obj).attr('edit','off');
+            }
+            $('#'+type+'_input').die().live("blur",function(){
+            });
+            $('#'+type+'_input').select();
+            $('#'+type+'_input').focus().live("blur",function(){
+                var editval=$(this).val();
+                var r = /^[,，\d]*$/;
+                $(obj).html(editval);
+                $(obj).attr('edit','on');
+                if(!r.test(editval)){
+                    ui.error('请输入数字');
+                    $(obj).html(oldval);
+                    return false;
+                }
+                $.post('__URL__&act=setEcFiel',{id:id,value:editval,field:type},function(data){
+                    var json=$.parseJSON(data);
+                    if(type=='years'){
+                        $(obj).html(json.info);
+                    }else{
+                        window.location.reload(true);
+                    }
+                });
+            });
+        }
+
+
+//        var obj = $('#ordernum_'+id);
+//        if($(obj).attr('edit')=='on'){
+//            var inval=$(obj).html();
+//            inval =inval.replace(/(^\s*)|(\s*$)/g, "");
+//            if(!$('#edit'+id).val()){
+//                $(obj).html("<input style='width:30px;' id='edit"+id+"'name='' value='"+inval+"'>");
+//                $(obj).attr('edit','off');
+//            }
+//            $('#edit'+id).die().live("blur",function(){
+//            });
+//            $('#edit'+id).select();
+//            $('#edit'+id).focus().live("blur",function(){
+//                var editval=$(this).val();
+//                var r = /^\d+$/;
+//                $(obj).html(editval);
+//                $(obj).attr('edit','on');
+//                if(!r.test(editval)){
+//                    ui.error('请输入数字');
+//                    $(obj).html(inval);
+//                    return false;
+//                }
+//                $.post('__URL__&act=changeOrder',{id:id,ordernum:editval},function(data){
+//                    var json=$.parseJSON(data);
+//                    if(json.status==0){
+//                        ui.error(json.info)
+//                        $(obj).html(inval);
+//                    }else{
+//                        ui.success(json.info);
+//                        window.location.reload(true);
+//                    }
+//                });
+//            });
+//        }
+    }
+    function delFolder(id){
+        if( confirm("删除分类不会删除分类下的申请表，确定删除？") ){
+            $.post( '__URL__&act=doDelFolder',{id:id},function(data ){
+                var json=$.parseJSON(data);
+                if(json.status==0){
+                    ui.error(json.info)
+                }else{
+                    ui.success(json.info);
+                    window.location.reload(true);
+                }
+            });
+        }
+    }
+    function delFile(id){
+        if( confirm("确定删除申请表？") ){
+            $.post( '__URL__&act=doDelFile',{id:id},function(data ){
+                var json=$.parseJSON(data);
+                if(json.status==0){
+                    ui.error(json.info)
+                }else{
+                    ui.success(json.info);
+                    window.location.reload(true);
+                }
+            });
+        }
+    }
+    function renew(){
+        window.location.reload(true);
+    }
+    function rebox(fileId) {
+        ui.box.close();
+        edit_file(fileId);
+    }
+</script>

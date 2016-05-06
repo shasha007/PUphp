@@ -1,0 +1,38 @@
+<include file="../Lesson/_header" />
+
+<div class="member_c">
+    <div class="member_menu b"><eq name="type" value="edit">编辑<else/>添加</eq>图片</div>
+    <div class="member_back"><a href="{:U('/LessonActive/photo',array('id'=>$id))}">返回图片列表</a></div>
+    <form action="{:U('/LessonActive/doEditPhoto',array('id'=>$courseId))}" enctype="multipart/form-data" method="post">
+        <div class="member_add">
+            <table width="900" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="45"></td>
+                    <td align="right" width="70">标题：</td>
+                    <td width="15"></td>
+                    <td><input type="text" name="title" value="{$photo.title}" maxlength="60"/></td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right"><span class="red">*</span> 图片：</td>
+                    <td>
+                    </td>
+                    <td>
+                <if condition="$photo">
+                    <img src="{$photo.path|getThumb=###,80,80}">
+                    <input name="gid" value="{$photo.id}" type="hidden"><br/>
+                </if>
+                <input name="upfile" id="face" type="file" class="member_input1">
+                <br/><span style="color:#666;font-size:10px;">最大为{$photo_max_size/1024/1024}M，支持{$photo_file_ext}格式。建议图片大小：250像素x180像素</span>
+                </td>
+                </tr>
+            </table>
+        </div>
+        <div class="member_btn">
+            <input type="submit" value="确定" class="member_btn1" />
+        </div>
+    </form>
+</div>
+
+<include file="../Lesson/_footer" />

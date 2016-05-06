@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="{:U('job/Recruitment/doreleasejobs')}" method='POST'>
+		职位名称<input type="text" name='positionname'><br>
+		职位分类<input type="text" name='positionclass'><br>
+		招聘人数<input type="text"name='number'><br>
+		工作地区<input type="text" name='workarea'><br>
+		信息投放学校<input type="text" name='putschool'><br>	
+                职位类型<input type="text" name='positiontype'><br>
+		结束日期<input type="text" name='endtime'><br>
+		薪资<input type="text" name='salary'><br>
+		学位<input type="text"name='education'><br>
+		性别<input type="text"name='sex'><br>
+		描述<textarea name='jobdescripition'></textarea>
+                <input type='submit'>
+	</form>
+</body>
+</html>

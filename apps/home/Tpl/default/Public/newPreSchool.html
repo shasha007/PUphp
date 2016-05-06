@@ -1,0 +1,12 @@
+<div class="school_p">
+
+    <div class="school_college">
+        <ul>
+            <volist name="school" id="vo">
+                <li><a href="{:U($_REQUEST['url'], array('school'=>$vo['a']) )}">{$vo.t}</a></li>
+            </volist>
+        </ul>
+    </div>
+    <div class="school_close"><input name="close" type="button" value="关闭" class="school_btn" onclick="javascript:ui.box.close();" /></div>
+
+</div>

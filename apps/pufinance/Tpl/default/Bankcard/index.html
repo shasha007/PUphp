@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>银行卡</title>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/style.css?v=001" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=001" rel="stylesheet">
+</head>
+<body>
+<div class="h-card-info">
+    <ul class="">
+        <volist name="cards" id="card">
+            <li class="clearfix container">
+                <div class="h-bank-card bank-{$card.bank_id} h-card"  onclick="location.href = '{:U('pufinance/Bankcard/show', array('id' => $card['id']))}'">
+                    <p class="clearfix container">
+                        <img class="img-responsive" src="../Public/img/bank/bank-{$card.bank_id}.png">
+                        <span>{$card.bank_name}储蓄卡</span>
+                    </p>
+
+                    <p><i class="h-point"></i>
+                        <i class="h-point"></i>
+                        <i class="h-point"></i>
+                        <i class="h-point"></i>
+                        &emsp13;
+                        <i class="h-point"></i>
+                        <i class="h-point"></i>
+                        <i class="h-point"></i>
+                        <i class="h-point"></i>
+                        &emsp13;
+                        <i class="h-point"></i>
+                        <i class="h-point"></i>
+                        <i class="h-point"></i>
+                        <i class="h-point"></i>
+                        <i>{$card.card_no|substr=###, -4}</i>
+                    </p>
+                </div>
+            </li>
+        </volist>
+    </ul>
+    <div class="h-card-add">
+        <a href="{:U('pufinance/Bankcard/bindBankcard')}"><span>+</span>&emsp13;添加银行卡</a>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
+<script src="../Public/js/mainScript.js"></script>
+<script>
+    setActionBar('绑定银行卡', '../Public/img/bind.png', 'location.href = \'{:U("pufinance/Bankcard/bindBankcard")}\';');
+</script>
+</body>
+</html>

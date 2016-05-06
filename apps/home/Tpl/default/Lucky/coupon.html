@@ -1,0 +1,120 @@
+<div class="so_main dialog-box">
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <!--
+        <a href="javascript:void(0)" class="btn_a delete-btn-all"><span>删除选中</span></a>
+        -->
+    </div>
+    <div class="list dialog-coupon">
+        <table width="900" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <!--
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="">
+                    <label for="checkbox"></label>
+                </th>
+                -->
+                <th>ID</th>
+                <th width="30%">优惠券编号</th>
+                <th>优惠券说明</th>
+                <th>所属用户</th>
+                <th>激活状态</th>
+                <!--
+                <th>操作</th>
+                -->
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="dialog-list_{$vo.id}">
+                    <!--
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    -->
+                    <td>{$vo.id}</td>
+                    <td>{$vo['code']}</td>
+                    <td>{$vo.title}</td>
+                    <td>
+                        <?php if ($vo['user_id'] > 0):?>
+                        激活用户：<?php echo getUserName($vo['user_id']) ?>
+                        <?php else:?>
+                        -
+                        <?php endif;?>
+                    </td>
+                    <td><?php echo ($vo['status']==0)?'未激活':'已激活'; ?></td>
+                    <!--
+                    <td>
+                        <?php if($vo['status']==0):?>
+                        <a href="javascript:void(0)" data-id="<?php echo $vo['id'] ?>" class="delete-btn">删除</a>
+                        <?php else:?>
+                        -
+                        <?php endif;?>
+                    </td>
+                    -->
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <!--
+        <a href="javascript:void(0)" class="btn_a delete-btn-all"><span>删除选中</span></a>
+        -->
+    </div>
+</div>
+
+<script>
+    (function($){
+
+        //删除指定行
+        $('.delete-btn').click(function(){
+            if (confirm('您确定要删除该优惠券么？删除后无法找回')){
+                var _id = $(this).data('id');
+                if (_id == ''){
+                    return false;
+                }
+                //删除指定行
+                $.ajax({
+                    url:'<?php echo U("home/Lucky/deleteCoupon") ?>',
+                    data:{id:_id},
+                    dataType:'JSON',
+                    type:'POST',
+                    success:function(data){
+                        if (data.status==1){
+                            $('#dialog-list_'+_id).remove();
+                        }
+                        alert(data.info);
+                    }
+                });
+            }
+            return false;
+        });
+
+        //删除选中
+        $('.delete-btn-all').click(function(){
+            if (!confirm('您确定要删除该优惠券么？删除后无法找回')){
+                return false;
+            }
+            var _data = $('.dialog-coupon :checkbox').serialize();
+            console.log(_data);
+            for(var i=0 ;i<_data.length;i++){
+                alert(_data[i]);
+            }
+            return false;
+            $.ajax({
+                url:'<?php echo U("home/Lucky/deleteCoupon") ?>',
+                data:_data,
+                dataType:'JSON',
+                type:'POST',
+                success:function(data){
+                    if (data.status==1){
+                        $('#dialog-list_'+_id).remove();
+                    }
+                    alert(data.info);
+                }
+            });
+        });
+
+
+    })(jQuery);
+</script>

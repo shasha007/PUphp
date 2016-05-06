@@ -1,0 +1,138 @@
+<include file="_header" />
+<script type="text/javascript">
+$(function(){
+	$('#menu li').hover(function(){
+		$(this).children('ul').stop(true,true).show('fast');
+	},function(){
+		$(this).children('ul').stop(true,true).hide('fast');
+	});
+});
+</script>
+<div class="hd_c_top">
+    <div class="menu">
+        <ul class="first-menu" id="menu">
+            <li class="first-menu-li<?php if($action=='index')echo' i8';?>"><a href="{:U('/Index/index')}">活动首页</a></li>
+            <li class="first-menu-li <?php if($action=='collect'||$action=='join')echo' i8';?>"><a href="{:U('/Index/index',array('action'=>'launch'))}">我的活动</a>
+                <ul class="second-menu">
+                    <li class="second-menu-li i9"><a href="{:U('/Index/index',array('action'=>'join'))}">我参与的活动</a></li>
+                    <li class="second-menu-li i9"><a href="{:U('/Index/index',array('action'=>'collect'))}">我收藏的活动</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="platform">分类：
+        {$cTitle}	<span>[<a href="javascript:void(0)">切换</a>]</span>
+        <ul class="platform-menu hidden">
+            <li> <a href="{:U('/Index/index')}">全部</a> </li>
+            <?php foreach($category as $k=>$vo):?>
+            <li> <a href="{:U('/Index/index', array('cid'=>$k) )}">{$vo}</a> </li>
+            <?php endforeach;?>
+        </ul>
+    </div>
+</div>
+<div class="hd_c">
+{:W('Weibo',array('tpl_name'=>'event_share_weibo','button_title'=>'分享'))}
+<div class="hd_c_left">
+    <ul>
+        <volist name="data" id="vo">
+        <li>
+            <div class="hd_c_left_thumb">
+                <a href="{:U('/Front/index', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}"><img src="{$vo['cover']}" /></a>
+            </div>
+            <div class="hd_c_left_infor">
+                <div class="hd_c_left_title b<?php if($vo['isTop'])echo' up'?>">
+                    <a href="{:U('/Front/index', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">{$vo['title']}</a>
+                </div>
+                <div class="hd_c_left_class"><a href="{:U('/Index/index', array('cid'=>$vo['typeId']) )}">[{$vo['type']}]</a></div>
+                <div class="hd_c_left_time"><span class="black">活动时间：</span>{$vo['time']}</div>
+                <div class="hd_c_left_author"><span class="black">报名起止：</span>
+                    <?php if($vo['startline']>0){echo date( 'Y-m-d H:i',$vo['startline'] );}?> 至
+            <?php echo date('Y-m-d H:i', $vo['deadline']) ?></div>
+                <div class="hd_c_left_school"><span class="black">活动选项：</span>
+                报名<?php if(!$vo['allow']){echo '无';}?>需审批，
+                报名<?php if(!$vo['need_tel']){echo '无';}?>需联系电话，
+                签到<?php if($vo['free_attend']){echo '无';}?>需事先报名
+                </div>
+                <div class="hd_c_left_count">
+                    <?php if($vo['uid'] == $mid) echo "待审人数（".$vo['verifyCount']."）";?> 参加人数（{$vo['joinCount']}）
+
+                </div>
+                <div class="hd_c_left_jf">
+                    评分:<span class="jf_note" id="note{$vo['id']}"><?php if($vo['noteUser'] == 0):?>暂无<?php else:?>{$vo['note']}<?php endif;?></span>
+                    (已有<span id="noteNum{$vo['id']}">{$vo['noteUser']}</span>人评分)
+                    <?php if(!$vo['hasNoted']):?>
+                    <span class="hd_c_left_select" id="noteSelect{$vo['id']}">
+                        <select onchange="doNote({$vo['id']},this)">
+                            <option selected="" value="0">请评分</option>
+                            <option value="5">5分，非常好</option>
+                            <option value="4">4分，挺好</option>
+                            <option value="3">3分，还行</option>
+                            <option value="2">2分，一般</option>
+                            <option value="1">1分，太烂了</option>
+                        </select>
+                    </span>
+                    <?php endif;?>
+                 </div>
+            </div>
+            <div class="hd_c_left_btn">
+                <ul>
+                    <li class="i6">
+
+                        <!-- JiaThis Button BEGIN -->
+                        <div onmouseover='setShare("{$vo['title']}", "{:U('/Front/index',array('id'=>$vo['id']))}");'> <!--自定义第一个分享标题和链接-->
+                             <div class="jiathis_style">
+                                <a href="http://www.jiathis.com/share/?uid=您的UID" class="jiathis"  target="_blank">分享活动</a>
+                            </div>
+                        </div>
+                        <!-- JiaThis Button END -->
+                        <script type="text/javascript">
+                          function setShare(title, url) {
+                              jiathis_config.title = title;
+                              jiathis_config.url = url;
+                          }
+                            var jiathis_config = {}
+                          </script>
+                    <script type="text/javascript" src="http://v1.jiathis.com/code/jia.js?uid=您的UID" charset="utf-8"></script>
+
+                    </li>
+                    <?php if($vo['status']==0): ?>
+                        <li class="i3">等待审核</li>
+                    <?php elseif( $vo['deadline']>time()): ?>
+                        <span class="list_joinIn_{$vo['id']}">
+                            <?php if( $vo['canJoin'] || !$mid): ?>
+                                <?php if( $vo['limitCount'] >0 ): ?>
+                                <li><a href="{:U('/Front/join',array('id'=>$vo['id']))}">我要参加</a></li>
+                                <?php else: ?>
+                                <li class="i3">名额已满</li>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <?php if($vo['hasMember'] != 1): ?>
+                                    <li class="i3"><a href="javascript:EventDelAction( {$vo['id']} )">取消申请</a></li>
+                                <?php else: ?>
+                                    <li class="i3"><a href="javascript:EventDelAction( {$vo['id']} )">取消参加</a></li>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </span>
+                    <?php else: ?>
+                        <li class="i4">报名已结束</li>
+                    <?php endif; ?>
+                    <?php if(!$vo['hasColleted']):?>
+                        <li class="i5" id="col_add{$vo.id}"><a href="javascript:editCollect( {$vo['id']} ,'add' )">收藏活动</a></li>
+                        <li class="i3" id="col_cancel{$vo.id}" style="display: none;"><a href="javascript:editCollect( {$vo['id']},'cancel' )">取消收藏</a></li>
+                    <?php else: ?>
+                        <li class="i5" id="col_add{$vo.id}" style="display: none;"><a href="javascript:editCollect( {$vo['id']} ,'add' )">收藏活动</a></li>
+                        <li class="i3" id="col_cancel{$vo.id}"><a href="javascript:editCollect( {$vo['id']},'cancel' )">取消收藏</a></li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </li>
+        </volist>
+    </ul>
+    <div class="page">{$html}</div>
+</div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+</div>
+<include file="_footer" />

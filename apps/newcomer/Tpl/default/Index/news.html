@@ -1,0 +1,106 @@
+<include file="../Public/header" />
+<div class="view_header">
+    <div class="menu-wrapper">
+        <div class="menu">
+            <a <eq name="_GET['cat']" value="0"> class="menu1cur" <else/>  class="menu1"  </eq>href="{:U('newcomer/Index/index',array('cat'=>0))}"></a>
+            <a   <eq name="_GET['cat']" value="1"> class="menu2cur" <else/>  class="menu2"  </eq>  href="{:U('newcomer/Index/index',array('cat'=>1))}"></a>
+            <a  <eq name="_GET['cat']" value="2"> class="menu3cur" <else/>  class="menu3"  </eq> href="{:U('newcomer/Index/index',array('cat'=>2))}"></a>
+            <a <eq name="_GET['cat']" value="3"> class="menu4cur" <else/>  class="menu4"  </eq>href="{:U('newcomer/Index/index',array('cat'=>3))}"></a>
+        </div>
+    </div>
+</div>
+<div class="view_banner">
+    <div class="banner01"></div>
+</div>
+<div class="content pt8">
+    <div class="content_box view_news">
+        <div>
+            <!--修改处开始-->
+            <div class="leftbox">
+                <div class="box_header">
+                    <a class="box_back" href="{:U('newcomer/Index/index')}">返回首页</a>
+                    <span class="box_title">资讯正文</span>
+                </div>
+                <div class="box_content">
+                    <div class="text_box">
+                        <div class="text_title">{$document.title}</div>
+                        <div class="text_param">{$document.mtime|friendlyDate} 浏览次数：{$document.readCount}</div>
+                        <div class="text_content">
+
+                            {$document.content}
+
+                            <br />&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <div class="box_bottom"></div>
+            </div>
+            <!--修改处结束-->
+
+            <div class="sidebar">
+                <div class="guide">
+                    <div class="box_header">
+                        <span class="box_title">新生指南</span>
+                    </div>
+                    <div class="box_content">
+                        <!--指南列表 开始-->
+                        <div class="guide_row" >
+                            <a class="item01" href="{:U('newcomer/Index/clist',array(category=>1))}"></a>
+                            <a class="item02" href="{:U('newcomer/Index/clist',array(category=>2))}"></a>
+                            <a class="item03" href="{:U('newcomer/Index/clist',array(category=>3))}"></a>
+                            <a class="item04" href="{:U('newcomer/Index/clist',array(category=>4))}"></a>
+                            <a class="item05" href="{:U('newcomer/Index/clist',array(category=>5))}"></a>
+                            <a class="item06" href="{:U('newcomer/Index/clist',array(category=>6))}"></a>
+                            <a class="item07" href="{:U('newcomer/Index/clist',array(category=>7))}"></a>
+                            <a class="item08" href="{:U('newcomer/Index/clist',array(category=>8))}"></a>
+                        </div>
+                        <!--指南列表 结束-->
+                    </div>
+                    <div class="box_bottom"></div>
+                </div>
+                <neq name="logo" value="">
+                <div class="links">
+                    <div class="box_header">
+                        <span class="box_title">校园官网</span>
+                    </div>
+                    <div class="box_content" style="height:79px;">
+                        <!--校园官网 开始-->
+                        <div class="links_row" >
+                            <a href="{$url}" target=_blank><img src="{$logo|tsMakeThumbUp=###,290,59}" /></a>
+                        </div>
+                        <!--校园官网 结束-->
+                    </div>
+                    <div class="box_bottom"></div>
+                </div>
+                </neq>
+                <div class="clearfix"></div>
+                <div class="newcome_piclist">
+                    <ul>
+                        <volist name="photos" id="vo">
+                            <li><a href="{:U('newcomer/Index/news',array(id=>$vo['document_id']))}"><img src="{$vo.icon|tsMakeThumbUp=###,156,96,'c'}" /></a></li>
+                        </volist>
+                    </ul>
+                </div>
+                <!--修改文章封面列表结束-->
+            </div>
+
+
+
+        </div>
+        <div class="box_bottom"></div>
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+</div>
+</div>
+<script>
+    $(function(){
+        $('.newcome_piclist ul li').eq(1).addClass('i1');
+        $('.newcome_piclist ul li').eq(3).addClass('i1');
+    });
+</script>
+<include file="../Public/footer" />
+</body>
+</html>

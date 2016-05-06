@@ -1,0 +1,20 @@
+<center>
+    <h1 class="red">
+        <?php if(!$canFinish): ?>
+            活动尚未结束，不可完结
+        <?php elseif($school_audit==3): ?>
+            申请完结审核中... 请耐心等待
+        <?php elseif($school_audit==4): ?>
+            申请完结被驳回，请修改后从新申请
+        <?php elseif($school_audit==5): ?>
+            已完结
+        <?php endif; ?>
+    </h1>
+</center>
+    <pre>
+     活动结束后申请完结，发放{$webconfig.cradit_name}和活动积分
+     流程：
+     1. 上传1张代表性的照片，填写一段终结文字
+     2. 等待后台管理员审核
+     3. 审核通过后，参加并签到的成员可获得{$webconfig.cradit_name}和活动积分
+    </pre>

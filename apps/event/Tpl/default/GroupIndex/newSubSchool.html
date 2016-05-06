@@ -1,0 +1,15 @@
+<div class="school_p1">
+
+    <div class="school_bl">
+        <ul>
+              <li><a href="{:U($_REQUEST['url'], array('school'=>'all') )}">全校</a></li>
+               <li><a href="{:U($_REQUEST['url'], array('school'=>'-1') )}">校级</a></li>
+            <volist name="school" id="vo">
+                <li><a href="{:U($_REQUEST['url'], array('school'=>$vo['id']) )}">{$vo.title}</a></li>
+            </volist>
+        </ul>
+    </div>
+    <div class="school_close1"><input name="close" type="button" value="关闭" class="school_btn" onclick="javascript:ui.box.close();" /></div>
+
+</div>
+<div class="clear"></div>

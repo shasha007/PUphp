@@ -1,0 +1,56 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<div class="clear"></div>
+
+<div class="st_s_count mt10 ml20 h30">共{$count}条动态</div>
+<?php if($isadmin):?>
+<div class="st_s_fb h30 b f14 mt10 mr20"><a href="{:U('event/GroupFeed/add', array('gid'=>$gid))}#sub">发布动态</a></div>
+<?php endif;?>
+<div class="st_list1 ml10 mt10">
+    <div class="b_content st_link">
+        <volist name="data" id="vo">
+            <div class="c1" id="list_{$vo.id}">
+                <div class="date">{$vo['ctime']|friendlyDate}</div>
+                <div class="box b1"><i class="arrow-left"></i><i class="icon-circle2"></i>
+                    <span class='ct'>{$vo.content}
+                        <?php if(!empty($vo['img'])):?><br/><a href="{$vo.img|tsMakeThumbUp=###,120,120,'no'}" target="_blank">
+                        <img src="{$vo.img|tsMakeThumbUp=###,120,120}" alt="" /></a>
+                        <?php endif;?>
+                    </span>
+                    <?php if($isadmin):?>
+                    <p align="left"></br><a href="javascript:del('{$vo.id}');">删除</a></p>
+                    <?php endif;?>
+                </div>
+            </div>
+        </volist>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+</div>
+<script type="text/javascript">
+    var sub = {$sub};
+    $(document).ready(function(){
+        if(sub){
+            location.hash="#sub";
+        }
+    });
+    a = $('.c1');
+    a.each(function () {
+        $(this).height($(this).children('.box').height() + 47);
+    });
+    function del(tid){
+        if (confirm('删除后无法恢复, 确认删除?')){
+        $.post( '__URL__&act=del',{gid:<?php echo $gid; ?>,tid:tid},function( text ){
+            var json =$.parseJSON(text);
+            if( json.status == 1 ){
+                $('#list_'+tid).remove();
+            }else{
+                ui.error( json.info );
+            }
+          });
+        }
+    }
+
+</script>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

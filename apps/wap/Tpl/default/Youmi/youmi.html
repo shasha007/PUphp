@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>有米</title>
+		<link rel="stylesheet" href="../Public/css/youmiStyle.css" />
+	</head>
+	<body>
+			<div class="jfArea">
+				<p>当前积分</p>
+				<b>{$score}</b>
+				<p>最多兑换<b>{$pu}</b>个PU币   {$scoreConfig.score}分=1PU币</p>
+			</div>
+			<p class="dh">
+				兑换<input type="number" class="pu" value="{$pu}" /><span>全部</span>
+			</p>
+			<button class="confirm">确认</button>
+			<button class="more">获取更多优米积分></button>
+	</body>
+</html>
+<script src="../Public/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script src="../Public/js/publicjs.js"></script>
+<script>
+	$(function () {
+		var uid = Android.getUid();
+		$.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+			if(data.status == 2)
+			{
+				window.location.reload();
+			}
+		},'json');
+
+	});
+	$('.confirm').bind('click',function () {
+		var pu;
+		pu = $('.pu').val();
+		$.post('{:U("wap/Youmi/exchange")}',{pu:pu},function (data) {
+			if(data.status == 1)
+			{
+				alert('兑换成功');
+				window.location.reload();
+			}
+			else
+			{
+				alert(data.msg);
+			}
+		},'json');
+	});
+	$('.more').bind('click',function () {
+		//跳转到原生获取积分页面
+		Android.openInternalPage("youmi", "", "", "", "", "", "");
+	})
+</script>

@@ -1,0 +1,32 @@
+<include file="_header" />
+<div class="kdl_mobile_page">
+ <div class="kdl_mobile_header">
+    <div class="kdl_m_header f14 bold tcenter">
+  <a href="{:U('shop/PocketShop/index')}"><li class="cur">分期商城</li></a><a href="{:U('shop/PocketShop/addPrice')}"><li>口袋金</li></a></div>
+  <a href="{:U('shop/PocketShop/myList')}"><div class="kdl_dd"></div></a>
+</div>
+  <div class="clear"></div>
+  <div class="m_search_bg m_mt50">
+    <div class="m_search">
+      <form method="post" action="{:U('shop/PocketShop/index')}">
+      <input name="name" class="m_input" type="text" value="" placeholder="请输入商品名">
+      </form>
+    </div>
+  </div>
+  <div class="m_menu tcenter bold f14">
+    <ul>
+      <a href="{:U('shop/PocketShop/index')}">
+      <li>所有商品</li>
+      </a>
+      <a href="{:U('shop/PocketShop/getAllCate')}">
+      <li class="cur tcenter">分类商品</li>
+      </a>
+    </ul>
+  </div>
+  <div class="clear"></div>
+  <foreach name="list" item="val">
+<a  href="{:U('shop/PocketShop/sortList')}&cid={$val.id}"><div class="m_sort f14">{$val.name}</div></a>
+</foreach>
+<div class="m_hr1"></div>
+</div>
+<include file="_footer" />

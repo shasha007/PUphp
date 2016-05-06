@@ -1,0 +1,50 @@
+<include file="_header" />
+<div class="kdl_mobile_page m_mb50">
+<div class="kdl_mobile_header f18 bold tcenter">信息完善</div>
+<a href="{:U('shop/PocketShop/addPrice')}"><div class="m_back"></div></a>
+<form method="post" action="{:U('shop/PocketShop/doPocketPrice')}">
+    <input type="hidden" name="price" value="{$price}" />
+    <input type="hidden" name="staging" value="{$staging}" />
+    <input type="hidden" name="reasonId" value="{$reasonId}" />
+    <input type="hidden" name="stagPrice" value="{$stagPrice}" />
+    <input type="hidden" name="addId" value="{$add.id}" />
+    <!--<div class="m_save"><input type="submit" value="保存"></div>-->
+    <div class="clear m_mt50"></div>
+    <div class="m_hr"></div>
+    <div class="m_userinfor f14">
+        <div class="m_userkey">姓名</div><input name="name" type="text" value="{$add['name']}" class="m_input1">
+    </div>
+    <div class="clear"></div>
+    <div class="m_userinfor f14">
+        <div class="m_userkey">手机号码</div><input name="tel" type="tel" value="{$add['tel']}" class="m_input1">
+    </div>
+    <div class="clear"></div>
+    <div class="m_userinfor f14">
+        <div class="m_userkey">身份证号</div><input name="identity" value="{$add['identity']}" type="text" class="m_input1">
+    </div>
+    <div class="clear"></div>
+    <div class="m_userinfor f14">
+        <div class="m_userkey">邮政编码</div><input name="zipCode" value="{$add['zipCode']}" type="text" class="m_input1">
+    </div>
+    <div class="clear"></div>
+    <div class="m_userinfor f14">
+        <div class="m_userkey">详细地址</div><input name="address" value="{$add['address']}" type="text" class="m_input1">
+    </div>
+    <div class="clear"></div>
+    <div class="m_userinfor f14">
+        <div class="m_userkey">总额/期数</div>
+        <div class="m_color1">￥{$price}.00 / {$staging}期</div>
+    </div>
+    <div class="clear"></div>
+    <div class="m_userinfor f14">
+        <div class="m_userkey">每期还款额</div>
+        <div class="m_color1">￥{$stagPrice}</div> </div>
+    <div class="clear"></div>
+    <div class="m_userinfor f14">
+        <div class="m_userkey">备注</div>
+        <div class="m_color1">本金：￥{$benPrice}+服务费：￥{$servicePrice}</div> </div>
+    <div class="clear"></div>
+    <div class="m_c_buy f18"><input type="submit" value="立即申请" class="m_btn"></div>
+</form>
+</div>
+<include file="_footer" />

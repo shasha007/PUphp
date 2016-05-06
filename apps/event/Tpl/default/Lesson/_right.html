@@ -1,0 +1,20 @@
+<div class="c_right_menu f_14 b">课程推荐</div>
+<div class="c_right_list">
+    <ul>
+        <volist name='istop' id='vo'>
+        <li>
+            <div class="c_right_list_thumb"><a href="{:U('/LessonMember/detail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}" ><img src="{$vo['logoId']|getCover}" alt="" /></a></div>
+            <div class="c_right_list_infor">
+                <div class="c_right_list_title link_r f_14 b l_24"><a href="{:U('/LessonMember/detail', array('id'=>$vo['id']))}">{$vo.title}</a></div>
+                <div class="c_right_list_desc l_20">
+                    任课老师：{$vo.teacher}<br />
+                    课时：{$vo.credit}<br />
+                    参加人数：{$vo.joinCount}
+                </div>
+            </div>
+        </li>
+        </volist>
+
+    </ul>
+</div>
+</div>             

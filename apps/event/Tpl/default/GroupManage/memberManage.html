@@ -1,0 +1,131 @@
+<include file="../GroupPublic/_mhead" />
+
+<script>
+    function manage(uid,op) {
+        var v_prompt = "";
+        if(op == 'admin') {
+            v_prompt = '你确定设置该用户成为管理员';
+        }else if(op == 'normal'){
+            v_prompt = '你确定设置该用户成为普通会员';
+        }else if(op == 'out'){
+            v_prompt = '你确定要剔除该用户';
+        }
+        if(v_prompt.length){
+            if (!confirm(v_prompt))
+            {
+                return;
+            }
+        }
+        document.actionform.uid.value = uid;
+        document.actionform.op.value = op;
+        document.actionform.submit();
+    }
+</script>
+
+<div class="st_m1 mt10 ml20">
+    <div class="st_m1_count h30 ml10 st_link">
+        <a  <if condition="$_GET['type'] eq 'manage' "> class='b' </if> href="{:U('event/GroupManage/memberManage',array('gid'=>$groupinfo['id'],'type'=>'manage'))}" >所有成员</a> ({$memberlist.count})丨
+        <a  <if condition="$_GET['type'] eq 'apply' "> class='b' </if> href="{:U('event/GroupManage/memberManage',array('gid'=>$groupinfo['id'],'type'=>'apply'))}">申请加入的人</a>
+    </div>
+
+    <form method="post" name="actionform" action="{:U('event/GroupManage/memberaction')}">
+        <input type="hidden" name="gid" value="{$gid}">
+        <input type="hidden" name="op" value="">
+        <input type="hidden" name="uid" value="">
+    </form>
+<div class="st_search2 mt10">
+     <form method="post">
+        <input name="k"  value="{$search_key}" type="text" class="st_s_input" placeholder="输入关键字" />
+        <input name="st_s_search" type="submit" class="st_s_btn b f14" value="搜 索" />
+    </form>
+</div>
+    <div class="st_m1_list mt10">
+        <ul>
+            <li class="ce8 c3">
+                <div class="st_m1_name ml25">姓名</div>
+                <div class="st_m1_sf">身份</div>
+                <div class="st_m1_yx">院系</div>
+                <div class="st_m1_tel">联系电话</div>
+                <div class="st_m1_cz">操作</div>
+                <div class="st_m1_bz">备注<br/><span style="color: green;">(单击编辑)</span></div>
+            </li>
+            <volist name="memberlist['data']" id="member">
+                <li class="st_link">
+                <div class="st_fl mt10"><input name="" type="checkbox" value=""  class="ck"></div>
+                    <div class="st_m1_name ml10">
+                        <span class="pic30 mr5 alM">
+                        <space uid="member['uid']" target="_blank">{uavatar=s}</space></span>
+                        <space uid="member.uid"  target="_blank">{realname}</space>
+                    </div>
+                    <div class="st_m1_sf">
+                        <eq name="member['level']" value="1">主席</eq>
+                        <eq name="member['level']" value="2">管理员</eq>
+                        <eq name="member['level']" value="3">普通成员</eq>
+                    </div>
+                    <div class="st_m1_yx">{$member['school2']}</div>
+                    <div class="st_m1_tel">{$member['mobile']}</div>
+                    <div class="st_m1_cz">
+                        <php>if ($mid != $member['uid']) {</php>
+                        <php>if($iscreater) {</php>
+                        <eq name="member['level']" value="3"><a href="javascript:manage({$member['uid']},'admin');">升为管理员</a><br /></eq>
+                        <eq name="member['level']" value="2"><a href="javascript:manage({$member['uid']},'normal');">降为普通成员</a> </eq>
+                        <a href="javascript:manage({$member['uid']},'out');">踢出部落</a>
+                        <php>} else if ($iscreater || ($isadmin && $member['level'] > 2)) {</php>
+                        <a href="javascript:manage({$member['uid']},'out');">踢出部落</a>
+                        <php>}</php>
+                        <php>}</php>
+                    </div>
+                    <div class="st_m1_bz djbj" onclick="remark(this,{$member['uid']},{$gid})" edit="on">
+                        {$member.remark}
+                    </div>
+                </li>
+            </volist>
+<!--            <li class="st_link st_bn">
+                <div class="st_m1_select">
+                    <input name="st_member" type="checkbox" value="" /> <a href="#">升为管理员</a> 丨 <a href="#">踢出</a>
+                </div>
+            </li>-->
+        </ul>
+        <div class="page">{$memberlist['html']}</div>
+    </div>
+</div>
+</div>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />
+<script>
+    function remark(obj,uid,gid){
+            var inval=$(obj).html();
+            if($(obj).attr('edit')=='on'){
+                inval =inval.replace(/(^\s*)|(\s*$)/g, "");
+                if(!$('#edit'+uid).val()){
+                    $(obj).html("<input id='edit"+uid+"'name='' value='"+inval+"'>");
+                    $(obj).attr('edit','off');
+                    $(obj).removeClass('djbj');
+                }
+                $("#edit"+uid).die().live("blur",function(){
+                });
+                $("#edit"+uid).select();
+                $("#edit"+uid).focus().live("blur",function(){
+                    var editval=$(this).val().replace(/(^\s*)|(\s*$)/g, "");
+                    if(editval.length>6){
+                        ui.error('字符长度不能超过6个字');
+                         return false;
+                    }
+
+                    $(obj).html(editval);
+                    $(obj).attr('edit','on');
+                    $(obj).addClass('djbj');
+                    $.post("{:U('event/GroupManage/addRemark')}",{uid:uid,val:editval,gid:gid},function(data){
+                        var json=$.parseJSON(data);
+    //                    if(json.status==0){
+    //                        ui.error(json.info)
+    //                    }else{
+    //                        ui.success(json.info);
+    //                    }
+                    });
+                });
+            }
+
+    }
+
+</script>

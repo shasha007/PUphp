@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>自助服务</title>
+		<link rel="stylesheet" href="../Public/css/style.css" />
+	</head>
+	<body bgcolor="#F3F1EE">
+		<div class="L-modify">
+			<div class="L-reset" onclick="javascript:window.location.href='<?php echo U('pufinance/service/changePwd');?>'">
+				<span>重置支付密码</span>
+			</div>
+			<div class="L-details" onclick="javascript:window.location.href='<?php echo U('pufinance/service/personalInfo');?>'">
+				<span>{$Think.lang.finance_name}个人信息修改</span>
+			</div>
+			<div class="L-contract"  onclick="javascript:window.location.href='<?php echo U('pufinance/service/PUContract');?>'">
+				<span>服务合同</span>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../Public/js/mainScript.js" ></script>
+<script type="text/javascript">
+    setActionBar('自助服务', '', '');
+</script>

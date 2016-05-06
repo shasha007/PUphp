@@ -1,0 +1,47 @@
+<include file="_header" />
+<script>
+    function showCode(code){
+        ui.box.show('<img src="barcodegen/test.php?text='+code+'" />',{title:'条码'});
+    }
+</script>
+<div class="hd_c">
+<div class="jf_c_left">
+    <div class="jf_list1">
+        <ul>
+            <li class="b">
+                <div class="jf_list1_thumb_1">礼品图片</div>
+                <div class="jf_list1_title_1">礼品名称/兑换时间</div>
+                <div class="jf_list1_price">兑换积分</div>
+                <div class="jf_list1_count">兑换数量</div>
+                <div class="jf_list1_zt">礼品状态</div>
+                <div class="jf_list1_code1">二维码</div>
+            </li>
+            <volist name="data" id='vo'>
+            <li>
+                <div class="jf_list1_thumb">
+                    <a href="{:U('/School/gift', array('id'=>$vo['jfid']))}" title="{$vo.jf.title}"><img src="{$vo.jf.path|getThumb1=###,124,124}" alt="" /></a>
+                </div>
+                <div class="jf_list1_1">
+                    <div class="jf_list1_title b">
+                        <a href="{:U('/School/gift', array('id'=>$vo['jfid']))}" title="{$vo.jf.title}">{$vo.jf.title}</a>
+                    </div>
+                    <div class="jf_list1_time">兑换时间：<?php echo(date('Y-m-d H:i',$vo['cTime']));?></div>
+                </div>
+                <div class="jf_list1_price"><?php echo($vo['cost']*$vo['number'])?>分</div>
+                <div class="jf_list1_count">{$vo.number}</div>
+                <div class="jf_list1_zt"><?php if($vo['isGet']):?>礼品已发放<?php else:?><span class="green b">尚未领取</span><?php endif;?></div>
+                <div class="jf_list1_code">
+                    <div class="jf_list1_codeimage"><a href="javascript:void(0)" onclick="showCode('{$vo.code}');">查看条码</a></div>
+                    <div class="jf_list1_codetext">{$vo.code}   </div>
+                </div>
+            </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

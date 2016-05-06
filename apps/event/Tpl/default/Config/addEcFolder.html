@@ -1,0 +1,32 @@
+<div style="width:300px;margin:10px auto 20px auto;">
+    分类(文件夹)名称：<input id="title" class="txt" value ="{$title}" /><br/><br/>
+    <input type="hidden" id="id" value="{$id}"/>
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="editType()" value="确定" />
+</div>
+<script>
+function editType(){
+  var title = $( '#title' ).val();
+  title = title.replace(/\s+/g,"");
+  var tlen = title.length;
+  if(tlen<=0){
+    alert("分类(文件夹)名称不能为空");
+    return false;
+  }else if(tlen>20){
+    alert("分类(文件夹)名称不能超过20个字");
+    return false;
+  }
+  var id = $('#id').val();
+  $.post( '__URL__&act=doAddEcFolder',{title:title,id:id},function( res ){
+        var json =$.parseJSON(res);
+        if( json.status ==0 ){
+            ui.error(json.info);
+        }else{
+            ui.box.close();
+            ui.success(json.info);
+            window.location.reload(true);
+        }
+  });
+}
+</script>

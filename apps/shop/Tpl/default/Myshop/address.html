@@ -1,0 +1,94 @@
+<include file="_header" />
+<script type="text/javascript" src="../Public/js/address.js?131220"></script>
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">收货地址</div>
+            <div class="consumer_records">
+                <div class="d_address mt10">
+                    <ul class="c_r_link ">
+                        <li class="c3 p3">
+                            <div class="d_a_address" style="color:#333;">详细地址</div>
+                            <div class="d_a_code">邮政编码</div>
+                            <div class="d_a_name">收货人</div>
+                            <div class="d_a_tel">电话号码</div>
+                            <div class="d_a_default"></div>
+                            <div class="d_a_do">操作</div>
+                        </li>
+                        <volist name="list" id='vo'>
+                        <li id="list{$vo.address_id}">
+                            <div class="d_a_address">{$vo.city}</br>{$vo.shipAddress}</div>
+                            <div class="d_a_code">{$vo.shipZip}</div>
+                            <div class="d_a_name">{$vo.shipName}</div>
+                            <div class="d_a_tel">{$vo.shipMobile}</br>{$vo.shipTel}</div>
+                            <div class="d_a_do">
+                                <a href="javascript:void(0);" onclick="editAdd({$vo.address_id})"">修改</a>
+                                <a href="javascript:void(0);" onclick="delAdd({$vo.address_id})">删除</a>
+                            </div>
+                        </li>
+                        </volist>
+                    </ul>
+                    <div class="d_a_btn b" id="addButt"><a onclick="checkAdd();" href="javascript:void(0);">添加收货地址</a></div>
+                    <div class="d_add mt10" id="addDiv" style="display: none">
+                        <div class="d_add_t b">添加收货地址</div>
+                        <div class="clear"></div>
+                        <form action="{:U('shop/Myshop/doEditAdd')}" method="post">
+                            <input type="hidden" name="id" id="id" value=""/>
+                        <ul>
+                            <li>
+                                <div class="d_add_n">所在地区：</div>
+                                <div class="d_add_desc">
+                                    <input id="city" name="city" type="text" class="d_add_input w350" /><span class="m_color2">*</span> (省、市、区)
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d_add_n">街道地址：</div>
+                                <div class="d_add_desc">
+                                    <input id="shipAddress" name="shipAddress" type="text" class="d_add_input w350" /><span class="m_color2">*</span> (不需要重复填写省、市、区)
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d_add_n">邮政编码：</div>
+                                <div class="d_add_desc">
+                                    <input id="shipZip" name="shipZip" type="text" class="d_add_input" maxLength="20"/>
+                                    <span class="m_color2">*</span> <a href="http://alexa.ip138.com/post/Search.aspx" target="_blank">邮编查询</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d_add_n">收货人：</div>
+                                <div class="d_add_desc">
+                                    <input id="shipName" name="shipName" type="text" class="d_add_input"  maxLength="10"/>
+                                    <span class="m_color2">*</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d_add_n">手机号码：</div>
+                                <div class="d_add_desc">
+                                    <input id="shipMobile" name="shipMobile" type="text" class="d_add_input"  maxLength="11"/>
+                                    <span class="m_color2">*</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d_add_n">固定电话：</div>
+                                <div class="d_add_desc">
+                                    <input id="shipTel" name="shipTel" type="text" class="d_add_input"  maxLength="20"/>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="d_add_b">
+                            <input type="submit" class="d_add_b1 b" value="保存" />
+                            <input type="button" value="取消" class="d_add_b2" onclick="cancelAdd();"/>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var addNum = <?php echo count($list);?>;
+    var list = eval({$listJson});
+</script>
+<include file="../Public/_footer" />

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>{$Think.lang.finance_name}</title>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/style.css?v=001" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=001" rel="stylesheet">
+</head>
+<body>
+<!--
+<header class="h-public-header ">
+	<div></div>
+    <div class="h-order-slc"><?php foreach($titles as $k=>$title):?>
+        <?php if($k == $_GET['t']):?><?php echo $title;?><?php else:?>所有订单<?php endif;?><?php endforeach;?><span class="h-span-down">
+        <img src="../Public/img/down-3030.png">
+    </span>
+    </div>
+
+</header>
+<div class="h-header-select clearfix">
+    <p <?php if($_GET['t'] == 'all' || empty($_GET['t'])):?>class="on"<?php endif;?>><a href="<?php echo U('pufinance/order/index',array('t'=>'all'));?>">所有订单</a></p>
+	<?php foreach($types as $k=>$type):?>
+	 <p <?php if($k == $_GET['t']):?>class="on"<?php endif;?>><a href="<?php echo U('pufinance/order/index',array('t'=>$k));?>"><?php echo $type;?></a></p>
+	<?php endforeach;?>
+</div>-->
+<header class="h-puj clearfix">
+    <a href="<?php echo U('pufinance/order/index',array('t'=>$_GET['t']));?>"><div <?php if(!isset($_GET['s'])):?>class="h-puj-on"<?php endif;?>>全部</div></a>
+    <a href="<?php echo U('pufinance/order/index',array('t'=>$_GET['t'], 's'=>0));?>"><div <?php if($_GET['s'] ==0 && isset($_GET['s'])):?>class="h-puj-on"<?php endif;?>>审核中</div></a>
+	<a href="<?php echo U('pufinance/order/index',array('t'=>$_GET['t'], 's'=>2));?>"><div <?php if($_GET['s'] == 2):?>class="h-puj-on"<?php endif;?>>放款中</div></a>
+    <a href="<?php echo U('pufinance/order/index',array('t'=>$_GET['t'], 's'=>4));?>"><div <?php if($_GET['s'] == 4):?>class="h-puj-on"<?php endif;?>>待还款</div></a>
+    <a href="<?php echo U('pufinance/order/index',array('t'=>$_GET['t'], 's'=>5));?>"><div <?php if($_GET['s'] == 5):?>class="h-puj-on"<?php endif;?>>已还清</div></a>
+    <a href="<?php echo U('pufinance/order/index',array('t'=>$_GET['t'], 's'=>1));?>"><div <?php if($_GET['s'] == 1):?>class="h-puj-on"<?php endif;?>>已驳回</div></a>
+</header>
+<div class="h-fqsc">
+    <ul class="">
+	
+		<?php foreach($orders as $item):?>
+		<?php $bank_info = get_order_bank($item['bank_card_id']);?>
+        <li >
+          <header class="clearfix container">
+              <p class="pull-left">{$Think.lang.finance_name}<span style="font-size:14px;color:#7e7e7e;">（<?php echo date('Y-m-d H:i', $item['ctime']);?>）</span></p>
+              <p class="pull-right h-color-red"><?php if(in_array($item['status'],array(0,1,4,5))): ?><?php echo order_status($item['status']);?><?php else:?>放款中<?php endif;?></p>
+          </header>
+		  
+		  <?php if(!empty($item['bank_card_id'])):?>
+			<div class="h-fqsc-con clearfix container">
+				<div class="h-bank-card bank-<?php echo $bank_info['bank_id'];?>">
+					<p class="clearfix container">
+						<img class="img-responsive" src="../Public/img/bank/bank-<?php echo $bank_info['bank_id'];?>.png">
+						<span><?php echo $bank_info['bank'].'储蓄卡';?></span>
+					</p>
+					<p><i class="h-point"></i>
+						<i class="h-point"></i>
+						<i class="h-point"></i>
+						<i class="h-point"></i>
+						&emsp13;
+						<i class="h-point"></i>
+						<i class="h-point"></i>
+						<i class="h-point"></i>
+						<i class="h-point"></i>
+						&emsp13;
+						<i class="h-point"></i>
+						<i class="h-point"></i>
+						<i class="h-point"></i>
+						<i class="h-point"></i>
+						<i><?php echo substr($bank_info['card_no'], -4, 4);?></i>
+					</p>
+				</div>
+				<div class="h-fqsc-con-r pull-right">
+				   借款: <p>￥<?php echo number_format($item['amount'],2);?></p>
+				</div>
+			</div>
+			<?php else:?>
+			<div class="h-pujin-pu">
+                <div class="">
+                    <img class="img-responsive" src="../Public/img/bank/bank-0.png" >
+                </div>
+                <div class=" ">
+                    <p>PU钱包</p>
+                </div>
+                <div class="">
+                    <p><span>借款:&emsp;</span>￥<?php echo number_format($item['amount'],2);?></p>
+                </div>
+            </div>
+			<?php endif;?>
+			
+            <footer class="h-fqsc-foot">
+                <div class="clearfix container">
+                <p class="pull-left">
+                    共1件商品
+                </p>
+                <p class="pull-right">总价: ￥<?php echo number_format(($item['interest']+$item['amount']),2);?></p>
+               <!-- <p class="pull-right">优惠: -$0.00</p>-->
+                <p class="pull-right">分期期数: <?php echo $item['stage'];?>个月</p>
+                <p class="pull-right h-big h-color-red">月供: ￥<?php echo bcdiv(($item['interest']+$item['amount']), $item['stage'], 2);?></p>
+
+                <p class="pull-right">本金￥<?php echo bcdiv($item['amount'], $item['stage'], 2);?>+服务费￥<?php echo bcdiv($item['interest'], $item['stage'], 2);?></p>
+				
+				<?php if($item['status'] == 4):?>
+				<a href="<?php echo U('pufinance/PuCredit/repay');?>"><div class="pull-left h-puj-button-hk">
+				   我要还款
+				</div></a>
+				<?php elseif($item['status'] == 1):?>
+				<a href="<?php echo U('pufinance/PuCredit/borrow');?>"><div class="pull-left h-pu-yellow">
+					重新申请
+				</div></a>
+				<?php endif;?>
+                </div>
+            </footer>
+        </li>
+		<?php endforeach;?>
+    </ul>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../Public/js/mainScript.js" ></script>
+<script type="text/javascript">
+    setActionBar('我的订单', '', '');
+</script>
+<script src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script src="../Public/js/h-pu-jin.js"></script>
+<script src="../Public/js/order.js"></script>

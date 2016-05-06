@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"/>
+<title>个人信息</title>
+
+<link rel="stylesheet" href="../Public/css/m_mall.css?201509011"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+</head>
+
+<body>
+<a href="{:U('shop/Bank/bankPrice')}"><div class="m_back"></div></a>
+    <div class="clear m_mt60"></div>
+<div class="bg">
+
+ <div class="main mt10">
+  <form action="{:U('shop/Bank/doAddPcard')}" method="post">
+  <div class="mall_title b f16">基本信息</div>
+  <div class="m_key1"><span class="m_red">*</span>姓名</div>
+  <div class="m_add"><input name="realname" type="text" class="m_input3" value="{$arr2.name}" readonly/></div>
+  <div class="m_key1"><span class="m_red">*</span>身份证号</div>
+  <div class="m_add"><input name="ctf_id" type="text" class="m_input3" <?php if($res['ctf_id']){ ?> value="{$res.ctf_id}" readonly <?php }?> /></div>
+  <div class="m_key1"><span class="m_red">*</span>邮编</div>
+  <div class="m_add"><input name="post_code" type="text" class="m_input3" value="{$arr2.post_code}" readonly/></div>
+
+  <div class="m_key1"><span class="m_red">*</span>手机号</div>
+  <div class="m_add"><input name="mobile" type="text" class="m_input3" <?php if($res['mobile']){ ?> value="{$res.mobile}" readonly <?php }?>/></div>
+  <div class="m_key1">QQ(微信等)</div>
+  <div class="m_add"><input name="qq" type="text" class="m_input3" <?php if($list['qq']){ ?> value="{$list.qq}" readonly<?php }?>/></div>
+    <input type="hidden" name="channel" value="{$channel}" class="m_input3">
+
+ <div class="m_cash_btn1"><input name="tj" type="submit"class="m_cash_btn bold f16" value="提交"/></div>
+</form>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+
+</script>
+</html>

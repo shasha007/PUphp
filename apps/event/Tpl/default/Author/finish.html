@@ -1,0 +1,15 @@
+<include file="_header" />
+
+<div class="member_c">
+    <include file="_finishTop" />
+        <?php if($school_audit != 5):?>
+        <div class="member_back"><a href="{:U('/Author/editFinish',array('id'=>$eventId))}">编辑修改</a></div>
+        <?php endif;?>
+    <div class="member_add">
+        <div class="hd_print_list2_thumb"><img src="{$print_img|getThumb=###,125,125}" alt="" /></div>
+        <div class="hd_print_list2_infor">{$print_text|showBr}</div>
+        <div class="clear">经费：{$pay}元<br/> 附件：{$endattach|getAttachHtml}</div>
+    </div>
+</div>
+
+<include file="_footer" />

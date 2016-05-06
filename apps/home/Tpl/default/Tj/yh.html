@@ -1,0 +1,50 @@
+<include file="_header" />
+<include file="__THEME__/comm/_datepicker" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="__URL__&act=userActive"><<返回<<</a></li></ul>
+    </div>
+    <include file="_rhtab" />
+    <div class="Toolbar_inbox">
+        <form method='post'>
+            学校：
+            <select name="sid" id="school" >
+                <option value=''>---学校---</option>
+                <foreach name="school" item="vo">
+                    <option value="{$vo.id}" <?php if(isset($res['sid']) && $res['sid']==$vo['id']):?>selected<?php endif;?>>{$vo.display_order} {$vo.title}</option>
+                </foreach>
+            </select>
+            <input type="submit" value="搜索" />
+        </form>
+        <form action="__URL__&act=yanqing1" method='post'>
+            导出日期：
+            <input name="eday" type="text" value="" onfocus="rcalendar(this,'dateonly');" />
+            <input type="submit" value="[导出excel]" />
+        </form>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th width="300px;">学校</th>
+                <th width="100px;" style="text-align:right;">月累计登陆(在校)</th>
+                <th width="100px;" style="text-align:right;">总人数(在校)</th>
+                <th width="100px;" style="text-align:right;">月活率</th>
+                <th> </th>
+            </tr>
+            <?php if($res):?>
+                <tr overstyle='on' style="text-align:right;">
+                    <td style="text-align:left;">{$res.schoolName}</td>
+                    <td>{$res.loginCount}</td>
+                    <td>{$res.allCount}</td>
+                    <td><?php echo(money2xs($res['loginCount']/$res['allCount']*10000));?>%</td>
+                    <td></td>
+                </tr>
+            <?php endif;?>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录 </span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="_footer" />

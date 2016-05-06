@@ -1,0 +1,27 @@
+<include file="_header" />
+<div class="hd_c">
+    <div class="jf_c_left">
+        <?php if(!empty($webconfig['gift_address'])):?>
+        <center><div class="intro_c_zt red b">礼品领取地点：{$webconfig.gift_address}</div></center>
+        <?php endif;?>
+        <div class="jf_list">
+            <ul>
+                <volist name="data" id='vo'>
+                <li>
+                    <div class="jf_list_thumb">
+                        <a href="{:U('/School/gift', array('id'=>$vo['id']))}" title="{$vo.title}"><img src="{$vo.path|getThumb1=###,124,124}" alt="" /></a>
+                    </div>
+                    <div class="jf_list_title b">
+                        <a href="{:U('/School/gift', array('id'=>$vo['id']))}" title="{$vo.title}">{$vo.title}</a>
+                    </div>
+                    <div class="jf_list_text">所需积分：<span class="red_1">{$vo.cost}</span> </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="page">{$html}</div>
+    </div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

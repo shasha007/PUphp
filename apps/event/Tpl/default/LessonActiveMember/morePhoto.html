@@ -1,0 +1,25 @@
+<include file="../Lesson/_header" />
+<div class="kc_content">
+    <div class="c_left">
+        <div class="c_fl">
+            <div class="c_fl_menu l_30 b f_14">课程活动照片</div>            
+        </div>           
+        <div class="kc_pl">
+            <div class="kc_pic">
+                <ul>
+                    <volist name="data" id='vo'>
+                        <li>
+                            <div class="kc_pic_thumb"><a href="{:U('/LessonActiveMember/photoDetail',array('id'=>$vo['courseId'],'img'=>$vo['id']))}" target="_blank" title="{$vo.title}"><img src="{$vo.path|getThumb=###,180,160}" /></a></div>
+                            <div class="kc_pic_title l_30"><a href="{:U('/LessonActiveMember/photoDetail',array('id'=>$vo['courseId'],'img'=>$vo['id']))}" target="_blank" title="{$vo.title}">{$vo.title|getShort=###,127,'…'}</a></div>
+                        </li>
+                    </volist>
+                </ul>
+                <div class="page">{$html}</div>
+            </div>            
+        </div>
+    </div>
+
+    <div class="c_right">
+        <include file="../Lesson/_right2" />
+    </div>
+    <include file="../Lesson/_footer" />

@@ -1,0 +1,155 @@
+.integrity-header {
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #d36d07;
+}
+
+.integrity-header p:nth-child(2) {
+    width: auto;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 42px;
+}
+
+.integrity-header p:nth-child(2) span {
+    font-size: 14px;
+}
+
+.integrity-header p:nth-child(3) {
+    font-size: 12px;
+    color: #e49d67;
+}
+
+.integrity-list a {
+    margin: 0 -5px;
+    display: block;
+    color: #333;
+}
+
+.integrity-list ul {
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.integrity-list ul li {
+    padding: 5px 0px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.color-eee {
+    color: #eee;
+}
+
+.event-img {
+    padding: 0 5px;
+}
+
+.event-name {
+    padding: 0px 5px;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+.event-point {
+    padding: 0px 5px;
+    text-align: center;
+}
+
+.no-sign {
+    color: #ea5504;
+}
+
+.is-sign {
+    color: #f69d08;
+}
+
+.event-point p:nth-child(1) {
+    font-size: 20px;
+
+}
+
+.event-point p:nth-child(2) {
+    font-size: 14px;
+    color: #eee;
+}
+
+.event-point span {
+    color: #333;
+}
+
+
+.integrity-header {
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #d36d07;
+}
+
+.integrity-header p:nth-child(2) {
+    width: auto;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 42px;
+}
+
+.integrity-header p:nth-child(3) {
+    font-size: 12px;
+    color: #e49d67;
+}
+.integrity-list a{
+    margin: 0 -5px;
+    display: block;
+    color: #333;
+}
+.event-img{
+    padding: 0 5px;
+}
+.event-name{
+    padding: 0px 5px;
+    font-size: 16px;
+    overflow: hidden;
+}
+.event-point{
+    padding: 0px 5px;
+    text-align: center;
+}
+.integrity-list ul{
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.integrity-list ul li{
+    padding: 5px 0px;
+
+    border-bottom: 1px solid #eee;
+}
+.color-eee{
+    color: #eee;
+}
+.no-sign{
+    color: #ea5504;
+}
+.is-sign{
+    color: #f69d08;
+}
+.event-point p:nth-child(1){
+    font-size: 20px;
+
+}
+.event-point p:nth-child(2){
+    font-size: 14px;
+    color: #eee;
+}
+#point-active{
+    background-color: #ccc;
+}
+#sq-xuefen{
+    display: none;
+}

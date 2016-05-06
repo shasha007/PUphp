@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>照片</title>
+<link href="__THEME__/css/sina.css" rel="stylesheet">
+<script src="public/js/photo/sinaflash.js" type="text/javascript"></script>
+<script src="public/js/photo/epidiascope_hd_v4.js" type="text/javascript"></script>
+
+<body>
+<div id="wrap">
+
+<div class="eTitle">
+    <div class="h1title"><span id="d_picTit"></span><span id="total"></span></div>
+</div>
+
+<!-- 2010/12/2 begin 在eControl外面增加了一层DIV -->
+<div class="clearfix">
+<div class="eControl">
+
+    <div style="position: relative;" class="ecCont">
+        <div style="position: relative; z-index: 5;" id="ecbFullScreen" title="点击全屏获得更好观看效果" data-sudaclick="blk_ecbFullScreen">
+            <div class="buttonCont" id="fullScreenFlash"></div>
+        </div>
+        <div style="position: relative; z-index: 5;" id="ecbSpeed" data-sudaclick="blk_ecbSpeed"><div id="ecbSpeedInfo" class="buttonCont">5秒</div></div>
+        <div style="position: relative; z-index: 5;" id="ecbPre" title="上一张" data-sudaclick="blk_ecbPre"><div class="buttonCont"></div></div>
+        <div style="position: relative; z-index: 5;" id="ecbPlay" data-sudaclick="blk_ecbPlay">
+        <div title="播放" id="ecpPlayStatus" class="play"></div>
+        </div>
+        <div style="position: relative; z-index: 5;" id="ecbNext" title="下一张" data-sudaclick="blk_ecbNext"><div class="buttonCont"></div></div>
+        <div id="ecbLine"><div class="buttonCont"></div></div>
+
+        <div style="position: relative; z-index: 5;" id="ecbMode" title="列表模式(tab)" data-sudaclick="blk_ecbMode"><div class="buttonCont"></div></div>
+        <div style="position: relative; z-index: 5;" id="ecbModeReturn" title="返回幻灯模式(tab)" data-sudaclick="blk_ecbModeReturn"><div class="buttonCont"></div></div>
+
+        <!-- 速度条 begin -->
+        <div id="SpeedBox">
+            <div id="SpeedCont">
+                <div id="SpeedSlide"></div>
+                <div style="top: 49px;" id="SpeedNonius"></div>
+            </div>
+        </div>
+        <!-- 速度条 end -->
+
+    </div>
+</div>
+<!-- 2010/12/2 end -->
+
+<div id="eFramePic">
+    <div id="efpBigPic">
+        <div class="efpClewStep_5" id="efpClew"><span id="efpClewClose" style="display: block;"></span></div>
+        <div style="position: relative; overflow: hidden; padding-top: 15px;" class="" id="d_BigPic"></div>
+        <div id="efpLeftArea" class="arrLeft" title="上一张" data-sudaclick="blk_efpLeftArea"></div>
+        <div id="efpRightArea" class="arrRight" title="下一张" data-sudaclick="blk_efpRightArea"></div>
+    </div>
+    <!-- endSelect begin -->
+    <a id="nextPicsBut"></a>
+    <div id="endSelect">
+        <div id="endSelClose"></div>
+        <div class="bg"></div>
+        <div class="E_Cont">
+            <p><span style="font-size:14px; float: left; padding: 4px 5px 0 0;">已经是最后一张</span>
+               <a href="javascript:void(0)" id="rePlayBut"></a></p>
+        </div>
+    </div>
+    <!-- endSelect end -->
+    <div id="efpTxt">
+        <div id="d_picTime"></div>
+        <div id="d_picIntro"></div>
+    </div>
+
+    <!-- 底部小图栏 begin -->
+    <div id="efpPicList">
+        <div id="efpPreGroup" data-sudaclick="blk_efpPreGroup"></div>
+
+        <div id="efpListLeftArr" onmouseover="this.className='selected'" onmouseout="this.className=''" data-sudaclick="blk_efpListLeftArr"></div>
+        <div id="efpPicListCont" data-sudaclick="blk_efpPicListCont"></div>
+        <div id="efpListRightArr" onmouseover="this.className='selected'" onmouseout="this.className=''" data-sudaclick="blk_efpListRightArr"></div>
+        <div id="efpNextGroup" data-sudaclick="blk_efpNextGroup" style="display: none">
+	<div id="efpNextPic" onmouseover="this.className='selected'" onmouseout="this.className=''">
+	  <table cellspacing="0">
+	    <tr>
+	      <td><a href=""><img src=""  alt="" title="" /></a></td>
+	    </tr>
+	  </table>
+	</div>
+	<div id="efpNextTxt"><a href="" title="">下一图集&gt;&gt;</a></div>
+      </div>
+    </div>
+    <!-- 底部小图栏 end -->
+</div>
+<div id="ePicList"></div>
+<!--v3--><div id="eData" style="display:none;">
+</div>
+</div>
+<script language="javascript" type="text/javascript">
+<!--//--><![CDATA[//><!--
+
+var dataInfo = {
+	title : '',
+	others : {
+	downloadPic : false} //允许下载图片
+};
+
+function echoFocus(){
+	var _url = "{$echoFocus}";
+	getData.curUrl = _url;
+	sina._getJsData(_url,getData.fillData);
+        //window.scrollTo(0,40);
+};
+function fullFlash(txt,pic){
+    var flashurl = "http://" + window.location.hostname + "/public/js/photo/loop_100629.swf";
+    var fullScreen = new sinaFlash(flashurl, "fullScreenObj", "100%", "100%", "8", "#000000");
+    fullScreen.addParam("quality", "best");
+    fullScreen.addParam("wmode", "transparent");
+    fullScreen.addParam("allowFullScreen", "true");
+    fullScreen.addParam("allowScriptAccess","always");
+    fullScreen.addVariable("mylinkpic", pic);		//此处添加组图标题
+    fullScreen.addVariable("infotxt",dataInfo.title);
+    //此处添加图片文字标题，导语，分别用“|”，“#”分割
+    fullScreen.addVariable("mytxt",txt);
+    fullScreen.addVariable("fulls_btnx","0");
+    fullScreen.addVariable("fulls_btny","0");
+    fullScreen.addVariable("fulls_btnalpha","0")
+    fullScreen.write("fullScreenFlash");
+};
+function getFullScreenFlash(){
+    if(sina.isIE){
+        return sina.$('fullScreenFlash').getElementsByTagName('object')[0];
+    }else{
+        return sina.$('fullScreenFlash').getElementsByTagName('embed')[0];
+    };
+};
+function flash_to_js(name){
+    name = new String(name);
+    var status = name.split("|");
+    epidiascope.speedBar.setGrade(status[1]);
+    epidiascope.select(parseInt(status[0]));
+};
+function js_to_flash(){
+    epidiascope.stop();
+    return epidiascope.selectedIndex + "|" + epidiascope.speedBar.grade;
+};
+function errorFocus(str){
+    document.getElementById("d_picTit").innerHTML = str;
+    document.getElementById("d_BigPic").innerHTML = '<img src="__THEME__/pimages/err02.gif" alt="' + str + '" />';
+};
+function next_jstoflash(){
+    if(getData.nextUrl.length <= 0){
+        return;
+    }else{
+        epidiascope.ImgObj1.src = "__THEME__/pimages/news_mj_005.gif";
+        sina._getJsData(getData.nextUrl,function(){getData.fillData(0);});
+    }
+}
+
+echoFocus();
+//--><!]]>
+</script>
+</div></body></html>

@@ -1,0 +1,35 @@
+
+
+<div class="list">
+     <form action='__URL__&act=doaddpolicy' method ="POST">
+    <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+     <tr>
+        <td>选择区域</td>      
+        <td>
+            <select name="city">
+                <option value="0">-----please-----</option>
+                <volist name="citys" id="vo" key="key">
+                    <option value="{$vo.cityID}">{$vo.city}</option>
+                </volist>
+            </select>
+        *</td>
+    </tr>
+    <tr>
+        <td>标题</td>
+        <td><input type="text" name="title"></td>
+    </tr>
+    <tr>
+        <td>发布人</td>
+        <td><input type="text" name="author"></td>
+    </tr>
+    <tr>
+        <td>内容</td>
+        <td><div class="c1"><textarea id="content" name="content" style="height:350px;"></textarea></div></td>
+    </tr>
+     <tr>
+         <td><div class="c1" style="height:30px;"><input type="submit" class="btn_b" value="OK" /></td>
+        <td></td>
+    </tr>
+    </table>
+     </form>
+</div>

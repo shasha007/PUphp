@@ -1,0 +1,117 @@
+<include file="../GroupPublic/_mhead" />
+<script>
+$(document).ready(function(){
+	group_info.init();
+	group_info.$input_tags.change(function(){
+		group_info.tag_num();
+	});
+});
+</script>
+
+    <div class="st_m_desc mt20">
+           <form name="editform" action="{:U('event/GroupManage/doEdit', array('gid'=>$gid))}" method="post" onsubmit="javascript:return group_info.check_form(this);" enctype="multipart/form-data">
+        <table width="600" border="0">
+            <tr>
+                <td width="80" align="right">名称：</td>
+                <td width="520">{$groupinfo['name']}</td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+              <tr>
+                <td width="80" align="right">主席：</td>
+                <td width="520">{$groupinfo['uid']|getUserRealname}</td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td align="right">学院：</td>
+                <td>{$groupinfo['schoolName']}</td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+            <php>if($groupinfo['year']){</php>
+                 <tr>
+                <td align="right">年级：</td>
+                <td>{$groupinfo['year']}</td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+            <php>}</php>
+            <tr>
+                <td align="right">分类：</td>
+                <td>{$groupinfo['cname1']}</td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td align="right" valign="top"><span class="red">*</span> 简介：</td>
+                <td><textarea name="intro" cols=""  rows="" class="st_m_area">{$groupinfo.intro}</textarea></td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td align="right">logo：</td>
+                <td>
+                    <span class="st_m_logo"><img src="{$groupinfo['logo']|getGroupThumb}"/></span>
+                    <input name="logo" type="file" class="st_m_input" />
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td class="c9">（尺寸为180*180，支持格式jpg,jpeg,png,gif。用于部落头像图片）</td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td align="right">联系人：</td>
+                <td><input name="contact" type="text"  value="{$groupinfo['contact']}" class="st_m_input" /></td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td align="right">联系电话：</td>
+                <td><input name="telephone" type="text"   value="{$groupinfo['telephone']}"class="st_m_input" /></td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td align="right">E-mail：</td>
+                <td><input name="email" type="text" value="{$groupinfo['email']}" class="st_m_input" /></td>
+            </tr>
+            <tr>
+                <td height="8"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td align="right">成员数：</td>
+                <td>{$groupinfo['membercount']}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input name="st_bc" type="submit" value="保 存" class="st_f_btn mt10" /></td>
+            </tr>
+        </table>
+           </form>
+    </div>
+</div>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

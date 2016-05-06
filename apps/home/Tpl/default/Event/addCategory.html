@@ -1,0 +1,123 @@
+<include file="_header" />
+<style>
+    .tan{border: 1px solid #ccc;background: #fff;position: fixed;left:50%;top: 50%;margin-left: -100px;margin-top: -130px;display: none;}
+    .tan input{width:50px;}
+</style>
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        &nbsp;&nbsp;&nbsp;&nbsp;{$info.title}&nbsp;&nbsp;<a style="cursor: pointer; float: right;padding-right: 50px;" onclick="javascript:history.go(-1);"><<返回</a>
+    </div>
+    <div class="page_tit"><if condition="$info['title'] == ''">新增<else />编辑</if>专题分类</div>
+    <div class="form2">
+        <form method="post" action="{:U('home/Event/doAddCategory')}" enctype="multipart/form-data">
+            <dl class="lineD adx">
+                <dt>分类名称：</dt>
+                <dd>
+                    <input type="text" name="title" value="{$info.title}" >
+                </dd>
+            </dl>
+            <dl class="lineD adx">
+                <dt></dt>
+                <dd>
+                    <input type="hidden" name="id" value="{$info.id}">
+                </dd>
+            </dl> <!-- 编辑的时候 传的id -->                      
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function getSchools(obj){
+        var span = $(obj).siblings('span');
+        if($(obj).val()==0){
+            span.hide();
+            return false;
+        }
+        span.show();
+        span.empty();
+        var cityId=$(obj).val();
+        $.get( U('event/Available/school') ,{cityId:cityId},function(data) {
+            var json=  $.parseJSON(data);
+            var string = "<input  type='checkbox' onclick='checkAll(this,"+cityId+")' value=''/>全部";
+            $.each(json, function(k,v)
+            {
+                string += "&nbsp;&nbsp;<input name='schools"+cityId+"[]' type='checkbox' value='"+v.id+"'>"+v.title;
+            });
+            span.append(string);
+
+        });
+    }
+
+    function add(){
+        var obj = $('#jun').clone(true).insertAfter("#jun");
+        $(obj).find("option:selected").attr('selected','');
+        $(obj).find('span').hide();
+    }
+
+
+    function checkAll(o,cityId){
+        if( o.checked == true ){
+            $('input[name="schools'+cityId+'[]"]').attr('checked','true');
+        }else{
+            $('input[name="schools'+cityId+'[]"]').removeAttr('checked');
+        }
+    }
+
+    function checkYearAll(o){
+        if( o.checked == true ){
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+    }
+
+    function adType(obj){
+        if(obj.value==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+    }
+
+    function adPlace(obj){
+        if(obj.value==0||obj.value==1){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+
+        if(obj.value<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    }
+
+
+    $(function(){
+        if($("select[name='type']").val()==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+        if($("select[name='place']").val()==1||$("select[name='place']").val()==0){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+        }
+
+        if($("select[name='place']").val()<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    });
+</script>
+<include file="_footer" />

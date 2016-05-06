@@ -1,0 +1,85 @@
+@charset "utf-8";
+/* CSS Document */
+*{ padding:0;margin:0;list-style:none;}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+table,td{
+	margin:auto;
+	padding:inherit;
+}
+select, input, img{ vertical-align:middle;}
+a{ text-decoration:none;}
+a:link {
+color:#666;
+}
+a:visited{ color:#666;}
+a:hover,a:active, a:focus {
+color:#999; text-decoration:underline;
+}
+body {
+	font-family: "宋体","MingLiu","Lucida Sans Unicode", "Lucida Grande", "sans-serif",;
+	font-size: 12px;
+	line-height:160%;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #666666;
+	text-decoration: none;
+	background-color: #f5f5f5;
+	background-image: none;
+	background-repeat: no-repeat;
+	letter-spacing: normal;
+	text-align: left;
+	word-spacing: normal;
+	white-space: normal;
+	display: block;
+	clear: both;
+	float: none;
+	width: auto;
+	position: static;
+	height: auto;
+	top: auto;
+	clip: rect(auto,auto,auto,auto);
+}
+.clear{ clear:both;}
+.b{ font-weight:bold;}
+
+.bg{ width:100%; float:left; background:#f5f5f5;}
+.main{ width:980px; margin:auto;padding-top:40px;}
+
+.exam_header{ float:left; width:980px; background:url(../images/bg.jpg) no-repeat top right; }
+.exam_logo{ float:left; width:239px; height:54px; margin:12px auto 16px 5px; display:inline;}
+.exam_menu{ float:left; width:965px; color:#981b1b; font-size:14px; font-family:"微软雅黑"; padding-left:15px; background:#ff8d12; height:30px; line-height:30px; border-bottom:1px solid #e2e2e2; border-top:1px solid #e2e2e2;}
+.exam_time{ float:right; margin:-31px 20px auto auto; display:inline; color:#FFF; line-height:30px; height:30px;}
+.exam_content{ float:left; width:888px; padding:15px 45px; background:#fff; border-bottom:1px solid #e1e1e1;border-left:1px solid #e1e1e1;border-right:1px solid #e1e1e1;}
+.exam_content.i2{ background:url(../images/bg_exam.jpg) no-repeat right 30px #fffcdd; width:978px; padding:0px; height:450px;}
+.exam_menulist{ float:left; width:500px; margin:8px 200px; display:inline;}
+.exam_menulist ul{ float:left; width:100%;}
+.exam_menulist li{ float:left; font-weight:bold; background:url(../images/btn_3.gif) no-repeat; width:132px; margin-right:25px; display:inline; height:43px; line-height:43px; text-align:center; font-size:16px; font-family:"微软雅黑";}
+.exam_menulist li.hover{background:url(../images/btn_2.gif) no-repeat;}
+.exam_menulist li.hover a{ color:#fff2ca; background:url(../images/btn_2.gif) no-repeat;}
+.exam_menulist li.hover a:hover{color:#fff2ca; background:url(../images/btn_2.gif) no-repeat;}
+.exam_menulist li a{ width:132px; height:43px; display:block; color:#900000;}
+.exam_menulist li a:hover{ width:132px; height:43px; display:block; color:#fff2ca; text-decoration:none; background:url(../images/btn_2.gif) no-repeat;}
+.exam_menulist li a:active{ text-decoration:none;}
+.exam_menulist li a:focus{ text-decoration:none;}
+.exam_menulist li a:visited{ text-decoration:none;}
+
+
+.exam_submenu{ float:left; width:870px; padding:5px 9px 0px 9px; height:28px; line-height:28px; font-size:14px; border-top:1px solid #CCC; color:#000; margin-top:8px; }
+.exam_list{ float:left; width:888px; font-size:14px;  line-height:30px; margin-top:10px; margin-bottom:20px;}
+.exam_list label{ padding-right:30px;}
+.exam_list ul{ float:left; width:100%;}
+.exam_list li{ float:left; width:870px; border-bottom:1px dashed #dedede;padding:4px 9px;}
+.exam_list li.i1{ padding-bottom:10px;}
+.exam_list li.i{ border-bottom:none;}
+.exam_list li:hover{ background:#f2f2f2;}
+.exam_list_title{ float:left; width:870px;}
+.exam_list_option{ float:left; width:850px; margin-left:12px; display:inline;}
+.exam_list_answer{ float:left; color:#F00; font-size:12px; width:600px;padding-left:12px; display:none;}
+.exam_btn_d{ float:left; width:500px; height:37px; padding:0px 194px 10px 194px; text-align:center; margin-bottom:8px; border-bottom:1px solid #dedede; }
+.exam_input{ border-bottom:1px solid #ccc; border-top:none;border-left:none;border-right:none; width:600px;  height:24px; line-height:24px; padding:0px 3px;}
+
+.exam_title{ float:left; margin:40px auto auto 40px; display:inline;}
+.exam_text{ float:left; width:450px; margin:50px auto auto 45px; display:inline; color:#690314; font-size:14px; line-height:26px;}
+.exam_start{ float:left; width:119px; height:40px; margin:50px auto auto 170px; display:inline;}

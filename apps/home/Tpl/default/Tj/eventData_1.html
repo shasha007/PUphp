@@ -1,0 +1,86 @@
+<include file="_header" />
+
+<div class="so_main">
+    <div class="list">
+        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+             <form method='post' action="{:U('home/Tj/every_month_shcool_count')}">
+                <td><input type="submit" value='导出'></td>
+                <td>月份	 | 学校	| 年级 | 发起活动总数 | 完结活动总数 | 报名人数 | 签到人数 &nbsp;&nbsp;&nbsp;&nbsp;
+                月份<input type='text' name='yuefen' value="可指定月份">格式2014-12</td>
+            </form>
+            </tr>
+
+            <tr>
+             <form method='post' action="{:U('home/Tj/activityDetail_every')}">
+                <td>月份<input type='text' name='yuefen' value="可指定月份">格式2014-12</td>
+                <td>学校</td>
+                <td >学生部门</td>
+                <td >学校社团</td>
+                <td >团支部 </td>
+                <td></td>
+                <td>发起活动总数 完结活动总数 </td>
+                <td>报名人数 签到人数</td>
+                <td><input type="submit" value='导出'></td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/activityDetail')}">
+                <td>学校</td>
+                <td>活动标题</td>
+                <td>发起组织</td>
+                <td>开始时间</td>
+                <td>结束时间</td>
+                <td>活动状态</td>
+                <td>报名人数(09-14级)</td>
+                <td>签到人数(09-14级)</td>
+                <td><input type="submit" value='导出'></td>
+            </form>
+            </tr>
+
+            <tr>
+            <form method='post' action="{:U('home/Tj/activityTypeAnalysis')}">
+                <td>学校</td>
+                <td>活动类型</td>
+                <td>活动数量</td>
+                <td>报名人数(09-14级)</td>
+                <td>签到人数(09-14级)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="submit" value='导出'></td>
+            </form>
+            </tr>
+
+            <tr>
+             <form method='post' action="{:U('home/Tj/every_shcool_community_munber')}">
+                <td>学校</td>
+                <td></td>
+                <td></td>
+                <td>类型</td>
+                <td></td>
+                <td></td>
+                <td>人数</td>
+                <td></td>
+                <td><input type="submit" value='导出'></td>
+            </form>
+            </tr>
+
+            <tr>
+               <form method='post' action="{:U('home/Tj/threeGroup')}">
+                <td>学生部门人数</td>
+                <td></td>
+                <td></td>
+                <td>社团人数</td>
+                <td></td>
+                <td></td>
+                <td>团支部人数</td>
+                <td></td>
+                <td><input type="submit" value='导出'></td>
+            </form>
+            </tr>
+        </table>
+    </div>
+    </div>
+
+<include file="_footer" />

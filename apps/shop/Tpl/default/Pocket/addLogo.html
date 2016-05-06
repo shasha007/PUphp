@@ -1,0 +1,34 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <form action="{:U('shop/Pocket/doAddLogo')}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$list.id}">
+        <div class="form2">
+            <dl class="lineD">
+                <dt>广告图上传：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <if condition="$list">
+                        <img id="thumb" src="{$list.pic|tsMakeThumbUp=###,80,80}">
+                    </if>
+                    <input name="upfile" type="file" size="40"/><span class="cGray2">（建议上传大小为750*240的图片）</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>广告图链接：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="path" type="text" value="{$list.path}" size="130">
+                </dd>
+            </dl>
+
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+
+</script>
+<include file="_footer" />

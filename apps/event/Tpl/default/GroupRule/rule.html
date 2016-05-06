@@ -1,0 +1,32 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+           <div class="st_text mt20 ml20">
+            <div class="st_text_title b h30 f14 c3">{$topic.title}</div>
+            <div class="st_text_note c9 h24 st_link">发布者：<a target="blank" href="{:U('home/Space/index', array('uid'=>$topic['uid']))}">{$topic.uid|getUserRealName}</a> &nbsp;&nbsp; 时间：{$topic.addtime|friendlyDate}</div>
+            <div class="st_text_desc mt20">
+               <div id="topic_content">{$topic.content|html_entity_decode=###,ENT_QUOTES}</div>
+                 <php>if (is_array($topic['attach'])) {</php>
+                        <if condition="!$groupinfo['openUploadFile']">
+                            <div>文件共享已关闭</div>
+                            <elseif condition="($groupinfo['whoUploadFile'] == 3 && !$ismember) || ($groupinfo['whoUploadFile'] == 2 && !$isadmin)" />
+                            <div class="locked">无权限查看附件</div>
+                            <else />
+                            <volist name="topic['attach']" id="data">
+                                <div class="adjunct_list">
+                                    <div class="Annex">
+                                        <if condition="$data['is_del']">
+                                            <span style="text-decoration:line-through;">附件：{$data['name']}</span>[<span style="color:#FF0000;">已被管理员删除</span>]
+                                            <else />
+                                            附件：<a href="javascript:;" onClick="download({$data['id']});" <if condition="$file['note']">title="注释：{$data['note']}"</if>>{$data['name']}</a>
+                                        </if>
+                                    </div>
+                                </div>
+                            </volist>
+                        </if>
+                        <php>}</php>
+            </div>
+           </div>
+
+          </div>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

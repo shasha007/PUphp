@@ -1,0 +1,17 @@
+<form action="{:U('admin/User/doChangeCity',array('id'=>$_GET['id']))}" method="post">
+    <table cellpadding=3 cellspacing=3>
+        <tr>
+            <td align="right">城市 <span style="color: #F00">*</span></td>
+            <td align="left">
+                <select name="cityId">
+                    <volist name="city" id="vo">
+                    <option value="{$vo.id}" <php>if($vo['id']==$_GET['cid']) echo 'selected';</php>>{$vo.city}</option>
+                    </volist>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div >
+        <input type="submit" class="btn_b" value="确定">
+    </div>
+</form>

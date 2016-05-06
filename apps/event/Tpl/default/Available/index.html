@@ -1,0 +1,190 @@
+<include file="../Teacher/_header" />
+<script>
+    var sid = {$editSid};
+    function selectSchool(){
+        var typevalue = $("#current").val();
+        ui.box.load(U('event/School/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择学校',noCheck:'yes'});
+    }
+</script>
+<div class="so_main">
+  <include file="_tab" />
+  <!-------- 搜索用户 -------->
+  <div id="searchUser_div" <neq name="type" value="searchUser">style="display:none;"</neq>>
+    <div class="page_tit">搜索下发文件 [ <a href="javascript:void(0);" onclick="searchUser();">隐藏</a> ]</div>
+    <div class="form2">
+    <form method="post" action="{:U('event/Available/index')}">
+    <!--<dl class="lineD">-->
+        <!--<dt>id：</dt>-->
+        <!--<dd>-->
+            <!--<input type="text" name="id" id="id" class="text" value="{$id}"   />-->
+        <!--</dd>-->
+    <!--</dl>-->
+    <dl class="lineD">
+      <dt>名称：</dt>
+        <dd>
+            <input type="text" name="title" id="title" class="text" value="{$title}"  />
+        </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+
+  <!-------- 用户列表 -------->
+  <div class="Toolbar_inbox">
+      <span>共{$list.totalRows}条记录</span>
+      <div class="page right">{$html}</div>
+      <?php if(isTuanRole($school['id'])):?>
+      <a href="{:U('event/Available/addFile')}" class="btn_a"><span>添加下发文件</span></a>
+      <?php endif;?>
+      <a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+          <span class="searchUser_action"><neq name="type" value="searchUser">搜索下发文件<else/>搜索完毕</neq></span>
+      </a>
+  </div>
+  <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+        <th style="width:30px;">
+            <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0" />
+            <label for="checkbox"></label>
+        </th>
+        <th class="line_l">ID</th>
+        <th class="line_l">通知名称</th>
+        <th class="line_l">文件下发者</th>
+        <th class="line_l">下达时间</th>
+        <?php if(isTuanRole($school['id']) && $rights['can_admin']):?>
+        <th class="line_l"><a href="javascript:void(0);" class="list_order" title="排序" id="order_jy_year_note">下达学校</a></th>
+        <th class="line_l">已阅数</th>
+        <th class="line_l">回执数</th>      
+        <?php endif;?>
+        <th class="line_l">操作</th>
+        </tr>
+        <volist id="vo" name="list.data">
+            <tr overstyle='on' id="user_{$vo['uid']}">
+            <if condition="0 == $vo['admin_level'] && $mid == $vo['uid']">
+                <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.uid}"></td>
+            <else />
+                <td><input type="checkbox" name="checkbox" id="checkbox2" value="" disabled></td>
+            </if>
+            <td>{$vo.id}</td>
+            <td>{$vo.title}</td>
+            <td>{$vo.uid|getUserRealName}</td>
+            <td>{$vo.cTime|date="Y-m-d H:i",###}</td>
+            <?php if(isTuanRole($school['id']) && $rights['can_admin']):?>
+                <td><a href="{:U('event/Available/schools','status=all&id='.$vo[id])}">{$vo.schooleCount}</a></td>                <!-- 下达学校数量 -->
+                <td><a href="{:U('event/Available/schools','status=read&id='.$vo[id])}">{$vo.readCount}</a></td> <!-- 阅读 -->
+                <td><a href="{:U('event/Available/schools','status=reply&id='.$vo[id])}">{$vo.replyCount}</a></td><!-- 回执 -->      
+            <?php endif;?>            
+            <td>
+                <a href="{:U('event/Available/chekckSchool', array('id'=>$vo[id]))}">查看</a>
+                <?php if(isTuanRole($school['id'])):?>
+                    <a href="{:U('event/Available/editFile', array('id'=>$vo[id]))}">编辑</a>
+                    <a href="{:U('event/Available/delFile', array('id'=>$vo[id]))}"  class="dell">删除</a>
+                <?php endif;?>
+            </td>
+            </tr>
+        </volist>
+  </table>
+  </div>
+
+  <div class="Toolbar_inbox">
+      <span>共{$list.totalRows}条记录</span>
+      <div class="page right">{$list.html}</div>
+      <?php if(isTuanRole($school['id'])):?>
+      <a href="{:U('event/Available/addFile')}" class="btn_a"><span>添加下发文件</span></a>
+      <?php endif;?>
+      <a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+          <span class="searchUser_action"><neq name="type" value="searchUser">搜索下发文件<else/>搜索完毕</neq></span>
+      </a>
+  </div>
+</div>
+
+<script>
+
+    $(".dell").click(function(){
+        if (confirm("确定需要删除改文件？")) {
+            return true ;
+        };
+        return false ;
+    })
+
+
+
+    function editYearNote(uid){
+        ui.box.load( '{:U('event/User/editYearNote')}' + '&uid=' + uid,{title:'学期总评分'});
+    }
+    //删除用户
+    function deleteUser(uid) {
+            uid = uid ? uid : getChecked();
+            uid = uid.toString();
+            if(uid == '' || !confirm('删除成功后将无法恢复，确认继续？')) return false;
+
+            $.post("{:U('event/User/doDeleteUser')}", {uid:uid}, function(res){
+                    if(res == '1') {
+                            uid = uid.split(',');
+                            for(i = 0; i < uid.length; i++) {
+                                    $('#user_'+uid[i]).remove();
+                            }
+                            ui.success('操作成功');
+                    }else {
+                            ui.error('无权操作');
+                    }
+            });
+    }
+
+
+    //搜索用户
+    var isSearchHidden = <neq name="type" value="searchUser">1<else/>0</neq>;
+    function searchUser() {
+            if(isSearchHidden == 1) {
+                    $("#searchUser_div").slideDown("fast");
+                    $(".searchUser_action").html("搜索完毕");
+                    isSearchHidden = 0;
+            }else {
+                    $("#searchUser_div").slideUp("fast");
+                    $(".searchUser_action").html("搜索用户");
+                    isSearchHidden = 1;
+            }
+    }
+
+    function folder(type, _this) {
+            $('#search_'+type).slideToggle('fast');
+            if ($(_this).html() == '展开') {
+                    $(_this).html('收起');
+            }else {
+                    $(_this).html('展开');
+            }
+
+    }
+    $(function(){
+        var orderKey = "<?php echo $orderKey;?>";
+        var orderType = "<?php echo $orderType;?>";
+        if(orderKey != ''){
+            $('#order_'+orderKey).addClass('order_'+orderType);
+        }
+        $('.list_order').hover(
+            function(){
+                if($(this).hasClass('order_asc')){
+                    $(this).removeClass("order_asc");
+                    $(this).addClass("order_desc");
+                }else if($(this).hasClass('order_desc')){
+                    $(this).removeClass("order_desc");
+                    $(this).addClass("order_asc");
+                }
+            }
+        );
+        $('.list_order').click(
+            function(){
+                if($(this).hasClass('order_desc')){
+                    window.location.href = "{:U('event/User/index')}&orderKey=jy_year_note&orderType=desc";
+                }else{
+                    window.location.href = "{:U('event/User/index')}&orderKey=jy_year_note&orderType=asc";
+                }
+            }
+        );
+    });
+</script>
+
+<include file="../Teacher/_footer" />

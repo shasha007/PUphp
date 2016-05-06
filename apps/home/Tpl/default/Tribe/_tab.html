@@ -1,0 +1,8 @@
+<div class="page_tit">部落审核</div>
+<div class="tit_tab">
+<ul>
+    <li><a <?php if(ACTION_NAME=='index'||ACTION_NAME=='audit'):?>class="on"<?php endif;?>href="__URL__&act=index">待审核</a></li>
+    <li><a <eq name="ACTION_NAME" value="pass">class="on"</eq>href="__URL__&act=pass">已通过</a></li>
+    <li><a <eq name="ACTION_NAME" value="reject">class="on"</eq>href="__URL__&act=reject">被驳回</a></li>
+</ul>
+</div>

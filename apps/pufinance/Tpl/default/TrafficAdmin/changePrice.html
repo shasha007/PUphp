@@ -1,0 +1,14 @@
+<form action="{:U('pufinance/TrafficAdmin/changePrice',array('id'=>$_GET['id']))}" method="post">
+    <table cellpadding=10 cellspacing=3>
+        <tr>
+            <td align="right">实际售价 <span style="color: #F00">*</span></td>
+            <td align="left">
+                <input type="text" name="amount" value="<?php echo $price;?>"/>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <input type="submit" class="btn_b" value="确定">
+        <input type="button" class="btn_b" onclick="javascript:ui.box.close();" value="取消">
+    </div>
+</form>

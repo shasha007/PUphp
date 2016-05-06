@@ -1,0 +1,77 @@
+<div style="width:450px;margin:10px auto 20px auto;">
+    <dl class="lineD" style="padding-left:30px">
+        <dt></dt>
+        <dd style="padding-bottom: 5px; height:22px;">
+            <input name="team" type="text" value="输入审核人学号或姓名"  onFocus="$(this).val('')" id="team" >
+            <a href="javascript:findTeam()">【查找】</a>
+        </dd>
+        <dd id="ren" style="display:none;padding-bottom: 5px;" ></dd>
+        <dd style="display:none;padding-bottom: 5px; height:22px;" id="transfer">
+           权限分配给： <input name="name" type="text" value="" id="name" readonly style='width:130px;'>
+        </dd>
+    </dl>
+    <input type="hidden" name="uid" value="" id="hidden" />
+    <center>
+        <div>
+            </br>
+            <input type="button" class="btn_b" id='que'  value="确定" />
+            <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+        </div>
+    </center>
+    <script type="text/javascript">
+        $(function(){
+            $('#que').click(function(){
+                var type={$_GET.type};
+                var uid = $('#hidden').val();
+                $.post("{:U('event/AdminCredit/doAddAudit')}", {type:type,uid:uid}, function(res){
+                    var json =$.parseJSON(res);
+                    if (json.status ==0) {
+                        ui.error(json.info);
+                    }else{
+                        window.location.reload(true);
+                        ui.success(json.info);
+                        ui.box.close();
+                    }
+                });
+            });
+        });
+        function cancel() {
+            ui.box.close();
+        }
+
+        function findTeam(){
+            var val =  $('#team').val();
+            $.post( "{:U('event/Teacher/findTeam')}", {'team':val},function(data){
+                if(data){
+                    var json = $.parseJSON(data);
+                    $('#transfer').show();
+                    if(json[0].email!='000'){
+                        $('#name').val('');
+                        $('#hidden').val('');
+                        $('#ren').show();
+                        $("#ren").html('请选择：');
+                        var str='';
+                        $.each(json,function(k,v){
+                            var val = v.uid+","+'\"'+v.realname+'\"';
+                            str+="<a style='background:#eee;cursor:pointer'onClick='changeName("+val+")'>"+v.realname+"&nbsp|&nbsp;学号:"+v.email+"</a>&nbsp;&nbsp;"
+                        });
+                        $("#ren").append(str);
+                    }else{
+                        $('#ren').hide();
+                        $('#name').val(json.realname);
+                        $('#hidden').val(json.uid);
+                    }
+                }else{
+                    ui.error('不存在此人');
+                }
+            });
+        }
+
+        function changeName(uid,realname){
+            $('#name').val(realname);
+            $('#hidden').val(uid);
+            $('#ren').hide();
+            $('#transfer').show();
+        }
+
+    </script>

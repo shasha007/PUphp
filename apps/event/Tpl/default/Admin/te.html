@@ -1,0 +1,74 @@
+<include file="header" />
+<div class="sub {$class}">
+    <div class="sub_infor">
+     <div class="sub_title">{$ts['site']['page_title']}</div>
+    </div>
+    <div class="sub_desc">{$desc}</div>
+ </div>
+<div class="<?php if($type==1){echo'list4';}else{echo'list2 ititle';};?>">
+    <ul id="cjlist">
+        <volist name="list" id="vo">
+            <li>{$vo.num}</li>
+        </volist>
+    </ul>
+</div>
+<div class="note"><span id="note" style="display: none;">让子弹飞一会，让数字跑一会，按下停止，大奖就是你的！</span></div>
+<div id="start" class="btn"></div>
+<div id="stop" class="btn_1" style="display: none;"></div>
+
+<script>
+    var type = {$type};
+    var _gogo;
+    var start_btn = $("#start");
+    var stop_btn = $("#stop");
+    var restTime = {$restTime};
+    $(function(){
+        if(restTime<=0){
+            start_btn.hide();
+        }
+    })
+    start_btn.click(function(){
+        start_btn.hide();
+        $.post(U('event/Admin/cjte'),{type:type},function(text){
+            json = eval('('+text+')');
+            if(json.status == 1){
+                $('#cjlist').append('<li id="roll"></li>');
+                var len = json.data.length;
+                _gogo = setInterval(function(){
+                        var num = Math.floor(Math.random()*len);
+                        var v = json.data[num].num;
+                        $("#roll").html(v);
+                },100);
+                $("#note").fadeIn("slow");
+                stop_btn.fadeIn("slow");
+            }else{
+                ui.error( json.info );
+            }
+        });
+    });
+    stop_btn.click(function(){
+        $("#note").hide();
+        clearInterval(_gogo);
+        var num = $("#roll").html();
+        var size = $("#roll").css('font-size');
+        $("#roll").animate({ fontSize: "160px" }, 1000 )
+        .animate({ fontSize: "160px" }, 500 )
+        .animate({ fontSize: size }, 1000 );
+        $.post(U('event/Admin/saveCj'),{num:num,type:type},function(text){
+            json = eval('('+text+')');
+            if(json.status != 1){
+                ui.error( json.info );
+                setTimeout(function(){location.reload();},1500);
+            }else{
+                restTime = restTime -1;
+                $("#roll").removeAttr('id');
+                stop_btn.hide();
+                if(restTime > 0){
+                    start_btn.fadeIn("slow");
+                }
+            }
+        });
+    });
+
+</script>
+<include file="footer" />

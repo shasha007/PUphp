@@ -1,0 +1,26 @@
+<div class="form2">
+    <form method="post" id="basic_setting" name="form" action="{:U('/User/editSchool')}">
+        <table cellpadding=3 cellspacing=3>
+            <tr>
+                <td align="right">学校院系名称：</td>
+                <td align="left"><input type="text" class="large bLeftRequire" name="title" value="{$school.title}"></td>
+            </tr>
+            <tr>
+                <td align="right">所属学校：</td>
+                <td align="left">
+                    <span id="pid">
+                        <select name="sid0">
+                            <option value="">请选择</option>
+                            <volist name="tree" id="vo">
+                                <option value="{$vo.a}">{$vo.t}</option>
+                            </volist>
+                        </select>
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <div ><input name="id" value="{$school.id}" type="hidden" />
+            <input name="editSubmit" value="1" type="hidden">
+            <input type="submit" class="btn_b" value="确定" /></div>
+    </form>
+</div>

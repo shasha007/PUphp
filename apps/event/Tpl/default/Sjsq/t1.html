@@ -1,0 +1,95 @@
+<include file="_header" />
+<script type="text/javascript" src="__PUBLIC__/js/kindeditor/kindeditor.js"></script>
+<form method="post" action="{:U('event/Sjsq/doAddT1')}" enctype="multipart/form-data">
+<div class="prov_ftitle p_c3 b f14">先进单位申报</div>
+<div class="prov_back prov_link"><a href="{:U('event/Sjsq/index/')}">返回</a></div>
+<div class="clear"></div>
+<div class="prov_fcon mt10">
+    <ul>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 单位名称：</div>
+            <div class="prov_fcon_d"><input name="title" type="text" placeholder="请输入单位名称" class="prov_input" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 工作特色：<br />(不超过500字)&nbsp;</div>
+            <div class="prov_fcon_d"><textarea name="content" id="content" cols="" rows="" placeholder="请输入工作特色" class="prov_tarea"></textarea></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 工作总结：<br />(3000字)&nbsp;</div>
+            <div class="prov_fcon_d prov_link">上传word版本附件（.doc或.docx,不超过{$maxSize}MB) <input name="p_file" type="file" class="prov_input1" /></div>
+        </li>
+        <li>
+            <div class="prov_fcon_t"><span class="p_red">*</span> 图片上传：</div>
+            <div class="prov_fcon_d prov_link"><input type="button" onclick="openUpload();" value="添加图片"/></div>
+        </li>
+        <li>
+            <div class="prov_thumblist">
+                <ul id="uploaded_photos">
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="prov_fcon_t">视频上传：</div>
+            <div class="prov_fcon_d prov_link"><input type="button" onclick="openFlash();" value="添加视频"/>
+                <div id="uploaded_flash"></div>
+            </div>
+        </li>
+        <li class="prov_fcon_b"><input type="button" value="提 交" onclick="submitForm(this.form);" class="prov_btn" /></li>
+    </ul>
+</div>
+</form>
+
+<script type="text/javascript" src="/public/js/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/public/js/swfupload/swfupload.queue.js"></script>
+<script type="text/javascript" src="/public/js/swfupload/fileprogress.js"></script>
+<script type="text/javascript" src="/public/js/swfupload/handlers.js"></script>
+<script>
+$(function(){
+    E=KISSY.Editor( "content" );
+});
+function checkform(v_form){
+    var titleLength = getLength(v_form.title.value);
+    if(titleLength == 0) {
+            v_form.title.focus();
+            ui.error('单位名称不能为空');
+            return false;
+    }
+    if(titleLength > 30) {
+            v_form.title.focus();
+            ui.error('单位名称不能超过30个字');
+            return false;
+    }
+    var contentLength = tsStripTagsLength(v_form.content.value);
+    if(contentLength == 0) {
+
+            ui.error('工作特色不能为空');
+            return false;
+    }
+    if(contentLength > 600) {
+            ui.error('工作特色不能超过500个字');
+            return false;
+    }
+    var pFile = v_form.p_file.value;
+    pFile = pFile+'';
+    var fileLength = getLength(pFile);
+    if(fileLength == 0) {
+            v_form.p_file.focus();
+            ui.error('请上传工作总结');
+            return false;
+    }
+    var fileArr = pFile.split('.');
+    fileLast = fileArr.length-1;
+    if(fileArr[fileLast] != 'doc' && fileArr[fileLast] != 'docx') {
+            v_form.p_file.focus();
+            ui.error('请上传doc或docx格式的工作总结');
+            return false;
+    }
+    var imgLength = getLength($('#uploaded_photos').html());
+    if(imgLength == 0) {
+            ui.error('请上传图片');
+            return false;
+    }
+    return true;
+}
+</script>
+<include file="_footer" />

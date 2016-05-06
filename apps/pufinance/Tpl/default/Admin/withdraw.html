@@ -1,0 +1,108 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+	<include file="userTab" />
+	<hr>
+    <div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=transaction">
+			姓名：<input name="realname" type="text" value="{$Think.post.realname}">&nbsp;&nbsp;
+			身份证号：<input type="text" value="{$Think.post.ctfid}" name="ctfid" />&nbsp;&nbsp;
+			类型：<select name="t">
+				<option value="all">--请选择--</option>
+				<?php foreach($types as $k=>$item):?>
+				<option value="<?php echo $k;?>" <?php if($k == $type):?>selected<?php endif;?>><?php echo $item;?></option>
+				<?php endforeach;?>
+			</select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+		<span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>用户ID</th>
+                <th>姓名</th>
+                <th>身份证号</th>
+				<th>申请时间</th>
+				<th>提现额度</th>
+				<th>提款到</th>
+				<th>贷款机构</th>
+				<th>审核状态</th>
+				<th>审核时间</th>
+				<th>操作</th>
+            </tr>
+			<?php foreach($data as $item):?>
+			<tr overstyle='on' id="list_<?php echo $item['id'];?>">
+					<td><?php echo $item['uid'];?></td>
+					<td><?php echo $item['realname'];?></td>
+					<td><?php echo $item['ctfid'];?></td>
+					<td><?php echo date('Y-m-d H:i:s',$item['ctime']);?></td>
+					<td>￥<?php echo number_format($item['money'],2);?></td>
+					<td><?php $bankInfo=get_Order_Bank($item['bank_card_id']); echo $item['bank_name'].' | '.$bankInfo['card_no'];?></td>
+					<td><?php echo $item['name'];?></td>
+					<td><?php echo get_withdraw_status($item['chk_status'])?></td>
+					<td><?php if(!empty($item['chk_status'])):?><?php echo date('Y-m-d H:i:s',$item['chk_time']);?><?php endif;?></td>
+					<td id="opt_<?php echo $item['id']?>">
+						<?php if($item['chk_status'] == 0):?>
+						<a id="agree<?php echo $item['id'];?>" href="javascript:agree(<?php echo $item['id'];?>);">同意</a> | 
+						<a id="reject<?php echo $item['id'];?>" href="javascript:reject(<?php echo $item['id'];?>);">驳回</a>
+						<?php elseif ($item['chk_status'] == 1):?>
+						<?php if ($item['invest_id']):?>
+						<a href="<?php echo U('pufinance/PufinanceOrder/customOrder', array('uid' => $item['uid']));?>">人工订单</a>
+                        <?php else: ?>
+                        <a href="javascript:void(0);" onclick="setInvest('{$item.bank_card_id}')">指定资金方</a>
+                        <?php endif;?>
+						<?php endif;?>
+					</td>
+			</tr> 
+			<?php endforeach;?>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+    function setInvest(bank_card_id) {
+        var url = "{:U('pufinance/PufinanceOrder/setInvest')}&bank_card_id=" + bank_card_id;
+        ui.box.load(url,{title:'指定资金方'});
+
+    }
+
+
+    function agree(id){
+	if(!id){
+		return ;
+	}
+	if( confirm( '是否同意用户提现？' ) ){
+		$.post('__URL__&act=doAgree',{id:id},function( res ){
+			if( res.code == 1 ){
+				ui.success( "操作成功" );
+				$('#opt_'+id).html('通过');
+				window.location.reload();
+			}else{
+				ui.error( "设置失败" );
+			}
+		},'json');
+    }
+}
+function reject(id){
+	if(!id){
+		return ;
+	}
+	if( confirm( '是否驳回用户提现？' ) ){
+		$.post('__URL__&act=doReject',{id:id},function( res ){
+			if( res.code == 1 ){
+				ui.success( "操作成功" );
+				$('#opt_'+id).html('未通过');
+			}else{
+				ui.error( "设置失败" );
+			}
+		},'json');
+    }
+}
+</script>
+<include file="../Public/footer" />

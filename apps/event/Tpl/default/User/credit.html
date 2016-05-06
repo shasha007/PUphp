@@ -1,0 +1,66 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <!-------- 用户列表 -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$html}</div>
+        <form method="get">
+            <input type="hidden" name="app" value="event" />
+            <input type="hidden" name="mod" value="User"/>
+            <input type="hidden" name="act" value="credit"/>
+            学号：<input type="text" value="{$_GET.num}" name="num" />
+            <input class="btn_b" type="submit" value="搜索">
+            <?php if($userInfo):?>
+            &nbsp;&nbsp;{$userInfo.realname}
+            &nbsp;&nbsp;{$webconfig.cradit_name}：{$userInfo.school_event_credit}
+            &nbsp;&nbsp;剩余积分：<?php echo($userInfo['school_event_score'])?>
+            <?php endif;?>
+        </form>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th class="line_l">日期</th>
+    <th class="line_l">活动</th>
+    <th class="line_l">活动状态</th>
+    <th class="line_l">签到</th>
+    <th class="line_l">{$webconfig.cradit_name}</th>
+    <th class="line_l">额外学分</th>
+    <th class="line_l">活动积分</th>
+  </tr>
+  <volist id="vo" name="data">
+  <tr>
+      <td>{$vo.cTime|date="Y-m-d",###}</td>
+      <td>{$vo.title}</td>
+      <td><?php if($vo['school_audit']==5):?><span class="cRed">已完结 {$vo.fTime|date="Y-m-d",###}</span><?php else:?>未完结<?php endif;?></td>
+      <td>
+          <eq name="vo['status']" value="2">
+          是
+  <else/>
+  <span class="cRed">否</span>
+  </eq>
+  </td>
+      <td>+{$vo.credit}</td>
+      <td>+{$vo.addCredit}</td>
+      <td>+{$vo.score}</td>
+  </tr>
+  </volist>
+  </table>
+  </div>
+    <div class="Toolbar_inbox">
+  	<div class="page right">{$html}</div>
+        <form method="get">
+            <input type="hidden" name="app" value="event" />
+            <input type="hidden" name="mod" value="User"/>
+            <input type="hidden" name="act" value="credit"/>
+            学号：<input type="text" value="{$_GET.num}" name="num" />
+            <input class="btn_b" type="submit" value="搜索">
+            <?php if($userInfo):?>
+            &nbsp;&nbsp;{$userInfo.realname}
+            &nbsp;&nbsp;{$webconfig.cradit_name}：{$userInfo.school_event_credit}
+            &nbsp;&nbsp;剩余积分：<?php echo($userInfo['school_event_score'])?>
+            <?php endif;?>
+        </form>
+    </div>
+</div>
+<include file="../Teacher/_footer" />

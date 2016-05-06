@@ -1,0 +1,116 @@
+<include file="../CoursePass/_header" />
+<script>
+    //搜索用户
+    var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+    function searchObject() {
+        if(isSearchHidden == 1) {
+            $("#searchObject_div").slideDown("fast");
+            $(".searchObject_action").html("课程统计搜索");
+            isSearchHidden = 0;
+        }else {
+            $("#searchObject_div").slideUp("fast");
+            $(".searchObject_action").html("统计搜索完毕");
+            isSearchHidden = 1;
+        }
+    }
+    </script>
+<div id="container" class="so_main">
+    <include file="_tab" />
+        <div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+        <div class="page_tit">课程统计搜索 [<a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+        <div class="form2">
+            <form action="__URL__&act=index" method="POST">
+                <input type="hidden" name="isSearch" value="1"/>
+                <dl class="lineD">
+                    <dt>学号：</dt>
+                    <dd>
+                        <input name="stuId" class="txt" value="{$stuId}">
+                    </dd>
+                </dl>
+                 <dl class="lineD">
+                    <dt>参加课程数：</dt>
+                    <dd>
+                        <input name="start" style="width:50px;" value="{$start}"> -- 
+                         <input name="end" style="width:50px;" value="{$end}">  (填写搜索范围)
+                    </dd>
+                </dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+        </div>
+        <div class="Toolbar_inbox">
+            <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+                <span class="searchObject_action"><neq name="isSearch" value="1">课程统计搜索<else/>统计搜索完毕</neq></span>
+            </a>
+        </div>
+        <div class="form2"> 
+        <a style="float:right;"href="{:U('event/CourseAnalyse/xls')}">导出Excel</a>
+        <table width='75%' align='center' style="border:1px solid #aaa;border-collapse:collapse;"border='1'>
+            <caption style="margin: 25px 0;"><h1>学生报名课程统计分析</h1></caption>
+            
+            <tr  height='50px' style="font-size:15px;background:#ddd;font-weight: bold" align="center">
+                <td>序号</td>
+                <td>姓名</td>
+                <td>学号</td>
+                <td>所在院</td>
+                <td class="line_l"><a href="javascript:void(0);" class="list_order" title="排序" id="order_num">参加课程数</a></td>
+                <td width="350px">详细课程列表</td>
+                </tr>
+            <volist name="data" id='vo'>
+                <tr align="center" height=35px' class="jun">
+                    <td>{$i}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.studentId}</td>
+                      <td>
+                        <?php if($vo['uid']):?>{$vo['uid']|tsGetSchoolByUid=###,'<br/>'}
+                        <?php else:?>{$vo.sid|tsGetSchoolTitle=###,$schools}<?php endif;?>
+                    </td>
+                    <td>{$vo.num}</td>
+                    <td>{$vo.title}</td>
+                </tr>
+            </volist>		
+        </table>
+    </div>
+</div>
+<div class="page right">{$html}</div>
+<div style="height: 30px;"></div>
+  <script>
+    $(function(){
+        var orderKey = "{$orderKey}";
+        var orderType = "{$orderType}";
+        if(orderKey != ''){
+            $('#order_'+orderKey).addClass('order_'+orderType);
+        }
+        $('.list_order').hover(
+            function(){
+                if($(this).hasClass('order_asc')){
+                    $(this).removeClass("order_asc");
+                    $(this).addClass("order_desc");
+                }else if($(this).hasClass('order_desc')){
+                    $(this).removeClass("order_desc");
+                    $(this).addClass("order_asc");
+                }
+            }
+        );
+        $('.list_order').click(
+            function(){
+                if($(this).hasClass('order_desc')){
+                    window.location.href = "{:U('event/CourseAnalyse/index')}&orderKey=num&orderType=desc";
+                }else{
+                    window.location.href = "{:U('event/CourseAnalyse/index')}&orderKey=num&orderType=asc";
+                }
+            }
+        );
+    });
+    
+       $(document).ready(function(){
+          $('.jun').hover(function(){
+              $(this).css('background','#eee');
+          },function(){
+              $(this).css('background','');
+          });
+      });
+</script>
+<include file="../CoursePass/_footer" />

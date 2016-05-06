@@ -1,0 +1,52 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="page_tit"><eq name="type" value="edit">编辑用户<else/>添加用户</eq></div>
+
+        <form method="post" action="{:U('home/PassManage/doEditUser')}">
+            <input type="hidden" name="uid" value="{$uid}" />
+            <div class="form2">
+                <dl class="lineD">
+                    <dt>密码：</dt>
+                    <dd>
+                        <input name="password" id="password" type="text">
+                        <p>用户进行登录的密码</p>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>学校：</dt>
+                    <dd>{$sid|tsGetSchoolName}</dd>
+                </dl>
+                <dl class="lineD" >
+                    <dt>院校{$dd}：</dt>
+                    <dd>{$sid1|tsGetSchoolName}</dd>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>年级：</dt>
+                    <dd>{$year}</dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>专业：</dt>
+                    <dd>{$major}</dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>昵称：</dt>
+                    <dd>{$uname}</dd>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>真实姓名：</dt>
+                    <dd>{$realname}</dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>性别：</dt>
+                    <dd>{$sex|getSex}</dd>
+                </dl>
+                <div class="page_btm">
+                    <a href="{$_SESSION['admin_searchUser_url']}" > <<返回 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </div>
+        </form>
+</div>
+<include file="_footer" />

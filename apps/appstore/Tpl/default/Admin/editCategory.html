@@ -1,0 +1,17 @@
+<div class="form2">
+<form method="post" id="basic_setting" name="form"
+	action="{:U('appstore/Admin/editCategory', array('t'=>$t))}">
+	
+<input name="id" value="{$category.id}" type="hidden" />
+<input name="editSubmit" value="1" type="hidden">
+		
+<table cellpadding=3 cellspacing=3>
+	<tr>
+		<td align="right">{$typename}分类：</td>
+		<td align="left"><input type="text" class="large bLeftRequire"
+			name="title" value="{$category.title}"> <input type="submit" class="btn_b" value="确定" /></td>
+	</tr>
+</table>
+
+</form>
+</div>

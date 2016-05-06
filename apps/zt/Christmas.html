@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <title>圣诞故事</title>
+    <style>
+        html {
+            font-size: 62.5%;
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        .christmas-center {
+            background-color: #f3f8ed;
+        }
+
+        .christmas-center img {
+            padding-top: 10px;
+        }
+
+        .christmas-support {
+            position: relative;
+            top: -100px;
+            width: 70%;
+            height: 90px;
+            font-weight: 800;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+
+        .christmas-support img {
+            width: 100px;
+        }
+
+        .support-p {
+            margin: 0;
+            color: #323232;
+        }
+
+        .red-color {
+            color: #9e0b0f;
+        }
+        #num{
+            font-size: 3.0rem;
+        }
+
+        .christmas-content {
+            position: relative;
+            top: -90px;
+        }
+
+        .christmas-footer {
+            position: relative;
+            top: -90px;
+            text-align: center;
+        }
+
+        .christmas-shop {
+            font-size: 1.6rem;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            color: #fff;
+            background-color: #c61f26;
+        }
+
+        .christmas-shop-a {
+            height: 130px;
+            margin: 0 auto;
+            font-size: 1.6rem;
+            padding-top: 2%;
+            background-color: #e74a12;
+        }
+
+        .christmas-shop-a div {
+            width: 96%;
+            font-size: 1.6rem;
+            height: 90%;
+            padding-top: 10px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .christmas-shop-a div a {
+            font-size: 1.6rem;
+            text-decoration: none;
+            color: #a50e0e;
+        }
+        .christmas-error{
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+<header class="banner">
+    <img class="img-responsive" src="images/banner.png">
+</header>
+<div class="christmas-center">
+    <img class="img-responsive" src="images/cm_center.png">
+</div>
+<div class="christmas-support">
+    <p class="support-p">已有<span class="red-color" id="num"></span>人支持</p>
+    <img id="christmas-button" src="images/announce.png">
+    <p id="christmas-error" class="red-color small"></p>
+</div>
+<div class="christmas-content">
+    <img class="img-responsive" src="images/merry.png">
+    <img class="img-responsive" src="images/cm_content.png">
+</div>
+<footer class="christmas-footer">
+    <div class="christmas-shop">
+        点击进入PU商城，特价商品等你抢：
+    </div>
+    <div class="christmas-shop-a">
+        <div>
+            <a href="http://www.pocketuni.net/index.php?app=shop&mod=PocketShop&act=index">
+                <img class="img-responsive" src="images/cm_footer.png">
+            </a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+<script>
+    $(function () {
+        getchristmasnum(); //获取点赞数
+        $("#christmas-button").click(function () { //点击事件
+            $.ajax({
+                url: 'http://www.pocketuni.net/index.php?app=home&mod=Vote&act=voter',
+                type: 'post',
+                dataType: 'JSON',//here
+                data: {
+                    key: 'Christmas_v1'  //活动名
+                },
+                error: function() {
+                    console.log("error");
+                },
+                success: function(data) {
+                    console.log(data);
+                    if(data.status==1){
+                        $("#num").html(data.data);
+                    }else{
+                        $("#christmas-error").html(data.info);
+                    }
+                }
+            });
+
+        });
+    })
+
+    function getchristmasnum() {
+        $.ajax({
+            url: 'http://www.pocketuni.net/index.php?app=home&mod=Vote&act=voterCount',
+            type: 'post',
+            dataType: 'JSON',//here,
+            data: {
+                key: 'Christmas_v1'  //活动名
+            },
+            error: function() {
+            },
+            success: function(data) {
+                if(data.status==1){
+                    $("#num").html(data.data);
+                }else{
+                    $(".support-p").html(data.info);
+                }
+            }
+        });
+    }
+</script>

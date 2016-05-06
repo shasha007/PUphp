@@ -1,0 +1,96 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="../Public/js/laydate/laydate.js"></script>
+<div class="so_main">
+    <include file="../Public/trafficTabs" />
+	<div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=trafficLists">
+			运营商：<select name="opid" id="opid">
+				<option value="all">--请选择运营商--</option>
+				<?php foreach($ops as $item):?>
+				<option value="<?php echo $item['id'];?>" <?php if($item['id'] == $opid):?>selected<?php endif;?>><?php echo $item['name'];?></option>
+				<?php endforeach;?>
+			</select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+	<div class="Toolbar_inbox">
+		<a href="<?php echo U('pufinance/TrafficAdmin/addTraffic');?>" class="btn_a">
+			<span >新增套餐</span>
+		</a>
+	</div>
+
+	    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>运营商名称</th>
+                <th>面值</th>
+                <th>实际售价</th>
+				<th>流量值</th>
+				<th>报价</th>
+				<th>折扣</th>
+				<th>建议最低零售价</th>
+				<th>操作</th>
+            </tr>
+			<?php foreach($data as $item):?>
+			<tr id="list_<?php echo $item['id'];?>" >
+					<td><?php echo $item['name'];?></td>
+					<td>￥<?php echo $item['face_value'];?></td>
+					<td>￥<?php echo $item['price'];?> <a href="javascript:changeValue({$item['id']},<?php echo $item['price'] ? $item['price'] : 0;?>);">修改</a></td>
+					<td><?php echo $item['flow_value'];?></td>
+					<td>￥<?php echo $item['quoted_price'];?></td>
+					<td>
+					<?php if($item['discount'] == 0):?>
+					免费
+					<?php elseif($item['discount'] == 100):?>
+					不打折
+					<?php else:?>
+					<?php echo ($item['discount'] / 10).'折';?>
+					<?php endif;?>
+					</td>
+					<td>￥<?php echo $item['zero_sale_price'];?></td>
+					<td>
+					<?php if($item['is_show'] == 1):?>
+                        <a id="status<?php echo $item['id'];?>" href="javascript:void(0);" onclick="changeStatus('<?php echo $item['id'];?>', 'close')">使用</a>
+						<?php else:?>
+						<a id="status<?php echo $item['id'];?>" href="javascript:void(0);" onclick="changeStatus('<?php echo $item['id'];?>', 'open')">不使用</a>
+						<?php endif;?>
+					</td>
+			</tr>
+			<?php endforeach;?>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script type="text/javascript">
+function changeValue(id,amount){
+	var url = '<?php echo U('pufinance/TrafficAdmin/changePrice'); ?>'+'&id='+id;
+    ui.box.load(url,{title:'面值更改'});
+}
+
+function changeStatus(id,act){
+	if(act == 'open'){
+		v = "状态更改为使用";
+		v2 = "使用";
+		act2 = 'close';
+	}else{
+		v = "状态更改为不使用";
+		v2 = "不使用";
+		act2 = 'open';
+	}
+	if(confirm(v)){
+		$.post('<?php echo U('pufinance/TrafficAdmin/changeStatus');?>',{id:id,type:act},function( res ){
+		console.log(res);
+			if( res.code == 1 ){
+				$('#status'+id).html('<a href="javascript:changeStatus('+id+',\''+act2+'\');" >'+v2+'</a>');
+				ui.success( "操作成功" );
+			}else{
+				ui.error( "设置失败" );
+			}
+		},'json');
+	}
+}
+</script>
+<include file="../Public/footer" />

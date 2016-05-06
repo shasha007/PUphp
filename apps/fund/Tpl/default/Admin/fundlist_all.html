@@ -1,0 +1,35 @@
+<div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>合作企业</th>
+                <th>赞助金额</th>
+                <th>实际赞助</th>
+                <th>投放时间</th>
+                <th>到帐时间</th>
+                <th>合作开始</th>
+                <th>合作到期</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.company}</td>
+                    <td>{$vo.putFund}</td>
+                    <td>{$vo.actualFund}</td>
+                    <td>{$vo['putTime']|friendlyDate=###,'ymd'}</td>
+                    <td>{$vo['actualTime']|friendlyDate=###,'ymd'}</td>
+                    <td>{$vo['cTime']|friendlyDate=###,'ymd'}</td>
+                    <td>{$vo['endTime']|friendlyDate=###,'ymd'}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="">查看详情</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>

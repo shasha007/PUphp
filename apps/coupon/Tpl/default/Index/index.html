@@ -1,0 +1,27 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/css/coupon.css" type="text/css" charset="utf-8" />
+<div class="bg">
+    <div class="main">
+        <include file="../Public/category" />
+        <volist name="list" id='vo'>
+            <div class="coupon_list">
+                <div class="coupon_list_title i3">{$vo['cName']}</div>
+                <div class="coupon_list_more"><a href="{:U('coupon/Index/couponList', array('cid'=>$vo['cid']))}">更多>></a></div>
+                <div class="clear"></div>
+                <div class="coupon_list_sublist">
+                    <ul>
+                        <volist name="vo['hot']" id='hot'>
+                        <li>
+                            <div class="coupon_list_sublist_thumb">
+                                <a href="{:U('coupon/Index/details', array('id'=>$hot['id']))}" title="{$hot['description']}" target="_blank"><img src="{$hot['path']|realityImageURL}" alt="" /></a></div>
+                            <div class="coupon_list_sublist_title b">
+                                <a href="{:U('coupon/Index/details', array('id'=>$hot['id']))}" title="{$hot['description']}" target="_blank">{$hot['description']}</a></div>
+                        </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+        </volist>
+    </div>
+</div>
+<include file="__THEME__/footer" />

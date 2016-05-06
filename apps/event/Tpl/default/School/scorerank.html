@@ -1,0 +1,29 @@
+<include file="_header" />
+
+<div class="hd_c i1">
+        <?php if($smid):?>
+        <div class="myrank">我的当前排名：{$self}</div>
+        <?php endif;?>
+        <div class="clear"></div>
+        <div class="ranktab1">
+            <div id="tabcon" class="tabcon">
+                <table width="940" border="0" cellspacing="0" cellpadding="0">
+                    <tr class="b" style="color:#333; height:32px; line-height:32px;">
+                        <td>排行</td>
+                        <td>姓名</td>
+                        <td>学号</td>
+                        <td class="rank4">学校积分</td>
+                    </tr>
+                    <?php foreach($data as $key=>$vo):?>
+                    <tr>
+                        <td><?php echo (($nowPage-1)*$listRows)+$key+1?></td>
+                        <td>{$vo['uid']|getUserRealName}</td>
+                        <td>{$vo['uid']|getCacheUserEmail|getUserEmailNum}</td>
+                        <td class="rank4">{$vo.score}</td>
+                    </tr>
+                    <?php endforeach; ?>
+                </table>
+                <div class="page plist">{$html}</div>
+            </div>
+        </div>
+<include file="_footer" />

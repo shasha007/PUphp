@@ -1,0 +1,77 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Kangxin/getAllCount')}" class="btn_a"><span>分期查询借贷总数</span></a>
+        <a href="{:U('shop/Kangxin/ctfIdInfo')}" class="btn_a"><span>身份证查询学生信息</span></a>
+        <form method="post" action="__URL__&act=KxCount">
+            &nbsp;&nbsp;范围：<select name="type" id="mytype" onchange="getclist()">
+                <option value="all">全部</option>
+                <option value="school">学校</option>
+                <option value="city">城市</option>
+            </select>
+            &nbsp;&nbsp;条件：<select name="val" id="myval">
+                <option value="">--请选择--</option>
+
+            </select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>贷款余额</th>
+                <th>贷款笔数</th>
+                <th>逾期余额</th>
+                <th>逾期笔数</th>
+                <th>操作</th>
+
+            </tr>
+            <tr>
+                <td>{$list.num}</td>
+                <td>{$list.count}</td>
+                <td>{$result.price}</td>
+                <td>{$result.num}</td>
+                <td><a href="{:U('shop/Kangxin/kxLoan')}">导出详细数据</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Kangxin/getAllCount')}" class="btn_a"><span>分期查询借贷总数</span></a>
+        <a href="{:U('shop/Kangxin/ctfIdInfo')}" class="btn_a"><span>身份证查询学生信息</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+    var mytype=$('#mytype');
+    var myval=$('#myval');
+    function getclist(){
+        var type = mytype.val();
+
+        if(type=='all'){
+            exit;
+        }
+        $.post('__URL__&act=getCondition',{type:type},function(data){
+            myval.empty();
+            myval.append('<option value="0">--请选择--</option>');
+            if(data){
+                for(var i=0;i<data.length;i++){
+                    var option = document.createElement('option');
+                    if(type=='school'){
+                        option.innerHTML = data[i]['title'];
+                    }else{
+                        option.innerHTML = data[i]['city'];
+                    }
+                    option.value = data[i]['id'];
+                    myval.append(option);
+                }
+            }
+        },'json');
+    }
+</script>
+<include file="_footer" />

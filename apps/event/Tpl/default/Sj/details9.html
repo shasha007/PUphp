@@ -1,0 +1,29 @@
+
+<div style="width:1000px;overflow-y:scroll;height:500px;">
+    <center><div class="b cRed" style="font-size:24px;">{$type|sjType}</div></center>
+    <?php if($reason): ?>
+        <div class="b cRed"><strong>驳回原因：</strong>{$reason}</div><br /><br />
+    <?php endif; ?>
+    <strong>故事名称：</strong>{$title}<br />
+    <strong>申报个人或团队名称：</strong>{$title2}<br />
+    <strong>故事内容(1000字)：</strong><br />
+    {$content|htmlspecialchars_decode}<br />
+    <strong>图片：</strong>
+    <?php foreach($img as $vo): ?>
+        {$vo.attachId|getImgHtml}
+    <?php endforeach; ?>
+    <br />
+    <strong>视频：</strong>
+    <?php foreach($flash as $vo): ?>
+        <a href="javascript:playFlash('{$vo.id}');" title=""><img width="80" height="80" src="{$vo.path|get_flash_img}"></a>
+    <?php endforeach; ?>
+    <br />
+    <br />
+    <center><input type="button" value="关闭" class="school_btn" onclick="javascript:ui.box.close();" /></center>
+</div>
+<script>
+    function playFlash(vid){
+        ui.box.close();
+        ui.box.load(U('event/Index/playTsFlash')+'&id='+vid,{title:'播放视频'});
+    }
+</script>

@@ -1,0 +1,44 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<include file="__THEME__/editor" />
+<script>
+	function checkform(v_form){
+		if(getLength(v_form.title.value) == 0) {
+			v_form.title.focus();
+			ui.error('标题不能为空');
+			return false;
+		}
+		if(getLength(v_form.title.value) > 30) {
+			v_form.title.focus();
+			ui.error('标题内容不能超过30个字');
+			return false;
+		}
+
+		if(checkPostContent(v_form.content.value) == 0) {
+			v_form.content.focus();
+			//ui.error('内容不能为空');
+			//return false;
+		}
+		return true;
+	}
+</script>
+<!--发帖页面-->
+<div class="st_f_menu f14 b mt20 ml20">编辑规章制度</div>
+  <form method="post" action="{:U('/GroupRule/edit',array('gid'=>$gid,'tid'=>$thread['id']))}" onsubmit="return checkform(this);">
+<div class="st_f_t ml50 h30 mt20">标题： <input name="title" type="text" value="{$thread.title}"  class="st_f_input" /></div>
+<div class="st_f_text ml50 mt10" style="overflow:hidden;*zoom:1">
+    <span style="height:200px; vertical-align:top">内容：</span> 
+    <textarea name="content" cols="" rows="" class="st_textarea" id="content">{$thread.content}</textarea>
+</div>
+<div class="clear"></div>
+<input type="hidden" name="editsubmit" value="do" >
+<div class="st_fl ml50 mt20"><input name="st_fb" type="submit" class="st_f_btn" value="修改规章制度" /></div>
+</form>
+</div>
+<script>
+$(document).ready(function(){
+	loadEditor("content");
+});
+</script>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

@@ -1,0 +1,69 @@
+<include file="_header" />
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">中奖商品</div>
+            <div class="consumer_records">
+                <div class="good_fl">分类：
+                    <a href="{:U('shop/Myshop/ygOrder')}" <?php if(!$_GET['state'])echo' class="cur"';?>>所有</a>
+                    <a href="{:U('shop/Myshop/ygOrder',array('state'=>1))}"<?php if($_GET['state']==1)echo' class="cur"';?>>未提交收货地址</a>
+                    <a href="{:U('shop/Myshop/ygOrder',array('state'=>2))}"<?php if($_GET['state']==2)echo' class="cur"';?>>等待发货</a>
+                    <a href="{:U('shop/Myshop/ygOrder',array('state'=>3))}"<?php if($_GET['state']==3)echo' class="cur"';?>>已发货,未签收</a>
+                    <a href="{:U('shop/Myshop/ygOrder',array('state'=>11))}"<?php if($_GET['state']==11)echo' class="cur"';?>>交易完成</a>
+                    <a href="{:U('shop/Myshop/ygOrder',array('state'=>12))}"<?php if($_GET['state']==12)echo' class="cur"';?>>取消的订单</a>
+                </div>
+                <div class="goodlist mt10">
+                    <ul class="c_r_link">
+                        <li class="gl_title">
+                            <div class="prize_name">获奖商品</div>
+                            <div class="prize_status">状态</div>
+                            <div class="prize_do">操作</div>
+                        </li>
+                        <?php if(empty($data)):?>
+<!--无列表显示-->
+    <li class="notFound">查无中奖记录</li>
+<?php else:?>
+<!--有列表显示-->
+<volist name="data" id='vo'>
+<li>
+<div class="prize_name gl_pic">
+    <div class="gl_thumb gl_pic"><a href="{:U('shop/Yg/detail',array('id'=>$vo['product_id']))}"><img src="{$vo['product']['pic']|tsMakeThumbUp=###,70,70}" alt="" /></a></div>
+    <div class="gl_name p_t"><a href="{:U('shop/Yg/detail',array('id'=>$vo['product_id']))}"><span class="c1">(第{$vo['yg']['times']}期)</span>{$vo['product']['name']}</a>
+        <br />获奖云购码：{$vo['yg']['codeRNO']} 获奖时间：{$vo['yg']['over_date']}</div>
+</div>
+<div class="prize_status">{$vo['order_state']|orderState}</div>
+<div class="prize_do">
+    <a href="{:U('shop/Myshop/ygOrderDetail',array('id'=>$vo['order_id']))}">查看详情</a>
+    <?php if($vo['order_state']==0):?>
+    </br><span class="prize_do_btn b center"><a href="{:U('shop/Myshop/ygOrderDetail',array('id'=>$vo['order_id']))}">完善配送信息</a></span>
+    <?php elseif($vo['order_state']==2):?>
+    </br><span class="prize_do_btn b center"><a href="{:U('shop/Myshop/ygOrderDetail',array('id'=>$vo['order_id']))}">确认收货</a></span>
+    <?php elseif($vo['order_state']==10&&$vo['comment']==0):?>
+    </br><span><a href="javascript:void(0)" onclick="comment({$vo['order_id']})">待评论</a></span>
+    <?php elseif($vo['order_state']==10&&$vo['comment']==1):?>
+    </br><span>已评</span>
+    <?php endif;?>
+</div>
+</li>
+</volist>
+<?php endif;?>
+                  </ul>
+                  <div class="page">{$html}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function comment(id){
+        if(id==''|| id==0){
+            ui.error("请选择要评论的商品");
+            return false;
+        }
+        ui.box.load( '{:U('shop/Myshop/doYgComment')}' + '&id=' + id,{title:'评论'});
+    }
+
+</script>
+<include file="../Public/_footer" />

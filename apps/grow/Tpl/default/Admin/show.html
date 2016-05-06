@@ -1,0 +1,10 @@
+<div style="width:600px;overflow-y:scroll;height:500px;padding:10px;">
+    <center><div class="b cRed f18px"><img src="{$logo|tsMakeThumbUp=###,160,120}" /> {$title}</div>
+        <div>{$cid1|getGrowCategory} {$cid2|getGrowCategory}</div>
+    </center>
+    <div>附件：{$attId|getAttachHtml}</div>
+    <div>{$content|htmlspecialchars_decode}</div>
+    <div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="clear">
+        <center><input type="button" class="btn_b" onclick="ui.box.close();" value="关闭" /></center>
+    </div>
+</div>

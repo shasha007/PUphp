@@ -1,0 +1,124 @@
+<?php if($msg):?>
+<div class="fund_success_con f14 tcenter mt20 c3">{$msg}<br/><br/></div>
+<?php else:?>
+<form action="{:U('fund/Index/doapplyEvent')}" method="POST" ENCTYPE="multipart/form-data" onsubmit="return form_event();" >
+    <div class="fund_pop" id="apply_t">
+        <div class="fund_popcon">
+            <div class="fund_popcon_fill">
+                <input type="hidden" name="eventId" id="eventId" value="{$_GET.id}">
+                <table width="550" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="100" class="c3 f14 tright"><span class="c1 b">*</span>联系人：</td>
+                        <td width="10"></td>
+                        <td><input name="contact" type="text" class="fund_popcon_input"  id="contact"/></td>
+                    </tr>
+                    <tr>
+                        <td height="15"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="c3 f14 tright"><span class="c1 b">*</span>电话：</td>
+                        <td></td>
+                        <td><input name="telephone" type="text" class="fund_popcon_input" id="telephone" /></td>
+                    </tr>
+                    <tr>
+                        <td height="15"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="c3 f14 tright">QQ：</td>
+                        <td></td>
+                        <td><input name="qq" type="text" class="fund_popcon_input"  /></td>
+                    </tr>
+                    <tr>
+                        <td height="15"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="c3 f14 tright"><span class="c1 b">*</span>支付宝账号：</td>
+                        <td>&nbsp;</td>
+                        <td><input name="alipayAccount" id="alipayAccount" type="text" class="fund_popcon_input"  /></td>
+                    </tr>
+                    <tr>
+                        <td height="15"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="c3 f14 tright"><span class="c1 b">*</span>承办部落：</td>
+                        <td></td>
+                        <td><select class="fund_popcon_input" name="gid" id="gid">
+                                <option value="0">-请选择部落-</option>
+                                <?php foreach($groups as $v): ?>
+                                <option value="{$v.gid}">{$v.name}</option>
+                                <?php endforeach; ?>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td height="15"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="c3 f14 tright"><span class="c1 b">*</span>承办金额：</td>
+                        <td>&nbsp;</td>
+                        <td><input name="amount" type="text" class="fund_popcon_input" placeholder="承办本活动所需之经费" id="f_money" onkeyup="clearNoNum(this)"/></td>
+                    </tr>
+                    <tr>
+                        <td height="15"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="c3 f14 tright"><span class="c1 b">*</span>上传附件：</td>
+                        <td></td>
+                        <td><input name="pic" id="pic" type="file" class="fund_popcon_input"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>上传活动策划、曾经办过的活动等</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="fund_popcon_btn tcenter b f14"><input type="submit" value="确认承办" class="fund_popcon_btn1"></div>
+        </div>
+    </div>
+</form>
+<script>
+    //提交JS验证
+    function form_event(){
+        var isTrue = true;
+        var formId = ['#contact','#telephone','#alipayAccount','#gid','#f_money','#pic'];
+        var formError = ['请填写联系人','请填写电话','请填写支付宝账号','请选择承办部落','请填写金额','请上传附件'];
+        $.each(formId,function(i,v) {
+            var checkInput = $(v).val();
+            if(v!='#gid'){
+                checkInput = checkInput.length;
+            }
+            if(checkInput ==0){
+                show_hidden(v,formError[i]);
+                isTrue = false;
+            }else{
+                show_hidden(v,'');
+            }
+        });
+        if(isTrue){
+            return true;
+        }
+        return false;
+    }
+
+    //提示
+    function show_hidden(type,str){
+        if(str!=''){
+            str = '<font color="red">'+str+'</font>';
+        }
+        $(type).parent().parent().next('tr').find('td').eq(2).html(str);
+    }
+
+</script>
+<?php endif;?>

@@ -1,0 +1,76 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="__URL__&act=add" class="btn_a"><span>添加</span></a>
+    </div>
+    <div class="list">
+
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>创建时间</th>
+                <th>发布时间</th>
+                <th>总阅读数</th>
+                <th>当前状态</th>
+                <th>操作</th>
+            </tr>
+            <foreach name="data" item='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td style="width:30px;">
+                        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                        <label for="checkbox"></label>
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.ctime|date="Y-m-d H:i:s",###}</td>
+                    <if condition="$vo.rtime neq 0">
+                    <td>{$vo.rtime|date="Y-m-d H:i:s",###}</td>
+                    <td>{$vo.rnum}</td>
+                    <else />
+                    <td>未发布</td>
+                    <td>暂无</td>
+                    </if>
+                    <td><if condition="$vo['release'] eq 1">
+                        已发布
+                        <else />未发布</if>
+                    </td>
+                    <td><a href="__URL__&act=add&id={$vo.id}">详情</a>
+                        <a href="javascript:void(0);" onclick="delBlock({$vo.id});">删除</a>
+                        <if condition="$vo['release'] eq 1">
+                            <a href="__URL__&act=edit&id={$vo.id}">取消发布</a>
+                        <else />
+                            <a href="__URL__&act=edit&id={$vo.id}">发布</a>
+                        </if>
+                    </td>
+                </tr>
+            </foreach>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="__URL__&act=add" class="btn_a"><span>添加</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+    function delBlock(id) {
+        if(confirm('您将删除操作，确定继续？')) {
+            $.post("__URL__&act=del",{id:id},function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else{
+                    ui.success(json.info);
+                    $('#list_'+id).remove();
+                }
+            });
+        }
+    }
+</script>
+<include file="_footer" />

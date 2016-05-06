@@ -1,0 +1,56 @@
+@charset "utf-8";
+/* CSS Document */
+*{ padding:0;margin:0;list-style:none;}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+table,td{margin:auto;padding:inherit;}
+select, input, img{ vertical-align:middle;}
+a{ text-decoration:none;}
+a:link {color:#666;}
+a:visited{ color:#666;}
+a:hover,a:active, a:focus {color:#999; text-decoration:underline;}
+body {
+	font-family: "宋体","MingLiu","Lucida Sans Unicode", "Lucida Grande", "sans-serif",;
+	font-size: 12px;
+	line-height:160%;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	color: #666;
+	text-decoration: none;
+	background-color: #f5f5f5;
+	background-image: none;
+	background-repeat: no-repeat;
+	letter-spacing: normal;
+	text-align: left;
+	word-spacing: normal;
+	white-space: normal;
+	display: block;
+	clear: both;
+	float: none;
+	width: auto;
+	position: static;
+	height: auto;
+	top: auto;
+	clip: rect(auto,auto,auto,auto);
+}
+.clear{ clear:both;}
+/*公用*/
+.c_fff{ color:#333;}
+.c_5{ color:#666;}
+.bg{ float:left; width:100%;background:#ff961b;}
+.main{ width:640px; margin:auto; background:#ff961b;}
+.game_title{ float:left; width:246px; margin:40px auto auto 100px; display:inline; height:60px; background: url(../images/game_icon.png) no-repeat left -181px; display:block; }
+.game_list{ float:left; background:#fcb15b; border-radius:5px; margin:30px auto 20px 30px; width:360px; display:inline; padding:10px 15px;}
+.game_list ul{ float:left; width:100%;}
+.game_list li{ float:left; background:#fff; border-radius:10px; box-shadow:#d98c3e; width:350px; height:46px; line-height:46px; margin-top:10px;}
+.game_list li.ibg{ background:#ffdeb8;}
+.game_list_n1{ float:left; margin:10px auto auto 10px; display:inline;  height:26px; width:30px; text-align:center; font-size:18px;font-family:"微软雅黑"; font-weight:bold; color:#ff961b; line-height:26px; text-align:center;}
+.game_list_n1.i1{ background:url(../images/game_icon.png) no-repeat left 0px;}
+.game_list_n1.i2{background:url(../images/game_icon.png) no-repeat left -54px;}
+.game_list_n1.i3{  background:url(../images/game_icon.png) no-repeat left -112px;}
+
+.game_list_thumb{ float:left; width:32px; margin:7px auto auto 20px; display:inline;}
+.game_list_thumb img{ width:32px; height:32px; border-radius:50px;}
+.game_list_name{ color:#ff961b; width:200px; font-size:16px; font-weight:bold; margin-left:15px; display:inline; font-family:"微软雅黑";}
+.game_list_score{ float:right; margin-right:20px;font-size:16px;font-family:"微软雅黑";}

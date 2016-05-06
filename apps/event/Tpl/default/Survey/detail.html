@@ -1,0 +1,40 @@
+<include file="../School/_header" />
+<div class="hd_c i1">
+    <div class="dy_desc">
+        <div class="dy_title b f14">{$survey.title}</div>
+        <div class="dy_note">发起时间:{$survey.cTime|friendlyDate}   截止时间:{$survey.deadline|friendlyDate}    参与人数:{$survey.id|getSurveyCount}</div>
+        <div class="dy_ms">
+            {$survey.explain}<br />
+        欢迎参加本次答题
+        </div>
+        <div class="dy_list">
+            <?php if($voted):?>
+                您已答过题，感谢您的参与
+            <?php elseif($vote):?>
+            <form action="{:U('event/Survey/doSurvey', array('id'=>$survey['id']))}" method="post">
+                <ul>
+                    <volist name="vote" id='vo' key="key">
+                    <li>
+                        <div class="dy_list_q red f14">Q{$key}.{$vo.title}[<?php if($vo['type'] == 0):?>单选<?php else:?>多选<?php endif;?>]</div>
+                        <div class="dy_list_a">
+                            <p>
+                                <volist name="vo.opt" id='opt'>
+                                    <?php if($vo['type'] == 0):?>
+                                    <label><input type="radio" name="opt_{$vo.id}[]" value="{$opt.id}" /> {$opt.name}</label><br/>
+                                    <?php else:?>
+                                    <label><input type="checkbox" name="opt_{$vo.id}[]" value="{$opt.id}" /> {$opt.name}</label><br/>
+                                    <?php endif;?>
+                                </volist>
+                            </p>
+                        </div>
+                    </li>
+                    </volist>
+                </ul>
+                <input type="submit" value="提 交" class="dy_list_btn b" />
+            </form>
+            <?php else:?>
+                调查已结束
+            <?php endif;?>
+        </div>
+    </div>
+<include file="../School/_footer" />

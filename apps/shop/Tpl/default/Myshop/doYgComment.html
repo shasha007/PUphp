@@ -1,0 +1,43 @@
+<span style="font-weight:bold; line-height:24px; padding-left:15px;">评论内容:  <br/>
+<textarea id='content' name="content" style="width:410px; margin-left:15px; display:inline; padding:5px; display:inline;height:150px;border:1px solid #ccc;" onKeyDown="gbcount(this,250);" onKeyUp="gbcount(this,250);"></textarea>
+<!--<div class="clear"></div>-->
+
+<p style="padding-left:15px;"><span id='remain' style='color:green;'>250</span><span style='color:green;'>/250字</span></p>
+<div style="background:#F8F8F8; width:442px; border-top:1px solid #E6E6E6; padding:5px;" class="alR">
+    <input type="button" class="m_clist_btn b" onclick="addComment({$id})" value="提 交" />
+</div>
+<script type="text/javascript">
+    function addComment(id){
+        var content=$('#content').val();
+        if(content.length<5){
+            ui.error('评论内容不得小于5个字');
+            return ;
+        }
+        //提交修改
+        $.post("{:U('shop/Myshop/addYgComment')}", {id:id,content:content}, function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else if(json.status==1){
+                 ui.success(json.info);
+                ui.box.close();
+               location.reload()
+            }
+        });
+        
+    }
+    
+    
+    function gbcount(o,max){
+        var msg = $(o).val();
+        var rest = max - msg.length;
+        if(rest < 0){
+            rest = 0;
+            $('#remain').html(0);
+            $(o).val(msg.substring(0,max));
+            alert('不能超过'+max+'个字!');
+        }
+        $('#remain').html(rest);
+    }
+
+</script>

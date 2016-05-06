@@ -1,0 +1,32 @@
+<style>
+    .blicense{width:300px;height:140px;}
+</style>>
+<include file="_header" />
+
+
+<div class="so_main">
+    <include file="_tab" />
+    
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>注册名称</th>
+                <th>公司名</th>
+                <th>营业执照</th>
+                <th>邮箱</th>      
+                <th>联系电话</th>
+                 <th>注册时间</th>
+            </tr>
+            <tr>
+                <td>{$data['ename']}</td>             
+                <td>{$data['fullname']}</td>
+                <td><img src="{$data['blicense']}" class="blicense"></td>
+                <td>{$data['getresume_email']}</td>
+                <td>{$data['telephone']}</td>            
+                <td><?php echo date('Y-m-d H:i',$data['ctime']);?></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<include file="_footer" />

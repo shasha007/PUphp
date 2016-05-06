@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} -
+</neq>
+    {$webconfig.title}
+</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<link href="../Public/css/x_hd1.css?20131022" type="text/css" rel="stylesheet" />
+<link href="../Public/event.css" rel="stylesheet" type="text/css" />
+<include file="__THEME__/comm/_app" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.nav.js?130703"></script>
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+</head>
+<style type="text/css">
+.school{ font-size:14px; color:#FFF; float:left; height:40px; line-height:40px; padding-left:20px;}
+</style>
+<body>
+<include file="__THEME__/_holder_school" />
+    <div class="bg">
+        <div class="main">
+            <div class="hd_header">
+                <div class="hd_title1"><img height="80px;" src="{$webconfig.path}" alt="" /></div>
+            </div>
+            <div class="clear"></div>
+            <div class="hd_content">

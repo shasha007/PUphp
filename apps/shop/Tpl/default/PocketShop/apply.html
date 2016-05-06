@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <title>PU卡简介</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+ <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style type="text/css">
+  .m_back{ background:url(../Public/images/m_mall/m_icon2.png) no-repeat 0 -100px; left:10px; top:15px; position:fixed; z-index:9999; width:30px; height:24px;display:block;}
+  .apply_PU{
+    font-size: 14px;
+    font-family:"Microsoft Yahei",微软雅黑,"Helvetica Neue",Arial,sans-serif; margin-top:40px;   
+  }
+  .apply_PU section{
+    margin-bottom: 20px;
+  }
+  .apply_PU img{
+    margin-bottom: 10px; width:100%;
+  }
+  mark{
+    color: red;
+    background-color: #fff;
+  }
+
+
+  .m_btn.i2{ color:#fff; background:#f14d26; height:36px; margin-bottom: 20px; text-align: center;font-size: 14px; line-height: 36px; border: none;border-radius: 5px;}
+  .m_btn.i2 a{ text-decoration: none; text-align: center; color: #fff; width:100%; height: 36px; display:block;}
+  .m_btn.i2 a:hover{ color: #fff;}
+  
+  </style>
+</head>
+<body>
+ <div class="container">
+<a href="{:U('shop/PocketShop/bankPrice')}"></a>
+  <article class="apply_PU">
+    <header class="apply_title">
+      <h2 class="text-center">  PU卡简介</h2>
+    </header>
+    <img src="../Public/images/card.png" class="img-responsive">
+    <section>
+      <header><h4> 一、PU卡相关功能介绍</h4></header>
+      <p>PU卡是PU口袋校园与招商银行联名发行的一款针对大学生市场集万千智慧于一体的神奇卡片。</p>
+      <p>1、PU卡<mark>终身免年费;</mark></p>
+      <P>2、全国<mark>任意ATM机取款零手续费</mark>（港澳台除外）;</P>
+      <p>3、PU卡成功开卡即享<mark>最高5000元</mark>信用额度，首月可获<mark>千元免息</mark>体验;</p>
+      <P>4、享受<mark>苏州市民卡B卡同等功能</mark>（如果单独办理市民卡B卡，需18元工本费）：乘坐公交享受6折优惠；乘坐地铁享受95折优惠，还可开通“<mark>公共自行车租借</mark>”、“<mark>惠民休闲年卡</mark>”等功能。</P>
+      <P>5、举办学院各类活动时，可以获得以班级或学生组织（社团）为单位申请“<mark>百万基金</mark>”活动经费的机会。</P>
+      <p>6、享受PU平台、招商银行借记卡合约商户的<mark>打折优惠</mark>。</p>
+      <p>7、享受PU平台针对PU卡用户推出的所有优惠活动，如：<mark>零元购、特卖商城</mark>。</p>
+      <p>8、一次申请，循环使用。实时申请，48小时内到账；最低每日还款1.38元；消费记录即时查询，每月收支清晰可见，建立大学生信用报告，步入社会更轻松。</p>
+    </section>
+    <section>
+      <header><h4>二、PU卡申办流程</h4></header>
+      <p>1、登陆PU的APP客户端</p>
+      <P>2、点击“口袋金”，进入口袋金页面</P>
+      <P>3、点击“PU卡申请”，完善相关信息</P>
+      <p>4、点击“确认”、提交并保留本页面截图</p>
+      <p>5、签订协议，领取PU卡（定期会进入各大高校现场发放、招商银行指定网点领取）</p>
+      <p>6、开卡成功，三天内获得首月千月免息体验；审核通过，获得5000元信用额度，额度内循环使用。</p>
+    </section>
+  </article>
+     <?php if($flag == 0): ?>
+        <div class="m_c_btn1 f16 bold center"><div class="m_btn i2 bold"><a href="{:U('shop/Bank/bankPrice')}" >立即申请</a></div></div>
+     <?php endif; ?>
+</div> 
+</body>
+
+</html>
+
+

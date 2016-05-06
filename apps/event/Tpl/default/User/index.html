@@ -1,0 +1,269 @@
+<include file="../Teacher/_header" />
+<script>
+    var sid = {$editSid};
+    function selectSchool(){
+        var typevalue = $("#current").val();
+        ui.box.load(U('event/School/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择院系',noCheck:'yes'});
+    }
+</script>
+<div class="so_main">
+  <include file="_tab" />
+  <!-------- 搜索用户 -------->
+  <div id="searchUser_div" <neq name="type" value="searchUser">style="display:none;"</neq>>
+    <div class="page_tit">搜索用户 [ <a href="javascript:void(0);" onclick="searchUser();">隐藏</a> ]</div>
+    <div class="form2">
+    <form method="post" action="{:U('event/User/doSearchUser')}">
+    <dl class="lineD">
+        <dt>身份：</dt>
+        <dd>
+            <select name="event_level">
+                <option value="">请选择</option>
+                <?php foreach($roles as $key=>$vo) :?>
+                    <option value="{$key}" <?php if($event_level==$key) echo 'selected' ?>>{$vo}</option>
+                <?php endforeach; ?>
+            </select>
+        </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>院系：</dt>
+      <dd>
+        <input type="text" id="selectarea" class="text" value="" readonly="true" OnFocus="selectSchool()" />
+        <input type="hidden" id="current" name="sid1"/>
+        </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>学号：</dt>
+      <dd><input name="number" id="email" type="text" value="{$number}"></dd>
+    </dl>
+	<php>if($type != 'searchUser') $uid = '';</php>
+    <dl class="lineD">
+      <dt>姓名：</dt>
+      <dd>
+        <input name="realname" id="realname" type="text" value="{$realname}">
+      </dd>
+    </dl>
+
+        <dl class="lineD">
+            <dt>年级：</dt>
+            <dd>
+                <input name="year" id="year" type="text" value="{$year}">
+                <span>(格式: 09，10,11，12 ) </span>
+        </dl>
+
+    <dl class="lineD">
+        <dt>账号状态：(登录并修改过密码)</dt>
+        <dd>
+            <select name="is_init">
+                <option value="">请选择</option>
+                <option value="2" <?php if($is_init==2) echo 'selected' ?>>已初始化</option>
+                <option value="1" <?php if($is_init==1) echo 'selected' ?>>未初始化</option>
+            </select>
+        </dd>
+    </dl>
+    <dl class="lineD">
+        <dt>权限：</dt>
+        <dd>
+            <?php if(!isTuanRole($school['id'])):?>
+                <label><input name="can_add_event" type="checkbox" value="1" <eq name="can_add_event" value="1">checked</eq>>发起活动</label>
+            <?php else:?>
+                <label><input name="can_prov_news" type="checkbox" value="1" <eq name="can_prov_news" value="1">checked</eq>>发布新闻</label>
+                <label><input name="can_prov_work" type="checkbox" value="1" <eq name="can_prov_work" value="1">checked</eq>>发布作业</label>
+                <label><input name="can_add_event" type="checkbox" value="1" <eq name="can_add_event" value="1">checked</eq>>发起内部活动</label>
+                <label><input name="can_prov_event" type="checkbox" value="1" <eq name="can_prov_event" value="1">checked</eq>>发起全省活动</label>
+            <?php endif;?>
+            <label><input name="can_event" type="checkbox" value="1" <eq name="can_event" value="1">checked</eq>>活动初级审核</label>
+            <label><input name="can_event2" type="checkbox" value="1" <eq name="can_event2" value="1">checked</eq>>活动终极审核</label>
+            <label><input name="can_gift" type="checkbox" value="1" <eq name="can_gift" value="1">checked</eq>>兑换管理</label>
+            <label><input name="can_print" type="checkbox" value="1" <eq name="can_print" value="1">checked</eq>>打印证书</label>
+            <label><input name="can_group" type="checkbox" value="1" <eq name="can_group" value="1">checked</eq>>部落管理</label>
+            <label><input name="can_available" type="checkbox" value="1" <eq name="can_available" value="1">checked</eq>>文件分发</label>
+            <label><input name="can_credit" type="checkbox" value="1" <eq name="can_credit" value="1">checked</eq>>{$webconfig.cradit_name}认定</label>
+        </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+
+  <!-------- 用户列表 -------->
+  <div class="Toolbar_inbox">
+      <span>共{$totalRows}条记录</span>
+  	<div class="page right">{$html}</div>
+        <?php if($canAddUser): ?>
+	<a href="{:U('event/User/addUser')}" class="btn_a"><span>添加用户</span></a>
+        <?php endif;?>
+	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+	</a>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0" />
+    	<label for="checkbox"></label>
+    </th>
+    <th class="line_l">ID</th>
+    <th class="line_l">用户信息</th>
+    <th class="line_l">诚信度</th>
+    <?php if(isTuanRole($school['id']) && $rights['can_admin']):?>
+    <th class="line_l"><a href="javascript:void(0);" class="list_order" title="排序" id="order_jy_year_note">学期总评分</a></th>
+    <?php endif;?>
+    <th class="line_l">用户明细</th>
+    <th class="line_l">身份</th>
+    <th class="line_l">院系</th>
+    <th class="line_l">用户权限</th>
+    <th class="line_l">{$webconfig.cradit_name}</th>
+    <th class="line_l">注册时间</th>
+	<th class="line_l">手机</th>
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="data">
+	  <tr overstyle='on' id="user_{$vo['uid']}">
+	  	<if condition="0 == $vo['admin_level'] && $mid != $vo['uid']">
+	    	<td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.uid}"></td>
+		<else />
+	    	<td><input type="checkbox" name="checkbox" id="checkbox2" value="" disabled></td>
+	    </if>
+	    <td>{$vo.uid}</td>
+	    <td>
+                <div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;""><img src="{$vo.uid|getUserFace='s'}" width="30"></div>
+                <div style="float:left">{$vo['realname']}<br>{$vo.email}</div>
+            </td>
+	    <td>{$vo.cx}</td>
+            <?php if(isTuanRole($school['id']) && $rights['can_admin']):?>
+            <td><span id="note_{$vo.uid}">{$vo.jy_year_note}</span><a href="javascript:void(0);" onclick="editYearNote({$vo.uid});"> [评分]</a></td>
+            <?php endif;?>
+	    <td>
+                <a href="{:U('event/User/credit')}&num={$vo.email|getUserEmailNum}">积分明细</a>
+                </br>
+                <a href="{:U('event/User/userGroup')}&num={$vo.email|getUserEmailNum}">部落明细</a>
+                <?php if(isEcApplySchool($school['id'])):?>
+                </br>
+                <a href="{:U('event/User/apply')}&num={$vo.email|getUserEmailNum}">申请{$webconfig.cradit_name}明细</a>
+                <?php endif;?>
+            </td>
+            <td><?php if($vo['event_level'] == 10){echo'校级领导';}elseif($vo['event_level'] == 11){echo'院系领导';}
+                elseif($vo['event_level'] == 12){echo'年级领导';}elseif($vo['event_level'] == 13){echo'专业领导';}else{echo'学生';}?></td>
+            <td>
+                {$vo.sid|tsGetSchoolName}<br />
+                {$vo.sid1|tsGetSchoolName}<br />
+                {$vo.year}<br />
+                {$vo.major}
+            </td>
+            <td>
+                <?php if($vo['can_admin']){echo'超级管理员<br />';}?>
+                <?php if($vo['can_prov_news']){echo'发布新闻<br />';}?>
+                <?php if($vo['can_prov_work']){echo'发布作业<br />';}?>
+                <?php if($vo['can_add_event']){echo'发起活动<br />';}?>
+                <?php if($vo['can_prov_event']){echo'全省活动<br />';}?>
+                <?php if($vo['can_event']){echo'活动初审<br />';}?>
+                <?php if($vo['can_event2']){echo'活动终审<br />';}?>
+                <?php if($vo['can_gift']){echo'兑换管理<br />';}?>
+                <?php if($vo['can_print']){echo'打印证书<br />';}?>
+                <?php if($vo['can_group']){echo'部落管理<br />';}?>
+                <?php if($vo['can_credit']){echo $webconfig['cradit_name'].'认定<br />';}?>
+                <?php if($vo['can_available']){echo'文件分发<br />';}?>
+            </td>
+	    <td>{$vo.school_event_credit}</td>
+	    <td>{$vo.ctime|date="Y-m-d H:i",###}</td>
+		<td>{$vo.mobile}</td>
+	    <td>
+                <?php if($canEditUser): ?>
+                <a href="{:U('event/User/editUser', array('uid'=>$vo['uid']))}" target="_blank">编辑</a>
+                <?php endif;?>
+            </td>
+	  </tr>
+  </volist>
+  </table>
+  </div>
+
+  <div class="Toolbar_inbox">
+      <span>共{$totalRows}条记录</span>
+	<div class="page right">{$html}</div>
+	<a href="{:U('event/User/addUser')}" class="btn_a"><span>添加用户</span></a>
+	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+	</a>
+  </div>
+</div>
+
+<script>
+    function editYearNote(uid){
+        ui.box.load( '{:U('event/User/editYearNote')}' + '&uid=' + uid,{title:'学期总评分'});
+    }
+    //删除用户
+    function deleteUser(uid) {
+            uid = uid ? uid : getChecked();
+            uid = uid.toString();
+            if(uid == '' || !confirm('删除成功后将无法恢复，确认继续？')) return false;
+
+            $.post("{:U('event/User/doDeleteUser')}", {uid:uid}, function(res){
+                    if(res == '1') {
+                            uid = uid.split(',');
+                            for(i = 0; i < uid.length; i++) {
+                                    $('#user_'+uid[i]).remove();
+                            }
+                            ui.success('操作成功');
+                    }else {
+                            ui.error('无权操作');
+                    }
+            });
+    }
+
+
+    //搜索用户
+    var isSearchHidden = <neq name="type" value="searchUser">1<else/>0</neq>;
+    function searchUser() {
+            if(isSearchHidden == 1) {
+                    $("#searchUser_div").slideDown("fast");
+                    $(".searchUser_action").html("搜索完毕");
+                    isSearchHidden = 0;
+            }else {
+                    $("#searchUser_div").slideUp("fast");
+                    $(".searchUser_action").html("搜索用户");
+                    isSearchHidden = 1;
+            }
+    }
+
+    function folder(type, _this) {
+            $('#search_'+type).slideToggle('fast');
+            if ($(_this).html() == '展开') {
+                    $(_this).html('收起');
+            }else {
+                    $(_this).html('展开');
+            }
+
+    }
+    $(function(){
+        var orderKey = "<?php echo $orderKey;?>";
+        var orderType = "<?php echo $orderType;?>";
+        if(orderKey != ''){
+            $('#order_'+orderKey).addClass('order_'+orderType);
+        }
+        $('.list_order').hover(
+            function(){
+                if($(this).hasClass('order_asc')){
+                    $(this).removeClass("order_asc");
+                    $(this).addClass("order_desc");
+                }else if($(this).hasClass('order_desc')){
+                    $(this).removeClass("order_desc");
+                    $(this).addClass("order_asc");
+                }
+            }
+        );
+        $('.list_order').click(
+            function(){
+                if($(this).hasClass('order_desc')){
+                    window.location.href = "{:U('event/User/index')}&orderKey=jy_year_note&orderType=desc";
+                }else{
+                    window.location.href = "{:U('event/User/index')}&orderKey=jy_year_note&orderType=asc";
+                }
+            }
+        );
+    });
+</script>
+
+<include file="../Teacher/_footer" />

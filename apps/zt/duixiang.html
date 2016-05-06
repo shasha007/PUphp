@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        html{
+            height: 100%;
+
+        }
+        #myModal{
+            font-family: 'helvetica neue', tahoma, 'hiragino sans gb', stheiti, 'wenquanyi micro hei', \5FAE\8F6F\96C5\9ED1, \5B8B\4F53, sans-serif;
+        }
+        body{
+            height: 100%;
+        }
+
+            .button_img {
+                position: absolute;
+                bottom: 20%;
+                left: 10%;
+                width: 80%;
+            }
+        .img-responsive{
+            display: block;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<div class="div_food">
+    <img src="images/duixiang1.png" class="img-responsive">
+</div>
+<div class="button_img">
+    <img class="img-responsive" id="btn_1"  src="images/duixiang2.png" >
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    提示
+                </h4>
+            </div>
+            <div class="modal-body">
+               请苹果用户点击发现-->扑校园
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    window.onload = function(){
+        var allheight = $(document).height();
+        var eleheight = $(".button_img").height();
+        $(".button_img").css("top",(allheight-eleheight)+"px");
+            document.getElementById('btn_1').addEventListener('click', onBtnClick, false);
+
+    }
+    function onBtnClick() {
+        var ua = navigator.userAgent.toLowerCase();
+        var isAndroid=false;
+        if (/iphone|ipad|ipod/.test(ua)) {
+            isAndroid = false;
+        } else if (/android/.test(ua)) {
+            isAndroid = true;
+        }
+        if(isAndroid){
+            window.Android.openInternalPage("pschool", "1", "扑校园","", "","","" );
+        }else{
+            $("#myModal").modal('show');
+        }
+    }
+</script>

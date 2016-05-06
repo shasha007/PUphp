@@ -1,0 +1,119 @@
+.square_comment {
+    padding: 5px 15px;
+    margin-bottom: 40px;
+    background-color: #fff;
+    color: #979797;
+    -webkit-user-select: none;/*禁用手机浏览器的用户选择功能 */
+    -moz-user-select: none;
+
+}
+.square-comment-list-li{
+    margin-top: 8px;
+    background-color: #fff;
+    overflow: hidden;
+    border-bottom: 1px solid #f2f1ee;
+}
+.square-comment-reply{
+    width: 82%;
+    float: right;
+    background-color: #fce6c1;
+    padding: 15px 10px;
+    margin-bottom: 5px;
+    color: #333;
+}
+.square-comment-list-li-con{
+    padding: 5px 0;
+    color: #333;
+    width: 82%;
+    float: right;
+}
+.square-li-r i{
+    float: right;
+    color: #cfcfcf;
+}
+.comment-select{
+    display: block;
+}
+#com-select{
+
+}
+.modal-content{
+    border-radius: 10px;
+}
+
+#report,#reply{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    text-align: center;
+}
+#report{
+    border-bottom: 1px solid #ccc;
+}
+.header-back span{
+    color: #ea5504;
+}
+
+.publish-topic{
+    position: fixed;
+    width: 15%;
+    right: 5%;
+    bottom: 5%;
+    filter:alpha(opacity=60);
+    -moz-opacity:0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;
+    z-index:9999;
+}
+.modal-dialog {
+    position: absolute;
+    width: 96%;
+    margin: 2%;
+    bottom: 45%;
+}
+.collect-topic{
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 18px;
+}
+.square-list{
+    margin-top: 5px;
+}
+.weibo-button{
+    position: fixed;
+    bottom: 0;
+    height: 50px;
+    text-align: center;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #efefef;
+    z-index: 999;
+}
+.weibo-button input{
+    width: 100%;
+    padding: 0;
+}
+.weibo-button div {
+    width: 25%;
+    height: 35px;
+    line-height: 35px;
+    margin-top: 10px;
+    float: left;
+}
+.weibo-button div:nth-child(1),.weibo-button div:nth-child(2),.weibo-button div:nth-child(3){
+    border-right: 1px solid #efefef;
+}
+.collected{
+    color: #ea5504;
+}
+.comment-comment{
+    width: 40%;
+    margin-top: 5%;
+}
+.publish-time{
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 5px;
+}

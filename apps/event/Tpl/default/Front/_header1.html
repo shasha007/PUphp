@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$event.title}</title>
+<include file="__THEME__/comm/_main" />
+<link href="../Public/css/style.css?201409181" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var APPNAME         =   '{$ts._app}';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+    function selectSchool(){
+        ui.box.load(U('home/Public/citys'),{title:'选择学校',noCheck:'yes'});
+    }
+</script>
+<style type="text/css">
+    {$bgcss}
+</style>
+</head>
+<body>
+    <?php if(!$event['is_school_event']):?>
+        <include file="__THEME__/_holder_2014" />
+    <?php else:?>
+        <style type="text/css">
+            .bg {padding-top: 0px;}
+        </style>
+    <?php endif;?>
+    <div class="bg">
+        <div class="bg1">
+            <div class="h_header">
+                <div class="header_menu2 pl40"><?php echo(C('SJ_YEAR'));?>年江苏省 暑期文化科技卫生“三下乡”社会实践活动 --- {$event.title}
+                </div>
+                <form action="{:U('event/Front/player/',array('id'=>$eventId))}" method="post">
+                    <div class="header_search1">
+                        <div class="frm" style="height:20px;*height:auto; position:relative">学校：
+                            <input type="text" class="header_s_input1" id="selectarea" value="{$_POST['sid']|tsGetSchoolName}" readonly="true" OnFocus="$('#_login_school_label').hide();selectSchool()" />
+                            <input type="hidden" id="current" name="sid" value="{$_POST['sid']}"/>
+                            关键字：<input name="keyword" class="header_s_input1" type="text" value="{$_POST['keyword']}" />
+                            <input type="submit" value="搜 索" class="header_search_btn1" /></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="main">
+            <div class="content">

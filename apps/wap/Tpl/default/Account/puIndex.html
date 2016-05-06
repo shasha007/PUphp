@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>PU币明细</title>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/puindex_style.css?v=001" rel="stylesheet">
+    <link href="../Public/css/puindex_reset.css?v=001" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+    <script src="../Public/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            var uid = Android.getUid();
+            $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+                if(data.status == 2)
+                {
+                    window.location.reload();
+                }
+            },'json');
+        });
+    </script>
+</head>
+<body>
+<div class="h-detail">
+    <div class="h-detail-header">
+        <p>PU币余额</p>
+        <h1>{$user.money|money2xs} </h1>
+        <div class="h-pu-red"><a href="{:U('wap/Account/puList')}">明细</a></div>
+        <div class="h-detail-btn clearfix">
+            <div class="recharger-card">
+                充值
+            </div>
+            <div>
+                <a href="{:U('pufinance/Withdraw/index')}">提现</a>
+            </div>
+        </div>
+    </div>
+    <!--<div class="h-detail-pu">
+        <header class="clearfix">
+            <div>
+                挣取PU币
+            </div>
+            <div>
+                <a>
+                    更多
+                </a>
+            </div>
+        </header>
+        <ul class="h-detail-ul">
+            <li>
+                <div>欢乐购超市导购员一天</div>
+                <div>100PU币</div>
+                <div>现在就去</div>
+            </li>
+            <li>
+                <div>欢乐购超市导购员一天</div>
+                <div>0PU币</div>
+                <div>现在就去</div>
+            </li>
+            <li>
+                <div>欢乐购超市导购员一天</div>
+                <div>100PU币</div>
+                <div>现在就去</div>
+            </li>
+            <li>
+                <div>欢乐购超市导购员一天</div>
+                <div>100PU币</div>
+                <div>现在就去</div>
+            </li>
+        </ul>
+    </div>-->
+</div>
+</body>
+
+<script src="../Public/js/publicjs.js"></script>
+<script>
+    settitle('PU币', '', '');
+</script>
+</html>

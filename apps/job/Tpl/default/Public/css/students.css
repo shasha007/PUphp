@@ -1,0 +1,104 @@
+@charset "utf-8";
+/* CSS Document */
+.job_banner{ float:left; width:1000px; height:216px; margin-top:30px;}
+/*首页轮播广告*/
+.focus{height:230px;width:1000px;margin:10px auto 0 auto;}
+.focus .left{float:left; width:795px; height:221px; position:relative;overflow:hidden;}
+.focus .left li{position:absolute; left:0; top:0; width:795px; height:221px; z-index:1; opacity:0; filter:alpha(opacity=0);}
+.focus .left li img{ width:795px; height:221px;}
+.focus .left li.active{z-index:2;}
+.focus .left li p{display:none;}
+.focus .right{float:right; width:200px;}
+.focus .right li{height:61px; overflow:hidden; width:184px; background:url(../images/bg_ad1.gif) no-repeat; padding:3px; margin-left:10px; margin-bottom:10px;cursor: pointer; }
+.focus .right li img{ width:184px; height:61px;}
+.focus .right li:hover,.focus .right li.active{ background:url(../images/bg_ad.gif) no-repeat left top; padding-top:3px; padding-left:12px; margin-left:0px }
+
+/*我的招聘*/
+.my_job{ float:left; width:1000px;}
+.my_job_menu{ float:left;}
+.my_job_menu ul{ float:left; width:100%;}
+.my_job_menu li{ float:left; width:100px; line-height:30px; line-height:30px; margin:0 10px; display:inline; }
+.my_job_menu li.cur{ background:#6ba51b;border-radius:3px; }
+.my_job_menu li.cur a{ color:#fff;}
+.my_job_menu li a{ color:#333;}
+.my_job_menu li a:hover,.my_job_menu li.cur a:hover{ color:#fff; text-decoration:none; background:#6ba51b; border-radius:3px; width:100px; height:30px; display:block;}
+.my_job_menu li a:link,.my_job_menu li.cur a:link{ text-decoration:none;}
+/*我的收藏*/
+.my_job_list{ float:left;}
+.my_job_list ul{ float:left; width:1000px;}
+.my_job_list li{ float:left; background:#f7f7f7; padding:10px; width:980px; margin-top:10px;}
+.my_job_list_logo{ float:left; width:80px;}
+.my_job_list_logo img{ width:80px; height:80px;}
+.my_job_list_infor{ float:left; width:350px; margin-left:15px; display:inline;}
+.my_job_list_name{ float:left; width:350px;}
+.my_job_list_name a{ color:#6ba51b;}
+.my_job_list_name a:hover{ color:#7bb727;}
+.my_job_list_des{ float:left; width:350px;}
+.c_y{ color:#eb7812;}
+.my_job_list_r{ float:right; margin-right:10px; display:inline; width:170px;}
+.my_job_list_time{ float:left; width:170px; text-align:right;}
+.my_job_list_btn{ float:left; text-align:right; width:170px; color:#888;}
+.my_job_list_btn a{ color:#6ba51b}
+.my_job_list_btn a:hover{ color:#7bb727}
+/*我的简历*/
+.my_resume_left{ float:left; width:644px; background:url(../images/bg_resume1.jpg) no-repeat left top #fafafa;}
+.my_resume_photo{ float:left; width:120px; margin:70px auto auto 262px; display:inline;}
+.my_resume_photo img{ width:120px; height:120px; border-radius:120px; border:1px solid #fff;}
+.my_resume_infor{ float:left; width:600px; margin:10px auto auto 22px; display:inline;}
+.my_resume_list{ float:left; width:644px; padding-bottom:20px;}
+.my_resume_list ul{ float:left; width:100%;}
+.my_resume_list li{ float:left; border-top:1px solid #dedede; width:560px; padding:5px 42px; display:inline; margin-top:20px;}
+.my_resume_list_menu{ float:left; width:100%; }
+.my_resume_list_infor{ float:left; width:100%;}
+.my_resume_staus{ float:left; background:#f6f6f6; width:644px; height:100px; line-height:100px;}
+.my_resume_right{ float:right; width:346px;}
+.my_resume_visit{ float:left; width:346px; border-top:2px solid #222; background:#f8f7f8;}
+.my_resume_visit_title{ float:left; width:300px; margin-left:20px; display:inline; color:#72ad1a;}
+.my_resume_visit_list{ float:left; width:346px; padding-bottom:15px;}
+.my_resume_visit_list ul{ float:left; width:100%;}
+.my_resume_visit_list li{ float:left; width:80px; margin:15px 5px auto 25px; display:inline;}
+.my_resume_visit_list li img{ width:80px; height:80px;}
+.my_resume_complete{ float:left; border:1px solid #dedede; background:#f8f7f8; height:78px; line-height:78px; width:344px;}
+.my_resume_r_list{ float:left; background:url(../images/bg_resume.gif) no-repeat 20px; width:300px;}
+.my_resume_r_list ul{ float:left; width:100%;}
+.my_resume_r_list li{ float:left; width:200px; padding-left:50px; height:50px; line-height:50px;}
+/*人才库*/
+.pool_menu{ float:left; width:680px; margin-left:170px; display:inline;}
+.pool_menu ul{ float:left; width:100%;}
+.pool_menu li{ float:left; border:1px solid #d9d9d9; width:143px; height:30px; line-height:30px; margin:auto 10px; display:inline;}
+.pool_menu li:hover{ border:none; width:145px; height:32px; line-height:32px;}
+.pool_menu li a{ color:#333; border:none; height:30px;display:block; width:145px;}
+.pool_menu li a:hover{ color:#fff; background:#f35711; border:none; text-decoration:none; height:32px; }
+.pool_menu li a:link{ text-decoration:none;}
+.pool_menu li.cur{ border:none;background:#f35711; border:none; width:145px; height:32px; line-height:32px;} 
+.pool_menu li.cur a{color:#fff; background:#f35711; border:none; width:145px; height:32px;}
+.pool_list{ float:left; width:960px; margin-left:20px; display:inline;}
+.pool_list ul{ float:left; width:100%; padding-bottom:20px;}
+.pool_list li{ float:left; width:120px; margin:20px 20px auto 20px; display:inline;}
+.pool_list_thumb{ float:left; width:116px; border:1px solid #dedede; padding:1px; background:#fff;}
+.pool_list_thumb img{ width:116px; height:146px;}
+.pool_list_school{ float:left; width:120px; height:24px; line-height:24px;}
+/*地方政策*/
+.policy_list{ float:left; width:1000px;}
+.policy_list ul{ float:left; width:100%; padding-bottom:20px;}
+.policy_list li{ float:left; width:1000px; margin-top:15px; border-bottom:1px dotted #dedede; padding-bottom:10px;}
+.policy_list_date{ float:left; width:40px; height:47px; background:url(../images/bg_date.gif) no-repeat top; color:#fff; margin-left:15px; display:inline;}
+.policy_list_title{ float:left; width:890px; }
+.policy_list_desc{ float:left; width:890px; height:40px; line-height:20px; overflow:hidden;}
+.policy_submenu{ float:left; width:1000px;}
+.policy_desctext{ float:left; width:900px;margin-left:50px; display:inline;}
+.policy_descnote{ float:left; width:900px; border-bottom:1px solid #dedede; padding-bottom:5px; margin-left:50px; display:inline;}
+.policy_desctext p{text-indent:25px; margin-top:10px;}
+.pb50{ padding-bottom:50px;}
+.policy_area{ float:left; width:200px; margin-left:20px; display:inline;}
+/*企业介绍*/
+.job_pleftlist{ float:left;width:650px;}
+.job_pleftlist ul{ float:left; width:100%;}
+.job_pleftlist li{ float:left; border-left:3px solid #b9d7c6; width:610px; background:#f6f6f6; margin-top:10px; padding:10px 15px 10px 20px;}
+.job_pleftlist li:hover{ background:#b9d7c6; color:#fff;}
+.job_pleftlist li a{ color:#3c8f61;}
+.job_pleftlist_more a{ text-decoration:underline;color:#3c8f61;}
+.job_pleftlist li a:hover,.job_pleftlist_more a:hover{ color:#56a67a;}
+.job_pleftlist_t{ float:left; width:400px;}
+.job_pleftlist_date{ float:right; width:100px; text-align:right; padding-right:10px;}
+.job_pleftlist_more{ float:right; width:100px; text-align:right; padding-right:10px;}

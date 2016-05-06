@@ -1,0 +1,87 @@
+<div class="hd_fl color4 link">
+    <span class="b">频道：</span>
+    <a<?php if(!$_SESSION['schoo_searchCat']['cat'])echo' class="f_s b"';?>
+        href="{:U('event/School/board', array('cat'=>'all'))}">全部</a>&nbsp;
+        <a<?php if($_SESSION['schoo_searchCat']['cat']=='jy')echo' class="f_s b"';?>
+            href="{:U('event/School/board', array('cat'=>'jy'))}">全省菁英</a>&nbsp;
+        <a<?php if($_SESSION['schoo_searchCat']['cat']=='top')echo' class="f_s b"';?>
+            href="{:U('event/School/board', array('cat'=>'top'))}">热门推荐</a>&nbsp;
+        <a<?php if($_SESSION['schoo_searchCat']['cat']=='fav')echo' class="f_s b"';?>
+            href="{:U('event/School/board', array('cat'=>'fav'))}">感兴趣的</a>&nbsp;
+        <a<?php if($_SESSION['schoo_searchCat']['cat']=='join')echo' class="f_s b"';?>
+            href="{:U('event/School/board', array('cat'=>'join'))}">我参与的</a>&nbsp;
+        <?php if($user['can_add_event'] || $user['can_prov_event']): ?>
+        <a<?php if($_SESSION['schoo_searchCat']['cat']=='launch')echo' class="f_s b"';?>
+            href="{:U('event/School/board', array('cat'=>'launch'))}">我发起的</a>&nbsp;
+        <?php endif; ?>
+        <?php if($user['can_add_event']): ?>
+        <a<?php if($_SESSION['schoo_searchCat']['cat']=='nofinish')echo' class="f_s b"';?>
+            href="{:U('event/School/board', array('cat'=>'nofinish'))}">待完结的</a>&nbsp;
+        <?php endif; ?>
+        <?php if($user['can_add_event']): ?>
+        <a<?php if($_SESSION['schoo_searchCat']['cat']=='apply')echo' class="f_s b"';?>
+            href="{:U('fund/Index/myapply')}">我申办的</a>&nbsp;
+        <?php endif; ?>
+    <br />
+    <span class="b">分类：</span>
+    <a<?php if(!$_SESSION['schoo_searchCat']['cid'])echo' class="f_s b"';?>
+        href="{:U('event/School/board', array('cid'=>'all'))}">全部</a>&nbsp;
+        <?php foreach($searchType as $k=>$vo):?>
+        <a<?php if($_SESSION['schoo_searchCat']['cid']==$k)echo' class="f_s b"';?>
+            href="{:U('event/School/board', array('cid'=>$k))}">{$vo}</a>&nbsp;
+        <?php endforeach;?>
+    <br />
+    <div>
+    <span class="b">组织：</span>
+    <a<?php if(!$_SESSION['schoo_searchCat']['sid'])echo' class="f_s b"';?>
+        href="{:U('event/School/board', array('sid'=>'all'))}">全部</a>&nbsp;
+    <a id="sub1" href="javascript:void(0)" onclick="showSearch(1, this);">部门</a>&nbsp;
+    <a id="sub2" href="javascript:void(0)" onclick="showSearch(2, this)">学院（部）</a>&nbsp;
+    <a id="sub3" href="javascript:void(0)" onclick="showSearch(3, this)">学生组织</a>&nbsp;
+    </div>
+    <div id="subSearch"></div>
+</div>
+<div class="hd_search">
+    <form method="post" action="{:U('/School/board')}">
+    <input name="title"  value="{$searchTitle}" type="text" class="hd_s_input f14 f_wr" placeholder="搜索活动" />
+    <input name="submit" type="submit" class="hd_s_b f_wr" value="找活动" />
+    </form>
+</div>
+<script>
+    var json0 = eval({$addSchool});
+    var json1 = eval({$cat1});
+    var json2 = eval({$cat2});
+    var sidCss = {$sidCss};
+    var sid = {$sid};
+    $(function(){
+        if(sidCss > 0){
+            var sub = '#sub'+sidCss.toString();
+            showSearch(sidCss, sub);
+        }
+    });
+    function showSearch(cat, o){
+        $(o).parent().children().removeClass("f_s b");
+        $(o).addClass("f_s b");
+        $("#subSearch").empty();
+        var prefix = '';
+        if(cat==3){
+            prefix = '-';
+            var json = json1;
+        }else if(cat==1){
+            prefix = '-';
+            var json = json2;
+        }else{
+            var json = json0;
+        }
+        $.each( json, function(i,n){
+            $("#subSearch").append(addSubSearch(n, prefix));
+        });
+    }
+    function addSubSearch(n, prefix){
+        var subcss = '';
+        if(sid == prefix+n.id){
+            subcss = ' class="f_s b"';
+        }
+        return "<a "+subcss+" href='"+U('event/School/board')+'&sid='+prefix+n.id+"'>"+n.title+"</a>&nbsp;";
+    }
+</script>

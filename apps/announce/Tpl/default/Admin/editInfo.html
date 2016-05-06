@@ -1,0 +1,94 @@
+<include file="_header" />
+<include file="__THEME__/comm/kindeditor" />
+<div class="so_main">
+  <include file="_tab" />
+  <div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>通知</div>
+  <div class="form2">
+<form action="{:U('/Admin/doEditInfo')}" enctype="multipart/form-data" method="post">
+    <if condition="$obj">
+        <input name="id" value="{$obj.id}" type="hidden">
+    </if>
+    <table cellpadding=3 cellspacing=3>
+    <tr>
+        <td align="right"><span style="color: #F00">*</span>标题：</td>
+        <td align="left"><input type="text" size="50" name="title" maxlength="20" value="{$obj.title}" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">通知分类：</td>
+        <td align="left">
+          <select name="cid" id="categoryId" onchange="selectCat();">
+          <volist name='categorys' key='cId' id='cName'>
+          <php>if($obj['cid']==$key) { </php>
+          <option value="{$key}" selected="selected">{$cName}</option>
+          <php> } else { </php>
+            <option value="{$key}">{$cName}</option>
+          <php> }</php>
+          </volist>
+          </select>
+            13届挑战杯：会晤信息（院系通知/其它院系）、通知公告（学校发文）、新闻简报（学校通知）
+        </td>
+    </tr>
+    <tr>
+        <td align="right">所属校区：</td>
+        <td align="left">
+            <select name="sid" id="sid" onchange="changeSchool();">
+            <volist name='schools' id='vo'>
+                <php>if($obj['sid']==$vo['a']) { </php>
+                    <option value="{$vo.a}" selected="selected">{$vo.t}</option>
+                <php> } else { </php>
+                    <option value="{$vo.a}">{$vo.t}</option>
+                <php> }</php>
+            </volist>
+          </select>
+          <select name="sid1" id="sid1" <?php if($obj.cid != 3):?>style="display:none;"<?php endif;?>>
+            <option value="0">请选择</option>
+            <volist name='subSchool' id='vo'>
+                <php>if($obj['sid1']==$vo['id']) { </php>
+                    <option value="{$vo.id}" selected="selected">{$vo.title}</option>
+                <php> } else { </php>
+                    <option value="{$vo.id}">{$vo.title}</option>
+                <php> }</php>
+            </volist>
+          </select>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td align="right">详细：</td>
+        <td align="left"><textarea name="content" id="content" style="width:780px;height:200px">{$obj.content}</textarea></td>
+    </tr>
+    </table>
+    <div class="page_btm">
+        <input type="submit" class="btn_b" value="确定">
+    </div>
+</form>
+  </div>
+  </div>
+<script>
+$(document).ready(function(){
+    selectCat();
+});
+function selectCat(){
+    if($('#categoryId').val() == 3){
+        $('#sid1').show();
+    }else{
+        $('#sid1').hide();
+    }
+}
+function changeSchool(){
+    if($('#categoryId').val() == 3){
+        pid = $('#sid').val();
+        $.post(U('home/Public/getSubSchool'),{pid:pid},function(txt){
+            json = eval('('+txt+')');
+            var select = '<option value="0">请选择</option>';
+            $.each(json, function(i, n) {
+                select += '<option value="' + n.id + '">' + n.title + '</option>';
+            });
+            $('#sid1').html(select);
+        });
+    }
+}
+</script>
+<include file="_footer" />

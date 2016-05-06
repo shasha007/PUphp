@@ -1,0 +1,202 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+    <div id="searchBlog_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="page_tit">搜索订单 [ <a href="javascript:void(0);" onclick="searchBlog();">隐藏</a> ]</div>
+    <div class="form2">
+    <form action="__URL__&act=stageOrderList" method="POST">
+    <input type="hidden" name="isSearch" value="1"/>
+        <dl class="lineD">
+          <dt>身份证：</dt>
+          <dd>
+            <input name="ctfid" type="number" min="0" value="{$serach.ctfid}">
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>姓名：</dt>
+          <dd>
+            <input name="realname" type="text" value="{$serach.realname}" />
+          </dd>
+        </dl>        
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+    </form>
+    </div>
+    </div>
+
+
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="searchBlog();">
+            <span class="searchBlog_action"><neq name="isSearch" value="1">搜索订单<else/>搜索完毕</neq></span>
+        </a>        
+        <!--<a href="{:U('home/Themes/addThemes')}" ><span>已风控通过</span></a>-->
+        <!--<a href="javascript:void(0);" class="btn_a" onclick="deleteThemes();"><span>风控通过操作</span></a>-->
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">分期订单号</th>
+                <th class="line_l">姓名</th>
+                <th class="line_l">身份证号</th>
+                <th class="line_l">联系方式</th>
+                <th class="line_l">借款金额</th>
+                <th class="line_l">利息</th>
+                <th class="line_l">剩余应还</th>
+                <th class="line_l">起止时间</th>
+                <th class="line_l">逾期费</th>
+                <th class="line_l">总计应还</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' id="{$vo.id}">
+                    <td>
+                        <input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}">
+    				</td>
+                    <td>{$vo.id}</td>
+                    <td><a href="{:U('pufinance/Admin/userDetail',array('uid'=>$vo['uid']))}">{$vo.realname}</a></td>
+                    <td>{$vo.ctfid}</td>
+                    <td>{$vo.mobile}</td>
+                    <td>{$vo.amount}</td>
+                    <td>{$vo.interest}</td>
+                    <td>{$vo.last_amount}</td>
+                    <td>{$vo.stime|date='Y-m-d H:i:s',###}<br>{$vo.etime|date='Y-m-d H:i:s',###}</td>
+                    <td>{$vo.overdue.all_last_overdue}</td>
+                    <td><?php echo $vo['last_amount']+$vo['overdue']['all_last_overdue']?></td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="showOverdueDetail('{$vo.id}')">详情</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+
+<script>
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchBlog() {
+    if(isSearchHidden == 1) {
+        $("#searchBlog_div").slideDown("fast");
+        $(".searchBlog_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchBlog_div").slideUp("fast");
+        $(".searchBlog_action").html("搜索订单");
+        isSearchHidden = 1;
+    }
+}
+
+    //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+        function () {
+            $(this).addClass("bg_hover");
+        },
+        function () {
+            $(this).removeClass("bg_hover");
+        }
+    );
+    });
+
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    //获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+function showOverdueDetail(stage_id) {
+    var url = "{:U('pufinance/PufinanceOrderStage/showOverdueDetail')}&stage_id=" + stage_id;
+    ui.box.load(url,{title:'逾期订单详情'});
+}
+
+    function removeItem(ids) {
+        ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#'+ids[i]).remove();
+        }
+    }
+
+    $(".sequence").blur(function(){
+        var orderoption = parseInt(this.value,10) ;
+        if (orderoption<0 || isNaN(orderoption)) {
+            alert('请输入正确的数字') ;
+        };
+        var id = parseInt(this.id,10) ;
+        if (id<0 || isNaN(id)) {
+            alert('操作失败请稍候再试') ;
+        };        
+        $.ajax({
+            url: '{:U('home/JavaThemes/sequence')}',
+            type: 'post',
+            data: {
+                id: id ,
+                orderoption: orderoption
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data ==='1') {
+                    location.reload(true) ;
+                }else if(data ==='0'){
+                    alert('修改失败请稍候再试') ;
+                }
+            }            
+        }) ;
+    });
+
+    $(".open").click(function(){
+        var id = $(this).data("id") ;
+        var status = $(this).data("statuses") ;
+        $.ajax({
+            type: 'post',
+            url: "{:U('home/JavaThemes/open')}" ,
+            data: {
+                status: status ,
+                id:id
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data!=='0') {
+                    if (status === 1) {
+                        $("#open"+id).html("关闭") ;
+                        $("#open"+id).attr("data-statuses", "2");
+                    }else{
+                        $("#open"+id).html("开启") ;
+                        $("#open"+id).attr("data-statuses", "1");
+                    }
+                }
+                else {
+                    alert('哈哈哈哈') ;
+                }
+            }
+        });
+    });
+</script>
+<include file="../Public/footer" />

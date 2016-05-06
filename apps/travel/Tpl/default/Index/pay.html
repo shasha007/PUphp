@@ -1,0 +1,44 @@
+<include file="_header" />
+<div class="t_payment mt10">
+    <div class="t_payment_title b f14">在线支付</div>   
+    <div class="t_payment_list">
+        <ul>
+            <li class="b f14 c333 t_p">
+                <div class="t_payment_name">商品</div>
+                <div class="t_payment_price">单价（元）</div>
+                <div class="t_payment_count">数量</div>       
+                <div class="t_payment_price">总价（元）</div>
+            </li>
+            <li>
+                <div class="mt5">
+                    <div class="t_payment_name"><a href="#">{$title}</a></div>
+                    <div class="t_payment_price">{$price}</div>
+                    <div class="t_payment_count">1</div>
+                    <div class="t_payment_price">{$price}</div>
+                </div>
+            </li>
+        </ul>
+        <div class="t_payment_tj">本次订单总需支付：￥<span class="b f16 cf60" style="font-family:Arial;">{$price}</span></div>
+    </div>
+    <div class="t_payment_list1 mt10">
+        <div class="t_payment_list1_over">您的帐户余额为：￥<span class="f16 b" style="color:#2d9f00; font-family:Arial;"><?php echo($myMoney/100);?></span></div>
+
+        <eq name="less" value="1">
+        <div class="t_payment_list1_cz">账户余额不足，<a href="{:U('home/Account/recharge')}" target="_blank">点此进行充值!</a></div>
+        </eq>
+
+        <div class="clear"></div>
+        <div class="t_payment_list1_zf">使用账户余额支付：￥<span class="cf60 f14 b">{$price}</span></div>
+    </div>
+
+    <neq name="less" value="1">
+    <div class="t_payment_btn mt10">
+        <form action="{:U('travel/Index/doPay')}" method="post">
+            <input type="hidden" name="tid" value="{$id}">
+            <input type="hidden" name="type" value="{$type}">
+            <input name="payment" type="submit" class="t_payment_btnbg b f14" value="确认支付" />
+        </form>
+    </div>
+    </neq>
+</div>
+<include file="_footer" />

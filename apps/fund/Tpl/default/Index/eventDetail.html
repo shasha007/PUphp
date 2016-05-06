@@ -1,0 +1,19 @@
+<div class="fund_pop" id="apply_f">
+    <div class="fund_popcon">
+        <div class="fund_popcon_title tcenter f14 b c3 mt10"><span class="eventName">{$eventName}</span></div>
+        <div class="fund_popcon_note mt10 tcenter"><span class="cTime">承办截止:{$byTime|friendlyDate}</span></div>
+        <div class="fund_popcon_pic tcenter mt20"><img class="logo" src="{$logo|getImgAttach=###,250,250,'c'}" alt="" /></div>
+        <div class="fund_popcon_text" id="text">
+            活动时间：{$cTime|friendlyDate} - {$endTime|friendlyDate}
+            {$descript|htmlspecialchars_decode}
+        </div>
+        <div class="fund_popcon_btn tcenter b f14"><a href="javascript:void(0)" onclick="sub({$eventId})">我要承办</a></div>
+    </div>
+    <input type="hidden" id="ids">
+</div>
+<script>
+    function sub(id){
+        ui.box.close();
+        ui.box.load("__URL__&act=eventApply&id="+id, {title:'我要承办'});
+    }
+</script>

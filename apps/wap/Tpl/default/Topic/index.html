@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name = "format-detection" content = "telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <link href="../Public/css/square.css?v=2016224" rel="stylesheet">
+    <link href="../Public/css/public_header.css?v=20160202" rel="stylesheet">
+    <title>话题</title>
+    <script>
+        $(function () {
+            var uid = Android.getUid();
+            $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+                if(data.status == 2)
+                {
+                    window.location.reload();
+                }
+            },'json');
+        });
+    </script>
+</head>
+<body>
+<div class="modal fade" id="area-selection" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content selection-con">
+                <p id="selection-con-p1"><a>区域&emsp13;</a>
+                    <span id="a1" class="selection-on">全国</span>
+                    <span id="a2">全省</span>
+                    <span id="a3">全市</span>
+                    <span id="a4">本校</span>
+                </p>
+                <p id="selection-con-p2">
+                    <a>性别&emsp13;</a>
+                    <span id="s1" class="selection-on">全部</span>
+                    <span id="s2">只看女性</span>
+                    <span id="s3">只看男性</span>
+                </p>
+                <footer class="clearfix">
+                    <button id="as-btn-o" class="btn-default btn">确定</button>
+                    <button id="as-btn-c" class="btn-default btn">取消</button>
+                </footer>
+        </div>
+
+    </div>
+</div>
+<!--发布话题 只需要给我个id就行-->
+<?php echo $search_user_id?'':'<div class="publish-topic" data-themeid="'.$themes_id.'"><img class="img-responsive" src="../Public/images/publish_weibo.png"></div>'; ?>
+<div id="top-back" >
+    <img class="img-responsive" src="../Public/images/return_top.png">
+</div>
+            <div class="square-list ">
+                <ul>
+                    <?php foreach ($list as $key=>$value) { ?>
+                        <li class="square-list-li container">
+                            <header class="clearfix">
+                                <div class="square-li-l">
+                                    <!--跳转主页-->
+                                    <a <?php echo $value['isHide']?'':'class="to-user-home"'; ?> data-userid="{$value.uid}"><img class="img-responsive" onerror="this.src='/apps/wap/Tpl/default/Public/images/img_default.png'" src="<?php echo $value['face']; ?>"></a></div>
+                                <div class="square-li-c" style="width:60%;">
+                                    <p><?php echo $value['uname']; ?>
+                                        <?php if($value['sex']=='1'){
+                                            echo '<span class="male">♂</span>' ;
+                                        }else{
+                                            echo '<span class="female">♀</span>' ;
+                                        } ?>
+                                    </p>
+                                    <p><span><?php echo $value['schoolname']; ?></span></p>
+                                </div>
+                                <?php if($value['is_friend']>0){ ?>
+                                    <div class="square-li-addfirend"><span class=" added-friend" style="color: #ccc;border: 1px solid #ccc;">已添加</span></div>
+                                <?php }elseif($user_id != $value['uid']){ ?>
+                                    <div class="square-li-addfirend">
+                                         <span id="<?php echo $value['uid']; ?>" class="added-friend" style="display:none;color: #ccc;border: 1px solid #ccc;">已添加</span>
+                                        <span onclick="mkfriend(<?php echo $value['uid']; ?>)">+好友</span>
+                                    </div>
+                                <?php } ?>
+                            </header>
+                            <a href ="{:U('wap/WeiboContent/index','weibo_id='.$value['weibo_id'])}">
+                                <div class="square-li-con">
+                                    <?php 
+                                        if ($value['isPu']) {
+                                            echo "<span class='tips-pu'>PU</span>$value[content]" ;
+                                        }elseif($value['isTop'] == 0){
+                                            echo $value['content'];    
+                                        }else{
+                                            echo "<span class='tips-toutiao'>头条</span>$value[content]" ;
+                                        }
+                                         
+                                    ?>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="square-li-pic container">
+                                    <div class="row">
+                                        <?php if(count($value['type_data'])>1){ ?>
+                                                <?php  foreach($value['type_data'] as $k=>$v) { ?>
+                                                    <div class="col-my-<?php
+                                                    switch(count($value['type_data'])){
+                                                        case 2:
+                                                            echo 6 ;
+                                                            break ;
+                                                        case 4:
+                                                            echo 6 ;
+                                                            break ;
+                                                        default:
+                                                            echo 4 ;
+                                                            break ;
+                                                    }    
+                                                     ?> padding-5" style="background: url('<?php echo $v['thumbmiddleurl']; ?>') repeat-x;background-size: cover;height: 150px;" onerror="this.style.background='url(/apps/wap/Tpl/default/Public/images/img_default.png) repeat-x'">
+                                                        <!--<img class="img-responsive" onerror="this.src='/apps/wap/Tpl/default/Public/images/img_default.png'" src= >-->
+                                                    </div>
+                                                <?php } ?>
+                                        <?php }elseif(count($value['type_data'])==1){ ?>
+                                            <!--只有一个图片的情况 todo-->
+                                            <div class="col-xs-12">
+                                                <img class="img-responsive"  src= <?php echo $value['type_data'][0]['thumbmiddleurl']; ?> >
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+
+                            <footer>
+                                <span class="pull-left"><?php echo $value['ctime']; ?></span>
+                                <p><?php
+                                        if($value['isHeart']==1){
+                                            echo "<span class='glyphicon glyphicon-heart liked' data-status='0' data-weiboid='$value[weibo_id]'>&emsp13;$value[heart]</span>" ;
+                                        }else{
+                                            echo "<span class='glyphicon glyphicon-heart' data-status='1' data-weiboid='$value[weibo_id]'>&emsp13;$value[heart]</span>" ;
+                                        }
+                                     ?>
+                                    <span class="glyphicon glyphicon-comment">&emsp13;<?php echo $value['comment']; ?></span></p>
+                            </footer>
+
+                            </a>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+</body>
+</html>
+<script src="../Public/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script>
+    var  ready = false;
+    var loadingShow = false;
+    var page = 2;
+    var loadingStr = '<div class="spinner"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
+    var noneStr = '<div class="nonestr">没有记录</div>';
+    $(window).scroll(function(){
+        var document = window.document;
+        var top = document.body.scrollTop || document.documentElement.scrollTop
+                || 0;
+        top += document.documentElement.clientHeight;
+        var height = document.documentElement.scrollHeight;
+        if (height - top < 100) {
+            if (!loadingShow) {
+                $(".square-list ul").append(loadingStr);
+                loadingShow = true;
+                getAjaxNews();
+            }
+        }
+    });
+    function getAjaxNews() {
+        setTimeout(function () {
+            //删除loading提示
+            var a = $(".selection-on").eq(0).attr("id").substring(1);
+            var s = $(".selection-on").eq(1).attr("id").substring(1);
+            $.ajax({
+                url: "{:U('wap/Topic/search')}",
+                type: 'get',
+                data: {
+                    themes_id : '<?php echo $themes_id ; ?>',
+                    aid: a,
+                    sid: s,
+                    page: page,
+                    uid : '<?php echo $search_user_id ; ?>'
+        },
+                success: function(data){
+                    if (data==='0') {
+                        $(".spinner").remove();
+                        $(".square-list ul").append(noneStr);
+                    }else{
+                        $(".square-list ul").append(data);
+                        $(".spinner").remove();
+                        page++;
+                        loadingShow = false;
+                        //处理图片
+                        dopicerror();
+                    }
+                }});
+        }, 1000);
+    }
+    $(function () {
+
+        //设置标题
+        if (document.referrer.trim().indexOf("http://")) {
+            settitle("<?php echo $name ; ?>","","");
+        } else {
+            settitle("<?php echo $name ; ?>","swich.png","openselect()");
+        }
+//
+        //禁止actionbar 被滑动
+        $(".action-bar").bind("touchmove", function (event) {
+            event.preventDefault();
+        });
+    });
+    //选择区域事件
+    $("#selection-con-p1 span").each(function () {
+        $(this).click(function () {
+            $(this).siblings().removeClass("selection-on");
+            $(this).addClass("selection-on");
+        });
+    });
+    //选择区域事件
+    $("#selection-con-p2 span").each(function () {
+        $(this).click(function () {
+            $(this).siblings().removeClass("selection-on");
+            $(this).addClass("selection-on");
+        });
+    });
+    //取消按钮
+    $("#as-btn-c").click(function () {
+        $('#area-selection').modal('hide');
+    });
+    $("#as-btn-o").click(function () {
+        //区域id
+        var a = $(".selection-on").eq(0).attr("id").substring(1);
+        var s = $(".selection-on").eq(1).attr("id").substring(1);
+        $.ajax({
+            url: "{:U('wap/Topic/search')}",
+            type: 'get',
+            data: {
+                themes_id : '<?php echo $themes_id ; ?>' ,
+                aid: a,
+                sid: s
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data!='0') {
+                    $(".square-list ul").html(data);
+                    loadingShow = false;
+                    page = 2 ;
+                }else{
+                    $(".spinner").remove();
+                    $(".square-list ul").html(noneStr);
+                }
+            }
+
+        });
+        $('#area-selection').modal('hide') ;
+    });
+    function mkfriend(uid){
+        $.ajax({
+            url: "{:U('wap/MakeFriend/index')}",
+            type: 'get',
+            dataType: 'JSON',
+            data: {
+                fid: uid+""
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data.status==0) {
+                    alert(data.msg) ;
+                }else{
+                    $("#"+uid).next("span").hide();
+                    $("#"+uid).show();
+                }
+            }
+        });
+    }
+
+</script>
+<script src="../Public/js/publicjs.js"></script>

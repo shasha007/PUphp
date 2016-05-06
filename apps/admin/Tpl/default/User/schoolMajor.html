@@ -1,0 +1,103 @@
+<include file="../Public/_header" />
+
+<div class="so_main">
+    <div class="page_tit">开通学校官方活动</div>
+    <include file="../Public/_school_tab" />
+    <div class="form2">
+        <form method="post" action="{:U('admin/User/doSearchMajor')}">
+            <dl class="lineD">
+                <dt>学校：</dt>
+                <dd>
+                    <select class="chosen" name="sid" id='sid'>
+                        <option value="">全部</option>
+                        <volist name="school" id="vo">
+                            <option value="{$vo.a}"
+                                    <?php if($vo['a']==$sid) echo 'selected' ?>>{$vo.pinyin} - {$vo.t}</option>
+                        </volist>
+                    </select>
+            </dl>
+
+            <dl class="lineD">
+                <dt>院校：</dt>
+                <dd>
+                    <span id="pid1">
+                        <select name="sid1" id='sid1'>
+                            <option value=''>请选择····</option>
+                        </select>
+                    </span>
+            </dl>
+
+            <script>
+                $(function(){
+                    $('#sid').change(function(){
+                        $('#sid1 option').not(0).remove();
+                        var val=$('#sid option:selected').val();
+                        $.get( U('admin/User/childTree') ,{sid:val},function(data) {
+                            var obj=  $.parseJSON(data);
+                            var option = "<option value=''>请选择····</option>";
+                            $.each(obj, function(k, v)
+                            {
+                                option += "<option value=\"" + v['a'] + "\">" + v['t'] + "</option>";
+                            });
+                            $("#sid1").append(option);
+                        });
+                    });
+
+
+                   var val=$('#sid option:selected').val();
+                   if(val>0){
+                        $.get( U('admin/User/childTree') ,{sid:val},function(data) {
+                            var obj=  $.parseJSON(data);
+                            var option = "";
+                            $.each(obj, function(k, v)
+            {
+                option += "<option value=\"" + v['a'] + "\">" + v['t'] + "</option>";
+            });
+            $("#sid1").append(option);
+        });
+    }
+
+});
+
+
+            </script>
+
+            <dl class="lineD">
+                <dt>年级：</dt>
+                <dd>
+                    <input name="year" id="year" type="text" value="{$year}">
+                    <span>格式: 09，11，12 等) </span>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </form>
+    </div>
+    <!-------- 用户列表 -------->
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l">ID</th>
+                <th class="line_l">专业</th>
+            </tr>
+            <volist id="vo" name="data" key="k">
+                <tr overstyle='on'>
+                    <td><strong><?php echo ($nowPage-1)*10+$k;?></strong></td>
+                    <td>{$vo['major']}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+  <div class="Toolbar_inbox">
+      <span>共{$totalRows}条记录 </span>
+	<div class="page right">{$html}</div>
+  </div>
+<script>
+    /**
+     * 下拉选择搜索
+     */
+    (function($){
+        $('select.chosen').chosen({width: "500px",search_contains:true});
+    })(jQuery);
+</script>
+    <include file="../Public/_footer" />

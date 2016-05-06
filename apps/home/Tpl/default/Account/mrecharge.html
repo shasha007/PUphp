@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width; initial-scale=1.0"/>
+        <title>手机版充值</title>
+        <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+        <link href="../Public/css/mrecharge.css?20150812" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="../Public/js/mrecharge.js"></script>
+    </head>
+    <body>
+        <div class="bg">
+            <div class="main">
+                <div class="recharge_title">PU币充值</div>
+                <div class="recharge_back"><a href="puapp://">&lt;&lt;返回PU</a></div>
+                <div class="recharge_con mt10">
+                    <div class="f14">账号姓名：{$user.realname}</div>
+                    <div class="recharge_line"></div>
+                    <div class="lh30 f14">充值金额：
+                        <form name="form1" method="post" action="{:U('home/Account/goPay')}">
+                            <p>
+                                <input type="radio" class="mradio" name="much" id="money1" value="10" checked />
+                                <label for="money1">10元</label>
+                                <input type="radio" class="mradio" name="much" id="money2" value="50"/>
+                                <label for="money2">50元</label>
+                                <input type="radio" class="mradio" name="much" id="money3" value="100"/>
+                                <label for="money3">100元</label>
+                                <input type="radio" class="mradio" name="much" id="money4" value="200"/>
+                                <label for="money4">200元</label><br/>
+                                <input type="radio" name="much" id="money5" value="0"/>
+                                <label for="money5">其他</label>
+                                <input id="otherMoney" class="recharge_input" type="text" maxlength="6"
+                                       onkeypress="if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 46)
+                                                   event.returnValue = false;
+                                       " onpaste="return false"/>
+                            </p>
+                        </form>
+                    </div>
+                    <div class="recharge_line"></div>
+                    <div class="f14">支付方式：<img src="../Public/images/alipay.png">支付宝</div>
+                    <div class="recharge_line"></div>
+                    <div class="f14">应付金额：￥<span class="recharge_red" id="Money">10</span></div>
+                    <div class="recharge_line"></div>
+                    <div class="recharge_red">兑换比例：一元人民币=1PU币</div>
+                    <div>
+                        <form target="_blank" method="post" action="{:U('home/Account/goPay')}" name="toPayForm" id="toPayForm">
+                            <input type="hidden" value="alipay" name="payName" id="hidPayName"/>
+                            <input type="hidden" value="" name="money" id="hidMoney"/>
+                            <input id="submit_ok" type="submit" class="recharge_btn mt10" value="点此充值"/>
+                        </form>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </body>
+</html>

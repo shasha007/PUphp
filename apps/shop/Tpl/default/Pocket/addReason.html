@@ -1,0 +1,22 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <h3>添加原因</h3>
+    <form action="{:U('shop/Pocket/doAddReason')}" method="post">
+        <div class="form2">
+            <dl class="lineD">
+                <dt>原因：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input type="text" name="name" />
+                </dd>
+            </dl>
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<include file="_footer" />

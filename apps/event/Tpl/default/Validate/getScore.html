@@ -1,0 +1,93 @@
+<include file="../Teacher/_header" />
+
+<script>
+
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<div class="so_main">
+    <include file="_tab" />
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <form method="post" action="__URL__&act=getScore&id={$id}">
+            时间：<input name="sTime" type="text" class="text" id="sTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />-
+            <input name="eTime" type="text" class="text" id="eTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>时间</th>
+                <th>部落名</th>
+                <th>操作</th>
+                <th>得分</th>
+                <th>分数</th>
+            </tr>
+            <foreach name="data" item="val">
+                <tr>
+                    <td style="width:30px;">
+                        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                        <label for="checkbox"></label>
+                    </td>
+                    <td>{$val.day}</td>
+                    <td>{$val.gid}</td>
+                    <td>{$val.reason}</td>
+                    <td>{$val.credit}</td>
+                    <td>{$val.score}</td>
+                </tr>
+            </foreach>
+       </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+<include file="../Teacher/_footer" />
+<script type="text/javascript">
+    $( function(){
+        $( "select[name='typeId']" ).val("{$typeId}");
+        $( "select[name='sorder']" ).val("{$sorder}");
+        $( "select[name='eorder']" ).val("{$eorder}");
+        $( "select[name='limit']" ).val("{$limit}");
+    });
+    c = new ctrl();
+    var sid = {$editSid};
+    function selectSchool(){
+        var typevalue = $("#current").val();
+        ui.box.load(U('event/School/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择学校',noCheck:'yes'});
+    }
+    function joinAll(id){
+        if( confirm( '是否给本校全体成员报名该活动？' ) ){
+            ui.box.show('处理中。。。请勿关闭浏览器 ',{title:'处理中...',closeable:false});
+            $.post('__URL__&act=allJoin',{id:id},function( text ){
+                var json=$.parseJSON(text);
+                ui.box.close();
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+    function bufa(id){
+        if( confirm( '是否补发积分学分？已发放的不会重复发放' ) ){
+            $.post('__URL__&act=bufa',{id:id},function( text ){
+                var json=$.parseJSON(text);
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+</script>

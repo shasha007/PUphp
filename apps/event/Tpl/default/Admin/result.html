@@ -1,0 +1,48 @@
+<include file="header" />
+
+<div class="list3">
+    <ul>
+        <li>
+            <div class="list3_title c1">特等奖</div>
+            <div class="list3_sublist">
+                <ul>
+                    <volist name="list0" id="vo">
+                        <li>{$vo.num}</li>
+                    </volist>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="list3_title">一等奖</div>
+            <div class="list3_sublist">
+                <ul>
+                    <volist name="list1" id="vo">
+                        <li>{$vo.num}</li>
+                    </volist>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="list3_title">二等奖</div>
+            <div class="list3_sublist">
+                <ul>
+                    <volist name="list2" id="vo">
+                        <li>{$vo.num}</li>
+                    </volist>
+                </ul>
+            </div>
+        </li>
+        <li class="i5">
+            <div class="list3_title">三等奖</div>
+            <div class="list3_sublist">
+                <ul>
+                    <volist name="list3" id="vo">
+                        <li>{$vo.num}</li>
+                    </volist>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<include file="footer" />

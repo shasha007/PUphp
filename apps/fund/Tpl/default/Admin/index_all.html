@@ -1,0 +1,60 @@
+<div class="form2" style='padding-bottom: 10px;'>
+ <form action='__URL__&act=index' method="POST">
+    学校：<select name='school'>
+               <option value='0'>不限</option>
+               <volist name='slist' id='vo'>
+                   <option value='{$vo.id}'>{$vo.title}</option>
+               </volist>
+          </select>
+    活动名称：<input type="text" name='eventName'>
+    审核状态：<select name='state'>
+               <option value='0'>不限</option>
+               <option value='1'>审核中</option>     
+               <option value=2'>待发放</option>
+               <option value='3'>已发放</option>
+          </select>
+    <input type="submit" class="btn_b">
+ </form>
+</div>
+
+<div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>学校</th>
+                <th>活动名称</th>
+                <th>发起人</th>
+                <th>状态</th>
+                <th>申请日期</th>
+                <th>审核人</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data['data']" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.sid}</td>
+                    <td><a href="{$vo.schoolUrl}" target="_blank">{$vo.eventName}</a></td>
+                    <td>{$vo.uid}</td>
+                    <td>{$state[$vo['state']]}</td>
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <td>{$vo.checker}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="detail({$vo.id});">查看</a>     
+                        <if condition="$vo.state eq 0">
+                        <a href="javascript:void(0);" onclick="through({$vo.id});">通过</a>
+                        <a href="javascript:void(0);" onclick="reject({$vo.id});">驳回</a>
+                        <elseif condition='$vo.state eq 1 and $vo.loanState eq 0' />
+                         <a href="javascript:void(0);">等待发放</a>
+                        <elseif condition='$vo.state eq 1 and $vo.loanState eq 1' />
+                         <a href="javascript:void(0);">已发放</a>
+                        </if>         
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>

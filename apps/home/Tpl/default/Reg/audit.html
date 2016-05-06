@@ -1,0 +1,93 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="list">
+<h1>用户注册审核</h1>
+<div style="float:left;padding:20px">
+    <a href="{:PIC_URL}/data/register/{$obj.zj_file}" target="_blank">
+        <img src="{$obj.zj_file|tsMakeThumbUp=###,450,550,'f','',false,'register'}"/>
+    </a>
+</div>
+<div style="float:left;padding:20px;text-align:left;">
+    <form id="pass" method="post" action="__URL__&act=doAudit&id={$obj.id}">
+        <input type="hidden" name="nowpage" value="{$nowpage}"/>
+        <input type="hidden" name="password" value="{$obj.password}"/>
+    <table width="100%;" border="1" cellspacing="0" cellpadding="10">
+        <tr>
+            <td>【用户提交】</td>
+            <td>【新建用户】<div class="cRed">根据学生证和用户提交，可酌情修改新建用户信息后提交</div></td>
+        </tr>
+        <tr>
+            <td>学校：{$obj.school}</td>
+            <td>
+                <input type="hidden" id="current" name="sid" value="{$obj.sid}"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-right: 10px;">院系：{$obj.yxName}</td>
+            <td><input type="text" class="text35" value="{$obj.yxName}" id="selectSid1" readonly="true" OnFocus="selectYuanxi()" size="40"/>
+                <input id="currentSid1" type="hidden" value="{$obj.yuanxi}" name="sid1">
+            </td>
+        </tr>
+        <tr>
+            <td>学号：{$obj.number}</td>
+            <td><input type="text" class="text35" value="{$obj.number}" name="number" /></td>
+        </tr>
+        <tr>
+            <td>专业：{$obj.major}</td>
+            <td><input type="text" class="text35" value="{$obj.major}" name="major" /></td>
+        </tr>
+        <tr>
+            <td>姓名：{$obj.realname}</td>
+            <td><input type="text" class="text35" value="{$obj.realname}" name="realname" /></td>
+        </tr>
+        <tr>
+            <td>年级：{$obj.year}</td>
+            <td><input type="text" class="text35" value="{$obj.year}" name="year" /></td>
+        </tr>
+        <tr>
+            <td>班级：{$obj.grade}</td>
+            <td><input type="text" class="text35" value="{$obj.grade}" name="grade" /></td>
+        </tr>
+        <tr>
+            <td>手机：{$obj.mobile}</td>
+            <td><input type="hidden" value="{$obj.mobile}" name="mobile" /></td>
+        </tr>
+        <tr>
+            <td style="padding-right: 10px;">邮箱：{$obj.email} </td>
+            <td><input type="button" class="btn_b" value="通 过" onclick="pass()"/></td>
+        </tr>
+    </table>
+    </form>
+    <br/>
+    <form method="post" action="__URL__&act=doReject&id={$obj.id}">
+        <input type="hidden" name="nowpage" value="{$nowpage}"/>
+        驳回原因：<textarea  style='width:200px;height:100px;' name='reason'></textarea>
+        <input type="submit" class="btn_b" value="驳 回"/>
+    </form>
+</div>
+</div>
+<script>
+    function pass(){
+        if(confirm('确定通过审核，并新建该用户账号？')){
+            $('#pass').submit();
+        }
+    }
+function selectSchool(){
+    if(!$('input[name="close"]').val()){
+        ui.box.load(U('home/Public/citys'),{title:'选择学校'});
+    }
+}
+function selectYuanxi(){
+    var sid = $("#current").val();
+    if(sid==''){
+        alert('请先选择学校');
+        return;
+    }
+    if(!$('input[name="close"]').val()){
+        var typevalue = $("#currentSid1").val();
+        ui.box.load(U('home/Public/boxYuanxi')+'&selected='+typevalue+'&sid='+sid,{title:'选择院系',noCheck:'yes'});
+    }
+}
+</script>
+<include file="_footer" />

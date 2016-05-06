@@ -1,0 +1,130 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/json2select.js" ></script>
+<script type="text/javascript" src="../Public/js/json2select2.js" ></script>
+<script type="text/javascript" src="../Public/js/document.info.form.js" ></script>
+
+<div class="content clearfix under-suggest">
+
+
+			<div class="right_box mt10">
+				<div class="right_boxtitle">
+				  <p>上传文档</p>
+				</div>
+				<div class="right_boxwrapper">
+
+
+					        	<form method="post" action="{:U('/Upload/doAdd')}" enctype="multipart/form-data" name="upload_single_doc" id="upload_single_doc" onsubmit="return start_upload(this);">
+
+								<ul class="add_document">
+									<li>
+						          	<div class="c1">标题：<span class="cRed pr5">*</span></div>
+						            <div class="c2">
+						              <input type="text" name="name" value="{$search_key}" class="text" style="width: 300px;" onblur="this.className='text';document_info.text_length(this,30);" onfocus="this.className='text2'" />
+						              <span id="document_name_tips" class="cRed pr5"></span>
+						            </div>
+						       	  </li>
+						          <li>
+						          	<div class="c1">文档简介：&nbsp;&nbsp;&nbsp;</div>
+						            <div class="c2">
+						              <textarea rows="6" style="padding: 8px; width: 400px;" class="text" onblur="this.className='text';document_info.text_length(this,60);" onfocus="this.className='text2'" name="intro"></textarea>
+						              <span id="document_intro_tips" class="cRed pr5"></span>
+						            </div>
+						       	  </li>
+					        	<li>
+						          	<div class="c1">学校：<span class="cRed pr5">*</span></div>
+						            <div class="c2" id="school"></div>
+					        	</li>
+					        	<li>
+						          	<div class="c1">文档分类：<span class="cRed pr5">*</span></div>
+						            <div class="c2" id="pid"></div>
+					        	</li>
+					            <li>
+					            	<div class="c1">文档：<span class="cRed pr5">*</span></div>
+					                <div class="c2"><input type="file" name="fileField[]" id="fileField_1" />(支持格式doc,docx,ppt,pptx,pdf,rar,zip)</div>
+					        	</li>
+					          <li>
+					          	<div class="c1">权限：<span class="cRed pr5">*</span></div>
+					            <div class="c2">
+					            	<div class="mb10"><label><input type="radio" style="margin-top: -3px;" name="type" value="open" checked>公开<span class="cGray2">（所有用户可见）</span></label></div>
+					                <div><label><input type="radio" style="margin-top: -3px;" name="type" value="close">私密<span class="cGray2">（仅自己可见）</span></label></div>
+					            </div>
+					       	  </li>
+							          <li>
+							          	<div class="c1">星级评分：<span class="cRed pr5">*</span></div>
+							            <div class="c2">
+							<select name="rate" id="rate"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+							            </div>
+							       	  </li>
+					          <li>
+					          	<div class="c1">售价：<span class="cRed pr5">*</span></div>
+					            <div class="c2">
+					<select name="credit" id="credit"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="5">5</option><option value="8">8</option><option value="10">10</option><option value="20">20</option></select>
+					              <span class="cGray2">（是指文档每被下载一次，您所获得的积分奖励）</span>
+					            </div>
+					       	  </li>
+					          <li>
+					          	<div class="c1">验证码：<span class="cRed pr5">*</span></div>
+					            <div class="c2">
+					              <input name="verify" type="text" class="text" style="width:70px" />
+								  <img src="{:U('home/Public/verify')}" id="verifyimg" class="alM" />
+					              <a href="javascript:void(0);" onclick="document_info.change_verify()" alt="换一张">看不清楚，换一个</a>
+					            </div>
+					       	  </li>
+					            <li>
+					              	<div class="c1">&nbsp;</div>
+					                <div class="c2">
+										<input type="hidden" name="dosubmit" value="1">
+										<input type="submit" id="submit_button" class="btn_b" value="上传文档" />
+					                </div>
+					        	</li>
+					        	</ul>
+
+					   			</form>
+
+				</div>
+			</div>
+
+
+</div>
+
+<script type="text/javascript">
+
+function start_upload(v_form) {
+	//必须选一个文件
+	var	files = document.getElementsByName('fileField[]');
+	var checked_files=0;
+	for	(i=0; i < files.length; i++)
+	{
+		if(files[i].value!=''){
+			checked_files++;
+		}
+	}
+	if(checked_files<=0){
+		ui.error('请选择一个文件上传！');
+		return false;
+	}
+
+	var checkmore = document_info.check_form(v_form);
+
+	if(checkmore) {
+		$('#submit_button').attr('disabled',true).val("上传中...");
+	}
+
+	return checkmore;
+}
+</script>
+
+ <script type="text/javascript">
+ $(document).ready(function(){
+
+	document_info.init();
+	var category_json = {:getCategorySelect(0)};
+	$("#pid").json2select(category_json,'','cid');
+
+	var category_json2 = {:getSchoolSelect(0)};
+	$("#school").json2select(category_json2,'{$schoolid}','school');
+
+ });
+</script>
+
+<include file="../Public/_footer" />

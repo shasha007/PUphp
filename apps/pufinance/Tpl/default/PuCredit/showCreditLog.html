@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{$Think.lang.finance_name}明细</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+    <script src="../Public/js/mainScript.js"></script>
+    <script>
+        setActionBar('{$Think.lang.finance_name}明细', '', '');
+    </script>
+</head>
+<body bgcolor="#F3F1EE">
+<div class="w-limitDiv">
+    <div>
+        <p>已用额度</p>
+        <p>{:number_format($credit['all_amount']-$credit['usable_amount'], 2)}</p>
+    </div>
+    <div>
+        <p>总额度</p>
+        <p>{$credit.all_amount|number_format=###,2}</p>
+    </div>
+</div>
+
+<volist name="logs" id="month">
+    <if condition="date('Ym') neq $key">
+        <p class="w-limitGeneral w-month">
+            <b>{$key|substr=###, 4}月</b>
+        </p>
+    </if>
+    <volist name="month" id="log">
+        <p class="w-limitGeneral">
+		<span>
+			<i>{$log.type|get_credit_log_type}</i>
+			<i>{$log.ctime|date='m-d', ###}</i>
+		</span>
+            <i>{$log.amount|number_format=###,2}</i>
+        </p>
+    </volist>
+</volist>
+</body>
+</html>

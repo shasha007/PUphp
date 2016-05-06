@@ -1,0 +1,15 @@
+<?php if($errorMsg):?>
+<div class="jf_tip">
+    <div class="jf_tip_desc">{$errorMsg}</div>
+    <div class="jf_btn"></div>
+</div>
+<?php else:?>
+<div class="jf_tip">
+    <div class="jf_tip_desc">兑换成功，凭条码或号码领取礼品！条码将会保存在[我兑换的礼品]</div>
+    <div class="jf_tip_code"><img src="barcodegen/test.php?text={$code}" alt="" /></div>
+    <div class="jf_btn"></div>
+</div>
+<script>
+    $('#jfNumber').html({$rest});
+</script>
+<?php endif?>

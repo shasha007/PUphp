@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>企业介绍--创就业--Pocketuni</title>
+<link href="../Public/css/job.css" type="text/css" rel="stylesheet" />
+<link href="../Public/css/students.css" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+</head>
+
+<body>
+<include file="__THEME__/_holder_2014" />
+<div class="bg_job">
+ <div class="main_job">
+<include file="../Public/top" />
+  <div class="c_job">
+   <div class="job_posthead mt10">
+    <div class="job_postlogo"><img src="{$cinfo.logo_pics}" /></div>
+    <div class="job_postinfor">
+     <div class="job_postname f18 b">{$cinfo.fullname}</div>
+     <div class="job_postcname f14 b">卓越 创新</div>
+     <div class="clear"></div>
+
+
+
+
+    </div>
+
+   </div>
+   <div class="job_pleft">
+    <div class="job_plefttitle b f16">公司简介</div>
+    <div class="job_pleftdesc">
+     {$cinfo.introduction}
+    </div>
+    <div class="job_plefttitle mt10 b f16">招聘职位</div>
+    <div class="job_pleftlist mt20 lh26">
+     <ul>
+      <volist name="jobList" id="vo" key="key">
+       <li>
+       <div class="job_pleftlist_t f14 b"><a href="{:U('job/Position/job_post')}&postid={$vo.postid}">{$vo.positionname}</a>【{$vo['workarea'] | getAreaName}】</div>
+       <div class="job_pleftlist_date">{$vo['ctime'] | friendlyDate}发布</div>
+       <div class="job_pleftlist_t mt5 b">{$vo['positiontype'] | positiontype}/{$vo['salary'] | monthlySalary}/经验不限/学历{$vo['education'] | getEducation}</div>
+      </li>
+      </volist>
+     </ul>
+     <?php if($jobList):?>
+     <div class="job_pleftlist_more mt10"><a href="#">查看更多</a></div>
+     <?php endif;?>
+    </div>
+   </div>
+   <div class="job_pright">
+    <div class="job_prkey">
+     <span class="b f14">领域：</span>{$cinfo['industrycategory_a'] | getsIndustryName}<br />
+     <span class="b f14">规模：</span>{$cinfo['scale'] | scale}<br />
+     <span class="b f14">性质：</span>{$cinfo['type'] | type}
+    </div>
+    <div class="job_pradd">
+     <span class="b">公司主页：</span>{$cinfo.homePage}<br />
+     <span class="b">公司地址：</span>{$cinfo.address}<br />
+     <span class="b">联系电话：</span>{$cinfo.telephone_areacode}-{$cinfo.telephone}<br />
+     <span class="b">E-mail：</span>{$cinfo.getresume_email}
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+
+
+</body>
+<include file="__THEME__/footer" />
+</html>

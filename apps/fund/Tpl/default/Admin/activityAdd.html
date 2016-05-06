@@ -1,0 +1,106 @@
+<link href="../Public/css/fund_admin.css" rel="stylesheet" type="text/css" />
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <include file="_act_tab" />
+    </div>
+    <div class="list">
+        <form ENCTYPE="multipart/form-data" action="__URL__&act=doaddEvent" method="post" id='form' onsubmit="return check();">
+            <input type="hidden" name='eventId' value="{$eventId}">
+            <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="200px;">*申请公司：</td>
+                    <td><input type="text" id='company' name='company' class='company' value="{$company}"></td>
+                </tr>
+                 <tr>
+                    <td>*活动名称：</td>
+                    <td><input type="text" id='eventName' name='eventName' class='eventName' value="{$eventName}"></td>
+                </tr>
+                 <tr>
+                    <td>*活动时间：</td>
+                    <td><input type="text" name='ctime'  id='ctime' value="<?php if($cTime):echo date('Y-m-d H:i:s',$cTime);endif;?>" class="p_input2 ctime" onfocus="rcalendar(this,'full');">
+                        ~ <input type="text" name='endtime' id='endtime' value="<?php if($cTime):echo date( 'Y-m-d H:i:s',$endTime );endif;?>" class="p_input2 endtime" onfocus="rcalendar(this,'full');"></td>
+                </tr>
+                 <tr>
+                    <td>*承办截止时间：</td>
+                    <td><input type="text" name='bytime' id='bytime' value="<?php if($cTime):echo date( 'Y-m-d H:i:s',$byTime );endif;?>" class="p_input2 bytime" onfocus="rcalendar(this,'full');"></td>
+                </tr>
+                <include file="__THEME__/comm/showInArea" />
+                 <tr id="addArea">
+                    <td>*活动logo：</td>
+                    <td>
+                     <div class="prov_thumblist"><ul id="uploaded_photos1"></ul></div>
+                     <input type="button" value="上传图标" onclick="openUploadImg(1);"> (尺寸为正方形1:1)
+                    </td>
+                </tr>
+                <tr>
+                    <td>描述</td>
+                    <td><textarea id="content" name="content" style="width:700px;height:350px">{$descript}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="page_btm"><input class="btn_b" type="submit" value='确认'></td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+</div>
+
+<include file="_footer" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/js/ztree/zTreeStyle.css" />
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.core-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.excheck-3.5.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/ztree/jquery.ztree.exedit-3.5.min.js" ></script>
+<include file="__THEME__/comm/_datepicker" />
+<include file="__THEME__/comm/kindeditor" />
+<script type="text/javascript">
+    function selectSchool(en){
+        var typevalue = $("#showSids").val();
+        ui.box.load(U('event/Index/school')+'&selected='+typevalue,{title:'选择学校',noCheck:'yes'});
+    }
+    function check(){
+        if(!$('#company').val()){
+            ui.error("申请公司不能为空");
+            return false;
+        }
+        if(!$('#eventName').val()){
+            ui.error("活动名称不能为空");
+            return false;
+        }
+        var ctime      = $('#ctime').val();
+        if(!ctime){
+            ui.error("活动开始时间不能为空");
+            return false;
+        }
+        var endtime      = $('#endtime').val();
+        if(!endtime){
+            ui.error("活动结束时间不能为空");
+            return false;
+        }
+        if(endtime<ctime){
+            ui.error("活动结束时间不能小于开始时间");
+            return false;
+        }
+        var bytime      = $('#bytime').val();
+        if(!bytime){
+            ui.error("承办截止时间不能为空");
+            return false;
+        }
+        if(bytime>ctime){
+            ui.error("承办截止日期不能大于活动开始日期");
+            return false;
+        }
+        return true;
+    }
+var imgCount = [0,0,0];
+var imgMax = [0,1,1];
+var thumbSizeW = [0,100,600];
+var thumbSizeH = [0,100,300];
+var showW = [0,60,120];
+var showH = [0,60,60];
+var imgId = 0;
+var attach_type = 'fund';
+</script>
+<include file="__THEME__/comm/_upload_file" />

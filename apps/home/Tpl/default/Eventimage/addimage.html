@@ -1,0 +1,207 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div id="editTpl_div">
+        <div class="page_tit">今日推荐图</div>
+        <a href="{:U('home/Eventimage/imglist')}" class="btn_a"><span>返回今日推荐列表</span></a>
+        <div class="form2">
+            <form method="post" action="{:U('home/Eventimage/doaddimage')}" enctype="multipart/form-data">
+                <dl class="lineD">
+                    <dt>今日推荐<span class="red">*</span></dt>
+                    <dd>
+                        <select  style="width: 180px"  name="eventid"  onChange="adPlace(this)">
+                        <foreach name="event" item="vo" key="i">
+                            <option value="{$vo.event_id}" >{$vo.title}</option>
+                            
+                         </foreach>  
+                        </select>
+                        <span class="cGray2">进行中的pu活动</span>
+                    </dd>
+
+                </dl>
+                <dl class="lineD  adx" id="jun">
+                    <dt>投放地区：</dt>
+                    <dd>
+                        <select name="area[]" onChange="getSchools(this)">
+                            <option value="0" >全部</option>
+                            <volist name="citys" id="vo">
+                                <option value="{$vo['id']}" <eq name="vo['id']" value="$area['areaId']">selected</eq> >{$vo.short} {$vo.city}</option>
+                            </volist>
+                        </select>
+                        <span >
+                            学校
+                            <input  type='checkbox' onclick="checkAll(this,{$area['areaId']})" value=''/>全部
+                            <volist name="area['school']" id="school">
+                                <input name="schools{$area['areaId']}[]" type='checkbox' value="{$school['id']}" <php>if(in_array($school['id'],$sids))echo 'checked' </php>>{$school.title}
+                            </volist>
+                        </span>
+                    </dd>
+                </dl>
+                <dl class="lineD adx">
+                    <dt>添加投放地区：</dt>
+                    <dd>
+                        <a href="javascript:void(0);" onclick="add();">添加</a>
+                    </dd>
+                </dl>           
+                <dl class="lineD">
+                    <dt>上传图片1<span class="red">*</span></dt>
+                    <dd>
+                        <input name="cover1" type="file" />
+                         </br>
+                    <span class="cGray2">尺寸为580*210px
+                        </span>
+                    </dd>
+                </dl>
+               
+      
+                <dl class="lineD">
+                    <dt>上传图片2<span class="red">*</span></dt>
+                    <dd>
+                        <input name="cover2" type="file" />
+                         </br>
+                    <span class="cGray2">尺寸为282*282px
+                        </span>
+                    </dd>
+                </dl>
+                
+                <dl class="lineD">
+                    <dt>上传图片3<span class="red">*</span></dt>
+                    <dd>
+                        <input name="cover3" type="file" />
+                         </br>
+                    <span class="cGray2">尺寸为183*263px
+                        </span>
+                    </dd>
+                </dl>
+
+
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/chosen.jquery.min.js"></script>
+<script>
+    function getSchools(obj){
+        var span = $(obj).siblings('span');
+        if($(obj).val()==0){
+            span.hide();
+            return false;
+        }
+        span.show();
+        span.empty();
+        var cityId=$(obj).val();
+        $.get( U('home/Ad/school') ,{cityId:cityId},function(data) {
+            var json=  $.parseJSON(data);
+            var string = "<input  type='checkbox' onclick='checkAll(this,"+cityId+")' value=''/>全部";
+            $.each(json, function(k,v)
+            {
+                string += "&nbsp;&nbsp;<input name='schools"+cityId+"[]' type='checkbox' value='"+v.id+"'>"+v.title;
+            });
+            span.append(string);
+
+        });
+    }
+
+    function add(){
+        var obj = $('#jun').clone(true).insertAfter("#jun");
+        $(obj).find("option:selected").attr('selected','');
+        $(obj).find('span').hide();
+    }
+
+		(function($){
+		    $('select[name=eventid]').chosen(	
+		    );
+		})(jQuery);
+		
+    function getSchools(obj){
+        var span = $(obj).siblings('span');
+        if($(obj).val()==0){
+            span.hide();
+            return false;
+        }
+        span.show();
+        span.empty();
+        var cityId=$(obj).val();
+        $.get( U('home/Ad/school') ,{cityId:cityId},function(data) {
+            var json=  $.parseJSON(data);
+            var string = "<input  type='checkbox' onclick='checkAll(this,"+cityId+")' value=''/>全部";
+            $.each(json, function(k,v)
+            {
+                string += "&nbsp;&nbsp;<input name='schools"+cityId+"[]' type='checkbox' value='"+v.id+"'>"+v.title;
+            });
+            span.append(string);
+
+        });
+    }
+
+    function add(){
+        var obj = $('#jun').clone(true).insertAfter("#jun");
+        $(obj).find('span').hide();
+    }
+
+
+    function checkAll(o,cityId){
+        if( o.checked == true ){
+            $('input[name="schools'+cityId+'[]"]').attr('checked','true');
+        }else{
+            $('input[name="schools'+cityId+'[]"]').removeAttr('checked');
+        }
+    }
+    function checkYearAll(o){
+        if( o.checked == true ){
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+    }
+
+    function adType(obj){
+        if(obj.value==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+    }
+
+    function adPlace(obj){
+        if(obj.value==0||obj.value==1){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+        if(obj.value<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    }
+
+
+    $(function(){
+        if($("select[name='type']").val()==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+        if($("select[name='place']").val()==1||$("select[name='place']").val()==0){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+
+        if($("select[name='place']").val()<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    });
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<include file="_footer" />

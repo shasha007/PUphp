@@ -1,0 +1,243 @@
+<include file="../CoursePass/_header" />
+<script>
+    //搜索用户
+    var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+    function searchObject() {
+        if(isSearchHidden == 1) {
+            $("#searchObject_div").slideDown("fast");
+            $(".searchObject_action").html("搜索完毕");
+            isSearchHidden = 0;
+        }else {
+            $("#searchObject_div").slideUp("fast");
+            $(".searchObject_action").html("搜索课程活动");
+            isSearchHidden = 1;
+        }
+    }
+
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                alert('请选择要删除的课程活动！');return false;
+            }
+            if( confirm("是否删除课程活动？") ){
+                $.post( '__URL__&act=doDeleteCourse',{id:id},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个课程活动成功" );
+                        var id_list = id.split( ',' );
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove();
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        },
+        top:function(id,act){
+            if( act == 'top' ){
+                v = "推荐";
+                v2 = "取消推荐";
+                act2 = 'cancel';
+            }else{
+                v = "取消推荐";
+                v2 = "推荐";
+                act2 = 'top';
+            }
+            if( confirm( '是否'+v ) ){
+                $.post('__URL__&act=doChangeIsTop',{id:id,type:act},function( text ){
+                    if( text == 1 ){
+                        ui.success( "操作成功" );
+                        $('#top'+id).html('<a href="javascript:void(0);" onclick="c.top('+id+',\''+act2+'\')">'+v2+'</a>');
+                    }else{alert(text);
+                        ui.error( "设置失败" );
+                    }
+                });
+            }
+        }
+    }
+    var c = null;
+
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<div class="so_main">
+    <include file="_tab" />
+
+    <div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+        <div class="page_tit">搜索课程活动 [<a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+        <div class="form2">
+            <form action="__URL__&act=courselist" method="POST">
+                <input type="hidden" name="isSearch" value="1"/>
+                <php>if($isSearch != '1') $uid = '';</php>
+                <dl class="lineD">
+                    <dt>用户ID：</dt>
+                    <dd>
+                        <input name="uid" class="txt" value="{$uid}">
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>课程活动ID：</dt>
+                    <dd>
+                        <input name="id" class="txt" value="{$id}">
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>课程活动标题：</dt>
+                    <dd>
+                        <input name="title" class="txt" value="{$title}" /><span> 支持模糊查询。</span>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>课程活动类别：</dt>
+                    <dd>
+                        <select name="typeId">
+                            <option value="">全部</option>
+                            <php>foreach($type_list as $k=>$t){</php>
+                            <option value="{$k}">{$t}</option>
+                            <php>}</php>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>发表时间：</dt>
+                    <dd>
+                        <div class="c2">
+                            <input name="sTime" type="text" class="text" id="sTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />-
+                            <input name="eTime" type="text" class="text" id="eTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
+                        </div>
+                        <div class="c"></div>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>是否推荐：</dt>
+                    <dd>
+                        <div class="c2">
+                <input type="radio" value="1" name="isTop" <eq name="isTop" value="1">checked</eq> />是
+                <input type="radio" value="0" name="isTop" <eq name="isTop" value="0">checked</eq> />否
+                <input type="radio" value="" name="isTop" <eq name="isTop" value="">checked</eq> />全部
+                        </div>
+                        <div class="c"></div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>结果排序：</dt>
+                    <dd>
+                        <select name="sorder">
+                            <option value = "cTime">时间排序</option>
+                            <option value = "id">发布id排序</option>
+                        </select>
+                        <select name="eorder">
+                            <option value = "DESC">降序</option>
+                            <option value = "ASC" >升序</option>
+                        </select>
+                        <select name="limit">
+                            <option value = "10">每页显示10条</option>
+                            <option value = "20">每页显示20条</option>
+                            <option value = "30">每页显示30条</option>
+                            <option value = "100">每页显示100条</option>
+                        </select>
+                    </dd>
+                </dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索课程活动<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除课程活动</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th width="30%">课程活动标题</th>
+                <th>发起者</th>
+                <th>参与</th>
+                <th>课时</th>
+                <th>发起时间</th>
+                <th>课程活动类别</th>
+                <th>状态</th>
+                <th>审核人</th>
+                <th>推荐</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><a href="{:U('/LessonActive/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a> <span class="cGray2 type_{$vo.id}">[{$vo['type']}]</span></td>
+                    <td>{$vo.uid|getUserRealName}</td>
+                    <td>{$vo['joinCount']}</td>
+                    <td>{$vo['credit']}</td>
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <td>{$vo['type']}</td>
+                    <td id="deadline{$vo['id']}">
+
+                        <?php if($vo['status'] == 1): ?>
+                            <span class="cRed">待审核</span>
+                        <?php elseif($vo['status'] == 0): ?>
+                          <span class="cGray2">被驳回</span>
+                        <?php elseif($vo['status'] == 2&&$vo['eTime']>time()): ?>
+                            <span class="cGreen">进行中...</span>
+                        <?php elseif($vo['status'] == 3 ||$vo['eTime']<time()): ?>
+                            <span class="cRed">结束</span>
+                        <?php endif;?>
+                    </td>
+                    <td>{$vo.audit_uid|getUserRealName}</td>
+                    <td>
+                        <?php if($vo['status'] == 2): ?>
+                        <php>
+                            if( $vo['isTop'] ){
+                                $button = '取消推荐';
+                                $act    = 'cancel';
+                            }else{
+                                $button = '推荐';
+                                $act    = 'top';
+                            }
+                        </php>
+                        <span id="top{$vo['id']}" ><a href="javascript:void(0);" onclick="c.top({$vo['id']},'{$act}')">{$button}</a></span>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                    <a href="{:U('/CourseActive/editCourse', array('id'=>$vo['id']))}">编辑</a>
+                <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索课程活动<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除课程活动</span></a>
+    </div>
+</div>
+<include file="../CoursePass/_footer" />
+<script type="text/javascript">
+    $( function(){
+        $( "select[name='typeId']" ).val("{$typeId}");
+        $( "select[name='sorder']" ).val("{$sorder}");
+        $( "select[name='eorder']" ).val("{$eorder}");
+        $( "select[name='limit']" ).val("{$limit}");
+    });
+    c = new ctrl();
+</script>

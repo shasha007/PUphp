@@ -1,0 +1,44 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"> 站点配置</div>
+    <form method="post" action="{:U('event/config/doWebconfig')}" enctype="multipart/form-data">
+        <div class="form2">
+            <dl class="lineD">
+                <dt>站点名称：</dt>
+                <dd>
+                    <input name="title" type="text" value="{$title}" size="40">
+                    <p>前台网站名称</p>
+            </dl>
+            <dl class="lineD">
+                <dt>站点顶部图片：</dt>
+                <dd>
+                <if condition="$path">
+                    <img style="height:80px" src="{:PIC_URL}{$path}"><br/>
+                </if>
+                <input type="file" name="banner_logo" />
+                <p>重要: 支持格式jpg,jpeg,png,gif。请注意图片大小 980*80尺寸，程序并不进行自动剪切!</p>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>学分名称：</dt>
+                <dd>
+                    <input name="cradit_name" type="text" value="{$cradit_name}" size="40">
+            </dl>
+            <dl class="lineD">
+                <dt>单个活动最大学分：</dt>
+                <dd><input name="max_credit" type="text" value="{$max_credit}" size="10" onkeyup="clearNoNum(this)"> 可带2位小数</dd>
+            </dl>
+            <dl class="lineD">
+                <dt>单个活动最大积分：</dt>
+                <dd><input name="max_score" type="text" value="{$max_score}" size="10" onkeyup="clearNoNum2(this)"> 整数</dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<include file="../Teacher/_footer" />

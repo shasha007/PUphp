@@ -1,0 +1,82 @@
+<include file="_header" />
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">团购记录</div>
+            <div class="consumer_records1">
+                <div class="good_fl">分类：
+                    <a href="{:U('shop/Myshop/tgOrder')}" <?php if(!$_GET['state'])echo' class="cur"';?>>所有</a>
+                    <a href="{:U('shop/Myshop/tgOrder',array('state'=>3))}"<?php if($_GET['state']==3)echo' class="cur"';?>>等待开团</a>
+                    <a href="{:U('shop/Myshop/tgOrder',array('state'=>4))}"<?php if($_GET['state']==4)echo' class="cur"';?>>未付尾款</a>
+                    <a href="{:U('shop/Myshop/tgOrder',array('state'=>99))}"<?php if($_GET['state']==99)echo' class="cur"';?>>未提交收货地址</a>
+                    <a href="{:U('shop/Myshop/tgOrder',array('state'=>1))}"<?php if($_GET['state']==1)echo' class="cur"';?>>等待发货</a>
+                    <a href="{:U('shop/Myshop/tgOrder',array('state'=>2))}"<?php if($_GET['state']==2)echo' class="cur"';?>>已发货,未签收</a>
+                    <a href="{:U('shop/Myshop/tgOrder',array('state'=>10))}"<?php if($_GET['state']==10)echo' class="cur"';?>>交易完成</a>
+                    <a href="{:U('shop/Myshop/tgOrder',array('state'=>11))}"<?php if($_GET['state']==11)echo' class="cur"';?>>取消的订单</a>
+                </div>
+                <div class="good_menu center">
+                    <ul>
+                        <li class="g374">商品</li>
+                        <li>状态</li>
+                        <li>数量(件)</li>
+                        <li>操作</li>
+                    </ul>
+                </div>
+                <div class="good_list1">
+                    <ul>
+<?php if(empty($data)):?>
+<li class="notFound">查无记录</li>
+<?php else:?>
+<volist name="data" id='vo'>
+<li>
+    <div class="good_list1_infor c_r_link">
+        <ul class="center">
+            <li class="g374">
+                <div class="good_list1_thumb"><a href="{:U('shop/Tg/detail',array('id'=>$vo['product_id']))}"><img src="{$vo['product']['pic']|tsMakeThumbUp=###,70,70}" alt="" /></a></div>
+                <div class="good_list1_name">
+                    <a href="{:U('shop/Tg/detail',array('id'=>$vo['product_id']))}">{$vo['product']['name']}</a></div>
+            </li>
+            <li>
+                <?php if($vo['order_state']==4||$vo['order_state']==0||$vo['order_state']==2):?>
+                <span class="m_color2">{$vo['order_state']|orderState}</span>
+                <?php else:?>
+                <span class="m_color3">{$vo['order_state']|orderState}</span>
+                <?php endif;?>
+            <li>{$vo.buyNum}</li>
+            <li><a href="{:U('shop/Myshop/tgOrderDetail',array('id'=>$vo['order_id']))}">查看详情</a>
+    <?php if($vo['order_state']==4):?>
+    </br><span class="prize_do_btn ml15 mt5 b center"><a href="{:U('shop/Myshop/tgPay',array('id'=>$vo['order_id']))}">支付尾款</a></span>
+    <?php elseif($vo['order_state']==0):?>
+    </br><span class="prize_do_btn ml15 mt5 b center"><a href="{:U('shop/Myshop/tgOrderDetail',array('id'=>$vo['order_id']))}">完善配送信息</a></span>
+    <?php elseif($vo['order_state']==2):?>
+    </br><span class="prize_do_btn ml15 mt5 b center"><a href="{:U('shop/Myshop/tgOrderDetail',array('id'=>$vo['order_id']))}">确认收货</a></span>
+    <?php elseif($vo['order_state']==10&&$vo['comment']==0):?>
+    </br><span>     <a href="javascript:void(0)" onclick="comment({$vo['order_id']})">待评论</a></span>
+    <?php elseif($vo['order_state']==10&&$vo['comment']==1):?>
+    </br><span>已评</span>
+    <?php endif;?>
+            </li>
+        </ul>
+    </div>
+</li>
+</volist>
+<?php endif;?>
+                    </ul>
+                    <div class="page">{$html}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function comment(id){
+        if(id==''|| id==0){
+            ui.error("请选择要评论的商品");
+            return false;
+        }
+        ui.box.load( '{:U('shop/Myshop/doTgComment')}' + '&id=' + id,{title:'评论'});
+    }
+    
+</script>
+<include file="../Public/_footer" />

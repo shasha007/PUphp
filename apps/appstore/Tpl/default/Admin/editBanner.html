@@ -1,0 +1,71 @@
+<include file="_header" />
+
+
+<script type="text/javascript" src="../Public/js/json2select2.js" ></script>
+<script>
+	var init = 0;
+	var platform = '{$platform}';
+</script>
+
+<div class="so_main">
+  <div id="editTpl_div">
+  	<div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>{$typename}</div>
+	
+	<div class="form2">
+	<form method="post" action="{:U('appstore/Admin/doEditBanner', array('t'=>$t))}" enctype="multipart/form-data">
+	<eq name="type" value="edit"><input type="hidden" name="id" value="{$id}"></eq>
+    <dl class="lineD">
+      <dt>标题：</dt>
+      <dd>
+        <input name="title" type="text" value="{$title}"> *
+	  </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>平台：</dt>
+      <dd id="platform">        
+	  </dd>
+    </dl>	
+    <dl class="lineD">
+      <dt>是否有效：</dt>
+      <dd>
+        <input type="radio" name="is_active" value="0" <neq name="is_active" value="1">checked</neq>>否<br />
+		<input type="radio" name="is_active" value="1" <eq name="is_active" value="1">checked</eq>>是
+	  </dd>
+    </dl>
+
+    <dl class="">
+      <dt>图片：</dt>
+      <dd>
+		<php>if(!empty($img)) {</php>
+		{$img|get_image_url}
+		<br />
+		<php>}</php>
+      	<input type="file" name="fileField[]" id="fileField_1" />
+	  </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>链接：</dt>
+      <dd>
+        <input name="url" type="text" value="{$url}">
+	  </dd>
+    </dl>
+	
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+	
+	if(init==0) {
+		init = 1;
+		var category_json = {:getCategorySelect(0, 2)};
+		$("#platform").json2select(category_json,platform,'platform');
+	}
+});
+</script>
+<include file="_footer" />

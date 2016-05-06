@@ -1,0 +1,233 @@
+<include file="_header" />
+<div class="intro_c">
+    <div class="member_tab">
+        <div class="member_cz">
+            共{$totalRows}个成员 签到{$attentCount}人&nbsp;&nbsp;
+            <?php if($can_admin):?>
+            <a href="javascript:void(0);" onclick="batchAttend({$eventId})">批量签到</a>  &nbsp;
+            <a href="javascript:void(0);" onclick="allAttend({$eventId})">签到全部成员</a>  &nbsp;
+            <?php endif;?>
+        </div>
+        <div class="member_search">
+            <form action="{:U('/Author/member',array('id'=>$eventId))}" method="post">
+                姓名：<input name="realname" type="text" class="member_searchinput"  value="{$realname}"/>
+                <input type="submit" value="搜索" class="member_btn3" />
+            </form>
+        </div>
+        <a href="{:U('/Author/excel',array('id'=>$eventId))}" style="float:right;padding-right: 30px;">导出excel</a>
+    </div>
+    <div class="member_list">
+            <table width="956" border="0" cellspacing="0" cellpadding="0">
+                <tr class="member_tr1">
+                    <td width="5"><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value=""></td>
+                    <td width="30"><a href="javascript:void(0);" class="list_order" title="排序" id="order_uid">UID</a></td>
+                    <td width="100">姓名</td>
+                <td width="50">诚信度</td>
+                <if condition='$need_tel eq 1'>
+                    <td width="100">电话</td>
+                </if>
+                <td width="100"><a href="javascript:void(0);" class="list_order" title="排序" id="order_status">是否签到</a></td>
+                <td width="30"><a href="javascript:void(0);" class="list_order" title="排序" id="order_sex">性别</a></td>
+                <td width="180">学校</td>
+                <td width="100">学号</td>
+                <td width="115"><a href="javascript:void(0);" class="list_order" title="排序" id="order_remark">备注<br/>(下面点击编辑)</a></td>
+               <?php if($can_jf):?>
+                <td width="60">附加{$webconfig.cradit_name}</td>
+               <?php endif;?>
+               <?php if($can_jf):?>
+                <td width="60">加积分</td>
+               <?php endif;?>
+                <td width="100">操作</td>
+                </tr>
+                <volist name="data" id='vo'>
+                    <tr class="member_tr2" id="list_{$vo.id}">
+                        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                        <td>{$vo.uid}</td>
+                        <td>{$vo.realname}</td>
+                        <td>{$vo.cx}</td>
+                    <if condition='$need_tel eq 1'>
+                        <td>{$vo.tel}</td>
+                    </if>
+                    <td id="dao{$vo.id}"><eq name="vo['status']" value="2">已签到</eq></td>
+                    <td><eq name="vo['sex']" value="1">男<else/>女</eq></td>
+                    <td>
+                        <?php if($vo['uid']):?>{$vo['uid']|tsGetSchoolByUid=###,'<br/>'}
+                        <?php else:?>{$vo.sid|tsGetSchoolNameById}<?php endif;?><br/>
+                        {$vo.year} </br>
+                        {$vo.major}
+                    </td>
+                    <td>{$vo.email}</td>
+                    <td  class="pl10 djbj1" onclick="remark(this,{$vo['uid']},{$eventId})" edit="on" title="单击编辑">{$vo.remark}</td>
+
+                    <?php if($can_jf):?>
+                    <td class="pl10 djbj1" onclick="addCredit(this,{$vo['id']},{$eventId},{$school_audit},1)" edit="on" title="单击编辑">
+                        {$vo.addCredit}
+                    </td>
+                    <?php endif;?>
+
+
+                    <?php if($can_jf):?>
+                    <td  class="pl10 djbj1" onclick="addCredit(this,{$vo['id']},{$eventId},{$school_audit},2)" edit="on" title="单击编辑">
+                        {$vo.addScore}
+                    </td>
+                    <?php endif;?>
+
+                    <td>
+                        <?php if($can_admin && $vo['status']!=2):?>
+                        <a href="javascript:adminAttendAction( '{$vo.uid}','{$eventId}','{$vo.id}');">签到</a>
+                        <?php endif;?>
+                        <?php if($vo['uid'] !== $publishUid) : ?>
+                        <a href="javascript:adminDelAction( '{$vo.id}','{$eventId}');">删除</a>
+                        <?php endif;?>
+                    </td>
+                    </tr>
+                </volist>
+            </table>
+    </div>
+    <div class="page">{$html}</div>
+</div>
+<include file="_footer" />
+
+<script type="text/javascript">
+    $(function(){
+        var orderKey = "<?php echo $orderKey;?>";
+        var orderType = "<?php echo $orderType;?>";
+        if(orderKey != ''){
+            $('#order_'+orderKey).addClass('order_'+orderType);
+        }
+        $('.list_order').hover(
+        function(){
+            if($(this).hasClass('order_asc')){
+                $(this).removeClass("order_asc");
+                $(this).addClass("order_desc");
+            }else if($(this).hasClass('order_desc')){
+                $(this).removeClass("order_desc");
+                $(this).addClass("order_asc");
+            }
+        }
+    );
+        $('.list_order').click(
+        function(){
+            if($(this).hasClass('order_desc')){
+                window.location.href = "{:U('event/Author/member',array('id'=>$eventId))}&orderKey=" + $(this).attr('id').substring(6) + '&orderType=desc';
+            }else{
+                window.location.href = "{:U('event/Author/member',array('id'=>$eventId))}&orderKey=" + $(this).attr('id').substring(6) + '&orderType=asc';
+            }
+        }
+    );
+    });
+    function batchAttend(eventId){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            ui.error("请选择要签到的成员");
+            return false;
+        }
+        if( confirm("是否为选择的成员签到？") ){
+            $.post( '__URL__&act=batchAttend',{mids:id,id:eventId},function(text){
+                var json = $.parseJSON(text)
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                    location.reload();
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+    function allAttend(eventId){
+        if( confirm("是否为所有成员签到？") ){
+            $.post( '__URL__&act=allAttend',{id:eventId},function(text){
+                var json = $.parseJSON(text)
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                    location.reload();
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+
+    function remark(obj,uid,eid){
+        if($(obj).attr('edit')=='on'){
+            var inval=$(obj).html();
+            inval =inval.replace(/(^\s*)|(\s*$)/g, "");
+            if(!$('#edit'+uid).val()){
+                $(obj).html("<input style='width:60px;'id='edit"+uid+"'name='' value='"+inval+"'>");
+                $(obj).attr('edit','off');
+                $(obj).removeClass('djbj1');
+            }
+            $("#edit"+uid).die().live("blur",function(){
+            });
+            $("#edit"+uid).focus().live("blur",function(){
+                var editval=$(this).val();
+                $(obj).html(editval);
+                $(obj).attr('edit','on');
+                $(obj).addClass('djbj1');
+                if(editval.length>6){
+                    ui.error('字符长度不能超过6个字');
+                    $(obj).html(inval);
+                    return false;
+                }
+                $.post("{:U('event/Author/addRemark')}",{uid:uid,val:editval,id:eid},function(data){
+                    var json=$.parseJSON(data);
+                    if(json.status==0){
+                        ui.error(json.info)
+                        $(obj).html(inval);
+                    }else{
+                        ui.success(json.info);
+                    }
+                });
+            });
+        }
+
+
+    }
+    function addCredit(obj,id,eid,status,type){
+        if(status<3){
+            ui.error('该活动未申请完结,无法加分');
+            return false;
+        }
+        if($(obj).attr('edit')=='on'){
+            var inval=$(obj).html();
+            inval =inval.replace(/(^\s*)|(\s*$)/g, "");
+            if(!$('#edit'+id).val()){
+                $(obj).html("<input style='width:30px;' id='edit"+id+"'name='' value='"+inval+"'>");
+                $(obj).attr('edit','off');
+                $(obj).removeClass('djbj1');
+            }
+            $('#edit'+id).die().live("blur",function(){
+            });
+            $('#edit'+id).select();
+            $('#edit'+id).focus().live("blur",function(){
+                var editval=$(this).val();
+                var r = /^\d+(\d*|\.|\.\d|\.\d\d)$/;
+                $(obj).html(editval);
+                $(obj).attr('edit','on');
+                $(obj).addClass('djbj1');
+                if(!r.test(editval)){
+                    ui.error('请输入数字,最多2位小数')
+                    $(obj).html(inval);
+                    return false;
+                }
+                var url;
+                if(type==1){
+                    url = "{:U('event/Author/addCredit')}";
+                }else{
+                    url = "{:U('event/Author/addScore')}";
+                }
+                $.post(url,{id:eid,userId:id,credit:editval},function(data){
+                    var json=$.parseJSON(data);
+                    if(json.status==0){
+                        ui.error(json.info)
+                        $(obj).html(inval);
+                    }else{
+                        ui.success(json.info);
+                    }
+                });
+            });
+        }
+    }
+
+</script>

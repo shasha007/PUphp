@@ -1,0 +1,1 @@
+<?phpreturn  array(	'forum_tashow_refuse'   => array(		'title' => '系统通知' ,		'body'  => '系统拒绝了您上传到Ta秀秀场的'.$num.'张违反活动规则的照片',	),);

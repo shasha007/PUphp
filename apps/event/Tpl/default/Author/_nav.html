@@ -1,0 +1,37 @@
+<div class="intro_menu">
+    <ul>
+        <li <eq name="ACTION_NAME" value="index">class="i10"</eq>
+            <eq name="ACTION_NAME" value="edit">class="i10"</eq>>
+            <a href="{:U('/Author/index',array('id'=>$id,'uid'=>$uid))}"><span>活动</span></a></li>
+        <?php if($school_audit!=0&&$school_audit!=1&&$school_audit!=6):?>
+            <li <eq name="ACTION_NAME" value="player">class="i10"</eq>
+                <eq name="ACTION_NAME" value="editPlayer">class="i10"</eq>
+                <eq name="ACTION_NAME" value="editPlayerImg">class="i10"</eq>
+                <eq name="ACTION_NAME" value="playerFlash">class="i10"</eq>
+                <eq name="ACTION_NAME" value="playerMultiPhoto">class="i10"</eq>
+                <eq name="ACTION_NAME" value="playerImg">class="i10"</eq>>
+                <a href="{:U('/Author/player',array('id'=>$id))}"><span>投票选手</span></a></li>
+            <li <eq name="ACTION_NAME" value="playerUpload">class="i10"</eq>>
+                <a href="{:U('/Author/playerUpload',array('id'=>$id))}"><span>选手审核</span></a></li>
+            <li <eq name="ACTION_NAME" value="member">class="i10"</eq>>
+                <a href="{:U('/Author/member',array('id'=>$id))}"><span>成员</span></a></li>
+            <li <eq name="ACTION_NAME" value="memberAudit">class="i10"</eq>><a href="{:U('/Author/memberAudit',array('id'=>$id))}"><span>成员审核</span></a></li>
+            <li <eq name="ACTION_NAME" value="newsEdit">class="i10"</eq>
+                <eq name="ACTION_NAME" value="newsList">class="i10"</eq>>
+                <a href="{:U('/Author/newsList',array('id'=>$id))}"><span>新闻</span></a></li>
+            <li <eq name="ACTION_NAME" value="flash">class="i10"</eq>><a href="{:U('/Author/flash',array('id'=>$id))}"><span>活动视频</span></a></li>
+            <li <eq name="ACTION_NAME" value="photo">class="i10"</eq>
+                <eq name="ACTION_NAME" value="editPhoto">class="i10"</eq>
+                <eq name="ACTION_NAME" value="multiPhoto">class="i10"</eq>>
+                <a href="{:U('/Author/photo',array('id'=>$id))}"><span>活动照片</span></a></li>
+            <li <eq name="ACTION_NAME" value="orga">class="i10"</eq>
+                <eq name="ACTION_NAME" value="editOrga">class="i10"</eq>>
+                <a href="{:U('/Author/orga',array('id'=>$id))}"><span>组织单位</span></a></li>
+            <li <eq name="ACTION_NAME" value="finish">class="i10"</eq>
+                <eq name="ACTION_NAME" value="editFinish">class="i10"</eq>>
+                <a href="{:U('/Author/finish',array('id'=>$id))}"><span>完结活动</span></a></li>
+            <li <eq name="ACTION_NAME" value="qrcode">class="i10"</eq>>
+                <a href="{:U('/Author/qrcode',array('id'=>$id))}"><span>签到方式</span></a></li>
+        <?php endif;?>
+    </ul>
+</div>

@@ -1,0 +1,56 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <!-------- 用户列表 -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$html}</div>
+        <form method="get">
+            <input type="hidden" name="app" value="event" />
+            <input type="hidden" name="mod" value="User"/>
+            <input type="hidden" name="act" value="apply"/>
+            学号：<input type="text" value="{$_GET.num}" name="num" />
+            <input class="btn_b" type="submit" value="搜索">
+            <?php if($userInfo):?>
+            &nbsp;&nbsp;{$userInfo.realname}
+            &nbsp;&nbsp;{$webconfig.cradit_name}：{$userInfo.school_event_credit}
+            &nbsp;&nbsp;剩余积分：<?php echo($userInfo['school_event_score'])?>
+            <?php endif;?>
+        </form>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th class="line_l">日期</th>
+    <th class="line_l">申请名称</th>
+    <th class="line_l">申请类别</th>
+    <th class="line_l">{$webconfig.cradit_name}</th>
+    <th class="line_l">审核人</th>
+  </tr>
+  <volist id="vo" name="data">
+  <tr>
+      <td>{$vo.rTime|date="Y-m-d",###}</td>
+      <td>{$vo.title}</td>
+      <td>{$vo.type|getEcTypeName=###,$school['id']}</td>
+      <td>+{$vo.credit}</td>
+      <td>{$vo.finish|getUserName}</td>
+  </tr>
+  </volist>
+  </table>
+  </div>
+    <div class="Toolbar_inbox">
+  	<div class="page right">{$html}</div>
+        <form method="get">
+            <input type="hidden" name="app" value="event" />
+            <input type="hidden" name="mod" value="User"/>
+            <input type="hidden" name="act" value="apply"/>
+            学号：<input type="text" value="{$_GET.num}" name="num" />
+            <input class="btn_b" type="submit" value="搜索">
+            <?php if($userInfo):?>
+            &nbsp;&nbsp;{$userInfo.realname}
+            &nbsp;&nbsp;{$webconfig.cradit_name}：{$userInfo.school_event_credit}
+            &nbsp;&nbsp;剩余积分：<?php echo($userInfo['school_event_score'])?>
+            <?php endif;?>
+        </form>
+    </div>
+</div>
+<include file="../Teacher/_footer" />

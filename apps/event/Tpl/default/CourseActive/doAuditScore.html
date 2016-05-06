@@ -1,0 +1,36 @@
+<dl style="margin:10px 10px 0; height:22px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 活动：</dt>
+    <dd class="left alL">{$title}</dd>
+</dl>
+<dl style="padding-bottom: 5px; height:22px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 时间：</dt>
+    <dd class="left alL"><?php echo date( 'Y-m-d H:i',$sTime ); ?> 至<br/><?php echo date( 'Y-m-d H:i',$eTime ); ?></dd>
+</dl>
+
+
+
+<dl style="margin:10px 10px 5px; height:30px" class="clear">
+   
+</dl>
+<div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="alR">
+    <input type="button" class="btn_b" onclick="addEdit({$id})" value="确定" />
+    <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+<script type="text/javascript">
+    function addEdit(id) {
+        //提交修改
+        $.post("{:U('event/CourseActive/doAudit')}", {gid:id}, function(res){
+            if (res == '0') {
+                ui.error('审核失败');
+            }else {
+                ui.success('审核成功');
+                ui.box.close();
+                $('#list_'+id).remove();
+                updateNum();
+            }
+        });
+    }
+function cancel() {
+	ui.box.close();
+}
+</script>

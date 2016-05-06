@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>已承办列表--活动基金--PU口袋校园</title>
+<script type="text/javascript">
+    var _UID_   = '{$uid}';
+    var _MID_   = '{$mid}';
+    var _ROOT_  = '__ROOT__';
+    var _THEME_ = '__THEME__';
+    var _PUBLIC_ = '__PUBLIC__';
+</script>
+<link href="../Public/css/fund.css" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+</head>
+
+<body>
+<include file="__THEME__/_holder_2014" />
+<div class="bg">
+ <div class="main">
+  <div class="content_fund">
+   <div class="fund_menu b f14 lh26 c1"><a href="__URL__&act=index">承办活动</a> / 我承办的活动</div>
+   <div class="fund_list mt5">
+    <ul>
+     <volist name="data" id="vo">
+      <li>
+        <div class="fund_list_thumb"><a href="#"><img src="{$vo['event']['logo']|getImgAttach=###,250,250,'c'}" alt="" /></a></div>
+        <div class="fund_list_title f14 mt10 c3"><a href="#">{$vo['event']['eventName']}</a></div>
+        <div class="fund_list_org">招募企业：<span class="b c3">{$vo['event']['company']}</span></div>
+        <div class="fund_list_org">已申请社团：<span class="c1 b">{$vo.count}</span>个</div>
+        <div class="fund_list_status tcenter f16 mt10
+             <?php if($vo['state']==1){echo 'fund1';}elseif($vo['state']==2){echo 'fund2';}else{echo 'c3';}?>">
+            <?php if($vo['state']==1){echo '恭喜您申请成功';}elseif($vo['state']==2){echo '申请失败';}else{echo '审核中';}?></div>
+        <div class="fund_list_edit tcenter f14 mt10 <?php if($vo['state'] !=1){echo 'fund3';}?>">
+            <?php if($vo['state'] == 1):?>
+            <a href="{:U('event/Author/index', array('id'=>$vo['eid'], 'uid'=>$vo['uid']))}">编辑</a>
+            <?php else:?>
+             <a href="javascript:void(0)">编辑</a>
+            <?php endif;?>
+        </div>
+
+      </li>
+     </volist>
+
+    </ul>
+    <div class="fund_page">{$page}</div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<include file="__THEME__/footer" />
+</body>
+</html>

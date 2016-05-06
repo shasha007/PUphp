@@ -1,0 +1,41 @@
+<style>
+    .img{width:60px;height:40px;}
+</style>
+<include file="_header" />
+
+
+<div class="so_main">
+    <include file="_tab" />
+
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>公司名</th>
+                <th>注册时间</th>
+                <th>状态</th>      
+                <th>账户余额</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data.data" id='vo'>
+                <tr id="list_{$vo.postid}">
+                    <td>{$vo.eid}</td>
+                    <td><img src='{$vo.logo_pics}' class='img'><a href="__URL__&act=detail&id={$vo.postid}">{$vo.fullname|getShort=###,15,'…'}</a></td>
+                    <td><?php echo date('Y-m-d H:i',$vo['ctime'])?></td>
+                    <td>{$state[$vo['is_activation']]}</td>
+                    <td>{$vo.account}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="">查看</a>     
+                        <a href="javascript:void(0);" onclick="">充值</a>          
+                        <a href="javascript:void(0);" onclick="">扣费</a>      
+      
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+</div>
+ <div class="page right">{$data.html}</div>
+<include file="_footer" />

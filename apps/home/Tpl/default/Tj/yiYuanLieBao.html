@@ -1,0 +1,30 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul>
+    </div>
+    <div class="page_tit">9.一元猎宝</div>
+    <div class="list">
+        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>日期</th>
+                <th>点击量</th>
+            </tr>
+            <volist name="lists" id="vo">
+                <tr>
+                    <td>
+                        {$vo.date}
+                    </td>
+                    <td>
+                        {$vo.hit}
+                    </td>
+                </tr>
+            </volist>
+
+        </table>
+    </div>
+    </div>
+<script type="text/javascript">
+
+</script>
+<include file="_footer" />

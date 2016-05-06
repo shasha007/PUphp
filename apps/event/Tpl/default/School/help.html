@@ -1,0 +1,41 @@
+<include file="_header_help" />
+<div class="help_link">
+<a href="{:U('/School/index')}">活动首页</a>&nbsp;|&nbsp;<span class="help_cur b"><a href="{:U('event/School/help')}">发起活动（主办方）帮助</a></span>&nbsp;|&nbsp;<a href="{:U('event/School/help1')}">完结活动（主办方）帮助</a>&nbsp;|&nbsp;<a href="{:U('event/School/help2')}">报名参加签到（参加者）帮助</a>&nbsp;|&nbsp;<a href="{:U('event/School/help3')}">签到（主办方）帮助</a></div>
+
+
+<a href="{:U('event/School/download')}">
+    <div class="p_btn2" style="float:right;margin: -50px 20px 0 0;">下载帮助</div>
+</a>
+<script><!--不循环播放-->
+var total = 4;
+      function next(i){
+		var before=(i-1);
+		// if(i>total){
+			// i=1;
+		 //}
+		if(i<=total){
+			var before=(i-1);
+			$('#'+before).hide();
+			
+			$('#'+i).show();
+		}
+	 }
+</script>
+<div class="clear"></div>
+<input type=button value="重新查看" style="float:right; margin:5px 10px auto auto; display:inline;border:1px solid #dedede; background:../Public/images/icon.png -312px -90px; width:100px; height:30px; line-height:30px; text-align:center; cursor:pointer;" onclick="window.location.href = window.location.href">
+<div style="float:left; margin:10px 19px;">
+    <div id="1">
+     <a href="javascript:void(0);" onclick="next(2);"><img src="../Public/images/h_m1.jpg" alt="" /></a>
+    </div>
+    <div id="2" style="display: none;">
+        <a href="javascript:void(0);" onclick="next(3);"><img src="../Public/images/h_m2.jpg" alt="" /></a>
+    </div>
+    <div id="3" style="display: none;">
+        <a href="javascript:void(0);" onclick="next(4);"><img src="../Public/images/h_m3.jpg" alt="" /></a>
+    </div>
+    <div id="4" style="display: none;">
+        <a href="javascript:void(0);" onclick="next(5);"><img src="../Public/images/h_m4.jpg" alt="" /></a>
+    </div>
+</div>
+
+<include file="_footer" />

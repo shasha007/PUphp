@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公告活动</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<link href="../Public/css/x_tz.css?1310171" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+<script>
+    var _UID_   = '{$uid}';
+        var _MID_   = '{$mid}';
+        var _ROOT_  = '__ROOT__';
+        var _THEME_ = '__THEME__';
+        var _PUBLIC_ = '__PUBLIC__';
+        var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+        var _LANG_SET_ = '{:LANG_SET}';
+        var $CONFIG = {};
+        $CONFIG['mid'] = '{$mid}';
+        $CONFIG['root_path'] = '__ROOT__';
+        $CONFIG['theme_path'] = '__THEME__';
+        $CONFIG['public_path'] = '__PUBLIC__';
+        $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+        $CONFIG['lang'] = '{:LANG_SET}';
+        document.execCommand("BackgroundImageCache", false, true);
+ function setTab(name,cursel,n){
+ for(i=1;i<=n;i++){
+  var menu=document.getElementById(name+i);
+  var con=document.getElementById("con_"+name+"_"+i);
+  menu.className=i==cursel?"hover":"";
+  con.style.display=i==cursel?"block":"none";
+ }
+}
+</script>
+</head>
+<body>
+<include file="__THEME__/_holder_2014" />
+    <div class="bg">
+        <div class="main">
+            <div class="clear"></div>
+            <div class="hd_content">

@@ -1,0 +1,13 @@
+<div class="tit_tab">
+<ul>
+    <li><a <eq name="ACTION_NAME" value="index">class="on"</eq>
+            <eq name="ACTION_NAME" value="addWork">class="on"</eq>
+            <eq name="ACTION_NAME" value="editWork">class="on"</eq>
+            <eq name="ACTION_NAME" value="worklist">class="on"</eq>
+            href="__URL__&act=index">作业列表</a></li>
+    <li><a <eq name="ACTION_NAME" value="backlist">class="on"</eq>
+            href="__URL__&act=backlist">待评分作业
+            <?php if($hasWorkBack):?><img src="../Public/images/new.gif" /><?php endif;?>
+        </a></li>
+</ul>
+</div>

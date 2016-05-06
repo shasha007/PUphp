@@ -1,0 +1,127 @@
+<include file="_header" />
+<include file="__THEME__/comm/_datepicker" />
+<div class="so_main"><include file="_tab" />
+
+
+    <div class="form2"  style="clear:both">
+        <form method="post" id="basic_setting" name="form"
+              action="__URL__&act=count">
+            <dl class="lineD">
+                <dt>统计分类：</dt>
+                <dd><input type="radio" name="lei" id="upload" value='1'<eq name="lei" value="">checked</eq> <eq name="lei" value="1">checked</eq>>上传
+                    <input type="radio"   name="lei" id="upload" value='2' <eq name="lei" value="2">checked</eq>>下载</dd>
+
+            </dl>
+            <dl>
+                <dt>学校：</dt>
+                <dd>
+                    <span id="pid">
+                        <select name="sid" id='sid'>
+                            <option value="">全   部</option>
+                            <volist name="tree" id="vo">
+                                <option value="{$vo.a}"
+                                        <?php if($vo['a']==$sid) echo 'selected' ?>>{$vo.t}</option>
+                            </volist>
+                        </select>
+                    </span>
+                </dd>
+            </dl>
+            <dl class="lineD" >
+                <dt>院校：</dt>
+                <dd>
+                    <span id="pid1">
+                        <select name="sid1" id='sid1'>
+                            <option value="">全   部</option> 
+                            <if condition="$tree2 neq ''">
+                             <volist name="tree2" id="vo">
+                                <option value="{$vo.a}"
+                                        <?php if($vo['a']==$sid1) echo 'selected' ?>>{$vo.t}</option>
+                            </volist>
+                            </if>
+                        </select>
+
+                    </span>
+            </dl>
+            <dl>
+                <dt>时间段：</dt>
+                <dd>    <input name="sTime" id="sTime" type="text" class="p_input2" value="{$sTime}" onfocus="rcalendar(this,'full');" readonly/>
+                    --
+                    <input name="eTime" id="eTime" type="text" class="p_input2" value="{$eTime}" onfocus="rcalendar(this,'full');" readonly/>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>分类：</dt>
+                <dd>
+                    <span id="pid">
+                        <select name="wen" id='wen'>
+                            <option value="">全   部</option> 
+                            <volist name="cateory" id="vo">
+                                <option value="{$vo.id}"
+                                        <?php if($vo['id']==$wen) echo 'selected' ?>    >{$vo.title}</option>
+                            </volist>
+                        </select>
+                    </span>
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </form>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l">ID</th>
+            <if condition="$lei eq 2">
+                <th class="line_l">下载文件</th>
+            <th class="line_l">下载次数</th>
+                <else/>
+                <th class="line_l">上传人</th>
+            <th class="line_l">上传数量</th>
+            </if>
+            </tr>
+            <volist name="data" id="vo">
+                <if condition="$lei eq 2">
+                     <tr>
+                        <td><strong>{$i}</strong></td>
+                        <td><strong>{$vo.name}</strong></td>
+                        <td><strong>{$vo.count}</strong></td>
+                    </tr>
+                    <else/>
+                    <tr>
+                        <td><strong>{$i}</strong></td>
+                        <td><strong>{$vo.uname}</strong></td>
+                        <td><strong>{$vo.num}</strong></td>
+                    </tr>
+                </if>
+            </volist>
+        </table>
+    </div>
+</div>
+<div class="page right">{$html}</div>
+<script>
+    $(function(){
+        $('#sid').change(function(){
+            $('#sid1 option').not(0).remove();
+            var val=$('#sid option:selected').val();
+            $.get( "__URL__&act=childTree" ,{sid:val},function(data) {
+                var obj=  $.parseJSON(data);
+
+                var option = "<option value=\"\">全   部</option>";
+                $.each(obj, function(k,v)
+                {
+                    option += "<option value=\"" + v['a'] + "\">" + v['t'] + "</option>";
+                });
+                $("#sid1").append(option);
+
+            });
+        });
+
+    });
+
+
+</script>
+
+<include file="_footer" />

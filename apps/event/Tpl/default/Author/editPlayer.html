@@ -1,0 +1,97 @@
+<include file="_header" />
+<script type="text/javascript" src="__PUBLIC__/js/kindeditor/kindeditor.js"></script>
+<div class="member_c">
+    <div class="member_menu b">编辑选手</div>
+    <div class="member_back"><a href="{:U('/Author/player',array('id'=>$id))}">返回选手列表</a></div>
+    <form onSubmit='return checkUpPlayer();' name="myform" action="{:U('/Author/doAddPlayer',array('id'=>$eventId))}" enctype="multipart/form-data" method="post">
+        <if condition="$holdUser">
+            <input name="pid" value="{$holdUser.id}" type="hidden"><br/>
+        </if>
+        <div class="member_add">
+            <table width="900" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="5"></td>
+                    <td align="right" width="100">{$defaultName.realname}：</td>
+                    <td width="15"><span class="red">*</span></td>
+                    <td><input name="realname" type="text" class="p_input1" size="40" value="{$holdUser.realname}"/></td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right">{$defaultName.school}：</td>
+                    <td><span class="red">*</span></td>
+                    <td><input name="school" type="text" class="p_input1" size="40" value="{$holdUser.school}"/></td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right">{$defaultName.content}：</td>
+                    <td><span class="red">*</span></td>
+                    <td><textarea name="content" id="content" rows="5" cols="60">{$holdUser.content}</textarea></td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right">头像：</td>
+                    <td><span class="red">*</span></td>
+                    <td>
+                        <if condition="$holdUser">
+                            <img width="100" height="100" src="{$holdUser.path|getThumb=###,80,80}">
+                            <input name="uid" value="{$holdUser.id}" type="hidden"><br/>
+                        </if>
+                        <input name="upfile" id="face" type="file" class="member_input1">
+                        <br/><span style="color:#666;font-size:10px;"> 最大为{$photo_max_size/1024/1024}M，支持{$photo_file_ext}格式。建议图片大小：160像素x200像素</span>
+                    </td>
+                </tr>
+                <?php foreach($parameter as $k=>$vo):?>
+                <?php if($vo[1] != 4):?>
+                    <tr><td height="8" colspan="20"></td></tr>
+                    <tr>
+                        <td></td>
+                        <td align="right">{$vo[0]}：</td>
+                        <td><?php if($vo[2]):?><span class="red">*</span><?php endif; ?></td>
+                        <td>{:W('Paraedit',array('type'=>$vo[1],'id'=>$k+1,'paraValue'=>$holdUser['paramValue'][$k]))}
+                        </td>
+                    </tr>
+                <?php endif;?>
+                <?php endforeach;?>
+            </table>
+        </div>
+        <div class="member_btn">
+            <input type="submit" value="确定" class="member_btn1" />
+        </div>
+    </form>
+</div>
+{$fdjs}
+<script>
+function openUploadFile(i){
+    ui.box.load(U('home/Public/uploadFile')+'&isDel=1&attach_type=event_player&maxfile='+1+'&fileId='+i,{title:'上传文件'});
+}
+//单图上传回调函数,返回上传完成文件的信息
+function ts_upload_success(serverData){
+    var data	=$.parseJSON(serverData);
+    if(data.status==true){
+        if(data.type=='file'){
+            var fileId = data.fileId;
+            $('#para'+fileId).html(data.file);
+            $('#file'+fileId).val(data.attachId);
+            $('#del'+fileId).html('<a onclick="delFile('+fileId+')" href="javascript:void(0)">删除</a>');
+        }
+        return true;
+    }else{
+        if(data == '0'){
+            alert('上传失败，格式不允许');
+        }else{
+            alert(data.info);
+        }
+        isRedirect = false;
+        return false;
+    }
+}
+function delFile(fileId){
+    $('#para'+fileId).html('');
+    $('#file'+fileId).val('');
+    $('#del'+fileId).html('');
+}
+</script>
+<include file="_footer" />

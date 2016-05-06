@@ -1,0 +1,88 @@
+<div style="width:800px;overflow-y:scroll;height:500px;">
+    <center><div class="b cRed f18px">{$title}</div></center>
+    <dl>
+        <dt class="left alR b clear" style="width:120px;"> 部落：</dt>
+        <dd class="left alL">{$gname} {$sid|tsGetSchoolName}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:120px;"> 申请人：</dt>
+        <dd class="left alL">{$uid|getUserRealname}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:120px;"> 申请人联系方式：</dt>
+        <dd class="left alL">{$mobile}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:120px;"> 参与人姓名：</dt>
+        <dd class="left alL">{$partner}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:120px;"> 参与人联系方式：</dt>
+        <dd class="left alL">{$partnerContact}</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:120px;"> 实际发放资金：</dt>
+        <dd class="left alL">{$getMoney}元</dd>
+    </dl>
+    <dl>
+        <dt class="left alR b clear" style="width:120px;"> 附件：</dt>
+        <dd class="left alL">{$attachId|getAttachHtml2}</dd>
+    </dl>
+    <div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="clear">
+        <?php if($status==0):?>
+            <input type="button" class="btn_a" onclick="pass({$id})" value="审核通过" />&nbsp;&nbsp;
+            <textarea  style='width:200px;height:100px;' id='rej'></textarea>
+            <input type="button" class="btn_a" onclick="doReject({$id})" value="驳回" />
+        <?php elseif($status==1):?>
+            实际发放资金： <input type="text" id="getMoney" name="getMoney" value="0.00" size="10" /> <input type="button" class="btn_a" onclick="fafang({$id})" value="发放" />
+        <?php endif;?>
+    </div>
+</div>
+<script>
+    function pass(id){
+        if(confirm('确定审核通过？')){
+            $.post('__URL__&act=rwPass',{id:id},function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else{
+                    ui.success('审核成功');
+                    ui.box.close();
+                    $('#list_'+id).remove();
+                }
+            });
+        }
+    }
+    function doReject(id){
+        var rej=$('#rej').val();
+        if(!rej){
+            ui.error('请填写驳回原因');
+        }else if(confirm('确定驳回申请？')){
+            $.post('__URL__&act=rwReject', {id:id,reason:rej}, function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else{
+                    ui.success(json.info);
+                    ui.box.close();
+                    $('#list_'+id).remove();
+                }
+            });
+        }
+    }
+    function fafang(id){
+        var getMoney=$('#getMoney').val();
+        if(confirm('确定发放资金'+getMoney+'？')){
+            $.post('__URL__&act=giveRwMoney', {id:id,getMoney:getMoney}, function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else{
+                    ui.success(json.info);
+                    ui.box.close();
+                    $('#list_'+id).remove();
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,57 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit">添加问卷</div>
+    <form action="{:U('event/AdminSurvey/doAddSurvey')}" method="post">
+        <div class="form2">
+            <dl class="lineD">
+                <dt>问卷标题：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="title" type="text" value="{$title}" size="80">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>截止时间：<span style="color: #F00">*</span></dt>
+                <dd><input name="deadline" id="deadline" type="text" onfocus="rcalendar(this,'full');" readonly
+                     <eq name="type" value="edit">value="<?php echo date( 'Y-m-d H:i:s',$deadline );?>"</eq>/> 小时在弹出框底部编辑</dd>
+            </dl>
+            <?php if(isTuanRole($school['id'])):?>
+            <dl class="lineD">
+                <dt>是否全省问卷：</dt>
+                <dd><input type="checkbox" id="isProv" name="isProv" value="1" /></dd>
+            </dl>
+            <?php else:?>
+                <input type="hidden" id="isProv" name="isProv" value="0" />
+            <?php endif;?>
+            <dl class="lineD">
+                <dt>简介(可不填)：</dt>
+                <dd>
+                    <textarea id='textarea' name="explain" style="width:600px;height:110px;border:1px solid #ccc;" onKeyUp="gbcount(this,200);">{$explain}</textarea>
+                    <span  id='remain' style='color:green;'>200</span><span style='color:green;'>/200字</span>
+                </dd>
+            </dl>
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="下一步" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+$(function(){
+    gbcount('#textarea',200);
+});
+function gbcount(o,max){
+    var msg = $(o).val();
+    var rest = max - msg.length;
+    if(rest < 0){
+        rest = 0;
+        $('#remain').html(0);
+        $(o).val(msg.substring(0,max));
+        alert('不能超过'+max+'个字!');
+    }
+    $('#remain').html(rest);
+}
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<include file="../Teacher/_footer" />

@@ -1,0 +1,127 @@
+<include file="_header" />
+<script>
+    //搜索用户
+    var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+    function searchObject() {
+        if(isSearchHidden == 1) {
+            $("#searchObject_div").slideDown("fast");
+            $(".searchObject_action").html("搜索完毕");
+            isSearchHidden = 0;
+        }else {
+            $("#searchObject_div").slideUp("fast");
+            $(".searchObject_action").html("搜索活动");
+            isSearchHidden = 1;
+        }
+    }
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+        <div class="page_tit">搜索商品 [ <a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+        <div class="form2">
+            <form action="__URL__&act=eventlist" method="POST">
+                <input type="hidden" name="isSearch" value="1"/>
+                <php>if($isSearch != '1') $uid = '';</php>
+                <dl class="lineD">
+                    <dt>商品标题：</dt>
+                    <dd>
+                        <input name="title" class="txt" value="{$title}" /><span> 支持模糊查询。</span>
+                    </dd>
+                </dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>添加商品需另一人帮助审核。审核通过后自动开始团购。</div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Admin/editTg')}" class="btn_a"><span>添加商品</span></a>
+        <a href="{:U('shop/Admin/tg',array('state'=>2))}" class="btn_a"><span<?php if($_GET['state']==2)echo '  class="cRed"';?>>正在团购</span></a>
+        <a href="{:U('shop/Admin/tg',array('state'=>3))}" class="btn_a"><span<?php if($_GET['state']==3)echo '  class="cRed"';?>>待审核</span></a>
+        <a href="{:U('shop/Admin/tg',array('state'=>4))}" class="btn_a"><span<?php if($_GET['state']==4)echo '  class="cRed"';?>>已结束的</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>图片</th>
+                <th>期数</th>
+                <th width="30%">商品名称</th>
+                <th>发起人</th>
+                <th>审核人</th>
+                <th>起拍价/1人</th>
+                <th>最低价/人</th>
+                <th>每+1人降价</th>
+                <th>结束日期</th>
+                <th>已抢购人数</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><img width="30" height="30" src="{$vo.pic|tsMakeThumbUp=###,30,30,'f'}"/></td>
+                    <td>{$vo.tg_times}/{$vo.times}</td>
+                    <td><a href="{:U('/Tg/detail', array('id'=>$vo['id']))}" target="_blank">{$vo['name']}</a></td>
+                    <td>{$vo.uid|getUserRealName}</td>
+                    <td>{$vo.audit|getUserRealName}</td>
+                    <td>{$vo.sprice}</td>
+                    <td>{$vo.eprice} / {$vo.eprice_attended}</td>
+                    <td>{$vo.dec|money2xs}</td>
+                    <td>{$vo.eday}</td>
+                    <td>{$vo['has_attended']} <a href="{:U('shop/Admin/tgUser', array('id'=>$vo['id']))}">[查看明细]</a></td>
+                    <td>{$vo.state}</td>
+                <td>
+                    <?php if($vo['codeState']==1): ?>
+                        <a href="{:U('/Admin/editTg', array('id'=>$vo['id']))}">编辑</a>
+                    <?php elseif($vo['codeState']==2): ?>
+                        <?php if($vo['uid']==$mid): ?>
+                            待审核
+                        <?php else: ?>
+                            <a style="color:red;" href="{:U('/Admin/auditTg', array('id'=>$vo['id']))}">二次审核</a>
+                        <?php endif; ?>
+                        <a href="{:U('/Admin/editTg', array('id'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:void(0)" onclick="delProduct({$vo.id})">删除</a>
+                    <?php endif; ?>
+                    <?php if($vo['canActiv']): ?>
+                    <a href="{:U('/Admin/editTg', array('id'=>$vo['id'],'opt'=>'renew'))}">开始下期</a>
+                    <?php endif; ?>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Admin/editTg')}" class="btn_a"><span>添加商品</span></a>
+        <a href="{:U('shop/Admin/tg',array('state'=>2))}" class="btn_a"><span<?php if($_GET['state']==2)echo '  class="cRed"';?>>正在团购</span></a>
+        <a href="{:U('shop/Admin/tg',array('state'=>3))}" class="btn_a"><span<?php if($_GET['state']==3)echo '  class="cRed"';?>>待审核</span></a>
+        <a href="{:U('shop/Admin/tg',array('state'=>4))}" class="btn_a"><span<?php if($_GET['state']==4)echo '  class="cRed"';?>>已结束的</span></a>
+    </div>
+</div>
+<script>
+function delProduct(id){
+    if(confirm("是否删除商品?")){
+        $.post( '{:U('/Admin/deleteTg')}',{id:id},function(text){
+            if( text == 1 ){
+                ui.success( "删除成功" );
+                $('#list_'+id).remove();
+            }else{
+                ui.error( "删除失败" );
+            }
+        });
+    }
+}
+</script>
+<include file="_footer" />

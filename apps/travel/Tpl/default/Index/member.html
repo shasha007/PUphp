@@ -1,0 +1,48 @@
+<include file="top" />  
+<!--成员列表-->
+<div class="tour_d_member b f14">成员列表</div>
+<div class="tour_d_mlist">
+    <ul>
+        <li class="c333">
+            <div class="tour_d_m_name">昵称</div>
+            <eq name="isuser" value="1">
+            <div class="tour_d_m_name">姓名</div>
+            </eq>
+            <div class="tour_d_m_sex">性别</div>
+            <div class="tour_d_m_s">学校</div>
+            <eq name="isuser" value="1">
+            <div class="tour_d_m_tel">联系电话</div>
+            </eq>
+            <div class="tour_d_m_time">报名时间</div>        
+        </li>
+        <volist name="list" id='vo'>
+            <li>
+                <div class="tour_d_m_name">{$vo.uid|getUserName}</div>
+                <eq name="isuser" value="1">
+                <div class="tour_d_m_name">{$vo.realname}</div>
+                </eq>
+                <div class="tour_d_m_sex">
+                    <eq name="vo['sex']" value="1">
+                    男        
+                    <else/>
+                    女
+                    </eq>
+                </div>
+                <div class="tour_d_m_s">{$vo.sid|tsGetSchoolName}</div>
+                <eq name="isuser" value="1">
+                <div class="tour_d_m_tel">{$vo.tel}</div>
+                </eq>
+                  <div class="tour_d_m_time">{$vo.cTime|friendlyDate}</div>        
+            </li>
+        </volist>
+    </ul> 
+</div>
+
+</div>
+</div>
+
+      <include file="_right" />
+
+
+
+<include file="_footer" />

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>校内通知</title>
+<link href="../Public/css/x_tz.css?20141010" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+        <script>
+            var _UID_   = '{$uid}';
+            var _MID_   = '{$mid}';
+            var _ROOT_  = '__ROOT__';
+            var _THEME_ = '__THEME__';
+            var _PUBLIC_ = '__PUBLIC__';
+            var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+            var _LANG_SET_ = '{:LANG_SET}';
+            var $CONFIG = {};
+            $CONFIG['mid'] = '{$mid}';
+            $CONFIG['root_path'] = '__ROOT__';
+            $CONFIG['theme_path'] = '__THEME__';
+            $CONFIG['public_path'] = '__PUBLIC__';
+            $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+            $CONFIG['lang'] = '{:LANG_SET}';
+            document.execCommand("BackgroundImageCache", false, true);
+        </script>
+    </head>
+<include file="__THEME__/_holder_2014" />
+    <body>
+        <div class="bg">
+            <div class="main">
+                <div class="tz">
+                    <div class="tz_header">
+                        <div class="tz_header_logo"><a href="{:U('/Index/index',array(school=>$sid))}"><img src="../Public/images/pu_logo.png" alt="校内通知" /></a></div>
+                        <form method="get" action="{:U('/Index/index')}">
+                            <input type="hidden" name="app" value="announce" />
+                            <input type="hidden" name="mod" value="Index"/>
+                            <input type="hidden" name="act" value="index"/>
+                            <div class="tz_header_search">
+                                <input name="keyword" maxlength="10" type="text" class="tz_header_search_input" value="{$keyword}" />
+                                <input type="submit" class="tz_header_search_btn" value="搜 索" />
+                            </div>
+                        </form>
+                    </div>

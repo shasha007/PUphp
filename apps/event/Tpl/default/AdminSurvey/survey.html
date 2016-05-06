@@ -1,0 +1,53 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+    <div class="Toolbar_inbox">
+        <span><a href="javascript:history.back( -1 )">&lt;&lt;返回上一页</a>
+    </div>
+    <div class="dy_desc">
+        <div class="dy_title b f14">{$survey.title}</div>
+        <div class="dy_note">发起时间:{$survey.cTime|friendlyDate}   截止时间:{$survey.deadline|friendlyDate}    参与人数:{$survey.id|getSurveyCount}</div>
+        <div class="dy_sx" style="font-size:24px;text-align:center">*注* 统计图表每天统计一次</div>
+        <div class="dy_list">
+            <ul>
+                <volist name="vote" id='vo'>
+                <li>
+                    <div class="dy_list_q cGreen f14">Q{$i}. {$vo.title} [<?php if($vo['type'] == 0):?>单选<?php else:?>多选<?php endif;?>]</div>
+                    <div class="dy_list_a">
+                        <volist name="vo.opt" id='opt' key="k">
+                            <?php $kk = $k%10; $opid = $opt['id']; $lineCss=''; if(1==2 && $filterId == $opid)$lineCss=' line_box'?>
+                            <div class="left alR {$lineCss}" style="width:342px;">{$opt.name|getShort=###,25,'…'}:</div>
+                            <div class="left" style="width:190px;">
+                                <div class="poll">
+                                    <div class="vbg v<php>echo $kk?$kk:( $kk+1 );</php> vote-per-{$opid}" id="bg<php>echo $kk?$kk:( $kk+1 );</php>" style="width:0px;"> <span></span> </div>
+                                </div>
+                            </div>
+                            <div class="left{$lineCss}" style="width:81px;">{$vote_pers[$opid]['num']}({$vote_pers[$opid]['prozent']}%)</div>
+                            <?php if(1==2 && $filterId != $opid):?>
+                            <div class="left" style="width:81px;">
+                                <a href="{:U('event/AdminSurvey/survey', array('id'=>$survey['id'],'optId'=>$opid))}"
+                                   title="选择此项的人的调查结果">[筛选群体]</a>
+                            </div>
+                            <?php endif;?>
+                            <div class="c"></div>
+                        </volist>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+$(function(){
+<php>
+foreach($vote_pers as $k=>$v){
+//if($v == 100) $v=97;
+echo '$(".vote-per-'.$k.'").animate( { width: "'.$v['prozent'].'%"}, 2000);';
+}
+</php>
+});
+</script>
+<include file="../Teacher/_footer" />

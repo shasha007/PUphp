@@ -1,0 +1,15 @@
+<div class="form2">
+<form method="post" id="basic_setting" name="form"
+	action="{:U('coupon/Admin/editCategory')}">
+<table cellpadding=3 cellspacing=3>
+	<tr>
+		<td align="right">分类名称：</td>
+		<td align="left"><input type="text" class="large bLeftRequire"
+			name="title" value="{$category.title}"></td>
+	</tr>
+</table>
+<div ><input name="id" value="{$category.id}"
+	type="hidden" /> <input name="editSubmit" value="1" type="hidden">
+<input type="submit" class="btn_b" value="确定" /></div>
+</form>
+</div>

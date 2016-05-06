@@ -1,0 +1,84 @@
+<include file="_header" />
+<div class="t_class mt10 p10">
+    <div>地区：
+        {$areaTitle}
+        [<a href="javascript:void(0)" onclick="trainArea();">切换</a>]
+    </div>
+    <div>分类：
+        <a  <?php if($_SESSION['train_search']['cat']=='')echo' class="t_cur"';?>
+            href="{:U('train/Index/index',array('cat'=>'all'))}">全部</a>
+        <volist name='catList' id='vo'>
+        <a  <?php if($_SESSION['train_search']['cat']==$vo['id'])echo' class="t_cur"';?>
+            href="{:U('train/Index/index',array('cat'=>$vo['id']))}">{$vo.name}</a>
+        </volist>
+    </div>
+    <div>机构：
+        <a  <?php if($_SESSION['train_search']['org']=='')echo' class="t_cur"';?>
+            href="{:U('train/Index/index',array('org'=>'all'))}">全部</a>
+        <volist name='orgList' id='vo'>
+        <a  <?php if($_SESSION['train_search']['org']==$vo['id'])echo' class="t_cur"';?>
+            href="{:U('train/Index/index',array('org'=>$vo['id']))}">{$vo.name}</a>
+        </volist>
+    </div>
+</div>
+<div class="t_list mt10">
+    <ul>
+        <volist name="data" id='vo'>
+        <li>
+            <?php $org = $orgList[$vo['orgId']]; ?>
+            <div class="t_list_thumb"><a href="{:U('train/Index/detail',array('id'=>$vo['id']))}">
+                    <img src="{$org['logo']|tsMakeThumbUp=###,150,100,'f'}" alt="" /></a></div>
+            <div class="t_list_infor">
+                <div class="t_list_title f14 b"><a href="{:U('train/Index/detail',array('id'=>$vo['id']))}">{$vo.title}</a></div>
+                <div class="t_list_fee">
+                    开班日期：<span class="cf90 pr10">{$vo.kDate}</span>
+                    培训周期：<span class="cf90">{$vo.dauer}</span>
+                </div>
+                <div class="t_list_fee">城市：<span class="cf90 b">{$vo.cityId|getAreaTitle}</span></div>
+                <div class="t_list_fee">机构名称：
+                    <?php if($org['link']):?><a href="{$org.link}" target="_blank">{$org.name}</a>
+                    <?php else:?><span class="c193">{$org.name}</span><?php endif;?>
+                </div>
+                <div class="t_list_fee">联系方式：{$vo.contact}</div>
+            </div>
+            <div class="t_list_btn b">
+                <ul>
+                    <?php if(in_array($vo['id'],$collect)): ?>
+                    <li class="t4"><a href="javascript:void(0)" onclick="collect(this,{$vo['id']})">取消收藏</a></li>
+                    <?php else:?>
+                    <li class="t2"><a href="javascript:void(0)" onclick="collect(this,{$vo['id']})">我要收藏</a></li>
+                    <?php endif;?>
+                </ul>
+            </div>
+        </li>
+        </volist>
+    </ul>
+    <div class="page">{$html}</div>
+</div>
+<script>
+    function trainArea(){
+        ui.box.load(U('train/Index/area'),{title:'选择地区'});
+    }
+    function collect(o,id){
+        var del = 1;
+        var nc = 't4';
+        var nt = '取消收藏';
+        var oc = $(o).parent().attr('class');
+        if(oc=='t4'){
+            del = 2;
+            nc = 't2';
+            nt = '我要收藏';
+        }
+        $.post("{:U('train/Index/ajaxIndexCollect')}", {id:id,del:del}, function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                $(o).parent().attr('class',nc);
+                $(o).html(nt);
+                ui.success(json.info);
+            }
+        });
+    }
+</script>
+<include file="_footer" />

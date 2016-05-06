@@ -1,0 +1,66 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <span class="cRed">实物发货配送请去后台【乐购】【订单管理】</span>
+    <form action="" method="post">
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+            中奖时间段：
+            开始时间：<span style="color: #F00">*</span>
+                    <input name="mon1" id="mon1" type="text" onfocus="rcalendar(this,'full');" readonly
+                           value="<?php $mon1 = empty($_POST['mon1']) ? date( 'Y-m-d H:i:s') : $_POST['mon1']; echo $mon1;?>"/> 小时在弹出框底部编辑
+           结束时间：<span style="color: #F00">*</span>
+                    <input name="mon2" id="mon2" type="text" onfocus="rcalendar(this,'full');" readonly
+                           value="<?php $mon2 = empty($_POST['mon2']) ? date( 'Y-m-d H:i:s') : $_POST['mon2']; echo $mon2;?>"/> 小时在弹出框底部编辑
+            商品ID搜索：<input name="pid" type="text" value="{$_POST['pid']}">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        <div class="page right">{$html}</div>
+    </div>
+    </form>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th width="30%">商品名称</th>
+                <th>中奖人</th>
+                <th>学号</th>
+                <th>学校</th>
+                <th>中奖时间</th>
+                <th>来源</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td><a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" target="_blank">{$vo.realname}</a></td>
+                    <td>{$vo.xh}</td>
+                    <td>{$vo.uid|tsGetSchoolByUid0}</td>
+                    <td>{$vo.ctime|friendlyDate}</td>
+                    <td>{$vo.zjfrom}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<script>
+function delProduct(id){
+    if(confirm("是否删除奖品，商品不会删除，可再次添加到摇一摇里面?")){
+        $.post( U('home/Lucky/delYy'),{id:id},function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success(json.info);
+                $('#list_'+id).remove();
+            }
+        });
+    }
+}
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<include file="_footer" />

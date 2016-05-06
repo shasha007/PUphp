@@ -1,0 +1,119 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="page_tit"><eq name="type" value="edit">编辑用户<else/>添加用户</eq></div>
+
+        <form method="post" action="{:U('home/UserManage/doEditUser')}">
+            <input type="hidden" name="uid" value="{$uid}" />
+            <div class="form2">
+                <dl class="lineD">
+                    <dt>学校：</dt>
+                    <dd>
+                        <span id="pid">
+                            <select name="sid" id='sid'>
+                                <option value="">请选择</option>
+                                <volist name="tree" id="vo">
+                                    <option value="{$vo.a}"
+                                            <?php if($vo['a']==$sid) echo 'selected' ?>>{$vo.t}</option>
+                                </volist>
+                            </select>
+                        </span>
+                </dl>
+                <dl class="lineD" >
+                    <dt>院校{$dd}：</dt>
+                    <dd>
+                        <span id="pid1">
+
+                            <select name="sid1" id='sid1'>
+                               <volist name="tree1" id="vo">
+                                    <option value="{$vo.a}"
+                                            <?php if($vo['a']==$chlidren['id']) echo 'selected';?>>{$vo.t}</option>
+                                </volist>
+                            </select>
+
+                        </span>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>年级：</dt>
+                    <dd>
+                        <input name="year" id="year" type="text" value="{$year}" maxlength="2">
+                        <span>格式: 09，11，12 等) </span>
+                </dl>
+                <dl class="lineD">
+                    <dt>专业：</dt>
+                    <dd>
+                        <input name="major" id="major" type="text" value="{$major}">
+                </dl>
+                <dl class="lineD">
+                    <dt>Email：</dt>
+                    <dd>
+                        <input name="email" id="email" type="text" value="{$email}">
+                        <p>用户进行登录的帐号</p>
+                </dl>
+                <dl class="lineD">
+                    <dt>手机：</dt>
+                    <dd>
+                        <input name="mobile" id="email" type="text" value="{$mobile}">
+                </dl>
+                <dl class="lineD">
+                    <dt>密保邮箱：</dt>
+                    <dd>
+                        &nbsp;{$email2}</dd>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>密码：</dt>
+                    <dd>
+                        <input name="password" id="password" type="text">
+                        <p>用户进行登录的密码</p>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>昵称：</dt>
+                    <dd>
+                        <input name="uname" id="uname" type="text" value="{$uname}">
+                        <p>2-10位个中英文、数字、下划线和中划线组成</p>
+                </dl>
+
+                <dl class="lineD">
+                    <dt>真实姓名：</dt>
+                    <dd>
+                        <input name="realname" id="uname" type="text" value="{$realname}">
+                </dl>
+                <dl class="lineD">
+                    <dt>性别：</dt>
+                    <dd>
+                        <label><input name="sex" type="radio" value="1" <eq name="sex" value="1">checked</eq>>男</label>
+                        <label><input name="sex" type="radio" value="0" <neq name="sex" value="1">checked</neq>>女</label>
+                </dl>
+                <div class="page_btm">
+                    <a href="{$_SESSION['admin_searchUser_url']}" > <<返回 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </div>
+        </form>
+</div>
+<script>
+    $(function(){
+        $('#sid').change(function(){
+               $("#add").show();
+            $('#sid1 option').not(0).remove();
+            //  alert('')
+            var val=$('#sid option:selected').val();
+            $.get( U('home/UserManage/childTree') ,{sid:val},function(data) {
+                var obj=  $.parseJSON(data);
+
+                var option = "<option value=\"\">请选择...</option>";
+                $.each(obj, function(k,v)
+                {
+                    option += "<option value=\"" + v['a'] + "\">" + v['t'] + "</option>";
+                });
+                $("#sid1").append(option);
+            });
+        });
+
+    });
+
+
+</script>
+<include file="_footer" />

@@ -1,0 +1,33 @@
+<include file="_header" />
+<div class="kdl_mobile_page m_mb50">
+  <div class="kdl_mobile_header f18 bold tcenter">订单还款计划</div>
+  <a href="{:U('shop/Bank/myBankList')}"><div class="m_back"></div></a>
+  <div class="clear"></div>
+  <div class="repay">
+  <table width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+          <th>期次</th>
+          <th>分期金额</th>
+          <th>应还金额</th>
+          <th>该期本金</th>
+          <th>还款时间</th>
+          <th>还款状态</th>
+      </tr>
+      <foreach name="list" item="val">
+          <tr>
+              <td>{$val.num}</td>
+              <td>{$val.money}</td>
+              <td>{$val.surp_money}</td>
+              <td>{$val.hasDo}</td>
+              <td>{$val.stime}</td>
+              <if condition="$val['status'] eq 2">
+                <td>已还款</td>
+              <else/>
+                <td>未还款</td>
+              </if>
+          </tr>
+      </foreach>
+  </table>
+</div>
+</div>
+<include file="_footer" />

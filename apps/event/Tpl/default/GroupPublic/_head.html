@@ -1,0 +1,96 @@
+
+<script type="text/javascript" src="../Public/js/group.js"></script>
+<if condition="$groupinfo['brower_level'] eq -1">
+    {:W('Weibo',array('tpl_name'=>'group_share_weibo','button_title'=>'分享'))}
+</if>
+<div class="hd_c">
+<div class="st_c_left">
+    <div class="st_intro1 mt10 ml10">
+        <div class="st_i_menu b h30">校园部落</div>
+        <div class="st_i_thumb mt10"><a title="{$groupinfo['name']}  |  {$groupinfo['intro']|getShort=###,30,'…'}"><img src="{$groupinfo['logo']|getGroupThumb=###,180,180}"alt="" /></a></div>
+        <div class="st_i_r">
+            <?php if($smid) :?>
+            <div class="st_i_note">
+                <if condition="$groupinfo['brower_level'] eq -1">
+                      <!-- JiaThis Button BEGIN -->
+                         <div onmouseover='setShare("{$groupinfo['name']}", "{:U('event/GroupAnnounce/index',array('gid'=>$gid))}");'> <!--自定义第一个分享标题和链接-->
+                             <div style="float:right; text-align:right; padding-left:5px;">
+                                <a href="http://www.jiathis.com/share/?uid=您的UID" class="jiathis"  target="_blank">分享校园部落</a>
+                            </div>
+                        </div>
+                        <!-- JiaThis Button END -->
+                        <script type="text/javascript">
+                          function setShare(title, url) {
+                              jiathis_config.title = title;
+                              jiathis_config.url = url;
+                          }
+                            var jiathis_config;
+                          </script>
+                    <script type="text/javascript" src="http://v1.jiathis.com/code/jia.js?uid=您的UID" charset="utf-8"></script>
+                </if>
+                <php>if (($ismember && $groupinfo['need_invite'] != 2) || $isadmin) { </php><a href="{:U('event/GroupInvite/create',array('gid'=>$groupinfo['id']))}#sub">邀请好友</a><php>}</php>
+                <php>if($isadmin){</php><span class="vline">| &nbsp;</span><a href="{:U('/GroupManage/index',array('gid'=>$groupinfo['id']))}">管理校园部落</a><php>}</php>&nbsp;
+
+                <php>if(!$isadmin &&!$ismember){</php>
+                <php>if($groupinfo['membercount'] == $config['groupMaxUser']){</php>
+                |人数已经满({$groupinfo['membercount']})
+                <php>}else{</php>
+                | &nbsp;<a href="javascript:joingroup({$gid})">加入校园部落</a>
+                <php>}</php>
+                <php>} else{</php>
+                | &nbsp;已加入校园部落 &nbsp; |&nbsp;<neq name="superadmin" value="1"><a href="javascript:quitgroup({$gid})">退出{$groupinfo.level}</a></neq>
+
+                <php>}</php>
+
+            </div>
+              <?php endif;?>
+
+            <div class="st_i_t c3 ml20 b f14">{$groupinfo['name']}</div>
+            <?php if($groupinfo['vStern']):?>
+            <div class="st_i_star ml10"><img  src="../Public/images/star_{$groupinfo['vStern']}.png" /></div>
+            <?php endif;?>
+            <div class="clear"></div>
+            <div class="st_i_infor">
+                <ul>
+                     <li>部落主席：{$groupinfo.uid|getUserRealName}</li>
+                    <li>人数：{$groupinfo.membercount}人</li>
+                    <li>创建时间：<?php echo date('Y-m-d H:i', $groupinfo['ctime']) ?></li>
+                    <li>分类：{$groupinfo.cname1}</li>
+                    <li>院系：{$groupinfo.schoolName}</li>
+                </ul>
+                <div class="group_score_left"></div>
+                    <div class="group_score">活力值:{$groupinfo.activ_num}</div>
+                    <div class="group_score_right"></div>
+            </div>
+            <div class="clear"></div>
+
+            <div class="st_i_text mt10 ml20" id="sub">部落介绍：{$groupinfo.intro}</div>
+            <if condition="$groupinfo['contact'] AND $groupinfo['telephone']">
+            <div class="st_i_infor mt5">
+                <ul>
+                    <li>联系人：{$groupinfo.contact} </li>
+                    <li>联系方式：{$groupinfo.telephone}</li>
+                </ul>
+            </div>
+            </if>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+       <div class="st_i_gg ml10 mt10">
+    <div class="st_i_gg_desc">
+        最新公告：{$groupinfo['announce']}
+    </div>
+       </div>
+
+    <div class="clear"></div>
+    <div class="st_menu ml10 mt20">
+        <ul>
+            <li <if condition="MODULE_NAME eq 'GroupAnnounce'">class="s_cur" </if> ><a href="{:U('event/GroupAnnounce/index', array('gid'=>$gid,'sub'=>1))}">通知公告</a></li>
+            <?php if($webconfig['sid']!=402):?>
+            <li <if condition="MODULE_NAME eq 'GroupFeed'">class="s_cur" </if> ><a href="{:U('event/GroupFeed/index', array('gid'=>$gid,'sub'=>1))}">水区</a></li>
+            <?php endif;?>
+            <li <if condition="$current eq 'member'">class="s_cur" </if> ><a href="{:U('event/GroupMember/index', array('gid'=>$gid))}#sub">成员</a></li>
+        <li  <eq name="ACTION_NAME" value='groupEvent'>class="s_cur"</eq>><a href="{:U('event/GroupEvent/groupEvent', array('gid'=>$gid))}#sub">活动</a></li>
+        </ul>
+    </div>

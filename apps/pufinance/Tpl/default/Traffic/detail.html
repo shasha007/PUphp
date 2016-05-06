@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <link href="../Public/css/pay.css" rel="stylesheet">
+    <title>订单支付</title>
+</head>
+<body>
+<header class="h-unknown-pay-header">
+    <div>
+    <span><?php echo $traffic['flow_value'];?></span>&emsp13;加油包
+    </div>
+    <div>
+        <?php echo $traffic['price'];?>&emsp;元
+    </div>
+</header>
+<section class="h-unknown-pay-art">
+    <header>
+        流量包说明
+    </header>
+    <ul>
+        <li>流量包组成:&emsp13;全国2G/3G/4G/流量<?php echo $traffic['flow_value'];?></li>
+        <li>生效时间:&emsp13;30分钟内生效(以运营商短信为准)</li>
+        <li>失效时间:&emsp13;本月末失效</li>
+        <li>可订购次数:&emsp13;<?php if($opt == '联通'):?>同一规格的流量包5次<?php else:?>10次<?php endif;?></li>
+        <li>温馨提示:&emsp13;因运营商限制,部分号码暂时无法订购</li>
+    </ul>
+</section>
+<section class="h-unknown-pay-sec1">
+<div>
+    电话号码
+</div>
+    <div>
+        <?php echo $_SESSION['recharge_mobile'];?>
+    </div>
+</section>
+<section class="h-unknown-pay-sec2">
+    <div>
+        优惠券
+    </div>
+    <div>
+        无
+    </div>
+    <div>
+        <img src="../Public/img/zuojiantou.png">
+    </div>
+</section>
+<section class="h-unknown-pay-sec3">
+    <p>
+        共需支付 : <span><?php echo $traffic['price'];?></span>元
+    </p>
+</section>
+<footer class="h-unknown-pay-footer">
+    <button>
+        立即购买
+    </button>
+</footer>
+<script type="text/javascript" src="../Public/js/mainScript.js" ></script>
+<script type="text/javascript">
+    setActionBar('订单支付', '', '');
+</script>
+</body>
+</html>

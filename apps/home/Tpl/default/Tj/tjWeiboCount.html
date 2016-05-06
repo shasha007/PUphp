@@ -1,0 +1,19 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul>
+    </div>
+    <div class="page_tit">各校微博总数</div>
+    <div class="form2">
+        <table  width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-left:20px;">
+            <tr><th width="300px;">学校</th><th>微博总数</th></tr>
+            <volist name="list" id="vo">
+                <?php $sname=tsGetSchoolName($vo['sid']); if($sname):?>
+                <tr><td>{$sname}</td><td>{$vo.count}</td></tr>
+                <?php endif;?>
+            </volist>
+        </table>
+        <br/><br/>
+    </div>
+</div>
+<include file="_footer" />

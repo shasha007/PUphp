@@ -1,0 +1,61 @@
+<?php
+include("outputXLS.php");
+header("Pragma: public");
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Content-Type: application/force-download");
+header("Content-Type: application/octet-stream");
+header("Content-Type: application/download");;
+header("Content-Disposition: attachment;filename=".$user['uname'].date('Y-m-d',time()).".xls ");
+header("Content-Transfer-Encoding: binary ");
+
+xlsBOF();
+xlsWriteLabel(0,0,iconv('utf-8','gb2312','姓名'));
+xlsWriteLabel(0,1,iconv('utf-8','gb2312',$user['uname']));
+xlsWriteLabel(0,2,iconv('utf-8','gb2312','学号'));
+xlsWriteLabel(0,3,iconv('utf-8','gb2312',substr($user['email'], 0,strpos($user['email'],'@'))));
+xlsWriteLabel(0,4,iconv('utf-8','gb2312','学校'));
+xlsWriteLabel(0,5,iconv('utf-8','gb2312',$school['title']));
+xlsWriteLabel(2,0,iconv('utf-8','gb2312','编号'));
+xlsWriteLabel(2,1,iconv('utf-8','gb2312','日期'));
+xlsWriteLabel(2,2,iconv('utf-8','gb2312','活动简介'));
+xlsWriteLabel(2,3,iconv('utf-8','gb2312','备注'));
+
+$xlsRow = 3;
+
+foreach($list as $k=>$v){
+xlsWriteLabel($xlsRow,0,$k);
+$des=$v['title']."\n".$v['description'];
+xlsWriteLabel($xlsRow,1,date('Y-m-d', $v['sTime']) . iconv('utf-8','gb2312',' 至 ') . date('Y-m-d', $v['eTime']));
+xlsWriteLabel($xlsRow,2,iconv('utf-8','gb2312',$des));
+xlsWriteLabel($xlsRow,3,"");
+
+$xlsRow++;
+}
+xlsEOF();
+exit();
+
+
+function xlsBOF() {
+echo pack("ssssss", 0x809, 0x8, 0x0, 0x10, 0x0, 0x0);
+return;
+}
+
+function xlsEOF() {
+echo pack("ss", 0x0A, 0x00);
+return;
+}
+
+function xlsWriteNumber($Row, $Col, $Value) {
+echo pack("sssss", 0x203, 14, $Row, $Col, 0x0);
+echo pack("d", $Value);
+return;
+}
+
+function xlsWriteLabel($Row, $Col, $Value ) {
+$L = strlen($Value);
+echo pack("ssssss", 0x204, 8 + $L, $Row, $Col, 0x0, $L);
+echo $Value;
+return;
+}
+?> 

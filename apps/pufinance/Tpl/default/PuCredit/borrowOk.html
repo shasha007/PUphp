@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>申请完成</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+    <script src="../Public/js/mainScript.js" ></script>
+    <script>
+        setActionBar('申请完成', '', '');
+    </script>
+</head>
+<body>
+<img src="../Public/img/man.png" class="w-applySuccessImg">
+<p class="w-applyP">申请完成</p>
+<p class="w-applyP">您的订单已完成,如有问题请<a>联系客服</a></p>
+<a href="{:U('pufinance/Order/index')}" class="w-viewBtn">查看我的订单</a>
+<script>
+    function Jump(){
+        window.location.href = '{:U("pufinance/PuCredit/index")}';
+    }
+    document.onload = setTimeout("Jump()" , 5 * 1000);
+</script>
+</body>
+</html>

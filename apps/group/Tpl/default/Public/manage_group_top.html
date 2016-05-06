@@ -1,0 +1,43 @@
+<div class=page_title>
+    <!-- page_title begin -->
+    <div class="left" style="width:70px;"><span class="group_pic">
+            <a href="{:U('group/Group/index',array('gid'=>$groupinfo['id']))}">
+                <img src="__ROOT__/thumb.php?w=80&h=80&url={$groupinfo['logo']|get_photo_url}"/>
+            </a></span>
+        {:W('GroupStern',array('stern'=>$groupinfo['vStern']))}
+    </div>
+    <div style="margin-left:70px">
+        <h2><a href="{:U('group/Group/index',array('gid'=>$gid))}">{$groupinfo['name']}</a> > 社团管理</h2>
+    </div>
+    <div style="clear:left;"></div>
+</div>
+<!-- page_title end -->
+<div class="tab-menu">
+    <!-- 切换标签 begin  -->
+  <if condition="$data['disband'] neq 1">
+    <if condition="$data['vStatus'] eq 1">
+        <span class="right" id="jun_1"><a href="javascript:;" onclick="disband({$groupinfo['id']});" class="btn_b">申请解散</a></span> 
+        <else/>
+            <span class="right" ><a href="javascript:;" onclick="delgroup({$groupinfo['id']});" class="btn_b">解散社团</a></span> 
+    </if>
+    <span class="right" id="jun_2" style="margin-right:10px;"><a href="javascript:;" onclick="movegroup({$groupinfo['id']});" class="btn_b">转让社团</a></span>
+   </if>
+    <ul>
+        <li><a href="{:U('group/Manage/index',array('gid'=>$groupinfo['id']))}"
+               <if condition="$current eq 'basic'">class="on" </if>
+                ><span>基本信息</span></a></li>
+        <li><a href="{:U('group/Manage/membermanage',array('gid'=>$groupinfo['id']))}"
+               <if condition="$current eq 'membermanage'">class="on" </if>
+                ><span>成员管理</span></a></li>
+        <li><a href="{:U('group/Manage/announce',array('gid'=>$groupinfo['id']))}"
+               <if condition="$current eq 'announce'">class="on" </if>
+                ><span>公告发布</span></a></li>
+        <li><a href="{:U('group/Log/index',array('gid'=>$groupinfo['id']))}"
+               <if condition="$current eq 'log'">class="on" </if>
+                ><span>管理日志</span></a></li>
+        <li><a href="{:U('group/Manage/validate',array('gid'=>$groupinfo['id']))}"
+               <if condition="ACTION_NAME eq 'validate'">class="on" </if>
+                ><span>校方认证</span></a></li>
+    </ul>
+</div>
+<!-- 切换标签 end  -->

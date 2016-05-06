@@ -1,0 +1,104 @@
+@charset "utf-8";
+/* CSS Document */
+*{ padding:0;margin:0;list-style:none;}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+table,td{
+	margin:auto;
+	padding:inherit;
+}
+select, input, img{ vertical-align:middle;}
+a{ text-decoration:none;}
+a:link {
+color:#666;
+}
+a:visited{ color:#666;}
+a:hover, a:active, a:focus {
+color:#999; text-decoration:underline;
+}
+
+body {
+	font-family: "宋体","MingLiu","Lucida Sans Unicode", "Lucida Grande", "sans-serif",;
+	font-size: 12px;
+	line-height:160%;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #666666;
+	text-decoration: none;
+	background:url(cj/bg.jpg) no-repeat center top #c31d1f;
+	letter-spacing: normal;
+	text-align: left;
+	word-spacing: normal;
+	white-space: normal;
+	display: block;
+	clear: both;
+	float: none;
+	width: auto;
+	position: static;
+	height: auto;
+	top: auto;
+	clip: rect(auto,auto,auto,auto);
+}
+.clear{ clear:both;}
+.bg{ width:100%; float:left; background:url(cj/bg.jpg) center top;}
+.main{width:1000px; margin:auto; }
+.content_1{background:url(cj/bg_5.jpg) no-repeat center top; float:left; width:1000px; padding-bottom:90px;}
+.content_1.i6{background:url(cj/bg_6.jpg) no-repeat center top;}
+.header{ float:left; width:1000px;}
+.header_title{ float:left; text-align:center; width:1000px; color:#FFF; font-weight:bold; font-size:30px; font-family:"微软雅黑"; line-height:50px; margin-top:12px; }
+.header_menu{ float:left; width:732px; background:#bd0000; height:35px; margin:89px auto auto 134px; display:inline; }
+.header_menu ul{ float:left; width:588px; margin:2px auto auto 72px; display:inline;}
+.header_menu li{ float:left; text-align:center; width:98px; font-weight:bold; height:33px; line-height:33px; font-size:14px; font-family:"微软雅黑";}
+.header_menu li.i{ background:url(cj/bg_menu.gif) no-repeat;}
+.header_menu li.i a{ color:#bd0000;background:url(cj/bg_menu.gif) no-repeat bottom; width:98px; height:33px; display:block; }
+.header_menu li a{ color:#fff;width:98px; height:33px; display:block;}
+.header_menu li a:hover,.header_menu li.i a:hover{ color:#bd0000; text-decoration:none; background:url(cj/bg_menu.gif) no-repeat; width:98px; height:33px; display:block;}
+.content{ float:left; width:722px; margin:5px auto auto 140px; display:inline; height:500px;  }
+.list1{ float:left; width:722px; color:#FFF;}
+.list1 ul{ float:left; width:100%;}
+.list1 li{ float:left; width:282px; font-family:"微软雅黑"; padding:0px 220px; height:100px; border-bottom:1px solid #e7b96c; background:url(cj/icon_1.gif) no-repeat 220px 30px;}
+.list1 li.i1{ background:url(cj/icon_2.gif) no-repeat 220px 30px;}
+.list1 li.i2{background:url(cj/icon_3.gif) no-repeat 220px 30px;}
+.list1 li.i3{background:url(cj/icon_4.gif) no-repeat 220px 30px; border-bottom:none;}
+.list1 li.i4{background:url(cj/icon_4.gif) no-repeat 220px 30px;}
+.list1_infor{ float:left; width:150px; margin:15px auto auto 80px; display:inline;}
+.list1_title{ float:left; font-size:26px; width:150px; line-height:50px;}
+.list1_desc{ float:left; width:150px; font-size:14px;}
+.list1_count{ float:left; text-align:right; width:50px; font-size:18px; margin-top:40px; line-height:30px;}
+/*三等奖*/
+.sub{ float:left; width:522px; font-family:"微软雅黑"; padding:0px 100px; height:60px; border-bottom:1px solid #e7b96c; background:url(cj/icon_4.gif) no-repeat 220px 5px; color:#FFF;}
+.sub.ii1{background:url(cj/icon_3.gif) no-repeat 220px 5px;}
+.sub.ii2{background:url(cj/icon_2.gif) no-repeat 220px 5px;}
+.sub.ii3{background:url(cj/icon_1.gif) no-repeat 220px 5px;}
+.sub_title{float:left; font-size:20px; width:80px; line-height:30px; margin:15px auto auto 180px; display:inline; font-weight:bold;}
+.sub_desc{float:left; width:200px; font-size:16px; margin:15px auto auto 10px; display:inline; line-height:30px;font-weight:bold;}
+
+.list2{ float:left; width:600px; margin:15px auto auto 60px; display:inline; height:220px;font-size:26px; line-height:30px; z-index: 888}
+.list2.ititle{ float:left; text-align:center; width:50px; height:80px; padding-top:40px; margin-left:320px; display:inline; font-size:40px; line-height:50px;}
+.list2 ul{ float:left; width:100%;}
+.list2 li{ float:left; width:50px; margin:8px 5px 8px 5px; display:inline; text-align:right;  font-weight:bold; color:#FFF; font-family:"微软雅黑";}
+/*一等奖居中*/
+.list4{ float:left; text-align:center; color:#FFF; font-family:"微软雅黑";width:400px; height:120px; padding-top:50px; margin-left:160px; display:inline; font-size:32px; line-height:50px;}
+.list4 ul{ float:left; width:100%;}
+.list4 li{ float:left; width:70px; margin:8px 5px 8px 5px; display:inline; text-align:center;  font-weight:bold;}
+
+.btn{ float:left; background:url(cj/btn1.jpg) no-repeat; width:111px; height:112px; margin:10px auto auto 306px; display:inline; cursor:pointer;}
+.btn_1{float:left; background:url(cj/btn2.jpg) no-repeat; width:111px; height:112px; margin:10px auto auto 306px; display:inline; cursor:pointer;}
+.note{ float:left; width:600px; margin:10px auto 25px 62px; display:inline; color:#f2e900; font-size:22px; height:24px; line-height:24px; text-align:center; font-family:"微软雅黑";}
+/*获奖名单*/
+.list3{ float:left; width:722px;}
+.list3 ul{ float:left; width:100%;}
+.list3 li{ float:left; border-bottom:1px solid #e7b96c; width:722px; padding:8px 0px; line-height:20px;}
+.list3 li.i5{ border:none;}
+.list3_title{ float:left; font-size:24px; color:#FFF; font-family:"微软雅黑"; line-height:30px; width:85px; text-align:center; margin:5px auto auto 15px; display:inline;}
+.list3_sublist{ float:left; width:600px;}
+.list3_sublist ul{ float:left; width:100%;}
+.list3_sublist li{ float:left; width:50px; font-weight:bold; margin:10px 5px; display:inline;font-family:"微软雅黑"; padding:0px;  text-align:right; border:none; color:#FFF; font-size:26px; }
+.c1{ color:#f27706;}
+/*提示信息*/
+.html_clew_box{border:5px solid #6b6d6b;color:#1b9103;position:absolute;z-index:999;background:#fff url(cj/html_clew_box.gif) repeat-x 0 0;padding:0 25px 0 68px;margin-top:1px;float:left}
+.clew_error{background-position:0 bottom;color:#f00}
+.html_clew_box_close{clear:both;display:none}
+.html_clew_box_close a{background: url(cj/pop_ico_x.gif) no-repeat 0 0;width:8px;height:8px;overflow: hidden;text-indent: 10px;display: block;float: right}
+.html_clew_box_con{font-size:14px; padding:20px 0;white-space: nowrap;font-weight: bold}

@@ -1,0 +1,38 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$total}次抽奖, 中奖{$totalRows}</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>用户ID</th>
+                <th>用户姓名</th>
+                <th>用户手机</th>
+                <th width="30%">中奖时间</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.uid}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.mobile}</td>
+                    <td>{$vo.ctime|friendlyDate}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$total}次抽奖, 中奖{$totalRows}</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="_footer" />

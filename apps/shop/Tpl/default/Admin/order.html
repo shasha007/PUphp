@@ -1,0 +1,170 @@
+<include file="_header" />
+<link rel="stylesheet" type="text/css" href="../Public/css/admin.css">
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+        <form method="post" action="{:U('shop/Admin/order',array('state'=>$_GET['state']))}">
+        订单人姓名：
+        <input type="text" value="{$_REQUEST['search_uid']}" name="search_uid">
+        <input class="btn_b" type="submit" value="搜索">
+        </form>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Admin/order')}" class="btn_a"><span<?php if(!$_GET['state'])echo '  class="cRed"';?>>所有订单</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>1))}" class="btn_a"><span<?php if($_GET['state']==1)echo '  class="cRed"';?>>未提交收货地址</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>2))}" class="btn_a"><span<?php if($_GET['state']==2)echo '  class="cRed"';?>>等待发货</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>3))}" class="btn_a"><span<?php if($_GET['state']==3)echo '  class="cRed"';?>>已发货等待用户收货</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>11))}" class="btn_a"><span<?php if($_GET['state']==11)echo '  class="cRed"';?>>交易完成</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>12))}" class="btn_a"><span<?php if($_GET['state']==12)echo '  class="cRed"';?>>交易取消</span></a>
+
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>订单ID</th>
+                <th>订单人</th>
+                <th>订单生成时间</th>
+                <th>类别</th>
+                <th>图片</th>
+                <th width="30%">商品名称</th>
+                <th>成交价</th>
+                <th>数量</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td><div class="or_title">
+                            <a href="javascript:void(0)" class="dingdan"><b>订单号({$vo.order_id})</b></a>
+                            <div class="listingDetails">
+                                <div class="pad">
+                                    <?php if($vo['address']):?>
+                                    <b>收货信息</b>
+                                    <ul>
+                                        <li><span>收 货 人：{$vo.address.shipName}</span></li>
+                                        <li><span>手机：{$vo.address.shipMobile} 座机：{$vo.address.shipTel}</span></li>
+                                        <li><span>收货地址：{$vo.address.shipZip},{$vo.address.city} {$vo.address.shipAddress}</span></li>
+                                    </ul>
+                                    <?php endif;?>
+                                    <b>会员信息 UID: {$vo.uid}</b>
+                                    <ul>
+                                        <li><span>姓名：{$vo.user.realname}</span></li>
+                                        <li><span>学校：{$vo.user.school}</span></li>
+                                        <li><span>手机号码：{$vo.user.mobile}</span></li>
+                                    </ul>
+                                    <?php if($vo['trans']):?>
+                                    <b>物流信息</b>
+                                    <ul>
+                                        <li><span>快递单号：{$vo.trans.transport_num}</span></li>
+                                        <li><span>快递公司：{$vo.trans.transport_name}</span></li>
+                                        <li><span>发货时间：{$vo.trans.transport_time}</span></li>
+                                        <li><span>备注：{$vo.trans.transport_mark}</span></li>
+                                    </ul>
+                                    <?php endif;?>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" target="_blank">{$vo.user.realname}</a></td>
+                    <td>{$vo.cday}</td>
+                    <td>
+                        <?php if($vo['type']==1):?>一元梦想
+                        <?php elseif($vo['type']==2):?>众志成城
+                        <?php elseif($vo['type']==3):?>摇一摇(实物)
+                        <?php elseif($vo['type']==3):?>新年拜年(实物)
+                        <?php endif;?>
+                    </td>
+                    <td>
+                        <?php if($vo['product']['pic']):?>
+                        <img width="30" height="30" src="{$vo.product.pic|tsMakeThumbUp=###,30,30,'f'}"/>
+                        <?php endif;?>
+                    </td>
+                    <td><?php if($vo['type']==1){echo '第('.$vo['product']['times'].')期 ';}?>{$vo.product.name}</td>
+                    <td><?php if($vo['type']==1){echo '1';}else{echo $vo['product']['cprice']/100;}?></td>
+                    <td>{$vo.buyNum}</td>
+                <td>
+                    <?php if($vo['order_state']==1):?><a href="javascript:void(0)" class="btn btn-green" onclick="sendProduct('{$vo.order_id}');">我要发货</a>
+                    <?php else:?>{$vo['order_state']|orderState}
+                    <?php endif;?>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Admin/order')}" class="btn_a"><span<?php if(!$_GET['state'])echo '  class="cRed"';?>>所有订单</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>1))}" class="btn_a"><span<?php if($_GET['state']==1)echo '  class="cRed"';?>>未提交收货地址</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>2))}" class="btn_a"><span<?php if($_GET['state']==2)echo '  class="cRed"';?>>等待发货</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>3))}" class="btn_a"><span<?php if($_GET['state']==3)echo '  class="cRed"';?>>已发货等待用户收货</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>11))}" class="btn_a"><span<?php if($_GET['state']==11)echo '  class="cRed"';?>>交易完成</span></a>
+        <a href="{:U('shop/Admin/order',array('state'=>12))}" class="btn_a"><span<?php if($_GET['state']==12)echo '  class="cRed"';?>>交易取消</span></a>
+    </div>
+</div>
+<script>
+$(function(){
+    $('.dingdan') .click(function(){
+        $('.opened').hide();
+        $('td.highlighted').removeClass('highlighted');
+        var tr = $(this).parents("tr");
+        var div = $(this).parent().find('.listingDetails');
+
+        if (!$(div).hasClass('opened')) {
+            $('.opened').removeClass('opened');
+            $(div).addClass('opened').width(670).show();
+            $(tr).find('td').addClass('highlighted');
+        } else {
+            $(div).removeClass('opened');
+            $(tr).find('td').removeClass('highlighted');
+        }
+        return false;
+    })
+    $(document).click(function(){
+        $('.opened').hide();
+        $('.opened').removeClass('opened');
+    });
+});
+var g_order = null;
+function sendProduct(orderid){
+    g_order = orderid;
+    txt = '<div class="payment_ts"><fieldset><legend>快递信息</legend><p><label>快递单号：</label>'+
+            '<input type="text" name="transport_num" id="transport_num" /></p><p><label>快递公司：</label>'+
+            '<input type="text" name="transport_name" id="transport_name" /></p><p><label>备注信息：</label>'+
+            '<input type="text" name="transport_mark" id="transport_mark"  size="40"/></p><p>'+
+            '<input type="button" name="addTransport" class="btn btn-blue" value="添加" id="addTransport" onclick="send()"/></p></fieldset></div>';
+    ui.box.show(txt,{title:'发货处理',closeable:true})
+}
+function send(){
+    var transport_num = $("#transport_num").val();
+    var transport_name = $("#transport_name").val();
+    var transport_mark = $("#transport_mark").val();
+    if(transport_num == ''){
+        ui.error('快递单号不能为空');
+        return ;
+    }
+    if(transport_name == ''){
+        ui.error('快递公司不能为空');
+        return ;
+    }
+    $.post( '__URL__&act=sendProduct',{order_id:g_order,transport_num:transport_num,transport_name:transport_name,transport_mark:transport_mark},function(res){
+        var json =$.parseJSON(res);
+        if (json.status ==0) {
+            ui.error(json.info);
+        }else{
+            ui.success(json.info);
+            ui.box.close();
+            setTimeout(function(){location.reload();},1500);
+        }
+    });
+}
+</script>
+<include file="_footer" />

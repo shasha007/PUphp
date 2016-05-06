@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>用户信息</title>
+		<link rel="stylesheet" href="../Public/css/style.css" />
+	</head>
+	<body bgcolor="#F3F1EE">
+		<div class="L-article">
+		<form method="post" action="">
+			<div>
+				<span>*</span><i>姓名:</i><span><input type="text" disabled name="username" value="<?php echo $realname;?>" id="name"/></span>
+			</div>
+			<?php if(!empty($_GET['from']) && ($_GET['from'] == 'bindBankcard') ):?>
+			<div>
+				<span></span><i>推荐人uid:</i><span><input name="ruid" <?php if(!empty($recommend_uid)):?> disabled3<?php endif;?> value="<?php echo $recommend_uid;?>" type="number" /></span>
+			</div>
+			<?php endif;?>
+			<div>
+				<span>*</span><i>民族:</i><span><input type="text" name="nation" id="nation" value="<?php echo $ethnic;?>" /></span>
+			</div>
+			<div>
+				<span>*</span><i>QQ(微信)</i><span><input type="text" name="qq" id="qq" value="<?php echo $imid;?>" /></span>
+			</div>
+			<div>
+				<span><?php if(empty($mobile)):?>*<?php endif;?></span><i>备用手机号:</i><span><input  name="tel" id="telphon" value="" /></span>
+			</div>
+			<div>
+				<span>*</span><i>邮箱:</i><span><input name="email" id="email" value="<?php echo $email;?>" /></span>
+			</div>
+			<div>
+				<span>*</span><i>地址:</i><span><input name="address" id="address" value="<?php echo $address;?>" /></span>
+			</div>
+			<div class="L-inbag">
+				<button type="submit">完成</button>
+			</div>
+			</form>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../Public/js/mainScript.js" ></script>
+<script type="text/javascript">
+    setActionBar('填写信息', '', '');
+</script>

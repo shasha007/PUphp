@@ -1,0 +1,78 @@
+<include file="../Teacher/_header" />
+<div id="container" class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"> 礼品领取地点：<span id="address">{$webconfig.gift_address}</span> <input class="btn_b" type="button" value="修改" onclick="editGiftAddress()"></div>
+    <div class="page_tit"> 输入条码，查询未领取礼品</div>
+    <div class="form2">
+        <form action="" method="POST">
+            <dl>
+                <dt>请输入条码：</dt>
+                <dd>
+                    <input name="code" class="txt" value="{$code}">
+                    <input class="btn_b" type="submit" value="确定">
+                </dd>
+            </dl>
+        </form>
+        <?php if(!empty($data)):?>
+        <div id="gift" class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th width="60px"></th>
+                <th width="20%">物品</th>
+                <th>数量</th>
+                <th>兑换者</th>
+                <th>状态</th>
+                <th>花费积分</th>
+                <th>兑换时间</th>
+                <th>条码</th>
+            </tr>
+            <tr>
+            <volist name="data" id='vo'>
+                <td>
+                <if condition="$vo['jf']['path']">
+                    <img src="{$vo.jf.path|getThumb1=###,50,50}" style="margin-bottom: 5px;">
+                </if>
+                </td>
+                <td><a href="{:U('/School/gift', array('id'=>$vo['jf']['id']))}" target="_blank">{$vo['jf']['title']}</a> </td>
+                <td>{$vo['number']}</td>
+                <td>{$vo.uid|getUserRealName}</td>
+                <td><?php if($vo['isGet']):?>礼品已发放<?php else:?><span class="cGreen b">尚未领取</span><?php endif;?></td>
+                <td><?php echo($vo['cost']*$vo['number'])?></td>
+                <td><?php echo(date('Y-m-d H:i',$vo['cTime']));?></td>
+                <td>{$vo.code}</td>
+            </volist>
+            </tr>
+        </table>
+        <div class="page_btm">
+            <input type="submit" class="btn_b" value="确定领取"  onclick="linqu({$vo['id']});return false;"/>
+        </div>
+        </div>
+        <?php endif;?>
+    </div>
+</div>
+<?php if(empty($webconfig['gift_address'])):?>
+<script type="text/javascript">
+$(function(){
+    editGiftAddress();
+});
+</script>
+<?php endif;?>
+<script type="text/javascript">
+    function linqu(id){
+        if(confirm('确定礼品已发放领取？')){
+            $.post(U('event/Jf/linqu'),{id:id},function( text ){
+                json = eval('('+text+')');
+                if( json.status == 1 ){
+                    ui.success( json.info );
+                    $('#gift').remove();
+                }else{
+                    ui.error( json.info );
+                }
+            });
+        }
+    }
+    function editGiftAddress(){
+        ui.box.load( '__URL__&act=editGiftAddress',{title:'修改礼品领取地点'});
+    }
+</script>
+<include file="../Teacher/_footer" />

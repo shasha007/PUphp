@@ -1,0 +1,50 @@
+<include file="_header" />
+
+
+<div class="so_main">
+    <include file="_tab" />
+
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>公司名</th>
+                <th>注册时间</th>
+                <th>状态</th>      
+                <th>操作</th>
+            </tr>
+            <volist name="data.data" id='vo'>
+                <tr id="list_{$vo.eid}">
+                    <td>{$vo.eid}</td>
+                    <td><a href="__URL__&act=detail&id={$vo.eid}">{$vo.fullname|getShort=###,15,'…'}</a></td>
+                    <td><?php echo date('Y-m-d H:i',$vo['ctime']);?></td>
+                    <td>{$state[$vo['is_activation']]}</td>
+                    <td>
+                        <a href="{:U('job/Admin/registrationDetail',array('eid'=>$vo['eid']))}">查看</a>     
+                        <a href="javascript:void(0);" onclick="edit({$vo.eid},1);">通过</a>     
+                        <a href="javascript:void(0);" onclick="edit({$vo.eid},2);">驳回</a>           
+      
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+</div>
+<script>
+    function edit(eid,type){
+        $.post('__URL__&act=companyexamineAjax',{eid:eid,type:type},function(json){
+         if(json){
+                ui.success( "操作成功" );
+                $('#list_'+eid).remove();
+          }else{
+                ui.error( "操作失败" );
+           }
+
+       });
+    }
+
+</script>
+ <div class="page right">{$data['html']}</div>
+<include file="_footer" />

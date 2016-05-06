@@ -1,0 +1,54 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul>
+    </div>
+    <div class="page_tit">6.部落统计</div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+        <form method='post' action="{:U('home/Tj/group1')}" onsubmit="return checkMon(1);">
+            <td width="200;">1. 各校部落总数：<input type="submit" value='导出'></td>
+            <td>学校|总数|学生部门|部门人数|团支部|团支部人数|学生社团|社团人数</td>
+        </form>
+        </tr>
+        <tr>
+        <form method='post' action="{:U('home/Tj/groupCate')}" onsubmit="return checkMon(1);">
+            <td width="200;">2. 社团分类人数：<input type="submit" value='导出'></td>
+            <td>分类|人数</td>
+        </form>
+        </tr>
+        <tr>
+        <form method='post' action="{:U('home/Tj/everyGroupEvent')}" onsubmit="return checkMon(1);">
+            <td width="200;">3. 部落活动数：<input type="submit" value='导出'></td>
+            <td>分类|组织数量|活动数|报名|签到</td>
+        </form>
+        </tr>
+
+            <tr>
+                <form method='post' action="{:U('home/Tj/exportGroup')}" onsubmit="return checkMon(1);">
+                    <td width="200;">4. 部落统计：</td>
+                    <td>学校名称|社团名称|社团人数|社长姓名|性别|手机
+                        <select name="city">
+                            <option value="">--请选择--</option>
+                            <?php foreach($citys as $city): ?>
+                            <option value="<?php echo $city['id'] ?>"><?php echo $city['city'] ?></option>
+                            <?php endforeach;?>
+                        </select>
+                        <input type="submit" value='导出'>
+                    </td>
+                </form>
+            </tr>
+
+    </table>
+    </div>
+</div>
+<include file="_footer" />
+
+<script>
+
+    (function($){
+        $('select[name=city]').chosen();
+    })(jQuery);
+
+</script>

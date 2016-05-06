@@ -1,0 +1,28 @@
+<form action="{:U('/Admin/doEditPhoto')}" enctype="multipart/form-data" method="post">
+    <table cellpadding=3 cellspacing=3>
+    <tr>
+        <td align="right"><span style="color: #F00">*</span>标题：</td>
+        <td align="left"><input type="text" name="title" value="{$photo.title}" />
+        </td>
+    </tr>
+    <if condition="$photo">
+    <tr>
+        <td align="right">图片：</td>
+        <td align="left">
+        	<img  width="100" height="100" src="{$photo.path|realityImageURL}">
+        	<input name="id" value="{$photo.id}" type="hidden">
+        </td>
+    </tr>
+    </if>
+    <tr>
+        <td align="right"><span style="color: #F00">*</span>上传：</td>
+        <td align="left">
+        <input name="files[]" id="face" type="file"><br />
+        <span style="color:#666;font-size:10px;">建议图片大小：250像素x180像素</span>
+        </td>
+    </tr>    
+    </table>
+    <div >
+        <input type="submit" class="btn_b" value="确定">
+    </div>
+</form>

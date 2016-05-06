@@ -1,0 +1,75 @@
+<include file="_header" />
+<div class="bg">
+    <div class="main mt10">
+        <div class="f_bidcon_title b mt10">活动承办</div>
+        <div class="rule_enter"><a href="http://pocketuni.net/apps/zt/fund_rule_b.html">申请规则</a></div>
+        <?php if($msg):?>
+        <div class="f_bidcon_title b mt10 fund_key i2">（{$msg}）</div>
+        <?php endif;?>
+        <form onsubmit="return fund_apply();" ENCTYPE="multipart/form-data" method="POST" action="__URL__&act=doapplyEvent">
+         <div class="mb50">
+            <input type="hidden" name="eventId" value="{$id}" />
+            <div class="fund_key">联系人<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" class="fund_input" id="contact" name="contact" /></div>
+            <div class="fund_key">电话<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" id="telephone" class="fund_input" name="telephone" /></div>
+            <div class="fund_key">QQ（可填多个）</div>
+            <div class="fund_key"><input type="text" class="fund_input" name="qq" /></div>
+            <div class="fund_key">支付宝账号（可填多个）<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" class="fund_input" id="alipayAccount" name="alipayAccount" /></div>
+            <div class="fund_key">承办部落<span class="fund_red">*</span></div>
+            <div class="fund_key">
+                <select id="gid" name="gid" class="fund_select">
+                    <option value="0">-请选择部落-</option>
+                    <?php foreach($groups as $v): ?>
+                    <option value="{$v.gid}">{$v.name}</option>
+                    <?php endforeach; ?>
+                </select></div>
+            <div class="fund_key">承办金额<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" onkeyup="clearNoNum2(this)" id="amount" placeholder="承办本活动所需之经费" class="fund_input" name="amount" /></div>
+            <div class="fund_key">上传附件（上传活动策划、曾经办过的活动等）</div>
+            <div class="fund_key"><input type="file" class="fund_upload" id="attach" name="attach" /></div>
+            <div class="fund_key i2"></div>
+            </div>
+            <div class="fund_btnline">
+                <input name="tj1" type="submit" class="fund_fullbtn b f14" value="确认申请" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    //提交JS验证
+    function fund_apply() {
+        var isTrue = true;
+        var formId = ['#contact', '#telephone', '#alipayAccount','#gid','#amount'];
+        var formError = ['请填写联系人', '请填写电话', '请填写支付宝账号','请选择承办部落','请填写承办金额'];
+        $.each(formId, function (i, v) {
+            var checkInput = $(v).val();
+            if (v == '#amount') {
+                if (checkInput <= 0) {
+                    isTrue = false;
+                    alert('请填写承办金额');
+                    $(v).focus();
+                    return false;
+                }
+            }
+            if (v != '#gid') {
+                checkInput = checkInput.length;
+            }
+            if (checkInput == 0) {
+                isTrue = false;
+                alert(formError[i]);
+                $(v).focus();
+                return false;
+            }
+        });
+        if (isTrue) {
+            return true;
+        }
+        return false;
+    }
+    function clearNoNum2(obj) {
+        obj.value = obj.value.replace(/[^\d]/g, "");  //清除“数字”以外的字符
+    }
+</script>
+<include file="_footer" />

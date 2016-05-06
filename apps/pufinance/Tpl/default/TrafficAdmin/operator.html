@@ -1,0 +1,50 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/trafficTabs" />
+    <!--<include file="tabs" />-->
+</div>
+<div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">ID</th>
+                <th class="line_l">运营商名称</th>
+                <th class="line_l">使用范围</th>
+                <th class="line_l">流量有效期</th>
+                <th class="line_l">生效时间</th>
+                <th class="line_l">当月限充次数</th>
+                <th class="line_l">支持用户</th>
+<!--                <th class="line_l">操作</th>-->
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' id="{$vo.id}">
+                    <td>
+                        <input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td align="left">{$vo.name}</td>
+                    <td align="left">{$vo.area}</td>
+                    <td align="left">{$vo.term}</td>
+                    <td align="left">{$vo.commence}</td>
+                    <td align="left">
+                        {$vo.limitDesc}
+                    </td>
+                    <td align="left">
+                        {$vo.desc}
+                    </td>
+<!--                    <td align="left">
+                        <a href="{:U('client/Index/addApp',array('id'=>$vo['id']))}">编辑</a>
+                        <a href="javascript:void(0);" onclick="deleteApp('{$vo.id}')">删除</a>
+                    </td>-->
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="../Public/footer" />

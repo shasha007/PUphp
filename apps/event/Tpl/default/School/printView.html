@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>
+            <neq name="ts['site']['page_title']" value="">
+                {$ts['site']['page_title']} -
+            </neq>
+            校方活动 - 打印活动
+        </title>
+        <link rel="shortcut icon" href="__THEME__/favicon.ico" />
+        <link href="__THEME__/css/printview.css?20130609" rel="stylesheet" type="text/css" />
+        <include file="__THEME__/comm/_app" />
+        <script>
+            var _UID_   = '{$uid}';
+            var _MID_   = '{$mid}';
+            var _ROOT_  = '__ROOT__';
+            var _THEME_ = '__THEME__';
+            var _PUBLIC_ = '__PUBLIC__';
+            var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+            var _LANG_SET_ = '{:LANG_SET}';
+            function doPrint(){
+                if(confirm('已经将浏览器的【文件】->【页面设置】里页眉和页脚改为空白？')){
+                    window.print();
+                }
+            }
+            //自动在打印之前执行
+            window.onbeforeprint  = function(){
+                $("#test").hide();
+           }
+            //自动在打印之后执行
+            window.onafterprint = function(){
+                $("#test").show();
+            }
+        </script>
+        <style type=”text/css” media=”print”>
+            .hd_print_list2_btn{display:none;}
+        </style>
+    </head>
+    <body>
+    <div class="bg">
+        <div class="main">
+            <div class="hd_content print1">
+                <div class="hd_c_print">
+                    <div class="hd_print_list2_btn" id="test">
+                        <ul>
+                            <li><a href="javascript:void(0)" onclick="doPrint();">打 印</a></li>
+                        </ul>
+                        <div class="red">注意： 打印前，浏览器的【文件】->【页面设置】里页眉和页脚改为空白</div>
+                        <div>如要保存成PDF，可下载软件<a href="{:PIC_URL}/data/TinyPDF.exe">TinyPDF</a>。安装后打印选取这个TinyPDF的打印机，就可以把网页转换成PDF格式保存了</div>
+                    </div>
+
+                    <?php if($is_orga):?>
+                        <div class="hd_print_title1 b">{$webconfig.print_title}</div>
+                    <?php else:?>
+                        <div class="hd_print_title1 b">{$title}</div>
+                    <?php endif;?>
+                    <div class="hd_p_infor h24">
+                        姓名：{$uid|getUserRealName} &nbsp;&nbsp;
+                        学号：{$uid|getUserEmail|getUserEmailNum}&nbsp;&nbsp;
+                        学校：{$school.title}
+                    </div>
+                    <div class="clear"></div>
+                    <div class="hd_p_desc">
+                        <table width="898" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="b f14 h36" style="background:#f0eeee;">
+                                <td width="70">序号</td>
+                                <td width="80">时间</td>
+                                <td width="400">活动</td>
+                                <td width="198">主办组织单位</td>
+                                <td width="150">备注</td>
+                            </tr>
+                            <volist name="list" id='vo'>
+                            <tr>
+                                <td>{$i}</td>
+                                <td><?php echo date('Y-m',$vo['sTime'])?></td>
+                                <td>
+                                    <div class="hd_p_desc_title b">{$vo.title}</div>
+                                    <div class="hd_p_desc_text">活动简介：{$vo.description}</div>
+                                </td>
+                                <td>{$vo.sid|getEventOrga}</td>
+                                <td></td>
+                            </tr>
+                            </volist>
+                        </table>
+                    </div>
+                </div>
+                <div class="clear"></div>
+
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

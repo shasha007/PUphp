@@ -1,0 +1,46 @@
+<div class="school_d" >
+    <div class="school_province" id="prov">
+        <ul>
+            <volist name="provs" id="vo">
+                <li <eq name="first" value="$vo['id']">class='school1'</eq>><a href="javascript:void(0);" val="{$vo.id}">{$vo.title}</a></li>
+            </volist>
+        </ul>
+    </div>
+    <div class="school_train" id="subschool" >
+        <ul>
+            <volist name="citys" id="vo">
+                <li id="node_{$vo.id}">
+                    <a href="{$vo.link}">{$vo.title}</a>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="train_close">
+        <input type="button" class="train_btn" value="全部区域"  onclick="allArea()"/>
+        <input name="close" type="button" value="关闭" class="school_btn" onclick="javascript:ui.box.close();" />
+    </div>
+</div>
+<script>
+    $(function(){
+        $('#prov ul li a ').click(function(){
+            var pid = $(this).attr('val');
+            $('#prov ul li').removeClass()
+            $(this).parent('li').addClass('school1');
+            $.post(U('train/Index/ajaxArea'), { pid: pid},
+            function(data){
+                var json= $.parseJSON(data);
+                var str ="";
+                $.each(json,function(i,v){
+                    str+="<li><a href='"+v.link+"'>"+v.title+"</a></li>";
+                });
+                $('#subschool ul').html(str);
+                //$('#subschool ul').append(str);
+
+            });
+
+        });
+    })
+    function allArea(){
+        window.location.href = "{:U('train/Index/index')}&city=all&prov=all";
+    }
+</script>

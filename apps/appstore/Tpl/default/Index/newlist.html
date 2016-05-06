@@ -1,0 +1,92 @@
+<include file="../Public/_header" />
+
+	<div class="content clearfix under-suggest">
+
+<div class="App_main_2col_r"> 
+					
+					<div class="appchannel_stat_tab">
+						<div class="stat_total"><strong>{$cname}</strong> 共<strong class="pin_num">{$items.totalRows}</strong>个{$typename}</div>
+						<ul class="stat_tab">
+							<li>
+								浏览数
+							</li>
+							<li>
+								下载数
+							</li>							
+							<li class="current">
+								发布时间
+							</li>
+						</ul>
+					</div>
+					<!-- /appchannel_stat_tab -->
+
+
+					
+					<!-- appchannel_list -->
+					<div class="appchannel_list appchannel_app_pic">
+						<ul>
+							
+							  <php>
+							//print_r($items);
+							foreach( $items['data'] as $vo){</php>
+								<li class="clearfix">
+										
+										<php>if($type<3) { </php>
+										<div class="app_pic appPic_80">		
+											<a class="app_pic_bg" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}">																					
+											
+											<img class="app_img" src="{$vo.icon|get_document_url}" alt="">
+											</a>
+										</div>
+										<php> } </php>
+										<div class="app_detail">
+											<h3>
+												<php>if($type<3) { </php>
+												<a class="app_name" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}">{$vo['title']}</a>
+												<php> }else{ </php>	
+												<a class="app_name" href="{:U('appstore/Index/document', array('id'=>$vo['document_id']))}">{$vo['title']}</a>	
+												<php> } </php>
+												<span class="test_state indepart" title="站内应用"></span>											
+											</h3>
+											<p class="app_introduce">{$vo['content']|text|getShort="90"}</p>
+											<php>if($type<3) { </php>		
+											<p class="app_tabs">
+												分类:
+												<php>if($vo['cid0']>0) { </php>												
+												{$vo.cid0|getCategoryName}
+												<php> } </php>			
+												<php>if($vo['cid1']>0) { </php>
+												- 
+												{$vo.cid1|getCategoryName}
+												<php> } </php>
+											</p>
+											<php> } </php>
+										</div>
+										
+										<ul class="app_count">
+											<li>
+												{$vo['readCount']}
+											</li>
+											<li>
+												{$vo['downloadCount']}
+											</li>											
+											<li>
+												<php>echo date("Y",$vo['mtime'])."-".date("m",$vo['mtime'])."-".date("d",$vo['mtime'])."";</php>
+											</li>
+										</ul>
+
+									</li>
+								<php>}</php>																																																													
+																																
+																																				</ul>
+																																				
+<div class="page">{$items.html}</div>
+
+
+						<!-- /app_list -->
+					</div>			
+					
+                        <!--/W_main_2col_r--> 
+				</div>
+				
+<include file="../Public/_footer" />				

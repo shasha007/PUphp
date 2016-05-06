@@ -1,0 +1,33 @@
+<div class="page_tit">格瓦克流量管理</div>
+<div class="tit_tab">
+    <ul>
+        <!--<li>
+            <a href="{:U('pufinance/TrafficAdmin/index')}"
+                <?php if(ACTION_NAME == "index"):?>
+                class="on"
+                <?php endif;?>
+            >流量管理首页</a>
+        </li>-->
+        <li>
+            <a href="{:U('pufinance/TrafficAdmin/trafficLists')}" 
+               <?php if(ACTION_NAME=="trafficLists" || ACTION_NAME=="addTraffic"):?>
+                    class="on"
+                <?php endif;?>
+            >流量管理</a>
+        </li>
+        <li>
+            <a href="{:U('pufinance/TrafficAdmin/operator')}" 
+                <?php if(ACTION_NAME=="operator" || ACTION_NAME=="addOperator"):?>
+                    class="on"
+                <?php endif;?>
+            >运营商管理</a>
+        </li>
+        <li>
+            <a href="{:U('pufinance/TrafficAdmin/order')}" 
+                <?php if(ACTION_NAME=="order"):?>
+                    class="on"
+                <?php endif;?>
+            >订单管理</a>
+        </li>
+    </ul>
+</div>

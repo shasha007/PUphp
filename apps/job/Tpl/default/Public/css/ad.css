@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0;padding:0;list-style-type:none;}
+a,img{border:0;}
+.focus{height:230px;width:1000px;margin:10px auto 0 auto;}
+.focus .left{float:left; width:800px; height:221px; position:relative;overflow:hidden;}
+.focus .left li{position:absolute; left:0; top:0; width:842px; height:415px; z-index:1; opacity:0; filter:alpha(opacity=0);}
+.focus .left li img{ width:800px; height:221px; }
+.focus .left li.active{z-index:2;}
+.focus .left li p{display:none;}
+
+.focus .right{float:right; width:190px;}
+.focus .right li{height:61px; overflow:hidden; border:3px solid #dedede; color:#33cccc; margin-bottom:10px;cursor: pointer;}
+.focus .right li img{ width:186px; height:61px;}
+.focus .right li:hover,.focus .right li.active{color:#fff;background-position:-120px -120px;border:3px solid #77d3be; }

@@ -1,0 +1,219 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <!-- <div class="page_tit">今日推荐管理</div> -->
+    <div class="Toolbar_inbox">
+    <if condition="($allowOpt == true) ">
+        <a href="{:U('home/Eventimage/addimage')}" class="btn_a"><span>添加今日推荐</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="deleteAd();"><span>删除今日推荐</span></a>
+
+    </if>
+  
+        <div class="page right">{$html}</div>
+        <span>      
+	 <form method="post" action="{:U('home/Eventimage/imglist')}">
+	         今日推荐标题：<input name="title" type="text" value="{$title}">
+	            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+	        </form>
+        </span>
+    </div>
+     
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+    			<if condition="($allowOpt == true) ">
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+    			</if>
+                <th class="line_l">ID</th>
+                <th class="line_l">标题</th>
+                <th class="line_l">图片一</th>
+                <th class="line_l">图片二</th>
+                <th class="line_l">图片三</th>
+                <th class="line_l">是否开启</th>
+                <th class="line_l">排序</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' id="{$vo.id}">
+    				<if condition="($allowOpt == true) ">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}">
+    				</td></if>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                	<td><img alt="图片一" width="80" height="80" src="{$vo.img1Id|getImgAttachOri}"></td>
+                	<td><img alt="图片二" width="80" height="80" src="{$vo.img2Id|getImgAttachOri}"></td>
+                	<td><img alt="图片三" width="80" height="80" src="{$vo.img3Id|getImgAttachOri}"></td>
+                    <td>
+                        <if condition="$vo['display']==0">
+                            <button id="open{$vo.id}" data-id="{$vo.id}" data-statuses="1" class="open">开启</button>
+                            <else/>
+                            <font color="red"><button id="open{$vo.id}" data-id="{$vo.id}" data-statuses="2" class="open">关闭</button></font>
+                        </if>
+                    </td>
+                    <td class="pl10 djbj1" onclick="remark(this,{$vo['id']})" edit="on" title="单击编辑">
+                        <?php if($vo['queue']==99999){echo '' ;}else{echo $vo['queue'] ;} ?>
+                    </td>
+                <td>
+                	<if condition="($allowOpt == true) ">
+                    <a href="{:U('home/Eventimage/palceDisplay',array('id'=>$vo['id']))}">地址修改</a>
+                    <a href="{:U('home/Eventimage/editimage',array('id'=>$vo['id']))}">编辑</a>
+                    <a href="javascript:void(0);" onclick="deleteAd('{$vo.id}')">删除</a>
+                    <else />
+                    <a href="{:U('home/Ad/editAdread',array('id'=>$vo['id']))}">查看</a>
+                    </if>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+    	<if condition="($allowOpt == true) ">
+        <a href="{:U('home/Eventimage/addimage')}" class="btn_a"><span>添加今日推荐</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="deleteAd();"><span>删除今日推荐</span></a>
+
+        </if>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+
+<script>
+	//鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+        function () {
+            $(this).addClass("bg_hover");
+        },
+        function () {
+            $(this).removeClass("bg_hover");
+        }
+    );
+    });
+
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+  //获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+    function deleteAd(ids) {
+        var length = 0;
+        if(ids) {
+            length = 1;
+        }else {
+            ids    = getChecked();
+            length = ids[0] == 0 ? ids.length - 1 : ids.length;
+            ids    = ids.toString();
+        }
+        if(ids=='') {
+            ui.error('请先选择一个今日推荐');
+            return ;
+        }
+        if(confirm('您将删除'+length+'条记录，删除后无法恢复，确定继续？')) {
+            $.post("{:U('home/Eventimage/doDeleteImg')}",{ids:ids},function(res){
+                if(res=='1') {
+                    ui.success('删除成功');
+                    removeItem(ids);
+                }else {
+                    ui.error('删除失败');
+                }
+            });
+        }
+    }
+
+    function removeItem(ids) {
+        ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#'+ids[i]).remove();
+        }
+    }
+
+    $(".open").click(function(){
+        var id = $(this).data("id") ;
+        var status = $(this).data("statuses") ;
+        $.ajax({
+            type: 'post',
+            url: "{:U('home/Eventimage/open')}" ,
+            data: {
+                status: status ,
+                id:id
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data!=='0') {
+                    if (status === 1) {
+                        $("#open"+id).html("关闭") ;
+                        $("#open"+id).attr("data-statuses", "2");
+                    }else{
+                        $("#open"+id).html("开启") ;
+                        $("#open"+id).attr("data-statuses", "1");
+                    }
+                }
+                else {
+                    alert('哈哈哈哈') ;
+                }
+            }
+        });
+    });
+
+    function remark(obj,id){
+        if($(obj).attr('edit')=='on'){
+            var inval=$(obj).html();
+            if(!$('#edit'+id).val()){
+                $(obj).html("<input type='number'  min='1' style='width:60px;'id='edit"+id+"'name='' value='"+inval+"'>");
+                $(obj).attr('edit','off');
+                $(obj).removeClass('djbj1');
+            }
+            $("#edit"+id).die().live("blur",function(){
+            });
+            $("#edit"+id).focus().live("blur",function(){
+                var editval=$(this).val();
+                $(obj).html(editval);
+                $(obj).attr('edit','on');
+                $(obj).addClass('djbj1');
+                if(editval< 1){
+                    ui.error('数字必须大于1');
+                    $(obj).html(inval);
+                    return false;
+                }
+                $.post("{:U('home/Eventimage/addRemark')}",{id:id,val:editval},function(data){
+                    var json=$.parseJSON(data);
+                    if(json.status==0){
+                        ui.error(json.info)
+                        $(obj).html(inval);
+                    }else{
+                        ui.success(json.info);
+                        setTimeout("location.reload()",500) ;
+                    }
+                });
+            });
+        }
+
+
+    }
+</script>
+<include file="_footer" />

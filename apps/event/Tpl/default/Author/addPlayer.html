@@ -1,0 +1,80 @@
+<include file="_header" />
+<script type="text/javascript" src="__PUBLIC__/js/kindeditor/kindeditor.js"></script>
+<div class="member_c">
+    <div class="member_menu b">添加选手</div>
+    <div class="member_back"><a href="{:U('/Author/player',array('id'=>$id))}">返回选手列表</a></div>
+    <form onSubmit='return checkUpPlayer();' name="myform" action="{:U('/Author/doAddPlayer',array('id'=>$eventId))}" enctype="multipart/form-data" method="post">
+        <div class="member_add">
+            <table width="900" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="5"></td>
+                    <td align="right" width="100">{$defaultName.realname}：</td>
+                    <td width="15"><span class="red">*</span></td>
+                    <td><input name="realname" type="text" class="p_input1" size="40" value="{$holdUser.realname}"/></td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right">{$defaultName.school}：</td>
+                    <td><span class="red">*</span></td>
+                    <td><input name="school" type="text" class="p_input1" size="40" value="{$holdUser.school}"/></td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right">{$defaultName.content}：</td>
+                    <td><span class="red">*</span></td>
+                    <td><textarea name="content" id="content" rows="5" cols="60">{$holdUser.content}</textarea></td>
+                </tr>
+                <tr><td height="8" colspan="20"></td></tr>
+                <tr>
+                    <td></td>
+                    <td align="right">头像+展示图片：</td>
+                    <td><span class="red">*</span></td>
+                    <td>
+<span class="cGray2">建议图片大小：头像160x200px</span><br/>
+<div class="prov_thumblist"><ul id="uploaded_photos1"></ul></div>
+<input type="button" onclick="openUploadImg(1);" value="添加图片"/>
+<br/><span class="cGray2">提示：用鼠标拖动图片排序，第一张将作为头像</span>
+                    </td>
+                </tr>
+                <volist name="parameter" key="k" id='vo'>
+                    <tr><td height="8" colspan="20"></td></tr>
+                    <tr>
+                        <td></td>
+                        <td align="right">{$vo[0]}：</td>
+                        <td><?php if($vo[2]):?><span class="red">*</span><?php endif; ?></td>
+                        <td>{:W('Parameter',array('type'=>$vo[1],'id'=>$k,'version'=>2))}
+                        </td>
+                    </tr>
+                </volist>
+            </table>
+        </div>
+        <div class="member_btn">
+            <input type="submit" value="确定" class="member_btn1" />
+        </div>
+    </form>
+</div>
+{$fdjs}
+<script>
+$(document).ready(
+    function () {
+        $("#uploaded_photos1").sortable();
+        $("#uploaded_photos1").disableSelection();
+    }
+);
+var imgCount = [0,0];
+var imgMax = [0,10];
+var fileCount = [0,0,0,0,0,0,0,0,0,0,0,0];
+var fileMax = [0,1,1,1,1,1,1,1,1,1,1,1];
+var thumbSizeW = [0,100];
+var thumbSizeH = [0,125];
+var showW = [0,0];
+var showH = [0,0];
+var imgId = 0;
+var attach_type = 'event_player';
+</script>
+<include file="__THEME__/comm/_upload_file" />
+<script type="text/javascript" src="__PUBLIC__/js/ui.core.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ui.sortable.js"></script>
+<include file="_footer" />

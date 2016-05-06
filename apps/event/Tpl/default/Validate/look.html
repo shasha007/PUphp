@@ -1,0 +1,38 @@
+<include file="../Teacher/_header" />
+<div class="so_main" style=''>
+    <include file="_tab" />
+    <div class="page_tit">查看部落申请</div>
+    <div class="form2">
+        <dl class="lineD">
+            <dt><strong>部落名称：</strong></dt>
+            <dd><a href="{:U('group/Group/index',array('gid'=>$gid))}" target="_blank">{$group.name}</a>&nbsp;&nbsp;&nbsp;
+                <strong> 主席：</strong><space uid="group.uid" class="fn" target="_blank">{uname}</space>
+            </dd>
+        </dl>
+        <dl class="lineD">
+            <dt><strong>申请原因：</strong></dt>
+            <dd>{$reason}</dd>
+        </dl>
+        <dl class="lineD">
+            <dt><strong>申请资料：</strong></dt>
+            <dd><a href="{$cover_id|getCover=0,0}" target="_blank">点击查看</a></dd>
+        </dl>
+
+        <?php if($status ==1): ?>
+        <div class="page_btm" id="sub">
+            <input class="btn_b" type="button" onclick="tz({$id});" value="通过">
+            <input class="btn_w" type="button" onclick="del({$id});" value="驳回">
+        </div>
+        <?php endif; ?>
+
+    </div>
+</div>
+<script>
+    function tz(id){
+        ui.box.load( '{:U('/Validate/doAuditStern')}' + '&id=' + id,{title:'通过部落申请'});
+    }
+    function del(id){
+        ui.box.load( '{:U('/Validate/doAuditReason')}' + '&id=' + id,{title:'驳回部落申请'});
+    }
+</script>
+<include file="../Teacher/_footer" />

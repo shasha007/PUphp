@@ -1,0 +1,198 @@
+<include file="_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+<script>
+    $(document).ready(function(){
+        setTimeout('loadEditor("content")',100);
+    });
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <form action="{:U('home/Lucky/doEditLucky')}" enctype="multipart/form-data" method="post" onsubmit="return check();">
+        <input type="hidden" name="id" value="{$id}" />
+        <div class="form2">
+            <dl class="lineD">
+                <dt>商品名称：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="name" type="text" value="{$name}" size="130">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>剩余数量：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="num" type="text" value="{$num}"
+                    onkeyup="if(this.value.length==1)
+                    this.value=this.value.replace(/[^1-9]/g,'')
+                    else this.value=this.value.replace(/\D/g,'')"
+                    onafterpaste="if(this.value.length==1)
+                    this.value=this.value.replace(/[^1-9]/g,'')
+                    else this.value=this.value.replace(/\D/g,'')">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>类别：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="type"  id='type' class="text" onchange="changeType(this)">
+                        <option value="0" selected>--请选择--</option>
+                        <?php $types=getLuckyTypes(); foreach($types as $k=>$v): ?>
+                        <option value="{$k}" <?php if( $k == $type ) {echo "selected";}?>>{$v}</option>
+                        <?php endforeach; ?>
+                    </select>
+                </dd>
+            </dl>
+
+            <dl class="lineD" id="import-code">
+                <dt>导入优惠码：</dt>
+                <dd>
+                    <input type="file" id="upload-excel" name="excel">
+                    <a href="/data/template/coupon-code.xlsx">下载优优惠码EXCEL模板</a>
+                    <?php if ($id > 0): ?>
+                    <a class="openWindow" href="<?php echo U('home/Lucky/coupon',array('lucky_id'=>$id)) ?>">查看优惠券</a>
+                    <?php endif;?>
+                    <br>
+                    <span style="color:red">请仔细核对优惠券数量与奖品剩余数量是否一致</span>
+                </dd>
+            </dl>
+
+            <dl class="lineD" id="yg">
+                <dt>一元梦想商品名称：<span style="color: #F00">*</span></dt>
+                <dd><input name="ygName" type="text" value="{$ygName}" size="130"></dd>
+            </dl>
+            <dl class="lineD" id="pay">
+                <dt>代金券金额：<span style="color: #F00">*</span></dt>
+                <dd><input name="pay" type="text" value="1.00" readonly=""> 默认1.00</dd>
+            </dl>
+            <dl class="lineD" id="stime">
+                <dt>代金券有效期：</dt>
+                <dd><input name="stime" type="text" onfocus="rcalendar(this,'full');" readonly value="<?php if($stime!=0)echo date( 'Y-m-d H:i:s',$stime ); ?>"/> -
+                <input name="etime" type="text" onfocus="rcalendar(this,'full');" readonly value="<?php if($etime!=0)echo date( 'Y-m-d H:i:s',$etime ); ?>"/></dd>
+            </dl>
+            <dl class="lineD">
+                <dt>简介：<span style="color: #F00">*</span></dt>
+                <dd>
+                    中奖时显示于客户端,请尽量简短<br/>
+                    <textarea id='description' name="description" style="width:300px;height:100px;border:1px solid #ccc;" onKeyUp="gbcount(this,100);">{$description}</textarea>
+                    <span  id='remain' style='color:green;'>100</span><span style='color:green;'>/100字</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>详细内容：</dt>
+                <dd>
+                    <textarea name="content" id="content" style="width:700px;height:200px">{$content}</textarea>
+                    <br>
+                    通配符：优惠券编码<span style="padding:2px 5px;background: #143149;color: #ffffff;">[COUPON_CODE]</span>，区分大小写，只有在导入了对应的优惠券编码才有效
+                </dd>
+            </dl>
+            <dl class="lineD">
+            <include file="__THEME__/comm/showInAreaProduct" />
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+
+
+    (function($){
+        $('.openWindow').click(function(){
+            $url = $(this).attr('href');
+            if ($url == ''){
+                return false;
+            }
+            ui.box.load($url,{title:'查看详情'});
+            return false;
+        });
+
+        $('.dialog-box .page a').live('click',function(){
+            var $url = $(this).attr('href');
+            if ($url == ''){
+                return false;
+            }
+            $.ajax({
+                url:$url,
+                success:function(content){
+                    $('.dialog-box').html($(content).html());
+                }
+            });
+            return false;
+        });
+
+    })(jQuery);
+
+
+    $(function(){
+       changeType('#type');
+       gbcount('#description',100);
+    });
+    function changeType(o){
+        var typeId = $(o).val();
+        $('#yg').hide();
+        $('#pay').hide();
+        $('#stime').hide();
+        $('#import-code').hide();
+        if(typeId == 3){
+            $('#yg').show();
+            $('#pay').show();
+            $('#stime').show();
+        }
+        if (typeId == 2){
+            $('#import-code').show();
+        }
+    }
+    function gbcount(o,max){
+        var msg = $(o).val();
+        var rest = max - msg.length;
+        if(rest < 0){
+            rest = 0;
+            $('#remain').html(0);
+            $(o).val(msg.substring(0,max));
+            alert('不能超过'+max+'个字!');
+        }
+        $('#remain').html(rest);
+    }
+function check(){
+    if(!$( 'input[name="name"]' ).val()){
+        ui.error("商品名称不能为空");
+        return false;
+    }
+    if(!$( 'input[name="num"]' ).val()){
+        ui.error("剩余数量不能为空");
+        return false;
+    }
+    var type = $('#type').val();
+    if(type==0){
+        ui.error("请选择类别");
+        return false;
+    }else if(type==3){
+        if(!$( 'input[name="ygName"]' ).val()){
+            ui.error("一元梦想商品名称不能为空");
+            return false;
+        }
+        if(!$('input[name="pay"]' ).val()){
+            ui.error("代金券金额不能为空");
+            return false;
+        }
+    }
+    if(!$( '#description' ).val()){
+        ui.error("简介不能为空");
+        return false;
+    }
+    return true;
+}
+
+
+
+
+</script>
+<include file="_footer" />
+<include file="__THEME__/comm/_datepicker" />

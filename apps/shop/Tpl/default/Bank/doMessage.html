@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"/>
+<title>个人信息</title>
+
+<link rel="stylesheet" href="../Public/css/m_mall.css?201509011"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+</head>
+
+<body>
+<a href="{:U('shop/Bank/bankPrice')}"><div class="m_back"></div></a>
+    <div class="clear m_mt60"></div>
+<div class="bg">
+
+ <div class="main mt10">
+  <form action="{:U('shop/Bank/doEditCard')}" method="post">
+  <div class="mall_title b f16">基本信息</div>
+  <div class="m_key1"><span class="m_red">*</span>姓名</div>
+  <div class="m_add"><input name="realname" type="text" class="m_input3" value="{$arr2.name}" readonly/></div>
+  <div class="m_key1"><span class="m_red">*</span>民族</div>
+  <div class="m_add"><input name="nation" type="text" class="m_input3"  <?php if($list['nation']){ ?> value="{$list.nation}" readonly<?php }?>/></div>
+  <div class="m_key1"><span class="m_red">*</span>身份证号</div>
+  <div class="m_add"><input name="ctf_id" type="text" class="m_input3" <?php if($res['ctf_id']){ ?> value="{$res.ctf_id}" readonly <?php }?> /></div>
+  <div class="m_key1"><span class="m_red">*</span>家庭地址</div>
+  <div class="m_add"><input name="home" type="text" class="m_input3" <?php if($list['home']){ ?> value="{$list.home}" readonly<?php }?>/></div>
+  <div class="m_key1"><span class="m_red">*</span>邮编</div>
+  <div class="m_add"><input name="post_code" type="text" class="m_input3" value="{$arr2.post_code}" readonly/></div>
+
+
+  <div class="clear"></div>
+  <div class="mall_title b f16">联系方式</div>
+  <div class="m_key1"><span class="m_red">*</span>手机号</div>
+  <div class="m_add"><input name="mobile" type="text" class="m_input3" <?php if($res['mobile']){ ?> value="{$res.mobile}" readonly <?php }?>/></div>
+  <div class="m_key1"><span class="m_red">*</span>QQ(微信等)</div>
+  <div class="m_add"><input name="qq" type="text" class="m_input3" <?php if($list['qq']){ ?> value="{$list.qq}" readonly<?php }?>/></div>
+  <div class="m_key1"><span class="m_red">*</span>邮箱</div>
+  <div class="m_add"><input name="email_bill" type="text" class="m_input3" <?php if($res['email_bill']){ ?> value="{$res.email_bill}" readonly <?php }?>/></div>
+  <div class="m_key1"><span class="m_red">*</span>宿舍地址</div>
+  <div class="m_add"><input name="address" type="text" class="m_input3" <?php if($res['address']){ ?> value="{$res.address}" readonly <?php }?>/></div>
+  <div class="clear"></div>
+  <div class="mall_title b f16">家庭联系人（直系亲属）</div>
+  <div class="m_key1"><span class="m_red">*</span>父/母亲姓名</div>
+  <div class="m_add"><input name="d_name" type="text" class="m_input3" <?php if($list['d_name']){ ?> value="{$list.d_name}" readonly<?php }?> /></div>
+  <div class="m_key1"><span class="m_red">*</span>家长手机号</div>
+  <div class="m_add"><input name="d_mobile" type="text" class="m_input3" <?php if($res['d_mobile']){ ?> value="{$res.d_mobile}" readonly <?php }?>/></div>
+  <div class="m_key1"><span class="m_red">*</span>家长工作单位</div>
+  <div class="m_add"><input name="d_company" type="text" class="m_input3" <?php if($list['d_company']){ ?> value="{$list.d_company}" readonly<?php }?>/></div>
+  <div class="m_key1">工作单位电话</div>
+  <div class="m_add"><input name="dc_mobile" type="text" class="m_input3"/></div>
+  <div class="clear"></div>
+  <div class="mall_title b f16">校园联系人（同校同学）</div>
+  <div class="m_key1"><span class="m_red">*</span>姓名</div>
+  <div class="m_add"><input name="classmate" type="text" class="m_input3" <?php if($list['classmate']){ ?> value="{$list.classmate}" readonly<?php }?>/></div>
+  <div class="m_key1"><span class="m_red">*</span>手机号</div>
+  <div class="m_add"><input name="class_mobile" type="text" class="m_input3" <?php if($list['class_mobile']){ ?> value="{$list.class_mobile}" readonly<?php }?> /></div>
+  <div class="m_key1"><span class="m_red">*</span>宿舍地址</div>
+  <div class="m_add"><input name="class_address" type="text" class="m_input3" <?php if($list['class_address']){ ?> value="{$list.class_address}" readonly<?php }?> /></div>
+  <div class="m_key1">推荐人</div>
+  <div class="m_add"><input name="referrer" type="text" class="m_input3" <?php if($res['referrer']){ ?> value="{$res.referrer}" readonly<?php }?>/></div>
+  <div class="clear"></div>
+  <div class="mall_title b f16">分期信息</div>
+  <input type="hidden" name="money" value="{$data.money}" class="m_input3">
+  <input type="hidden" name="staging" value="{$data.staging}" class="m_input3">
+  <input type="hidden" name="reason" value="{$data.reason}" class="m_input3">
+  <!--<input type="hidden" name="recommend" value="1" class="m_input3">-->
+  <input type="hidden" name="mark" value="{$mark}" class="m_input3">
+  <input type="hidden" name="channel" value="{$channel}" class="m_input3">
+  <input type="hidden" name="id" value="{$res.id}" class="m_input3">
+  <input type="hidden" name="contract_id" value="{$contract_id}" class="m_input3">
+  <div class="m_key2 mt10">借款金额:{$data.money}元</div>
+  <div class="m_key2">分期数：{$data.staging}期</div>
+  <div class="m_key2">每期还款本金加服务费：{$data.stagMoney}元</div>
+  <div class="m_cash_check f14"><input name="recommend" id="mybox" class="m_cash_check1" type="checkbox" value="" checked /> 本人同意并遵守<?php if($mark==2){ ?><a href="javascript:void(0)" class="myclick" onclick="myclick(2);">《PU卡提款协议》</a>、<a href="javascript:void(0)" class="myclick" onclick="myclick(1);">《PU卡服务协议》</a><?php }else{ ?><a href="javascript:void(0)" class="myclick" onclick="myclick(4);">《PU卡1000元免息提款协议》</a>、<a href="javascript:void(0)" class="myclick" onclick="myclick(3);">《PU卡1000元免息服务协议》</a><?php }?></div>
+
+  <div class="m_cash_btn1"><input name="tijiao" type="button" onclick="doMessage(this);" class="m_cash_btn bold f16" value="提交" /></div>
+</form>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+    function myclick(mark){
+        var name = $( 'input[name="realname"]' ).val();
+        var mobile = $( 'input[name="mobile"]' ).val();
+        var ctf = $( 'input[name="ctf_id"]' ).val();
+        var money = $( 'input[name="money"]' ).val();
+        var staging = $( 'input[name="staging"]' ).val();
+        var contract = $( 'input[name="contract_id"]' ).val();
+        //alert(contract);
+        if(name && mobile && ctf && money && staging){
+            location.href="{:U('shop/Bank/lookXY')}&m="+mark+"&realname="+name+"&mobile="+mobile+"&ctf_id="+ctf+"&money="+money+"&staging="+staging+"&contract_id="+contract;
+        }
+    }
+
+    function doMessage(obj){
+        //alert(1);exit;
+        if(confirm('确认提交申请吗？')){
+        var val = $('#mybox').attr('checked');
+        if(!val){
+            alert('您未同意PU协议');
+            exit;
+        }
+        $(obj).attr("disabled", true);
+        var inputs = $('.m_input3');
+        //alert(inputs.length);
+        var name = [];
+        var params = '';
+        for(var i=0;i<=inputs.length;i++){
+
+            var m = $(inputs[i]);
+            //alert(m.val());
+             var n = m.attr('name');
+             if(n){
+
+                 var j = encodeURIComponent(m.val());
+                params += n+'='+j+'&';
+
+             }
+
+        }
+        //alert(params);
+        //console.log(name);
+//        var params = '';
+//        $.each(name,function(i,val){
+//
+//            params += i+'='+val+'&';
+//            alert(params);
+//        });
+        params = params.substring(0,params.length-1);
+        //var mydd = serializeArray(name);
+        //alert(params);
+        $.post('__URL__&act=doEditCard',params,function(data){
+            console.log(data);
+            //alert(data);
+           if(data==1){
+               $.MsgBox.Alert("消息", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;恭喜您，朴卡申请完毕，请保留本页面截图。");
+           }else{
+               $(obj).attr("disabled", false);
+               alert(data);
+               location.href="{:U('shop/PocketShop/bankPrice')}";
+           }
+
+
+                //console.log(data);
+//                    var json=$.parseJSON(data);
+//                    if(json.status==0){
+//                        ui.error(json.info)
+//
+//                    }else{
+//                        ui.success(json.info);
+//                    }
+                });
+        }
+    }
+
+    function jump(){
+        location.href="{:U('shop/Bank/bankPrice')}";
+    }
+
+
+
+    (function () {
+    $.MsgBox = {
+        Alert: function (title, msg) {
+            GenerateHtml("alert", title, msg);
+            btnOk();  //alert只是弹出消息，因此没必要用到回调函数callback
+            btnNo();
+        }
+    }
+    //生成Html
+    var GenerateHtml = function (type, title, msg) {
+        var _html = "";
+        _html += '<div id="mb_box"></div><div id="mb_con"><div id="test"></div><div class="m_tipicon"></div>';
+        _html += '<div id="mb_msg"><span id="mb_cen">'+msg+'</span><br/>若您有任何疑问，请致电PU卡客服：400-8788593</div><div id="mb_btnbox">' ;
+        if (type == "alert") {
+            _html += '<input id="mb_btn_ok" type="button" onclick="jump();" value="确定" />';
+        }
+        _html += '</div></div>';
+        //必须先将_html添加到body，再设置Css样式
+        $("body").append(_html); GenerateCss();
+    }
+    //生成Css
+    var GenerateCss = function () {
+        $("#mb_box").css({ width: '90%', height: '100%', zIndex: '99999', position: 'fixed', border: '1px solid #ddd',
+            filter: 'Alpha(opacity=60)', backgroundColor: 'gray', top: '0', left: '0', opacity: '0.6'
+        });
+        $("#mb_cen").css({ text_align:'center'
+        });
+        $("#test").css({ height:'10px'
+        });
+        $(".m_tipicon").css({ background:'url(../Public/images/m_mall/icon_tip.png) no-repeat center', width:'100%',height:'40px'
+        });
+        $("#mb_con").css({ zIndex: '999999', width: '350px', position: 'fixed',
+            backgroundColor: 'White', borderRadius: '15px'
+        });
+        $("#mb_tit").css({ display: 'block', fontSize: '14px', color: '#444', padding: '10px 15px',
+            backgroundColor: '#DDD', borderRadius: '15px 15px 0 0',
+            borderBottom: '3px solid #009BFE', fontWeight: 'bold'
+        });
+        $("#mb_msg").css({ padding: '20px', lineHeight: '20px',
+            borderBottom: '1px dashed #DDD', fontSize: '13px'
+        });
+        $("#mb_ico").css({ display: 'block', position: 'absolute', right: '10px', top: '9px',
+            border: '1px solid Gray', width: '18px', height: '18px', textAlign: 'center',
+            lineHeight: '16px', cursor: 'pointer', borderRadius: '12px', fontFamily: '微软雅黑'
+        });
+        $("#mb_btnbox").css({ margin: '15px 0 10px 0', textAlign: 'center' });
+        $("#mb_btn_ok,#mb_btn_no").css({ width: '100%', height: '30px', color: 'white', border: 'none' });
+        $("#mb_btn_ok").css({ color:'black' });
+        $("#mb_btn_no").css({ backgroundColor: 'gray', marginLeft: '20px' });
+        //右上角关闭按钮hover样式
+        $("#mb_ico").hover(function () {
+            $(this).css({ backgroundColor: 'Red', color: 'White' });
+        }, function () {
+            $(this).css({ backgroundColor: '#DDD', color: 'black' });
+        });
+        var _widht = document.documentElement.clientWidth;  //屏幕宽
+        var _height = document.documentElement.clientHeight; //屏幕高
+        var boxWidth = $("#mb_con").width();
+        var boxHeight = $("#mb_con").height();
+        //让提示框居中
+        $("#mb_con").css({ top: (_height - boxHeight) / 2 + "px", left: (_widht - boxWidth) / 2 + "px" });
+    }
+    //确定按钮事件
+    var btnOk = function (callback) {
+        $("#mb_btn_ok").click(function () {
+            $("#mb_box,#mb_con").remove();
+            if (typeof (callback) == 'function') {
+                callback();
+            }
+        });
+    }
+    //取消按钮事件
+    var btnNo = function () {
+        $("#mb_btn_no,#mb_ico").click(function () {
+            $("#mb_box,#mb_con").remove();
+        });
+    }
+})();
+</script>
+</html>

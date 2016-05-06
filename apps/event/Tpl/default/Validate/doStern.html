@@ -1,0 +1,50 @@
+<div style="width:200px;margin:10px auto 20px auto;">
+评定部落星级：
+<select name="stern" id="stern">
+    <option value="0" <?php if($stern==0):?>selected="selected"<?php endif;?>>无星</option>
+    <option value="1" <?php if($stern==1):?>selected="selected"<?php endif;?>>1星</option>
+    <option value="2" <?php if($stern==2):?>selected="selected"<?php endif;?>>2星</option>
+    <option value="3" <?php if($stern==3):?>selected="selected"<?php endif;?>>3星</option>
+    <option value="4" <?php if($stern==4):?>selected="selected"<?php endif;?>>4星</option>
+    <option value="5" <?php if($stern==5):?>selected="selected"<?php endif;?>>5星</option>
+</select>
+</div>
+<div>
+    <input type="button" class="btn_b" id='que'  value="确定" />
+    <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+<script type="text/javascript">
+    $(function(){
+	$('#que').click(function(){
+            var gid={$vid};
+            var stern=$('#stern').val();
+            if(!stern){
+                ui.error('请选择部落星级');
+            }else if($('#stern'+gid).html() == stern){
+                ui.box.close();
+            }else{
+                //提交修改
+                $.post("{:U('event/Validate/saveStern')}", {gid:gid,stern:stern}, function(res){
+                    var json =$.parseJSON(res);
+                    if (json.status ==0) {
+                        ui.error(json.info);
+                    }else{
+                        ui.success(json.info);
+                        ui.box.close();
+                        if(stern!=0){
+                        $('#stern'+gid).html(stern);
+                        }else{
+                        $('#stern'+gid).html('无');
+                        }
+                    }
+                });
+            }
+
+	});
+
+    });
+    function cancel() {
+	ui.box.close();
+    }
+
+</script>

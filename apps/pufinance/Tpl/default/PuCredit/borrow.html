@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>我要借款</title>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" href="../Public/css/style.css" />
+    <script src="../Public/js/mainScript.js" ></script>
+    <script>
+        setActionBar('我要借款', '', '');
+    </script>
+</head>
+<body bgcolor="#F3F1EE">
+<div class="w-repayGeneral w-shouldRepay">
+	<p>可借款额度</p>
+	<span>&yen;{$pucredit.usable_amount|number_format=###,2}</span>
+</div>
+<form id="borrow-form" action="{:U('pufinance/PuCredit/doBorrow')}" method="post">
+<div class="w-repayGeneral w-borrowing">
+	<span>借款金额</span>
+	<input name="amount" type="text" placeholder="请填入金额"/>
+</div>
+<div class="w-repayGeneral w-borrowing">
+	<span>分期月数</span>
+	<p class="w-simulate">
+		<strong>请输入月数</strong>
+		<select name="stage"></select>
+	</p>
+</div>
+<div class="w-repayGeneral w-borrowing w-borrowingBorder">
+	每月应还：&yen; <em id="per-amount">0.00</em>元(含服务费 &yen;<em id="per-interest">0.00</em>元)
+</div>
+<div class="w-repayGeneral w-borrowing">
+	<span>收款方式</span>
+	<p class="w-simulate">
+		<strong>PU币</strong>
+		<select name="bank_card_id">
+			<option value="0">PU币</option>
+			<volist name="bankcards" id="vo">
+				<option value="{$vo.id}">{$vo.bank_name}(尾号{$vo.card_no|substr=###,-4})</option>
+			</volist>
+		</select>
+	</p>
+</div>
+<div class="w-repayGeneral w-borrowing">
+	<span>事由</span>
+	<input name="reson" type="text" placeholder="请填写借款的理由"/>
+</div>
+<div class="w-repayGeneral w-borrowing w-testing">
+	<span>验证码</span>
+	<input name="captcha" type="text" placeholder="请填写验证码"/>
+	<button id="getCode" type="button">点击获取验证码</button>
+</div>
+<div class="w-repayGeneral w-borrowing">
+	<input type="checkbox" name="agree" value="1" checked />
+    <i id="agreement">服务合同</i>
+</div>
+<a href="javascript:void(0);" class="w-submit">提交订单</a>
+</form>
+<!--提示银行卡认证-->
+<div class="w-transparent w-tips" <eq name="nobank" value="1">style="display:block"</eq>>
+	<div>
+		<i>您还未进行实名认证</i>
+		<img src="../Public/img/wrz.png">
+		<p>
+			<span><a href="{:U('Pufinance/Bankcard/bindBankcard')}">立即认证</a></span>
+		</p>
+	</div>
+</div>
+
+<!--弹出协议-->
+<div class="w-transparent w-tips" id="agMask">
+	<div>
+		<span id="agCancel">×</span>
+		<div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.min.js"></script>
+<script>
+    document.getElementById("agreement").addEventListener("touchstart",function(){
+        document.getElementById("agMask").style.display="block";
+    });
+    document.getElementById("agCancel").addEventListener("click",function(){
+        document.getElementById("agMask").style.display="none";
+    });
+
+	/**
+	 * 计算每期金额 服务费
+	 */
+	function calcPerAmount() {
+		var amount  = parseFloat($(':input[name="amount"]').val());
+		var stage = $(':input[name="stage"]').val();
+		$('#per-amount').text('0.00');
+		$('#per-interest').text('0.00');
+		$.post('{:U("pufinance/PuCredit/ajaxCalcPerAmount")}', {
+			'amount' : amount,
+			'stage' : stage
+		}, function(result) {
+			if (result.status == 1) {
+				$('#per-amount').text(result.data.amount);
+				$('#per-interest').text(result.data.interest);
+			}
+		}, 'json');
+	}
+
+	$(function() {
+        $('#agMask>div>div').html('').load('{:U("pufinance/PuCredit/agree")}');
+		var validator = $('#borrow-form').validate({
+			invalidHandler : function(form, valid) {
+				$.each(valid.invalid, function(k, val) {
+					alert(val);
+					return false;
+				});
+			},
+			errorPlacement: function(error, element) {
+//                alert(error.html());
+				return false;
+			},
+			//focusInvalid: false,
+			onfocusout: false,
+			onkeyup: false,
+			onsubmit : false,
+			ignore: "",
+
+			rules : {
+				amount : {
+					required : true,
+					number : true,
+					min : 0.01,
+					max : {$pucredit.usable_amount|number_format=###,2, ".", ""}
+				},
+				captcha : {
+					required : true
+				},
+                agree : {
+                    required : true
+                }
+			},
+			messages : {
+				amount : {
+					required : '请输入金额',
+					number : '请输入金额',
+					min : '申请金额最小为{0}元',
+					max : '您最多可申请{0}元借款'
+				},
+                captcha : {
+                    required : '请输入验证码'
+                },
+                agree : {
+                    required : '必须同意协议'
+                }
+			}
+	});
+
+		// 处理分期值
+		$(':input[name="stage"]').change(function() {
+			$(this).prev('strong').html(this.value);
+			calcPerAmount();
+		});
+
+        // 选择银行卡
+		$(':input[name="bank_card_id"]').change(function() {
+			$(this).prev('strong').html($(this).find("option:selected").text());
+			$(':input[name="repay_bank_card_id"]').val(this.value);
+		});
+
+        $('#getCode').click(function() {
+            var _this = this;
+            $(this).prop('disabled', true).css({color:'#e0e0e0'});
+            $.post("{:U('pufinance/PuCredit/sendBorrowSms')}", function(result) {
+                if (result.status) {
+                    alert(result.info);
+                    var time = 60;
+                    $(_this).text(time + '秒后重新发送');
+                    var settime = setInterval(function() {
+                        time--;
+                        $(_this).text(time + '秒后重新发送');
+                        if (time <= 0) {
+                            clearInterval(settime);
+                            $(_this).prop('disabled', false).css({color:'#EA5504'}).text('重新发送');
+                        }
+                    }, 1000);
+                } else {
+                    alert(result.info);
+                    $(_this).prop('disabled', false).css({color:'#EA5504'});
+                }
+            }, 'json');
+        });
+
+		// 最小分期数限制
+		$(':input[name="amount"]').bind('keyup', function() {
+			var amount = parseFloat($(this).val());
+			var $stage = $(':input[name="stage"]');
+			if (amount > 0) {
+				var stage = Math.ceil(amount/200);
+				if (stage > 12) {
+					stage = 12;
+				}
+				$stage.prev('strong').html('1');
+				$stage.html('');
+				for (i = 1; i <= stage; i++) {
+					$stage.append('<option value="' + i + '">' + i + '</option>');
+				}
+				calcPerAmount();
+			}
+		});
+
+		// 提交申请
+		$('.w-submit').click(function() {
+			if (validator.form()) {
+				var form = $(this).closest('form');
+				var action = $(form).get(0).action;
+				$.post(action, $(form).serialize(), function(result) {
+//					console.log(result);
+					if (result.status == 0) {
+						alert(result.info);
+					} else if (result.status == 1) {
+						location.href = "{:U('pufinance/PuCredit/borrowOk')}";
+					}
+				}, 'json');
+			}
+
+		});
+	});
+</script>
+</body>
+</html>

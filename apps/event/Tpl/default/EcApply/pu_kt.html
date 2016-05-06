@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>口袋校园1</title>
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/css/header_2014.css?20140912" rel="stylesheet" type="text/css" />
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/public.css?20140620" rel="stylesheet" type="text/css" />
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/layout.css?20140903" rel="stylesheet" type="text/css" />
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/form.css?20140331" rel="stylesheet" type="text/css" />
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/link.css" rel="stylesheet" type="text/css" />
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/menu_home.css?20140912" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="http://test.pocketuni.lo/public/themes/newstyle2014/favicon.ico" />
+<link href="http://test.pocketuni.lo/apps/event/Tpl/default/Public/css/x_hd1.css?141128" type="text/css" rel="stylesheet" />
+<link href="http://test.pocketuni.lo/apps/event/Tpl/default/Public/css/group.css?20150615" type="text/css" rel="stylesheet" />
+<link href="http://test.pocketuni.lo/apps/event/Tpl/default/Public/event.css?20131126" rel="stylesheet" type="text/css" />
+<!-- 编辑器样式文件 -->
+<link href="http://test.pocketuni.lo/public/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="http://test.pocketuni.lo/public/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="http://test.pocketuni.lo/public/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/css/layout.css?20131112" rel="stylesheet" type="text/css" />
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/css/school.css?20140722" rel="stylesheet" type="text/css" />
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/css/header_2014.css" rel="stylesheet" type="text/css" />
+<link href="http://test.pocketuni.lo/public/themes/newstyle2014/menu_home.css" rel="stylesheet" type="text/css" />
+<link href="http://test.pocketuni.lo/public/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://test.pocketuni.lo/public/js/jquery.js"></script>
+<script type="text/javascript" src="http://test.pocketuni.lo/public/js/common.js?20140916"></script>
+<script type="text/javascript" src="http://test.pocketuni.lo/public/js/tbox/box.js?131220"></script>
+<script type="text/javascript" src="http://test.pocketuni.lo/public/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="http://test.pocketuni.lo/public/js/jquery.nav.js?130703"></script>
+<script>
+	var _UID_   = '33654';
+	var _MID_   = '33654';
+	var _ROOT_  = '';
+	var _THEME_ = 'http://test.pocketuni.lo/public/themes/newstyle2014';
+	var _PUBLIC_ = 'http://test.pocketuni.lo/public';
+	var _LENGTH_ = 140;
+    var _LANG_SET_ = 'zh-cn';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '33654';
+	$CONFIG['root_path'] = '';
+	$CONFIG['theme_path'] = 'http://test.pocketuni.lo/public/themes/newstyle2014';
+	$CONFIG['public_path'] = 'http://test.pocketuni.lo/public';
+    $CONFIG['weibo_length'] = 140;
+    $CONFIG['lang'] = 'zh-cn';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+<style type="text/css">
+.school {
+	font-size:14px;
+	color:#FFF;
+	float:left;
+	height:40px;
+	line-height:40px;
+	padding-left:20px;
+}
+</style>
+</head>
+<body>
+<div class="common_header">
+  <div class="common_header_con">
+    <div class="common_header_logo ml10"><a href="http://test.pocketuni.lo/index.php?app=home&mod=Index&act=index"><img src="http://test.pocketuni.lo/public/themes/newstyle2014/images/logo.jpg" alt="pocketuni" /></a></div>
+    <div class="common_header_menu f16 fw">
+      <ul>
+        <a class="c4" href="http://test.pocketuni.lo/index.php?app=home&mod=Index&act=index">
+        <li class="im1">首页</li>
+        </a> <a href="http://test.pocketuni.lo">
+        <li class="im2">我的大学</li>
+        </a> <span style="font-size:12px; font-family:宋体;" onClick="changeSchoolDomain()" >
+        <li class="im6">[切换]</li>
+        </span> 
+        <script>
+                function changeSchoolDomain(){
+                    ui.box.load(U('home/Public/changeSchoolDomain'),{title:'选择学校',noCheck:'yes'});
+                }
+                </script> 
+        <a href="http://test.pocketuni.lo/index.php?app=announce&mod=Index&act=notice">
+        <li class="im5">公告活动</li>
+        </a> <a href="http://test.pocketuni.lo/index.php?app=home&mod=space&act=index&uid=33654">
+        <li class="im3">个人中心</li>
+        </a>
+        <li class="im4 in1"><a href="http://test.pocketuni.lo/index.php?app=home&mod=Index&act=addapp" >应用</a>
+          <div class="dropmenu">
+            <dl class="app_list">
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=vote&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/vote/Appinfo/ico16.png" /> 投票 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=newcomer&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/newcomer/Appinfo/ico16.png" /> 迎新 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=appstore&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/appstore/Appinfo/ico16.png" /> APP市场 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=document&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/document/Appinfo/ico16.png" /> 课件 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=event&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/event/Appinfo/ico16.png" /> 活动 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=coupon&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/coupon/Appinfo/ico16.png" /> 消费 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=announce&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/announce/Appinfo/ico16.png" /> 校内通知 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=photo&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/photo/Appinfo/ico16.png" /> 相册 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=lib&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/lib/Appinfo/ico16.png" /> 图书馆 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=shop&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://pocketuni.lo/apps/shop/Appinfo/ico16.png" /> 乐购 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=kc&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.com/apps/kc/Appinfo/ico16.png" /> 课程表 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=exercise&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://xyhui.lo/apps/exercise/Appinfo/ico_app24.png" /> 题库 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=travel&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://pocketuni.lo/apps/travel/Appinfo/ico_app.png" /> 旅游 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=train&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://test.pocketuni.lo/apps/train/Appinfo/ico_app.png" /> 培训 </a> </dd>
+              <dd> <a href="http://test.pocketuni.lo/index.php?app=fund&mod=Index&act=index" class="a14"> <img class="app_ico" src="http://test.pocketuni.lo/apps/fund/Appinfo/ico_app.png" /> 活动基金 </a> </dd>
+            </dl>
+            <dl class="app_list_add">
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=Index&act=addapp"><span class="ico_app_add"></span>添加更多应用</a></dd>
+            </dl>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="common_header_nav">
+      <ul>
+        <li class="in1"><a href="http://test.pocketuni.lo/index.php?app=home&mod=message&act=index"></a>
+          <div class="dropmenu">
+            <ul class="message_list_container message_list_new">
+            </ul>
+            <dl class="message">
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=message&act=index">查看私信</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=user&act=atme">查看@我</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=user&act=comments">查看评论</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=message&act=notify">系统通知(5)</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=message&act=appmessage">应用消息</a></dd>
+            </dl>
+            <dl class="square_list">
+              <dd><a href="javascript:ui.sendmessage(0)">发私信</a></dd>
+            </dl>
+          </div>
+        </li>
+        <a href="http://test.pocketuni.lo/index.php?app=home&mod=Public&act=document&id=1">
+        <li class="in2"></li>
+        </a>
+        <li class="in3  in1" onClick="userManage(this);"><a href="javascript:void(0)"></a>
+          <div class="dropmenu">
+            <dl class="setup">
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=User&act=findfriend"><span class="ico_pub ico_pub_find"></span>找人</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=Account&act=index"><span class="ico_pub ico_pub_set"></span>个人设置</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=Account&act=recharge"><span class="ico_pub ico_pub_skin"></span>充值中心</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=shop&mod=Myshop&act=index"><span class="ico_pub ico_pub_gift"></span>我的乐购</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=shop&mod=Myshop&act=zj"><span class="ico_pub ico_pub_gift"></span>中奖记录</a></dd>
+              <dd><a href="http://test.pocketuni.lo"><span class="ico_pub ico_pub_activity"></span>成长服务平台</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=admin&mod=index&act=index"><span class="ico_pub ico_pub_admin"></span>后台管理</a></dd>
+              <dd><a href="http://test.pocketuni.lo/index.php?app=event&mod=Readme&act=index"><span class="ico_pub ico_pub_admin"></span>学校后台</a></a></dd>
+            </dl>
+            <dl class="square_list_add">
+              <dd><a href="http://test.pocketuni.lo/index.php?app=home&mod=Public&act=logout"><span class="ico_pub ico_pub_signout"></span>退出</a></dd>
+            </dl>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div id="message_list_container" class="layer_massage_box" style="display:none;">
+      <ul class="message_list_container">
+      </ul>
+      <a href="javascript:void(0)" onclick="ui.closeCountList(this)" class="del"></a> </div>
+  </div>
+  <div class="common_headerline"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".in1").hover(
+        function(){ $(this).addClass("hover"); },
+        function(){ $(this).removeClass("hover"); }
+    );
+                            ui.countNew();
+            //setInterval("ui.countNew()",100000);
+                
+            $('.platform').bind('mouseover', function() {
+            $('.platform-menu').removeClass('hidden');
+        });
+        $('.platform').bind('mouseout', function() {
+            $('.platform-menu').addClass('hidden');
+        });
+    });
+    function userManage(o){
+        $(o).toggleClass('hover');
+    }
+</script>
+<div style="position:fixed;bottom:40px;right:45px"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1156633722&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1156633722:53" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></div>
+<div class="bg">
+  <div class="main">
+    <div class="hd_header">
+      <div class="hd_title1"><img height="80px;" src="/data/uploads/2013/1226/15/52bbdd8e56fc5.jpg" alt="" /></div>
+      <div class="hd_ppt"> 
+        <!-- 幻灯代码 开始 -->
+        <div id="inner">
+          <div class="hot-event">
+            <div class="event-item" style="display: block;"> <a target="_blank" href="http://test.pocketuni.lo/index.php?app=event&mod=Front&act=index&id=63" class="banner"> <img src="http://test.pocketuni.lo/apps/event/Tpl/default/Public/images/schoolevent/3_2.jpg" class="photo" style="width: 980px; height: 218px;" alt="sdfdf" /> </a> </div>
+            <div class="switch-tab"> <a href="#" onclick="return false;"  class="current">1</a> </div>
+          </div>
+        </div>
+        <script type="text/javascript">
+                        $('#inner').nav({ t: 2000, a: 1000 });
+                    </script> 
+        <!-- 代码 结束 --> 
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class="hd_content">
+      <div class="hd_c_top">
+        <div class="menu f14 fw">
+          <ul class="first-menu" id="menu">
+            <li class="first-menu-li "><a href="http://test.pocketuni.lo/index.php?app=event&mod=School&act=index">活动首页</a> </li>
+            <li class="first-menu-li " ><a href="http://test.pocketuni.lo/index.php?app=event&mod=GroupIndex&act=index">校园部落</a>
+              <ul class="second-menu">
+                <li class="second-menu-li i9"><a href="http://test.pocketuni.lo/index.php?app=event&mod=GroupIndex&act=mygroup">我的申请</a></li>
+              </ul>
+            </li>
+            <li class="first-menu-li"><a href="http://test.pocketuni.lo/index.php?app=event&mod=School&act=jf">积分商城</a>
+              <ul class="second-menu">
+                <li class="second-menu-li i9"><a href="http://test.pocketuni.lo/index.php?app=event&mod=School&act=myjf">我兑换的礼品</a></li>
+              </ul>
+            </li>
+            <li class="first-menu-li " ><a href="http://test.pocketuni.lo/index.php?app=event&mod=Announce&act=index">校内通知</a></li>
+            <li class="first-menu-li"><a href="http://test.pocketuni.lo/index.php?app=event&mod=Survey&act=index">问卷</a></li>
+            <li class="first-menu-li"><a href="http://test.pocketuni.lo/index.php?app=event&mod=EcApply&act=ecapply" title="申请口袋学分">申请口袋学分</a>
+              <ul class="second-menu">
+                <li class="second-menu-li i9"><a href="http://test.pocketuni.lo/index.php?app=event&mod=EcApply&act=myEc">我的申请</a></li>
+              </ul>
+            </li>
+            <li class="first-menu-li i8"> <a href="http://test.pocketuni.lo/index.php?app=event&mod=EcApply2&act=ecApplyList" title="申请口袋学分">申请口袋学分</a>
+              <ul class="second-menu">
+                <li class="second-menu-li i9"><a href="http://test.pocketuni.lo/index.php?app=event&mod=EcApply2&act=myEc">我的申请</a></li>
+              </ul>
+            </li>
+            <li class="first-menu-li"><a href="http://test.pocketuni.lo/index.php?app=job&mod=Index&act=index">创就业</a></li>
+          </ul>
+        </div>
+        <div class="hd_c_publish f14 fw"><a href="http://test.pocketuni.lo/index.php?app=event&mod=School&act=addEventSelect">发起活动</a></div>
+      </div>
+      <script type="text/javascript" src="http://test.pocketuni.lo/public/js/jquery.form.js"></script>
+      <div class="hd_c i1">
+        <center>
+          <div class="intro_c_zt mt20 red b">【体育竞技比赛】</div>
+        </center>
+        <div class="publish_f">
+      <!--此处样式已放置x_hd1.css中，后续只要改x_hd1.css后面的数字更新样式，此处样式在后续不需要加--> 
+        <style>
+		.mt10{ margin-top:10px;}
+		.second_class{ float:left; width:900px; margin-left:39px; display:inline; font-family:"宋体";}
+        .s_ctitle{ float:left; line-height:24px; width:890px; display:inline; font-size:14px; margin:8px 0 0 10px; color:#333;}
+		.s_cddd{ color:#999; font-size:12px;}
+		.s_cinput{ border:1px #dedede solid; width:300px; height:28px; line-height:28px; padding:0 5px;}
+		.s_chr{ width:100%; border-bottom:1px dashed #eee; height:1px; float:left; margin-top:10px;}
+		.s_cselect{height:30px; line-height:30px; padding:0 5px; min-width:200px; color:#666; border:1px solid #dedede;}
+		.s_ctextarea{border:1px solid #dedede; padding:5px;}
+		.s_ubtn{ font-size:12px; height:28px; border:1px solid #999; padding:0 5px; color:#666;}
+		.s_u_filename{min-height:28px; color:#f00; padding:0 10px; line-height:28px;}
+		.s_cradio{ width:270px; text-align:left; padding-left:10px; margin-bottom:10px; line-height:20px; font-size:12px; color:#666; min-height:20px; float:left;}
+		.s_cradio_text{float:left;padding-left:20px; width:250px; margin-top:-16px; min-height:20px;}
+		.s_c_list{ margin-right:15px; font-size:12px;}
+		.s_cbtn{ float:left; margin:10px auto auto 390px;}
+        </style>
+  <!--第二课堂表单开始-->
+          <form id="myform" name="myform" method="post" action="/index.php?app=event&mod=EcApply2&act=doEcApply&id=13">
+          <div class="second_class">
+           <div class="s_ctitle">名称：<span class="s_cddd">（15字以内，显示于第二成绩单上）</span><span class="red">*</span></div>
+           <div class="s_ctitle"><input name="title" id="title" type="text" class="s_cinput" /></div>
+           <div class="s_chr"></div>
+           <div class="s_ctitle">实践或获奖时间：<span class="s_cddd">（上半学期：02月15-08月15，下半学期：08月16-02月14）</span><span class="red">*</span></div>
+           <div class="s_ctitle">
+            <select class="s_cselect" name="stime" id="stime" class="text">
+                    <option value="0" selected>--请选时间--</option>
+                    <option value="20150">2015 上半学期</option>
+                    <option value="20141">2014 下半学期</option>
+                    <option value="20140">2014 上半学期</option>
+                    <option value="20131">2013 下半学期</option>
+                    <option value="20130">2013 上半学期</option>
+                    <option value="20121">2012 下半学期</option>
+                    <option value="20120">2012 上半学期</option>
+                  </select>
+           </div>
+           <div class="s_chr"></div>
+           <div class="s_ctitle"><span id="title22">自定义字段1：</span><span class="s_cddd">（自定义字段描述说明）</span><span class="red">*</span></div>
+           <div class="s_ctitle"><input name="in22" id="in22" type="text" class="s_cinput"/></div>
+           <div class="s_chr"></div>
+           <div class="s_ctitle"><span id="title21">自定义字段2：</span><span class="s_cddd">（自定义字段描述说明）</span><span class="red">*</span></div>
+           <div class="s_ctitle"><textarea name="in21" id="in21" rows="5" cols="60" class="s_ctextarea"></textarea></div>
+           <div class="s_chr"></div>
+           <div class="s_ctitle"><span id="title20">自定义字段3：</span><span class="s_cddd">（自定义字段描述说明）</span><span class="red">*</span></div>
+           <div class="s_ctitle"><input name="in20" id="in20" type="text" class="s_cinput"/></div>
+           <div class="s_chr"></div>
+           <div class="s_ctitle"><span id="title19">自定义上传文件字段2：</span><span class="s_cddd">（支持格式jpg,gif,png,jpeg,bmp,zip,rar,doc,xls,ppt,docx,xlsx,pptx,pdf）</span><span class="red">*</span></div>
+           <div class="s_ctitle"><input type="button" onclick="openUploadFile();" value="上传文件" class="s_upbtn"/> 
+             <span id="attach1" class="s_c_list"><!--<input type="hidden" value="5200" name="attach[]">--><span class="s_u_filename">ad.jpeg</span><a href="javascript:void(0)" onclick="delFile(1)">删除</a></span>
+             <span id="attach1" class="s_c_list"><!--<input type="hidden" value="5200" name="attach[]">--><span class="s_u_filename">ad.jpeg</span><a href="javascript:void(0)" onclick="delFile(1)">删除</a></span>
+           </div>
+           <div class="s_chr"></div>
+           <div class="s_ctitle"><span id="title16">自定义字段4：</span><span class="s_cddd">（自定义字段描述说明）</span><span class="red">*</span></div>
+           <div class="s_ctitle">
+             <label><input note="100%" type="radio" value="100%" name="in16" checked/> 否</label>
+                <span style="padding-left:40px"></span>
+                <label><input note="50%" type="radio" value="50%" name="in16" /> 是</label></div>
+           <div class="s_chr"></div>
+           <div class="s_ctitle"><span id="title16">自定义字段5：</span><span class="s_cddd">（自定义字段描述说明）</span><span class="red">*</span></div>
+           <div class="s_ctitle" style="margin-top:15px;">
+             <label class="s_cradio"><input note="60" type="radio" value="60"  name="in15" checked/> <span class="s_cradio_text">自定义字段描述说明自定义字段描述说明自定义字段描述说明自定义字段描自定义字段描述说自定义字段描述说明1</span></label>
+             <label class="s_cradio"><input note="50" type="radio" value="50"  name="in15" /> <span class="s_cradio_text">自定义字段描述说明自定义字段描述说明自定义字段描述说明自定义字段描述说明2</span></label>
+             <label class="s_cradio"><input note="40" type="radio" value="40"  name="in15" checked/> <span class="s_cradio_text">自定义字段描述说明描述说明1</span></label>
+             <div class="clear"></div>
+             <label class="s_cradio"><input note="20" type="radio" value="20" name="in15" /> <span class="s_cradio_text">说明自定义自定义字段描述说明4</span></label>
+             <label class="s_cradio"><input note="10" type="radio" value="10" name="in15" /> <span class="s_cradio_text">自定义字段描述说明自定义字段描述说明自定义字段描述说明自定义字段描述说明5</span></label>
+             </div>
+           <div class="s_chr"></div>
+           <div class="s_ctitle"><span id="title22">审核人：</span><select class="s_cselect" name="stime" id="stime" class="text">
+                    <option value="-1" selected>请选择提交院系</option>
+                    <option value="476">外语学院</option>
+                    <option value="0">校团委</option>
+                    <option value="475">机械工程学院、城市轨道交通学院</option>
+                  </select>
+           <select class="s_cselect" name="stime" id="stime" class="text">
+                    <option value="0" selected>请先选择提交院系</option>
+                  </select><span class="red">*</span></div>
+           <div class="s_chr"></div>
+           <div class="s_cbtn"><input type="button" class="p_btn2 mt10" value="提交申请" onclick="checkEcApply()"/></div>
+          </div>          
+            <input type="hidden" name="__hash__" value="2faa12506b1e3a05781415cfd5e1eb91" />
+          </form>
+          <!--第二课堂表单结束-->
+        </div>
+      </div>
+      <script  type="text/javascript">
+    $(function(){
+       $('#sid1').bind('change', selectAuditor);
+    });
+    function selectAuditor(){
+        var sid1 = $(this).val();
+        if($(this).val()!='-1'){
+            $.get('/index.php?app=event&mod=EcApply2&act=ajaxAuditor' ,{sid1:sid1},function(data) {
+                var option = "<option value=''>--此院系暂无审核人员--</option>";
+                if(data!=0){
+                    var option = "<option value=''>--请选择审核人--</option>";
+                    var obj=  $.parseJSON(data);
+                    $.each(obj, function(k, v){
+                        option += "<option value=\"" + v['uid'] + "\">" + v['realname']+ "</option>";
+                    });
+                }
+                $("#audit").html(option);
+            });
+        }
+    }
+var attachCount = 0;
+var attachId = 0;
+var maxAttach = 5;
+function openUploadFile(){
+    restCount = maxAttach-attachCount;
+    if(restCount<=0){
+        alert('最多上传'+maxAttach+'个文件');
+    }else{
+        ui.box.load(U('home/Public/uploadFile')+'&isDel=1&attach_type=ecapply&maxfile='+restCount,{title:'上传文件'});
+    }
+}
+
+function ts_upload_success(serverData){
+    var data=$.parseJSON(serverData);
+    if(data.status==true){
+        attachCount+=1;
+        attachId+=1;
+        var msg = '<div class="attach_span" id="attach'+attachId+'">';
+        msg += '<input name="attach[]" type="hidden" value="'+data.attachId+'" />';
+        msg += '<span class="attach_title">'+data.file+'</span><a onclick="delFile('+attachId+')" href="javascript:void(0)">删除</a></div>';
+        $('#uploaded_files').append(msg);
+        return true;
+    }else{
+        if(data == '0'){
+            alert('上传失败，格式不允许');
+        }else{
+            alert(data.info);
+        }
+        isRedirect = false;
+        return false;
+    }
+}
+function delFile(id){
+    $('#attach'+id).remove();
+    attachCount-=1;
+}
+String.prototype.trim=function() {
+    return this.replace(/(^\s*)|(\s*$)/g,'');
+}
+function checkEcApply(){
+    var mustErr = false;
+    $.each($('.must'), function(i, n){
+        var field = $(n).attr('id');
+        if(field=='uploaded_files'){
+            if(attachCount<=0){
+                alert('附件未上传');
+                mustErr = true;
+                return false;
+            }
+        }else if($(n).val().trim()==''){
+            var id = field.substr(2);
+            alert('未填：'+$("#title"+id).text().substr(0, 10));
+            $("#"+field).focus();
+            mustErr = true;
+            return false;
+        }
+    });
+    if(mustErr){
+        return false;
+    }
+    if (document.myform.audit.value<=0) {
+        alert('请选择审核人');
+        document.myform.audit.focus();
+        return false;
+    }
+    var options = {
+            success: function(txt) {
+                var json =$.parseJSON(txt);
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                    window.location.href = "/index.php?app=event&mod=EcApply2&act=ecApplyList";
+                }else{
+                    ui.error(json.info);
+                }
+            }
+        };
+    $('#myform').ajaxSubmit( options );
+}
+</script> 
+    </div>
+    <div class="clear"></div>
+    <div class="c_footer" style="background:#fff;">
+      <div class="c_footercon center">
+        <div class="footer_icp1"> <a href="http://test.pocketuni.lo/index.php?app=home&mod=Public&act=document&id=1" target="_blank">常见问题</a>&nbsp;&nbsp;|&nbsp;&nbsp<a href="http://test.pocketuni.lo/index.php?app=home&mod=Public&act=document&id=2" target="_blank">关于PocketUni</a> <br />
+          PocketUni版权所有 苏ICP备12046592号-2 经营性ICP： <a href="http://test.pocketuni.lo/public/themes/newstyle2014/newimages/pic_icp.jpg" target="_blank">苏 B2-20130213</a>
+          <? php @mysql_close();?>
+          <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?dd3ea352543392a029ccf9da1be54a50";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><br/>
+        </div>
+        <div class="footer_code" style="margin-right:20px;"> <a href="javascript:void(0)" onclick="showBimg('http://test.pocketuni.lo/public/themes/newstyle2014/newimages/pu_android3b.png')" title="点击查看二维码"><img src="http://test.pocketuni.lo/public/themes/newstyle2014/newimages/pu_android3.png" alt="点击查看二维码" /></a> <a href="javascript:void(0)" onclick="showBimg('http://test.pocketuni.lo/public/themes/newstyle2014/newimages/pu_ios3b.png')" title="点击查看二维码"><img src="http://test.pocketuni.lo/public/themes/newstyle2014/newimages/pu_ios3.png" alt="点击查看二维码" /></a> </div>
+        <script>
+    function showBimg(path){
+        ui.box.show('<div style="width:300px;height:300px;"><img src="'+path+'" /></div>',{title:'二维码'});
+    }
+</script> 
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="http://test.pocketuni.lo/apps/event/Tpl/default/Public/js/event_school.js?141118"></script> 
+<script>
+$(document).ready(function () {
+    $('.platform2').bind('mouseover', function() {
+        $('.platform-menu2').removeClass('hidden');
+    });
+
+    $('.platform2').bind('mouseout', function() {
+        $('.platform-menu2').addClass('hidden');
+    });
+});
+</script> 
+<script type="text/javascript">
+$(function(){
+	$('#menu li').hover(function(){
+		$(this).children('ul').stop(true,true).show('fast');
+	},function(){
+		$(this).children('ul').stop(true,true).hide('fast');
+	});
+        $('.platform').bind('mouseover', function() {
+            $('.platform-menu').removeClass('hidden');
+        });
+
+        $('.platform').bind('mouseout', function() {
+            $('.platform-menu').addClass('hidden');
+        });
+});
+</script>
+</body>
+</html>

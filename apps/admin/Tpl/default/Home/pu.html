@@ -1,0 +1,43 @@
+<include file="../Public/_header" />
+<div class="so_main">
+    <div class="page_tit">pu币余额统计</div>
+    <include file="_pu_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+<form method="post">
+用户ID：
+<input type="text" value="{$_POST['userId']}" name="userId">
+<input class="btn_b" type="submit" value="搜索">
+</form>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l">用户ID</th>
+                <th class="line_l">姓名</th>
+                <th class="line_l">学校</th>
+                <th class="line_l">余额</th>
+                <th class="line_l">明细</th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on'>
+                    <td>{$vo.uid}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.sid|tsGetSchoolName}</td>
+                    <td>{$vo.money|money2xs}</td>
+                    <td><a href="{:U('admin/Home/moneyin',array('a__uid'=>$vo['uid']))}">充值明细</a>
+                    <a href="{:U('admin/Home/moneyout',array('out_uid'=>$vo['uid']))}">消费明细</a></td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录 </span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="../Public/_footer" />

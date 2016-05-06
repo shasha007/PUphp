@@ -1,0 +1,63 @@
+<include file="_header" />
+<include file="__THEME__/comm/kindeditor" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+
+        <input type="hidden" name="id" value="{$list.id}" />
+        <div class="form2">
+            <dl class="lineD">
+                <dt>借款金额：</dt>
+                <dd>
+                    {$list.money}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>利率：</dt>
+                <dd>
+                    {$list.rate}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>还款期数：</dt>
+                <dd>
+                    {$list.staging}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>每期还款金额：</dt>
+                <dd>
+                    {$list.stagMoney}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>申请理由：</dt>
+                <dd>
+                    {$list.reason}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>扣款开始时间：</dt>
+                <dd>
+                    {$list.stime}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>扣款结束时间：</dt>
+                <dd>
+                    {$list.etime}
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>申请借款时间：</dt>
+                <dd>
+                    {$list.ctime}
+                </dd>
+            </dl>
+        </div>
+    </form>
+</div>
+<script>
+
+</script>
+<include file="_footer" />

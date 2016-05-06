@@ -1,0 +1,29 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr>
+        <th class="line_l">逾期ID号</th>
+        <th class="line_l">起止时间</th>
+        <th class="line_l">产生时间</th>
+        <th class="line_l">滞纳金基数</th>
+        <th class="line_l">滞纳金</th>
+        <th class="line_l">剩余应还滞纳金</th>
+    </tr>
+    <volist name="overdue_order.list" id="vo">
+        <tr>
+            <td>
+                <present name="vo.id">
+                    {$vo.id}
+                    <else />
+                    临时
+                </present>
+
+            </td>
+            <td>{$vo.stime|date='Y-m-d H:i:s',###}<br>{$vo.etime|date='Y-m-d H:i:s',###}</td>
+            <td>{$vo.ctime|date='Y-m-d H:i:s',###}</td>
+            <td>{$vo.last_amount}</td>
+            <td>{$vo.overdue}</td>
+            <td>{$vo.last_overdue}</td>
+        </tr>
+    </volist>
+    </tbody>
+</table>

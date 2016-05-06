@@ -1,0 +1,17 @@
+<form action="{:U('admin/User/doEditEvent',array('id'=>$schoolId))}" method="post">
+    <if condition="$schoolId">
+        <input name="id" value="{$schoolId}" type="hidden">
+    </if>
+    <table cellpadding=3 cellspacing=3>
+        <tr>
+            <td align="right">学校官方活动域名: <span style="color: #F00">*</span></td>
+            <td align="left">
+                例如 suda  jyrc <br/>
+                <input size="50" type="text" name="domain" value=""  />
+            </td>
+        </tr>
+    </table>
+    <div >
+        <input type="submit" class="btn_b" value="确定">
+    </div>
+</form>

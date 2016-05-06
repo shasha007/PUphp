@@ -1,0 +1,346 @@
+<include file="../Public/_header" />
+
+	<div class="content clearfix under-suggest">
+
+
+			<div class="index_block_l">
+			    <div class="index_slide">
+			    <div class="slide-show">
+			<div class="slideshow-small-page lp"><a href="javascript:void(0);" id="slideshowPre" class="pre">pre</a></div>
+			
+			<div id="mainview" class="slideshow-large-container">
+		            <div class="imagereal">
+			
+			<volist name="bannerlist" id="vo">
+				<php>echo get_image($vo['img'], $vo['url']);</php>
+			</volist>
+
+		            </div>  
+		    </div>
+		    	
+			<div class="slideshow-small-page rp"><a href="javascript:void(0);" id="slideshowNext" class="next">next</a></div>
+			    <ul class="slideshow-small-list paging clearfix" style="">
+								<volist name="bannerlist" id="vo">
+					<li rel="{$i}" class="<php>if($i==1) echo "current";</php>">{$i}</li>
+								</volist>
+			    </ul>
+			</div>
+			    </div>
+			    <div class="ib_shadow"></div>
+			</div>
+			
+			<div class="index_block_r">
+			    <div class="index_user">
+				<div id="top-rank-list" class="section-wrap clearfix" data-zone="app-hot-all">
+				            <div class="title">
+				            <h4>热门资讯</h4>
+							<a class="more" href="{:U('appstore/Index/items', array('type'=>3) )}">更多>></a>
+				            <span class="section-footer"></span>
+					        </div>
+					
+							<ul class="index_info_list">
+								
+							    <volist name="recomList3" id="vo">
+							    <li>
+							      <a href="{:U('appstore/Index/document', array('id'=>$vo['document_id']))}"> {$vo.title}</a>
+							    </li>
+							    </volist>
+														
+							</ul>	
+					
+				</div>	
+			    </div>
+			    <div class="ib_shadow"></div>
+			</div>
+			
+			<div class="index_block_l mt-0">
+			    <div class="index_rec">
+			    <div id="WeekPopularRecommend" class="clearfix">
+			    <div class="rec_list">
+			        <ul id="recList">
+				
+				<volist name="recomList1" id="vo">
+					<li class="recomlist1 <php>if($i==1) echo "current";</php>" rel="{$vo['a']}">&nbsp;&nbsp;&nbsp;{$vo['t']}<span class="line">&nbsp;</span></li>
+				</volist>
+			         </ul>
+			    </div>
+			
+			    <div class="rec_content" id="recContent">
+				<volist name="recomList1" id="vo">
+					
+			        <ul class="recomlist1content week-popular-recommend-list clearfix <php>if($i>1) echo "hidden";</php>" id="recomlist_{$vo['a']}">				
+					<php>foreach( $vo['r'] as $app){</php>
+			 <li>    
+			<dl class="app-single-item">
+			    <dt>
+			        <a href="{:U('appstore/Index/app', array('id'=>$app['id']))}"  class="app-icon"><img width="64" height="64" src="{$app.icon|get_document_url}"><i class="app-single-round" >&nbsp;</i></a>
+			    </dt>
+			    <dd>
+			    <a href="{:U('appstore/Index/app', array('id'=>$app['id']))}" class="app-name">{$app.title}</a>
+				<p class="app-used-amount"><strong>{$app.readCount}</strong>浏览</p>
+			    <p class="app-used-amount"><strong>{$app.downloadCount}</strong>下载</p>
+			            </dd>
+			</dl>
+			</li>	
+				<php>}</php>	
+			</ul>
+			
+			</volist>
+			</div>
+			</div>
+			<span class="rec_title_yingyong">&nbsp;</span>
+			    </div>
+			    <div class="ib_shadow"></div>
+			</div>
+				
+			<div class="index_block_r mt-0">
+			    <div class="index_list">
+			    <div id="top-rank-list" class="section-wrap clearfix" data-zone="app-hot-all">
+			            <div class="title">
+			            <h4>热门应用排行榜</h4>
+			            <!--<span class="top-rank-list-title-banner"></span>-->
+			            <span class="section-footer"></span>
+			        </div>
+			        <ol id="indexWeeklist" class="special-rank-list  clearfix" data-zone="app-hot-all" data-pos="index">
+
+
+											
+			<volist name="hotList1" id="vo">				
+				<php>					
+					if($i>10) {
+						break;
+					}
+					if($i==1) {
+				</php>		
+			    <li class="first" style="height: 79px; ">
+			    <div class="hide-target" style=""><span style="margin-top: 25px; " class="rank-num rank-num1">1</span>
+			<dl class="app-single-item">
+			    <dt>
+			        <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-icon"><img width="64" height="64" src="{$vo.icon|get_document_url}"><i class="app-single-round" >&nbsp;</i></a>
+			    </dt>
+			    <dd>
+			    <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-name" >{$vo.title}</a>
+				<p class="app-used-amount"><strong>{$vo['readCount']}</strong>浏览</p>
+			    <p class="app-used-amount"><strong>{$vo['downloadCount']}</strong>下载</p>
+			            </dd>
+			</dl>
+			    </div>
+			    </li>
+			
+			<php>} else {</php>
+			
+			 <li>
+			  <div class="small-icon">
+			  <span class="rank-trend rank-keep"></span>
+			<span class="rank-num rank-num<php>echo $i;</php>"><php>echo $i;</php></span>
+			<a class="app-icon" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" ><img width="16" height="16" alt="" src="{$vo.icon|get_document_url}"> </a>
+			<a class="app-name1" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" >{$vo.title}</a>
+			        </div>
+			    </li>
+			<php>}</php>
+			</volist>
+			        </ol>
+
+			    </div>
+
+			    </div>
+			    <div class="ib_shadow"></div>
+			
+			</div>
+			
+			<div class="index_block_l mt-0">
+			    <div class="index_rec">
+			    <div id="WeekPopularRecommend" class="clearfix">
+			    <div class="rec_list">
+			        <ul id="recList">
+
+				<volist name="recomList2" id="vo">
+					<li class="recomlist2 <php>if($i==1) echo "current";</php>" rel="{$vo['a']}">&nbsp;&nbsp;&nbsp;{$vo['t']}<span class="line">&nbsp;</span></li>
+				</volist>
+			         </ul>
+			    </div>
+
+			    <div class="rec_content" id="recContent">
+				<volist name="recomList2" id="vo">
+
+			        <ul class="recomlist2content week-popular-recommend-list clearfix <php>if($i>1) echo "hidden";</php>" id="recomlist_{$vo['a']}">				
+					<php>foreach( $vo['r'] as $app){</php>
+			 <li>    
+			<dl class="app-single-item">
+			    <dt>
+			        <a href="{:U('appstore/Index/app', array('id'=>$app['id']))}"  class="app-icon"><img width="64" height="64" src="{$app.icon|get_document_url}"><i class="app-single-round" >&nbsp;</i></a>
+			    </dt>
+			    <dd>
+			    <a href="{:U('appstore/Index/app', array('id'=>$app['id']))}" class="app-name">{$app.title}</a>
+				<p class="app-used-amount"><strong>{$app.readCount}</strong>浏览</p>
+			    <p class="app-used-amount"><strong>{$app.downloadCount}</strong>下载</p>
+			            </dd>
+			</dl>
+			</li>	
+				<php>}</php>	
+			</ul>
+
+			</volist>
+			</div>
+			</div>
+			<span class="rec_title_youxi">&nbsp;</span>
+			    </div>
+			    <div class="ib_shadow"></div>
+			</div>
+
+			<div class="index_block_r mt-0">
+			    <div class="index_list">
+			    <div id="top-rank-list" class="section-wrap clearfix" data-zone="app-hot-all">
+			            <div class="title">
+			            <h4>热门游戏排行榜</h4>
+			            <!--<span class="top-rank-list-title-banner"></span>-->
+			            <span class="section-footer"></span>
+			        </div>
+			        <ol id="indexWeeklist" class="special-rank-list  clearfix" data-zone="app-hot-all" data-pos="index">
+
+
+
+			<volist name="hotList2" id="vo">				
+				<php>					
+					if($i>10) {
+						break;
+					}
+					if($i==1) {
+				</php>		
+			    <li class="first" style="height: 79px; ">
+			    <div class="hide-target" style=""><span style="margin-top: 25px; " class="rank-num rank-num1">1</span>
+			<dl class="app-single-item">
+			    <dt>
+			        <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-icon"><img width="64" height="64" src="{$vo.icon|get_document_url}"><i class="app-single-round" >&nbsp;</i></a>
+			    </dt>
+			    <dd>
+			    <a href="{:U('appstore/Index/app', array('id'=>$vo['id']))}"  class="app-name" >{$vo.title}</a>
+				<p class="app-used-amount"><strong>{$vo['readCount']}</strong>浏览</p>
+			    <p class="app-used-amount"><strong>{$vo['downloadCount']}</strong>下载</p>
+			            </dd>
+			</dl>
+			    </div>
+			    </li>
+
+			<php>} else {</php>
+
+			 <li>
+			  <div class="small-icon">
+			  <span class="rank-trend rank-keep"></span>
+			<span class="rank-num rank-num<php>echo $i;</php>"><php>echo $i;</php></span>
+			<a class="app-icon" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" ><img width="16" height="16" alt="" src="{$vo.icon|get_document_url}"> </a>
+			<a class="app-name" href="{:U('appstore/Index/app', array('id'=>$vo['id']))}" >{$vo.title}</a>
+			        </div>
+			    </li>
+			<php>}</php>
+			</volist>
+			        </ol>
+
+			    </div>
+
+			    </div>
+			    <div class="ib_shadow"></div>
+
+			</div>
+						
+			<script>
+			$(document).ready(function () { 				
+			    $(".recomlist1").each(function(index){
+			    $(this).hover(function(){
+				$(".recomlist1").removeClass('current');	
+				$(this).addClass('current');	
+				
+				var id=$(this).attr("rel");			
+				$(".recomlist1content").addClass('hidden');	
+				$("#recomlist_"+id).removeClass('hidden');				
+			    });
+			    });
+
+			    $(".recomlist2").each(function(index){
+			    $(this).hover(function(){
+				$(".recomlist2").removeClass('current');	
+				$(this).addClass('current');	
+				
+				var id=$(this).attr("rel");			
+				$(".recomlist2content").addClass('hidden');	
+				$("#recomlist_"+id).removeClass('hidden');				
+			    });
+			    });			
+			
+                //Get size of images, how many there are, then determin the size of the image reel.
+                var imageWidth = $("#mainview").width();
+                var imageSum = $(".imagereal img").size();
+                var imageReelWidth = imageWidth * imageSum;
+
+                //Adjust the image reel to its new size
+                $(".imagereal").css({'width' : imageReelWidth});
+
+                //Paging + Slider Function
+                rotate = function(){
+                    var triggerID = $active.attr("rel") - 1; //Get number of times to slide
+                    var image_reelPosition = triggerID * imageWidth; //Determines the distance the image reel needs to slide
+
+                    $(".paging li").removeClass('current'); //Remove all active class
+                    $active.addClass('current'); //Add active class (the $active is declared in the rotateSwitch function)
+
+                    //Slider Animation
+                    $(".imagereal").animate({
+                        left: -image_reelPosition
+                    }, 500 );
+
+                };
+
+                //Rotation + Timing Event
+                rotateSwitch = function(){
+                    play = setInterval(function(){ //Set timer - this will repeat itself every 3 seconds
+                        $active = $('.paging li.current').next();
+                        if ( $active.length === 0) { //If paging reaches the end...
+                            $active = $('.paging li:first'); //go back to first
+                        }
+                        rotate(); //Trigger the paging and slider function
+                    }, 3000); //Timer speed in milliseconds (3 seconds)
+                };
+
+                rotateSwitch(); //Run function on launch
+
+                //On Hover
+                $(".imagereal a").hover(function() {
+                    clearInterval(play); //Stop the rotation
+                }, function() {
+                    rotateSwitch(); //Resume rotation
+                });
+
+                //On Click
+                $(".paging li").click(function() {
+                    $active = $(this); //Activate the clicked paging
+                    //Reset Timer
+                    clearInterval(play); //Stop the rotation
+                    rotate(); //Trigger rotation immediately
+                    rotateSwitch(); // Resume rotation
+                    return false; //Prevent browser jump to link anchor
+                });
+                $("#slideshowPre").click(function() {
+                    $active = $('.paging li.current').prev();
+                    if ( $active.length === 0) { //If paging reaches the end...
+                        $active = $('.paging li:last'); //go back to first
+                    }
+                    //Reset Timer
+                    clearInterval(play); //Stop the rotation
+                    rotate(); //Trigger rotation immediately
+                    rotateSwitch(); // Resume rotation
+                    return false; //Prevent browser jump to link anchor
+                });
+                $("#slideshowNext").click(function() {
+                    $active = $('.paging li.current').next();
+                    if ( $active.length === 0) { //If paging reaches the end...
+                        $active = $('.paging li:first'); //go back to first
+                    }
+                    clearInterval(play); //Stop the rotation
+                    rotate(); //Trigger rotation immediately
+                    rotateSwitch(); // Resume rotation
+                    return false; //Prevent browser jump to link anchor
+                });	
+						
+			});
+			</script>
+<include file="../Public/_footer" />

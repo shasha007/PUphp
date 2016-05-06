@@ -1,0 +1,50 @@
+<div style="width:200px;margin:10px auto 20px auto;">
+部落审核通过<br/>
+评定部落星级：
+<select name="stern" id="stern">
+    <option value="1">1星</option>
+    <option value="2">2星</option>
+    <option value="3">3星</option>
+</select>
+</div>
+<div>
+    <input type="button" class="btn_b" id='que'  value="确定" />
+    <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+<script type="text/javascript">
+    $(function(){
+	$('#que').click(function(){
+            var id={$vid};
+            var stern=$('#stern').val();
+            if(!stern){
+                ui.error('请选择部落星级');
+            }else{
+                //提交修改
+                $.post("{:U('event/Validate/doAudit')}", {id:id,stern:stern}, function(res){
+                    var json =$.parseJSON(res);
+                    if (json.status ==0) {
+                        ui.error(json.info);
+                    }else{
+                        ui.success(json.info);
+                        ui.box.close();
+                        $('#list_'+id).remove();
+                        $('#sub').remove();
+                        updateNum();
+                    }
+                });
+            }
+
+	});
+
+    });
+    function updateNum() {
+        var auditCount = $('#auditCount').html();
+        auditCount = auditCount -1;
+        $('#auditCount').html(auditCount)
+    }
+
+    function cancel() {
+	ui.box.close();
+    }
+
+</script>

@@ -1,0 +1,29 @@
+<include file="../Public/_header" />
+
+<div class="tz_content">
+    <div class="tz_content_left">
+        <div class="tz_content_title">校内通知</div>
+        <div class="tz_back"><a href="{:U('/Index/index',array(cid=>$cid,school=>$sid))}">返回列表>></a></div>
+    </div>
+
+    <div id="tz_Tab">
+        <div class="tz_menu">
+          <ul>
+            <volist name="categorys" id="vo">
+                <li<?php if(isset($cid)&&$cid==$i) echo' class="hover"';?>>
+                    <a href="{:U('/Index/index',array(cid=>$i,school=>$sid))}">{$vo}</a></li>
+            </volist>
+          </ul>
+        </div>
+        <div class="tz_contentbox">
+            <div class="tz_desc">
+                <div class="tz_desc_title b">{$obj.title}</div>
+                <div class="tz_desc_note">发布学校：{$obj.sid|tsGetSchoolName} {$obj.sid1|tsGetSchoolName} &nbsp;&nbsp; 类别：{$categorys[$obj['cid']]} &nbsp;&nbsp; 发布时间：{$obj.cTime|friendlyDate}</div>
+                <div class="tz_desc_text">{$obj.content|htmlspecialchars_decode}</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<include file="../Public/_footer" />

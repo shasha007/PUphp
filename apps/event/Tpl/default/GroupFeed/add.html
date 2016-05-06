@@ -1,0 +1,27 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<div class="st_m_t ml50 b f14">发布动态</div>
+<div class="clear"></div>
+<form action="{:U('event/GroupFeed/index',array('gid'=>$gid))}" method="post" name="noticeform" onSubmit="return checkform();" enctype="multipart/form-data">
+    <div class="st_m3_text mt10 ml50">
+        <textarea name="content" id="content" cols="" rows="" placeholder="请输入文字" style="width:570px;height:150px"></textarea>
+        <input type="file" name="pic" class="p_file" />
+    </div>
+    <div class="mt20 ml50 st_fl">
+        <input type="hidden" name="doadd" value="doadd" >
+        <input type="submit" value="发 布" id="button" class="st_f_btn" />
+    </div>
+</form>
+</div>
+<script>
+function checkform(){
+    var contentLength = tsStripTagsLength(getEditorContent("content"));
+    if(contentLength == 0) {
+        ui.error('动态内容不能为空');
+        return false;
+    }
+    return true;
+}
+</script>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

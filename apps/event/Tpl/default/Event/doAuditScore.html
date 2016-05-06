@@ -1,0 +1,61 @@
+<dl style="margin:10px 10px 0; height:22px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 活动：</dt>
+    <dd class="left alL">{$title}</dd>
+</dl>
+<dl style="padding-bottom: 5px; height:22px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 时间：</dt>
+    <dd class="left alL"><?php echo date( 'Y-m-d H:i',$sTime ); ?> 至<br/><?php echo date( 'Y-m-d H:i',$eTime ); ?></dd>
+</dl>
+<dl style="margin:10px 10px 5px; height:22px;" class="clear">
+    <dt class="left alR " style="width:70px;"> {$webconfig.cradit_name}：</dt>
+    <dd class="left alL"><input type="text" id="credit" value="{$credit}" size="10" onkeyup="clearNoNum(this)" <?php if(!$creditEditbar):?> disabled="disabled"<?php endif;?>> 最大{$webconfig.max_credit}</dd>
+</dl>
+<dl style="margin:10px 10px 5px; height:22px;" class="clear">
+    <dt class="left alR " style="width:70px;"> 活动积分：</dt>
+    <dd class="left alL"><input type="text" id="score" value="{$score}" size="10" onkeyup="clearNoNum2(this)"> 最大{$webconfig.max_score}</dd>
+</dl>
+<dl style="margin:10px 10px 5px; height:22px;" class="clear">
+    <dt class="left alR "> 签到码限定使用人次：</dt>
+    <dd class="left alL"><input type="text" id="codelimit" value="{$codelimit}" size="13"></dd>
+</dl>
+
+<dl style="margin:10px 10px 5px; height:30px" class="clear">
+    <dt class="left alR" style="width:70px;">审核：</dt>
+    <dd class="left alL cRed">合理分配【{$webconfig.cradit_name}】和【活动积分】<br/>约活动1小时=1积分</dd>
+</dl>
+<div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="alR">
+    <input type="button" class="btn_b" onclick="addEdit({$id})" value="确定" />
+    <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+<script type="text/javascript">
+var max_credit = <?php echo $webconfig['max_credit'];?>;
+var max_score = <?php echo $webconfig['max_score'];?>;
+function addEdit(id) {
+    var credit	= $('#credit').val();
+    if(credit>max_credit){
+        ui.error('学分最大'+max_credit);
+        return false;
+    }
+    var score	= $('#score').val();
+    if(score>max_score){
+        ui.error('积分最大'+max_score);
+        return false;
+    }
+    var codelimit	= $('#codelimit').val();
+    //提交修改
+    $.post("{:U('event/Event/doAudit')}", {gid:id, credit:credit,score:score,codelimit:codelimit}, function(res){
+        var json =$.parseJSON(res);
+        if (json.status ==0) {
+            ui.error(json.info);
+        }else {
+            ui.success('审核成功');
+            ui.box.close();
+            $('#list_'+id).remove();
+            updateNum();
+        }
+    });
+}
+function cancel() {
+	ui.box.close();
+}
+</script>

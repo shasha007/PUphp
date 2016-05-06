@@ -1,0 +1,130 @@
+<include file="../Public/_header" />
+
+<script>
+function setTab(name,cursel,n){
+ for(i=1;i<=n;i++){
+  var menu=document.getElementById(name+i);
+  j = i+3;
+  var menu2=document.getElementById(name+j);
+  var con=document.getElementById("con_"+name+"_"+i);
+  menu.className=i==cursel?"hover":"";
+  menu2.className=i==cursel?"hover":"";
+  con.style.display=i==cursel?"block":"none";
+ }
+scroll(0,0);
+}
+</script>
+<div class="exam_content">
+    <div class="exam_menulist">
+        <ul>
+            <li id="one1" onclick="setTab('one',1,3)" class="hover"><a href="#">判 断</a></li>
+            <li id="one2" onclick="setTab('one',2,3)" ><a href="#">选 择</a></li>
+            <li id="one3" onclick="setTab('one',3,3)" ><a href="#">填 空</a></li>
+        </ul>
+    </div>
+    <div id="con_one_1" >
+        <div class="exam_submenu b">判断题 <span style="font-size:12px; font-weight:normal; color:#333;">（阅读问题并判断对错）</span></div>
+        <div class="exam_list">
+            <ul>
+                <volist name="pd" id="vo">
+                    <?php $cnt = count($pd);?>
+                    <li<?php if($cnt==$i)echo' class="i"'?>>
+                        <div class="exam_list_title">{$i}.{$vo.title}</div>
+                        <div class="exam_list_option">
+                            <label><input type="radio" name="pd{$i-1}" value="1" /> 对</label>
+                            <label><input type="radio" name="pd{$i-1}" value="0" /> 错</label>
+                        </div>
+                        <div id="pd_answer{$i-1}" class="exam_list_answer">正确答案：<?php if($vo['answer']==1){echo'对';}else{echo'错';}?></div>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="exam_btn_d"><a href="javascript:void();" onclick="setTab('one',2,3)"><img src="../Public/images/down.gif" alt="下一步" /></a></div>
+    </div>
+
+    <div id="con_one_2" style="display:none;" >
+        <div class="exam_submenu b">选择题 <span style="font-size:12px; font-weight:normal; color:#333;">（阅读问题并选择最佳答案每小题只有一个正确答案）</span></div>
+        <div class="exam_list">
+            <ul>
+                <volist name="xz" id="vo">
+                    <?php $cnt = count($xz);?>
+                    <li<?php if($cnt==$i)echo' class="i"'?>>
+                        <div class="exam_list_title">{$i}.{$vo.title}</div>
+                        <div class="exam_list_option">
+                        <?php $select=unserialize($vo['select'])?>
+                        <volist name="select" key="k" id="vos">
+                            <label><input type="radio" name="xz{$i-1}" value="{$k}" /> <?php echo(strtoupper(chr(96+$k)))?>. {$vos}</label>&nbsp;&nbsp;
+                        </volist>
+                        </div>
+                        <div id="xz_answer{$i-1}" class="exam_list_answer">正确答案：<?php echo(strtoupper(chr(96+$vo['answer'])))?></div>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="exam_btn_d">
+            <a href="javascript:void();" onclick="setTab('one',1,3)"><img src="../Public/images/up.gif" alt="上一步" /></a> &nbsp;&nbsp;
+            <a href="javascript:void();" onclick="setTab('one',3,3)"><img src="../Public/images/down.gif" alt="下一步" /></a>
+        </div>
+    </div>
+    <div id="con_one_3" style="display:none;" >
+        <div class="exam_submenu b">填空题 <span style="font-size:12px; font-weight:normal; color:#333;">（阅读问题并填写正确答案）</span></div>
+        <div class="exam_list">
+            <ul>
+                <volist name="tk" id="vo">
+                    <?php $cnt = count($tk);?>
+                    <li<?php if($cnt==$i)echo' class="i"'?>>
+                        <div class="exam_list_title">{$i}.{$vo.title}</div>
+                        <div class="exam_list_option"><input id="tk{$i-1}" type="text"  class="exam_input"/></div>
+                        <div id="tk_answer{$i-1}" class="exam_list_answer">正确答案：{$vo.answer}</div>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="exam_btn_d"><a  href="javascript:void(0)" onclick="showAnswer()"><img src="../Public/images/btn_4.gif" alt="提交" /></a>
+        &nbsp;&nbsp;&nbsp;&nbsp; <a href="{:U('/Index/index')}"><img src="../Public/images/btn_5.gif" alt="返回题库" /></a></div>
+    </div>
+
+    <div class="exam_menulist">
+        <ul>
+            <li id="one4" onclick="setTab('one',1,3)" class="hover"><a href="#">判 断</a></li>
+            <li id="one5" onclick="setTab('one',2,3)" ><a href="#">选 择</a></li>
+            <li id="one6" onclick="setTab('one',3,3)" ><a href="#">填 空</a></li>
+        </ul>
+    </div>
+</div>
+<script>
+	$(document).ready(function(){
+	$('input').click(function(){
+　　　　　　window.scrollBy(0,+75);
+　　	}); 
+	}); 
+    var goSum = <?php echo($goSum);?>;
+    var tk = <?php echo(json_encode($tk));?>;
+    var pd = <?php echo(json_encode($pd));?>;
+    var xz = <?php echo(json_encode($xz));?>;
+    function showAnswer(){
+        var wrong = 0;
+        $('.exam_list_answer').hide();
+        $.each(tk,function(i,line) {
+            if(line.answer != $('#tk'+i).val()){
+                $('#tk_answer'+i).show();
+                wrong = wrong+1;
+            }
+        });
+        $.each(pd,function(i,line) {
+            if(line.answer != $('input[name="pd'+i+'"]:checked').val()){
+                $('#pd_answer'+i).show();
+                wrong = wrong+1;
+            }
+        });
+        $.each(xz,function(i,line) {
+            if(line.answer != $('input[name="xz'+i+'"]:checked').val()){
+                $('#xz_answer'+i).show();
+                wrong = wrong+1;
+            }
+        });
+        alert('共'+goSum+'题，答错'+wrong+'题。得分'+parseInt((goSum-wrong)/goSum*100)+'分');
+	setTab('one',1,3);
+    }
+</script>
+<include file="../Public/_footer" />

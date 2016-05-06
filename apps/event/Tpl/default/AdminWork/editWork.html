@@ -1,0 +1,53 @@
+<include file="../Teacher/_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"><eq name="type" value="edit">编辑作业<else/>添加作业</eq></div>
+    <eq name="type" value="add">
+    <form action="{:U('event/AdminWork/doAddWork')}" enctype="multipart/form-data" method="post">
+    <else/>
+    <form action="{:U('event/AdminWork/doEditWork')}" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="id" value="{$id}" />
+    </eq>
+        <div class="form2">
+            <dl class="lineD">
+                <dt>作业标题：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <input name="title" type="text" value="{$title}" size="80">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>截止时间：<span style="color: #F00">*</span></dt>
+                <dd><input name="eTime" id="deadline" type="text" onfocus="rcalendar(this,'full');" readonly
+                     <eq name="type" value="edit">value="<?php echo date( 'Y-m-d H:i:s',$eTime );?>"</eq>/> 小时在弹出框底部编辑</dd>
+            </dl>
+            <dl class="lineD">
+                <dt>简介：</dt>
+                <dd>
+                    <textarea id='textarea' name="description" style="width:300px;height:100px;border:1px solid #ccc;" onKeyUp="gbcount(this,200);">{$description}</textarea>
+                    <span  id='remain' style='color:green;'>200</span><span style='color:green;'>/200字</span>
+                </dd>
+            </dl>
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+$(function(){
+    gbcount('#textarea',200);
+});
+function gbcount(o,max){
+    var msg = $(o).val();
+    var rest = max - msg.length;
+    if(rest < 0){
+        rest = 0;
+        $('#remain').html(0);
+        $(o).val(msg.substring(0,max));
+        alert('不能超过'+max+'个字!');
+    }
+    $('#remain').html(rest);
+}
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<include file="../Teacher/_footer" />

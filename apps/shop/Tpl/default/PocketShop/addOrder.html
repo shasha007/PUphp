@@ -1,0 +1,26 @@
+<include file="_header" />
+<div class="kdl_mobile_page m_mb50">
+            <div class="kdl_mobile_header f18 bold tcenter">信息确认</div>
+            <a href="{:U('shop/PocketShop/detail')}&id={$list.id}"><div class="m_back"></div></a>
+            <div class="clear m_mt50"></div>
+            <div class="m_username">收货人：{$data.name} &nbsp;&nbsp;{$data.tel}<br>身份证号：{$data.identity}<br>收货地址：{$data.address}</div>
+            <div class="clear"></div>
+            <div class="m_c_infor">
+                <div class="m_c_infor_thumb"><img src="{$list.pic|tsMakeThumbUp=###,200,200,'c'}"></div>
+                <div class="m_c_infor_desc">
+                    <div class="m_c_infor_t f14">{$list.name}</div>
+                    <div class="m_c_infor_price">{$color}</div>
+                    <div class="m_c_infor_price">商品价格：￥{$list.price} &nbsp;&nbsp;首付：￥{$shoufu} &nbsp;&nbsp;分{$staging}期还款</div>
+                    <div class="m_c_infor_price">月供：￥{$res.all}（本金：￥{$res.eveprice}+服务费：￥{$res.service}）</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="m_c_price1 m_color1">
+                *该商品价格以及月供金额以电话确定审核后为准
+            </div>
+            <div class="clear"></div>
+            <div class="m_c_btn">
+                <a href="{:U('shop/PocketShop/addOrder')}&gid={$list.id}&addressId={$addressId}&color={$color}&shoufu={$shoufu}&staging={$staging}"><div class="m_c_btn2 f16 bold">立即申请</div></a>
+            </div>
+            </div>
+<include file="_footer" />

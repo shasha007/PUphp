@@ -1,0 +1,47 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<div class="st_s_submenu ml10 mt10 b c3 f14">成员列表</div>
+<div class="st_search mt10">
+     <form method="post">
+        <input name="k"  value="{$search_key}" type="text" class="st_s_input" placeholder="输入关键字" />
+        <input name="st_s_search" type="submit" class="st_s_btn b f14" value="搜 索" />
+    </form>
+</div>
+<div class="clear"></div>
+<if condition="$search_key">
+  <div class="st_s_count mt10 ml20 h30">找到 <span style="color:red;">{$search_key}</span> 相关结果约：({$memberInfo.count})条</div>
+</if>
+<div class="st_list2 ml10 mt10">
+    <ul>
+        <volist name="memberInfo['data']" id="_member">
+            <li>
+                <div class="st_ls2_thumb"><space uid="_member['uid']" target="_blank">{uavatar=m}</space></div>
+                <div class="st_ls2_infor ml20">
+                    <div class="st_ls2_name b f14 st_link">
+                        <if condition="$_member['level'] eq 1">
+    				  <span class="creator" title="创建者">&nbsp;</span>
+    				<elseif condition="$_member['level'] eq 2" />
+    				  <span class="newer" title="管理者">&nbsp;</span>
+    				<else />
+    				</if>
+                        <space uid="_member['uid']" class="fn" target="_blank">{realname}</space>
+                    </div>
+
+                    <php>if ($mid > 0 && $_member['uid'] != $mid) {</php>
+                    <div class="right pr10" id="follow_list_{$_member.uid}" >
+                        <script>document.write(followState('{$_member.followState}','dolistfollow',{$_member.uid}))</script>
+                    </div>
+                    <php>}</php>
+                    <div class="st_ls2_school">{$_member['school2']}</div>
+                    <div class="st_ls2_school c9"> <em>最近访问：{$_member['mtime']|friendlyDate}</em> </div>
+                </div>
+            </li>
+        </volist>
+    </ul>
+       <div class="page">{$memberInfo['html']}</div>
+</div>
+
+
+</div>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

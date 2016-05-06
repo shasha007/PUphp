@@ -1,0 +1,62 @@
+<div class="school_d" >
+    <div class="school_firstletter" >
+        <div class="school_all">按学校首字母：</div>
+        <div class="school_letter">
+            <?php for($i=65;$i<=90;$i++):?><a href="javascript:void(0);"><?php echo chr($i);?></a><?php endfor;?>
+        </div>
+        <div class="school_search"><input name="fisrtletter" type="text" class="school_input" placeholder="请输入学校首字母" onkeyup="search(this)" /></div>
+    </div>
+    <div class="school_college" id="subschool" >
+        <ul>
+            <volist name="schools" id="vo">
+                <li id="node_{$vo.id}">
+                   <a onclick="save({$vo.id},'{$vo.title}')" href="javascript:void(0);">{$vo.title}</a>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="school_close"><input name="close" type="button" value="关闭" class="school_btn" onclick="javascript:ui.box.close();" /></div>
+</div>
+<script>
+    $(function(){
+        $('.school_letter a ').click(function(){
+            var letter = $(this).html();
+            $.post(U('home/Public/ajaxSchoolByLetter'), {letter:letter},
+            function(data){
+                var json= $.parseJSON(data);
+                $("#subschool").html('');
+                $.each( json, function(i,n){
+                    $("#subschool").append(addnode(n));
+                });
+            });
+        });
+    })
+    function addnode(n){
+        return "<li id='node_"+n.id+"'><a href='javascript:void(0);' onclick=save("+n.id+",\'"+n.title+"\') >"+n.title+"</a></li>";
+    }
+    function save(id,title){
+        if(!title){
+            alert('请选择学校');
+        }else{
+            $('#current').val(id);
+            $('#selectarea').val(title);
+            ui.box.close();
+            try{
+                $('#currentSid1').val('');
+                $('#selectSid1').val('');
+            }catch(e){}
+        }
+    }
+    function search(obj){
+        var letter = $(obj).val();
+        $.post(U('home/Public/ajaxSchoolByLetter'), {letter:letter},
+        function(data){
+            var json= $.parseJSON(data);
+            $("#subschool").html('');
+            $.each( json, function(i,n){
+                $("#subschool").append(addnode(n));
+            });
+        });
+    }
+
+</script>

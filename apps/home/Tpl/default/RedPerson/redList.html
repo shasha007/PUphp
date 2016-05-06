@@ -1,0 +1,182 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+
+    <div class="Toolbar_inbox">       
+        <a href="{:U('home/RedPerson/addRedName')}" class="btn_a"><span>添加分类</span></a>
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">ID</th>
+                <th class="line_l">名称</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist id="vo" name="list">
+                <tr overstyle='on' id="{$vo.id}">
+                    <td>
+                        <input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}">
+    				</td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="deleteThemes('{$vo.id}')">删除</a>
+                        <a href="{:U('home/RedPerson/addRedName','id='.$vo[id])}" >修改</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+
+<script>
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchBlog() {
+    if(isSearchHidden == 1) {
+        $("#searchBlog_div").slideDown("fast");
+        $(".searchBlog_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchBlog_div").slideUp("fast");
+        $(".searchBlog_action").html("搜索话题");
+        isSearchHidden = 1;
+    }
+}
+
+    //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+        function () {
+            $(this).addClass("bg_hover");
+        },
+        function () {
+            $(this).removeClass("bg_hover");
+        }
+    );
+    });
+
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    //获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+    function deleteThemes(ids) {
+        var length = 0;
+        if(ids) {
+            length = 1;
+        }else {
+            ids    = getChecked();
+            length = ids[0] == 0 ? ids.length - 1 : ids.length;
+            ids    = ids.toString();
+        }
+        if(ids=='') {
+            ui.error('请先选择一个目标');
+            return ;
+        }
+        if(confirm('您将删除'+length+'条记录，删除后无法恢复，确定继续？')) {
+            $.post("{:U('home/RedPerson/deleteRedName')}",{ids:ids},function(res){
+                if(res=='1') {
+                    ui.success('删除成功');
+                    removeItem(ids);
+                }else {
+                    ui.error('删除失败');
+                }
+            });
+        }
+    }
+
+    function removeItem(ids) {
+        ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#'+ids[i]).remove();
+        }
+    }
+
+    $(".sequence").blur(function(){
+        var orderoption = parseInt(this.value,10) ;
+        if (orderoption<0 || isNaN(orderoption)) {
+            alert('请输入正确的数字') ;
+        };
+        var id = parseInt(this.id,10) ;
+        if (id<0 || isNaN(id)) {
+            alert('操作失败请稍候再试') ;
+        };        
+        $.ajax({
+            url: '{:U('home/Themes/sequence')}',
+            type: 'post',
+            data: {
+                id: id ,
+                orderoption: orderoption
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data ==='1') {
+                    location.reload(true) ;
+                }else if(data ==='0'){
+                    alert('修改失败请稍候再试') ;
+                }
+            }            
+        }) ;
+    });
+
+    $(".open").click(function(){
+        var id = $(this).data("id") ;
+        var status = $(this).data("statuses") ;
+        $.ajax({
+            type: 'post',
+            url: "{:U('home/Themes/open')}" ,
+            data: {
+                status: status ,
+                id:id
+            },
+            error: function () {
+            },
+            success: function (data) {
+                if (data!=='0') {
+                    if (status === 1) {
+                        $("#open"+id).html("关闭") ;
+                        $("#open"+id).attr("data-statuses", "2");
+                    }else{
+                        $("#open"+id).html("开启") ;
+                        $("#open"+id).attr("data-statuses", "1");
+                    }
+                }
+                else {
+                    alert('哈哈哈哈') ;
+                }
+            }
+        });
+    });
+</script>
+<include file="_footer" />

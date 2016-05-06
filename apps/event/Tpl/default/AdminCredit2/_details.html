@@ -1,0 +1,29 @@
+<dl>
+    <dt class="left alR b clear" style="width:70px;"> 申请人：</dt>
+    <dd class="left alL">{$realname} {$sid1|tsGetSchoolName}</dd>
+</dl>
+<dl>
+    <dt class="left alR b clear" style="width:70px;"> 申请类别：</dt>
+    <dd class="left alL">{$fileName}</dd>
+</dl>
+<dl>
+    <dt class="left alR b clear" style="width:70px;"> 名称：</dt>
+    <dd class="left alL">{$title}</dd>
+</dl>
+<?php foreach($inputs as $v):?>
+    <dl>
+        <dt class="left alR b clear" style="width:280px;"> {$v.title}：</dt>
+        <dd class="left alL">
+            <?php if(is_array($v['res'])):?>
+                <?php foreach($v['res'] as $vo): ?>
+                    {$vo|getAttachHtml2}&nbsp;&nbsp;
+                <?php endforeach; ?>
+            <?php else:?>{$v.res}
+                <?php if($v['credit']):?> &nbsp;&nbsp;(实践学时：{$v['credit']})<?php endif;?></dd>
+            <?php endif;?>
+    </dl>
+<?php endforeach;?>
+<dl>
+    <dt class="left alR b clear" style="width:280px;"> 总实践学时：</dt>
+    <dd class="left alL">{$credit}</dd>
+</dl>

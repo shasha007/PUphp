@@ -1,0 +1,84 @@
+<include file="_header" />
+
+<script type="text/javascript" src="../Public/js/json2select2.js" ></script>
+
+<div class="so_main">
+  <div id="editTpl_div">
+  	<div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>{$typename}</div>
+	
+	<div class="form2">
+	<form method="post" action="{:U('/Admin/doEditDocument')}">
+	<input type="hidden" name="id" value="{$id}">
+    <dl class="lineD">
+      <dt>标题：</dt>
+      <dd>
+        <input name="name" type="text" value="{$name}"> *
+	  </dd>
+    </dl>
+    <dl class="">
+      <dt>文档简介：</dt>
+      <dd>
+      	<textarea name="intro" id="intro" style="width:780px;height:200px">{$intro}</textarea>
+	  </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>学校归类：</dt>
+      <dd id="school">        
+	  </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>文档分类：</dt>
+      <dd id="pid">        
+	  </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>星级评分：</dt>
+      <dd>
+<select name="rate" id="rate"><option value="0" <eq name="rate" value="0">selected</eq> >0</option><option value="1" <eq name="rate" value="1">selected</eq> >1</option><option value="2" <eq name="rate" value="2">selected</eq> >2</option><option value="3" <eq name="rate" value="3">selected</eq> >3</option><option value="4" <eq name="rate" value="4">selected</eq> >4</option><option value="5" <eq name="rate" value="5">selected</eq> >5</option></select>
+	  </dd>
+    </dl>
+	    <dl class="lineD">
+	      <dt>售价：</dt>
+	      <dd>
+					<select name="credit" id="credit"><option value="0" <eq name="credit" value="0">selected</eq> >0</option><option value="1" <eq name="credit" value="1">selected</eq> >1</option><option value="2" <eq name="credit" value="2">selected</eq> >2</option><option value="5" <eq name="credit" value="5">selected</eq> >5</option><option value="8" <eq name="credit" value="8">selected</eq> >8</option><option value="10" <eq name="credit" value="10">selected</eq> >10</option><option value="20" <eq name="credit" value="20">selected</eq> >20</option></select>
+		  </dd>
+	    </dl>
+		    <dl class="lineD">
+		      <dt>权限：</dt>
+		      <dd>
+		<select name="privacy" id="privacy"><option value="0"  <eq name="privacy" value="0">selected</eq> >主人可见</option><option value="1" <eq name="privacy" value="1">selected</eq>>所有人可见</option></select>
+			  </dd>
+		    </dl>	
+	    <dl class="lineD">
+	      <dt>下载次数：</dt>
+	      <dd>
+	        <input name="downloadCount" type="text" value="{$downloadCount}"> *
+		  </dd>
+	    </dl>
+	    <dl class="lineD">
+	      <dt>浏览次数：</dt>
+	      <dd>
+	        <input name="readCount" type="text" value="{$readCount}"> *
+		  </dd>
+	    </dl>		
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+</div>
+<script>
+
+$(document).ready(function(){
+
+		var category_json = {:getCategorySelect(0, 2)};
+		$("#pid").json2select(category_json,'{$cid0}','cid');
+
+		var category_json2 = {:getSchoolSelect(0)};
+		$("#school").json2select(category_json2,'{$schoolid}','school');
+	
+
+});
+</script>
+<include file="_footer" />

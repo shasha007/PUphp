@@ -1,0 +1,13 @@
+<include file="_header" />
+
+<div class="member_c">
+    <div class="member_menu b">{$orga.title}</div>
+    <div class="member_back"><a href="{:U('/Backend/editOrga',array('id'=>$eventId))}">编辑修改</a></div>
+    <div class="member_add">
+        <div style="width: 244px; padding-left: 250px;">
+            {$orga.content|htmlspecialchars_decode}
+        </div>
+    </div>
+</div>
+
+<include file="_footer" />

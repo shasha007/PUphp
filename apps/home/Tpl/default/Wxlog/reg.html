@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>注册</title>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ajaxfileupload.js"></script>
+<link href="__PUBLIC__/login/css/reg.css?20150901" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="bg">
+ <div class="reg_title f16 b tcenter">个人信息填写</div>
+ <div class="clear"></div>
+ <div class="main">
+  <div class="reg_con">
+   <!--错误提示框开始-->
+  <!--<div class="reg_tip tcenter f14">
+   <div class="reg_tiptext">请注意信息不能为空哟!</div>
+   <div class="reg_tipbtn"><a href="#">知道了</a></div>
+  </div>-->
+  <!--错误提示框结束-->
+<!--   <form method="post" action="{:U('home/Wxlog/doreg')}" enctype="multipart/form-data"> -->
+  <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>学校</div>
+   <div class="reg_fill"><input id = 'user_school' name="user_school" type="text" class="reg_input" /><input id="sid" type="hidden" name="sid" value=""></div>
+   <div class="reg_error" id = 'school_error' style="display:none;">学校填写有误</div>
+   <div class="reg_slist">
+    
+   </div>
+   <div class="clear"></div>
+   <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>年级</div><select name="grade" id = 'grade' class="reg_select"><option>2011级</option><option>2012级</option><option>2013级</option><option>2014级</option><option>2015级</option></select>
+  </div>
+  <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>学号</div>
+   <div class="reg_fill"><input name="user_no" type="text" id = 'user_no' class="reg_input"  placeholder="请输入学号" />
+   <!--信息填写有误时返回的错误信息-->
+   <div class="reg_error" style="display:none;">学号填写有误</div>
+   </div>
+  </div>
+  <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>真实姓名</div>
+   <div class="reg_fill"><input name="user_name" id = 'user_name' type="text" class="reg_input" placeholder="请输入姓名" /></div>
+  </div>
+  <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>专业</div>
+   <div class="reg_fill"><input name="user_major" id = 'user_major' type="text" class="reg_input" placeholder="请输入专业" /></div>
+  </div>
+  <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>院系</div>
+   <div class="reg_fill">
+   <select name="xueyuan" id = 'xueyuan' class="reg_select"><option>--请选择--</option></select>
+   </div>
+  </div>
+   <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>密码</div>
+   <div class="reg_fill"><input name="user_password" type="password" id = 'user_password' class="reg_input" placeholder="请输入密码" />
+   <div class="reg_error" style="display:none;">密码填写有误</div></div>
+  </div>
+  <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>常用邮箱</div>
+   <div class="reg_fill"><input name="user_mail" type="text" id = 'user_mail' class="reg_input" placeholder="请输入邮箱" />
+   <div class="reg_error" style="display:none;">邮箱填写有误</div></div>
+  </div>
+  <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>手机号码</div>
+   <div class="reg_fill"><input name="user_tel" id = 'user_tel' type="text" class="reg_input" placeholder="请输入手机号码" />
+   <div class="reg_error" style="display:none;">手机号码填写有误</div></div>
+  </div>
+  <div class="reg_infor i1 f14">
+   <div class="reg_key"><span class="red">*</span>上传证件</div>
+   <div class="reg_fill"><input name="photo" id = 'photo' type="file" class="reg_upload" value="请上传学生证照片"  placeholder="123"  />
+   <div class="reg_error" style="display:none;">照片上传有误</div></div>
+  </div>
+  <div class="reg_infor i3">
+  <div class="reg_key i2">请上传学生证照片</div>
+  </div>
+  </div>
+   <div class="clear"></div>
+  <div class="reg_infor i1 f14">
+   <input type="submit" class="reg_btn" value="提交" />
+  </div>
+<!--  </form> -->
+  </div>
+ </div>
+</div>
+</body>
+<script type = 'text/javascript'>
+
+	//设置一个全局标识变量
+	$flag = '0';
+
+	//用户输入时动态匹配学校
+	$('#user_school').on('input onchange',function(){
+		var html = '';
+		var $val = $(this).val();
+		$.get("{:U('home/Wxlog/getSchool')}",{school:$val},function(data){
+			$('.reg_slist').html('');
+			html += '<ul>';
+			$.each(data.data,function(i,row){
+				var vo = row['title'];
+				var id = row['id'];
+				html += "<li data_id = '"+id+"' data_name = '"+vo+"'>"+vo+"</li>";
+			})
+			html += '</ul>';
+			$('.reg_slist').html(html);
+		},'json');
+	})
+	
+	//用户输入时获取焦点,自动匹配
+	$('#user_school').on('focus',function(){
+		var html = '';
+		var $val = $(this).val();
+		$.get("{:U('home/Wxlog/getSchool')}",{school:$val},function(data){
+			$('.reg_slist').html('');
+			html += '<ul>';
+			$.each(data.data,function(i,row){
+				var vo = row['title'];
+				var id = row['id'];
+				html += "<li data_id = '"+id+"' data_name = '"+vo+"'>"+vo+"</li>";
+			})
+			html += '</ul>';
+			$('.reg_slist').html(html);
+		},'json');
+	})
+	
+	
+	//用户点击匹配内容时，自动更新到input表单中，同时更新学院内容
+	$('.reg_slist').on('click','li',function(){
+		var $title = $(this).attr('data_name');
+		var $id = $(this).attr('data_id');
+		var html = '';
+		$('#user_school').val($title);
+		$('#sid').val($id);
+		$.get("{:U('home/Wxlog/getXueyuan')}",{sid:$id},function(data){
+			$('#xueyuan').html('');
+			$.each(data.data,function(i,row){
+				var vo = row['title'];
+				var id = row['id'];
+				html += "<option value = '"+id+"' data_name = '"+vo+"'>"+vo+"</option>";
+			})
+			$('#xueyuan').html(html);
+			$('.reg_slist').html('');
+			$flag = '1';                              //标识改变值
+		},'json');
+	})
+	
+	
+	
+	//用户输入时失去焦点，将匹配内容清除，再做判断
+	$('#user_school').on('blur',function(){
+		
+		var $val = $(this).val();
+		setTimeout(function(){
+			if($flag == '0'){                                 //判断有没有执行点击事件
+				$('.reg_slist').html('');
+				$.get("{:U('home/Wxlog/judgeSchool')}",{title:$val},function(data){
+					
+						//var $title = data.data.title;
+						var $title = $val;
+						var $id = data.data.id;
+						var html = '';
+						$('#user_school').val($title);
+						$('#sid').val($id);
+						$.get("{:U('home/Wxlog/getXueyuan')}",{sid:$id},function(data){
+							//$('#xueyuan').html('');
+							$.each(data.data,function(i,row){
+								var vo = row['title'];
+								var id = row['id'];
+								html += "<option data_id = '"+id+"' data_name = '"+vo+"'>"+vo+"</option>";
+							})
+							$('#xueyuan').html(html);
+							
+						},'json');
+					
+				},'json')
+			}else{
+				$flag = '0';                           //恢复标识值
+			}
+		},500)
+	}) 
+	
+	
+	
+</script>
+
+<script>
+	
+$('.reg_btn').click(function(){
+	
+	
+    $user_school = $('#user_school').val();
+    $xueyuan = $('#xueyuan').val();
+    $user_no = $('#user_no').val();
+    $user_name = $('#user_name').val();
+    $user_major = $('#user_major').val();
+    $grade = $('#grade').val();
+    $user_tel = $('#user_tel').val();
+    $user_mail = $('#user_mail').val();
+    $user_password = $('#user_password').val();
+    $sid = $('#sid').val();
+    
+	
+	if($('#photo').val().length > 0){
+		 $.ajaxFileUpload
+         (
+             {
+                 url: 'index.php?app=home&mod=Wxlog&act=doreg&user_school='+$user_school+'&xueyuan='+$xueyuan+'&user_no='+$user_no+'&user_name='+$user_name+'&user_major='+$user_major+'&grade='+$grade+'&user_tel='+$user_tel+'&user_mail='+$user_mail+'&user_password='+$user_password+'&sid='+$sid+'', //用于文件上传的服务器端请求地址
+                 type: 'get',
+                 secureuri: false, //一般设置为false
+                 fileElementId: 'photo', //文件上传空间的id属性  <input type="file" id="file" name="file" />
+                 dataType: 'json', //返回值类型 一般设置为json
+                 success : function(data){
+                	 if(data.data == 'success'){
+                		 window.location.href="{:U('home/Wxlog/regsuccess')}";
+                	 }else{
+                		 alert(data.data);
+                	 }
+                 }
+             }
+         )
+	}else{
+		alert('请选择图片');
+	}
+	
+})
+
+
+
+	
+	
+</script>
+
+
+
+
+</html>

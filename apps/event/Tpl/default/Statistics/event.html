@@ -1,0 +1,68 @@
+<include file="../Teacher/_header" />
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+</script>
+<div class="so_main">
+    <include file="_tab" />
+
+    <div class="Toolbar_inbox">
+        活动数据导出
+    </div>
+
+    <div class="list">
+        <table id="blog_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr overstyle='on'>
+                <th>项目</th>
+                <th>选项</th>
+                <th>操作</th>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/eventYearDetail')}">
+                    <td>1、各年级活动明细</td>
+                    <td>月份&nbsp;&nbsp;<input type="text" name="mon" />&nbsp;&nbsp;
+                        格式2014-12</td>
+                    <td>
+                        <input type="submit" value="导出" />
+                    </td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/eventOrgSum')}">
+                    <td>2、各组织部门活动数</td>
+                    <td>月份&nbsp;&nbsp;<input type="text" name="mon" />&nbsp;&nbsp;
+                        格式2014-12</td>
+                    <td><input type="submit" value="导出"></td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/eventDetail')}">
+                    <td>3、活动明细</td>
+                    <td>月份&nbsp;&nbsp;<input type="text" name="mon" />&nbsp;&nbsp;
+                        格式2014-12</td>
+                    <td>
+                        <input type="submit" value="导出" />
+                    </td>
+                </form>
+            </tr>
+            <tr overstyle='on'>
+                <form method="post" action="{:U('event/Statistics/eventSum')}">
+                    <td>4、活动总数</td>
+                    <td></td>
+                    <td><input type="submit" value="导出"></td>
+                </form>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<include file="../Teacher/_footer" />

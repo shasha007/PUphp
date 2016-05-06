@@ -1,0 +1,97 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+    <form method="post" action="{:U('home/Denounce/feedExcel')}" onsubmit="return excel();">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+           <a href="{:U('home/Denounce/feedback',array('state'=>1))}" class="btn_a"><span<?php if($_GET['state']==1)echo '  class="cRed"';?>>未处理反馈</span></a>
+           <a href="{:U('home/Denounce/feedback',array('state'=>2))}" class="btn_a"><span<?php if($_GET['state']==2)echo '  class="cRed"';?>>已处理反馈</span></a>
+           <a href="{:U('home/Denounce/feedback')}" class="btn_a"><span<?php if(!$_GET['state'])echo '  class="cRed"';?>>所有反馈</span></a>
+        <input type="submit" value="[导出excel]"/>
+        月份<input size="10" type='text' id='mon' name='mon' value="">格式2014-12
+    </form>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l">ID</th>
+                <th class="line_l">反馈人</th>
+                <th class="line_l">联系方式</th>
+                <th class="line_l">反馈内容</th>
+                <th class="line_l">反馈时间</th>
+                <th class="line_l">处理状态</th>
+                <th class="line_l">聊天记录</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td><space uid="vo.uid" >{realname}</space></td>
+                    <td>{$vo.contact}</td>
+                    <td><a href="javascript:void(0);" onclick="detail('{$vo['content']}')">{$vo.content|msubstr=###,0,20}</a></td>
+                    <td>{$vo.ctime|friendlyDate}</td>
+                    <td id="finish{$vo.id}"><?php if($vo['fid']):?>{$vo.fid|getUserRealName} {$vo.rtime|friendlyDate}<?php else:?>
+                        <a href="javascript:void(0);" onclick="finish('{$vo.id}')">[设为已处理]</a><?php endif;?></td>
+                    <td><?php if($vo['fid']):?><a href="javascript:void(0);" onclick="talkMessage('{$vo.fid}','{$vo.uid}')">查看聊天记录</a><?php endif;?></td>
+                    <td><a href="javascript:void(0);" onclick="deleteRecord('{$vo.id}')">删除</a> </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+
+    </div>
+</div>
+<script>
+    function excel(){
+        if($('#mon').val() == ''){
+            alert('请输入月份');
+            $('#mon').focus();
+            return false;
+        }
+        return true;
+    }
+    function detail(content){
+        ui.box.show('<div style="width:300px;height:200px;">'+content+'</div>',{title:'反馈内容'});
+    }
+    function talkMessage(uid,toid){
+        ui.box.load( '__URL__&act=talkMessage&uid='+uid+'&toid='+toid,{title:'修改礼品领取地点'});
+    }
+    function deleteRecord(ids) {
+        if(ids=='') {
+            ui.error('请先选择一个反馈');
+            return ;
+        }
+        if(confirm('您将删除1条反馈记录，确定继续？')) {
+            $.post("{:U('home/Denounce/doDeleteFeedBack')}",{ids:ids},function(res){
+                if(res=='1') {
+                    ui.success('删除成功');
+                    $('#list_'+ids).remove();
+                }else {
+                    ui.error('删除失败');
+                }
+            });
+        }
+    }
+    function finish(ids) {
+        if(ids=='') {
+            ui.error('请先选择一个反馈');
+            return ;
+        }
+        if(confirm('您将反馈记录设为已处理，确定继续？')) {
+            $.post("{:U('home/Denounce/doFinishFeedBack')}",{ids:ids},function(res){
+                var json=$.parseJSON(res);
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                    var myDate = new Date();
+                    $('#finish'+ids).html(json.realname+' '+myDate.getHours()+':'+myDate.getMinutes());
+                }else{;
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+</script>
+<include file="_footer" />

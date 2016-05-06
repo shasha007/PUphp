@@ -1,0 +1,38 @@
+<div class="list add">
+    <form ENCTYPE="multipart/form-data" action="__URL__&act=doaddFund" method="post">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>*合作企业(全称)：</td>
+                <td><input type="text" name='fullname'></td>
+            </tr>
+             <tr>
+                <td>*投放资金：</td>
+                <td><input type="text" name='putfund'></td>
+            </tr>
+            <tr>
+                <td>*实际到帐资金：</td>
+                <td><input type="text" name='actualfund'></td>
+            </tr>
+            <tr>
+                <td>*投放时间：</td>
+                <td><input type="text" name='puttime' id='puttime' class="p_input2" onfocus="rcalendar(this,'dateonly');"></td>
+            </tr>
+            <tr>
+                <td>*资金到帐时间：</td>
+                <td><input type="text" name='actualtime' id='actualtime' class="p_input2" onfocus="rcalendar(this,'dateonly');"></td>
+            </tr>
+            <tr>
+                <td>*合作时间：</td>
+                <td><input type="text" name='ctime' id='ctime' class="p_input2" onfocus="rcalendar(this,'dateonly');"> ~ <input type="text" name='endtime' id='sTime' class="p_input2" onfocus="rcalendar(this,'dateonly');"></td>
+            </tr>
+             <tr>
+                <td>公司logo：</td>
+                <td><input name="pic" TYPE="file"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value='确认'></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<include file="__THEME__/comm/_datepicker" />

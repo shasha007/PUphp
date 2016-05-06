@@ -1,0 +1,41 @@
+<include file="_header" />
+<div class="kdl_mobile_page">
+  <div class="kdl_mobile_header f18 bold tcenter">订单详情</div>
+  <a href="{:U('shop/PocketShop/myList')}"><div class="m_back"></div></a>
+  <div class="clear"></div>
+  <div class="m_hr1"></div>
+  <if condition="$list['status'] eq 0">
+      <div class="m_state f16 fw mc2">审核中</div>
+  <elseif condition="$list['status'] eq 4"/>
+      <div class="m_state f16 fw">交易成功</div>
+
+  <elseif condition="$list['status'] eq 2"/>
+      <div class="m_state f16 fw">已驳回</div>
+  <else/>
+      <div class="m_state f16 fw mc1">分期中</div>
+  </if>
+  <div class="m_cdate fw f16">{$list.ctime|date="Y-m-d",###}</div><!--此处时间为用户创建订单时间-->
+  <div class="clear"></div>
+<div class="m_username">收货人：{$addressList.name}&nbsp; {$addressList.tel}<br>身份证号：{$addressList.identity}<br>收货地址：{$addressList.address}</div>
+<div class="clear"></div>
+<div class="m_c_infor">
+ <div class="m_c_infor_thumb"><img src="{$goodsList.pic|tsMakeThumbUp=###,200,200,'c'}"></div>
+ <div class="m_c_infor_desc">
+  <div class="m_c_infor_t f14">{$goodsList.name}</div>
+  <div class="m_c_infor_price">{$list.color}</div>
+  <div class="m_c_infor_price">￥{$goodsList.price}</div>
+ </div>
+</div>
+<div class="clear"></div>
+
+
+<if condition="$list['status'] eq 2">
+ <div class="m_c_infor_note m_color1 f14">驳回原因：{$list.reason}</div>
+ <a href="__URL__&act=delGoodsOrder&id={$list.id}"><div class="m_c_buy f18 fw">删除订单</div></a>
+<elseif condition="$list['status'] eq 4 || $list['status'] eq 0 "/>
+   <a href="__URL__&act=delGoodsOrder&id={$list.id}"><div class="m_c_buy f18 fw">删除订单</div></a>
+<else/>
+<div class="m_c_infor_note">*该商品价格以及月供金额以电话确定审核后为准</div>
+</if>
+<div class="kdl_mobile_page">
+<include file="_footer" />

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} - PocketUni
+</neq>
+    培训 - PocketUni
+</title>
+<include file="__THEME__/comm/_main" />
+<link href="../Public/css/train.css?201404162" type="text/css" rel="stylesheet" />
+<include file="__THEME__/comm/_app" />
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var APPNAME         =   '{$ts._app}';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+</head>
+<body>
+    <include file="__THEME__/_holder_2014" />
+    <div class="bg" style="padding-top: 10px;">
+        <div class="main">
+            <div class="t_header">
+                <div class="t_logo"><a href="{:U('train/Index/index')}"><img src="../Public/images/t_logo.gif" alt="PU 培训" /></a></div>
+                <div class="clear"></div>
+                <div class="t_menu center">
+                    <div class="t_mlist f14 fw">
+                        <ul>
+                            <li <?php if(ACTION_NAME=='index')echo'class="cur1"';?>><a href="{:U('train/Index/index')}">所有培训</a></li>
+                            <li class="m1 <?php if(ACTION_NAME=='collect')echo'cur1';?>"><a href="{:U('train/Index/collect')}">我收藏的</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="t_con">

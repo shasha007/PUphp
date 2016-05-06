@@ -1,0 +1,228 @@
+<include file="../Lesson/_header" /> 
+<div class="content">
+    <div class="c_left">
+        <div class="c_fl">
+            <div class="c_fl_menu l_30 b f_14">编辑课程活动</div>
+            <div class="p_style b f_14">编辑课程活动
+            </div>
+            <div class="publish">
+                <form  method='post' action="{:U('event/LessonActive/doEditCourse',array('id'=>$id))}" enctype="multipart/form-data" onsubmit="return checkCourseActive();">
+                    <table width="500" border="0" cellspacing="0" cellpadding="0" id="jun_1">
+                        <tr>
+                            <td width="15"><span class="red">*</span></td>
+                            <td width="100">课程活动名称：</td>
+                            <td width="5"></td>
+                            <td width="380"><input name="title" id="title2"  type="text" class="p_input1" value="{$title}" /></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程活动简介：</td>
+                            <td></td>
+                            <td><textarea id='info2' name="description" style="width:300px;height:100px;border:1px solid #ccc;" onKeyUp="gbcount(this,200);">{$description}</textarea>
+                                <span  id='remain' style='color:green;'>200</span><span style='color:green;'>/200字</span>  
+                            </td>                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程活动地点：</td>
+                            <td></td>
+                            <td><input name="address" type="text" class="p_input2" id="address2" value='{$address}'/> </td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>课程活动分类：</td>
+                            <td></td>
+                            <td>
+                                <select name="typeId" class="p_select"  id="type2">
+                                    <option value="0" selected>请选择活动分类</option>
+                                    <?php foreach($type as $k=>$v){ ?>
+                                    <option value="{$k}" <php>if( $k == $typeId ) {echo "selected";}</php>>{$v}</option>
+                                    <?php } ?>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程活动经费：</td>
+                            <td></td>
+                            <td>
+                                <select name="cost" id="cost" class="text">
+                                    <option value="0">免费</option>
+                                    <option value="1">AA制</option>
+                                    <option value="2">50元以下</option>
+                                    <option value="3">50-200元</option>
+                                    <option value="4">200-500元</option>
+                                    <option value="5">500-1000元</option>
+                                    <option value="6">1000元以上</option>
+                                </select>
+                                <script type="text/javascript" charset="utf-8">
+                                    $( "#cost option[value='{$cost}']" ).attr( 'selected',true );
+                                </script>
+                                资费说明：<input name="costExplain" type="text" class="p_input2" value="{$costExplain}" /></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程活动时间</td>
+                            <td></td>
+                            <td>
+                                <input name="sTime" id="sTime2" type="text" class="p_input3" onfocus="rcalendar(this,'full');" readonly  value="<?php echo date( 'Y-m-d H:i:s',$sTime ); ?>"/>
+                                --
+                                <input name="eTime" id="eTime2" type="text" class="p_input3" onfocus="rcalendar(this,'full');" readonly  value="<?php echo date( 'Y-m-d H:i:s',$eTime ); ?>"/>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>截止报名：</td>
+                            <td></td>
+                            <td><input name="deadline" type="text" class="p_input3"  id="deadline2" onfocus="rcalendar(this,'full');" readonly  value="<?php echo date( 'Y-m-d H:i:s',$deadline ); ?>"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>课程活动人数：</td>
+                            <td></td>
+                            <td><input name="count" type="text" class="p_input3" value="{$limitCount}"/> 课程活动人数上限 设0表示无限制</td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课时：</td>
+                            <td></td>
+                            <td><input name="credit" type="text" class="p_input3" value="{$credit}" id="cre2"/></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red">*</span></td>
+                            <td>课程活动图片：</td>
+                            <td></td>
+
+                            <td>
+                        <if condition="$logoId">
+                            <img src="{$logoId|getCover}" style="width:100px;height:100px;" id="img">
+                                <input name="hide"  type="hidden" id="imgt" value='1'/>
+                        </if>
+                        <input name="logo"  type="file"/>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>（尺寸为125*125，用于课程活动列表图片）</td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>联系方式:</td>
+                            <td></td>
+                            <td><input name="contact" id="contact" type="text" class="p_input2" value="{$contact}" maxlength="30"/>
+                                填写联系人电话，如：张小姐，1346665XXXX</td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td height="6"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>课程活动选项：</td>
+                            <td></td>
+                            <td>
+                                <label><input name="need_tel" type="checkbox" value=""  <?php if($need_tel)echo 'checked'?> /> 课程活动参加人员需要手机号</label>
+                                <label> <input name="allow" type="checkbox" value=""  <?php if($allow)echo 'checked'?> /> 课程活动参加人员需要审批</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="60"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><input name="fabu" type="submit" class="p_btn2" value="发起课程活动" /></td>
+                        </tr>
+                    </table>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="c_right">
+        <include file="../Lesson/_right" />
+    </div>
+   <script>
+    $(function(){
+        gbcount('#info2',200);
+    });
+</script>
+    <include file="../Lesson/_footer" />
+    <include file="__THEME__/comm/_datepicker" />

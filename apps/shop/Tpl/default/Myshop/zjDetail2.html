@@ -1,0 +1,33 @@
+<include file="_header" />
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">奖品详情</div>
+            <div class="good_confirm">
+                <div class="m_prize mt10">
+                    <div class="m_ptitle center b f14">{$name}</div>
+                    <div class="m_pintro mt20 m_color4"><span class="b clr6">简介：</span>{$description}</div>
+                    <div class="m_pstyle mt20 center">
+                        <table width="600" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="b">
+                                <td width="180">类型</td>
+                                <td width="270">来源</td>
+                                <td width="150">获奖时间</td>
+                            </tr>
+                            <tr>
+                                <td>{$typeName}</td>
+                                <td>{$zjfrom}</td>
+                                <td>{$ctime|friendlyDate}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="m_pdesc mt10 ml15">
+                        {$content}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="../Public/_footer" />

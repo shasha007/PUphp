@@ -1,0 +1,42 @@
+<include file="header" />
+<div name="top">PocketUni课程规划</div>
+<div class="pl5 m5">
+    <a href="{:U('wap/School/kc')}">课 程</a>
+    <a href="{:U('wap/School/hd')}">课程活动</a>
+    &nbsp;{$user.uname|getShort=###,4,''}
+    <a href="{:U('wap/SchoolPublic/logout')}">退出</a>
+</div>
+<div class="nav">课程分类：</div>
+<div class="userinfo">
+    我的课程：<a  <?php if($_SESSION['lesson_searchCat']['cat']=='')echo' class="f_s b"';?> href="{:U('wap/School/kc',array('cat'=>'all'))}">全部</a>
+    &nbsp;&nbsp; <a <?php if($_SESSION['lesson_searchCat']['cat']=='join')echo' class="f_s b"';?> href="{:U('wap/School/kc',array('cat'=>'join'))}">我报名的课程</a>
+    <br/>
+    分类：<a <?php if(!$_SESSION['lesson_searchCat']['cid'])echo' class="f_s b"';?>
+            href="{:U('wap/School/kc', array('cid'=>'all'))}">全部</a> &nbsp;&nbsp;
+        <?php foreach($type as $k=>$vo):?>
+        <a<?php if($_SESSION['lesson_searchCat']['cid']==$k)echo' class="f_s b"';?>
+            href="{:U('wap/School/kc', array('cid'=>$k))}">{$vo}</a>&nbsp;&nbsp;
+        <?php endforeach;?><br />
+    <form method="post" action="{:U('wap/School/kc')}">
+        输入关键字：<br/>
+        <input type="text" name="sousuo" /><br/>
+        <input type="submit" value="搜课程"/>
+    </form>
+</div>
+<volist name='data' id='vo'>
+<div class="list">
+    <a href="{:U('wap/School/kcDetail', array('id'=>$vo['id']))}">{$vo.title}</a><br />
+    分类：{$vo.type}<br />
+    上课时间：<?php echo date('Y-m-d H:i', $vo['sTime']) . " 至 " . date('Y-m-d H:i', $vo['eTime']) ?><br />
+    报名时间：<?php echo date('Y-m-d H:i', $vo['deadline']) ?> 截止<br />
+    地点：{$vo.address}<br />
+    课时：{$vo.credit}   任课老师：{$vo.teacher}<br />
+    参加人数（{$vo.joinCount}） 剩余名额：{$vo.limitCount}<br />
+</div>
+</volist>
+<include file="page" />
+<div class="nav mt5">
+    <a href="{:U('wap/SchoolPublic/logout')}">退出</a> |
+    <a href="#top">回到顶部</a> |
+</div>
+<include file="footer" />

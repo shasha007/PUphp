@@ -1,0 +1,457 @@
+<include file="../Teacher/_header" />
+
+<script>
+    //搜索用户
+    var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+    function searchObject() {
+        if(isSearchHidden == 1) {
+            $("#searchObject_div").slideDown("fast");
+            $(".searchObject_action").html("搜索完毕");
+            isSearchHidden = 0;
+        }else {
+            $("#searchObject_div").slideUp("fast");
+            $(".searchObject_action").html("搜索活动");
+            isSearchHidden = 1;
+        }
+    }
+
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                alert('请选择要删除的活动！');return false;
+            }
+            if( confirm("是否删除{$ts['app']['app_alias']}？") ){
+                $.post( '__URL__&act=doDeleteEvent',{id:id},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个{$ts['app']['app_alias']}成功" );
+                        var id_list = id.split( ',' );
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove();
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        },
+        transfer:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                alert('请选择要转移的活动！');return false;
+            }
+            ui.box.load('__URL__&act=transferEventTab&id='+id,{title:'活动分类转移'});
+        },
+        activ:function(id){
+            if( confirm( '是否重新激活' ) ){
+                $.post('__URL__&act=doChangeActiv',{id:id},function( text ){
+                    if( text == 1 ){
+                        ui.success( "操作成功" );
+                        $('#deadline'+id).html('<span class="cGreen">进行中...</span>');
+                    }else{alert(text);
+                        ui.error( "设置失败" );
+                    }
+                });
+            }
+        },
+        edit:function(id,act){
+            if( act == 'recommend' ){
+                v= "幻灯";
+                v2 = "取消幻灯";
+                act2 = 'cancel';
+
+            }else{
+                v = "取消幻灯";
+                v2 = "幻灯";
+                act2 = 'recommend';
+            }
+            if( confirm( '是否'+v ) ){
+                $.post('__URL__&act=doChangeIsHot',{id:id,type:act},function( text ){
+                     var json=$.parseJSON(text);
+                  if( json.status == 1 ){
+                        ui.success(json.info);
+                        $('#button'+id).html('<a href="javascript:void(0);" onclick="c.edit('+id+',\''+act2+'\')">'+v2+'</a>');
+                    }else{
+                       ui.error(json.info);
+                    }
+                });
+            }
+        },
+        top:function(id,act){
+            if( act == 'top' ){
+                v = "推荐";
+                v2 = "取消推荐";
+                act2 = 'cancel';
+            }else{
+                v = "取消推荐";
+                v2 = "推荐";
+                act2 = 'top';
+            }
+            if( confirm( '是否'+v ) ){
+                $.post('__URL__&act=doChangeIsTop',{id:id,type:act},function( text ){
+                    var json=$.parseJSON(text);
+                    if( json.status == 1 ){
+                        ui.success(json.info);
+                        $('#top'+id).html('<a href="javascript:void(0);" onclick="c.top('+id+',\''+act2+'\')">'+v2+'</a>');
+                    }else{;
+                        ui.error(json.info);
+                    }
+                });
+            }
+        },
+        pu:function(id,act){
+            if( act == 'top' ){
+                v = "推荐";
+                v2 = "取消推荐";
+                act2 = 'cancel';
+            }else{
+                v = "取消推荐";
+                v2 = "推荐";
+                act2 = 'top';
+            }
+            if( confirm( '是否'+v ) ){
+                $.post('__URL__&act=doChangePuRecomm',{id:id,type:act},function( text ){
+                    var json=$.parseJSON(text);
+                    if( json.status == 1 ){
+                        ui.success(json.info);
+                        $('#pu'+id).html('<a href="javascript:void(0);" onclick="c.pu('+id+',\''+act2+'\')">'+v2+'</a>');
+                    }else{;
+                        ui.error(json.info);
+                    }
+                });
+            }
+        }
+    }
+    var c = null;
+    function showEvent(id){
+        ui.box.load( '{:U('event/Event/event')}' + '&id=' + id,{title:'活动详情'});
+    }
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<div class="so_main">
+    <include file="_tab" />
+
+    <div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+        <div class="page_tit">搜索{$ts['app']['app_alias']} [ <a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+        <div class="form2">
+            <form action="__URL__&act=SpecialEvenLlist" method="POST">
+                <input type="hidden" name="isSearch" value="1"/>
+                <php>if($isSearch != '1') $uid = '';</php>
+                <dl class="lineD">
+                    <dt>{$ts['app']['app_alias']}标题：</dt>
+                    <dd>
+                        <input name="title" class="txt" value="{$title}" /><span> 支持模糊查询。</span>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>院系：</dt>
+                    <dd>
+                        <input type="text" id="selectarea" class="text" value="" readonly="true" OnFocus="selectSchool()" />
+                        <input type="hidden" id="current" name="sid1"/>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>{$ts['app']['app_alias']}类别：</dt>
+                    <dd>
+                        <select name="typeId">
+                            <option value="">全部</option>
+                            <php>foreach($searchType as $k=>$t){</php>
+                            <option value="{$k}">{$t}</option>
+                            <php>}</php>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>{$ts['app']['app_alias']}状态：</dt>
+                    <dd>
+                        <select name="status">
+                            <option value="">全部</option>
+                            <option value="0" <eq name="status" value="0"> selected</eq>>待初审</option>
+                            <option value="1"  <eq name="status" value="1"> selected</eq>>待终审</option>
+                            <option value="2"  <eq name="status" value="2"> selected</eq>>进行中</option>
+                            <option value="3"  <eq name="status" value="3"> selected</eq>>完结待审核</option>
+                            <option value="4"  <eq name="status" value="4"> selected</eq>>完结被驳回</option>
+                            <option value="5"  <eq name="status" value="5"> selected</eq>>已完结</option>
+                            <option value="6"  <eq name="status" value="6"> selected</eq>>活动被驳回</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>活动标签：</dt>
+                    <dd>
+                        <select name="tagId">
+                            <option value="">全部</option>
+                            <php>foreach($taglist as $v){</php>
+                            <option value="{$v.id}" <?php if($tid==$v['id']){echo 'selected';}?>>{$v.title}</option>
+                            <php>}</php>
+                        </select>
+                    </dd>
+                </dl>
+                <?php if($sid=473):?>
+                <dl class="lineD">
+                    <dt>是否PU活动：</dt>
+                    <dd>
+                        <input name="pu" type="radio" value="" <eq name="pu" value="">checked</eq>>全部
+                        <input name="pu" type="radio" value="2" <eq name="pu" value="2">checked</eq>>是
+                        <input name="pu" type="radio" value="0" <eq name="pu" value="0">checked</eq>>否
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>PU推荐：</dt>
+                    <dd>
+                        <input name="puRecomm" type="radio" value="" <eq name="puRecomm" value="">checked</eq>>全部
+                        <input name="puRecomm" type="radio" value="2" <eq name="puRecomm" value="2">checked</eq>>是
+                        <input name="puRecomm" type="radio" value="0" <eq name="puRecomm" value="0">checked</eq>>否
+                    </dd>
+                </dl>
+                <?php endif;?>
+                <dl class="lineD">
+                    <dt>推荐：</dt>
+                    <dd>
+                        <input name="isTop" type="radio" value="" <eq name="isTop" value="">checked</eq>>全部
+                        <input name="isTop" type="radio" value="1" <eq name="isTop" value="1">checked</eq>>是
+                        <input name="isTop" type="radio" value="0" <eq name="isTop" value="0">checked</eq>>否
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>幻灯：</dt>
+                    <dd>
+                        <input name="isHot" type="radio" value="" <eq name="isHot" value="">checked</eq>>全部
+                        <input name="isHot" type="radio" value="1" <eq name="isHot" value="1">checked</eq>>是
+                        <input name="isHot" type="radio" value="0" <eq name="isHot" value="0">checked</eq>>否
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>发表时间：</dt>
+                    <dd>
+                        <div class="c2">
+                            <input name="sTime" type="text" class="text" id="sTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />-
+                            <input name="eTime" type="text" class="text" id="eTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
+                        </div>
+                        <div class="c"></div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>结果排序：</dt>
+                    <dd>
+                        <select name="sorder">
+                            <option value = "cTime">时间排序</option>
+                            <option value = "id">发布id排序</option>
+                        </select>
+                        <select name="eorder">
+                            <option value = "DESC">降序</option>
+                            <option value = "ASC" >升序</option>
+                        </select>
+                        <select name="limit">
+                            <option value = "10">每页显示10条</option>
+                            <option value = "20">每页显示20条</option>
+                            <option value = "30">每页显示30条</option>
+                            <option value = "100">每页显示100条</option>
+                        </select>
+                    </dd>
+                </dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th width="30%">{$ts['app']['app_alias']}标题</th>
+                <th>活动标签</th>
+                <th>专题类型</th>
+                <th>发起者</th>
+                <th>参与</th>
+                <th>{$webconfig.cradit_name}</th>
+                <th>活动积分</th>
+                <th>发起时间</th>
+                <th>状态</th>
+                <th>初审人</th>
+                <th>终审人</th>
+                 <?php if($rights['can_admin'] == 1||$rights['can_event2']==1): ?>
+                <th>推荐</th>
+                <th>幻灯</th>
+                 <?php endif;?>
+                 <?php if($canPuRecomm): ?>
+                    <th>PU推荐</th>
+                 <?php endif;?>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><?php if($vo['is_prov_event']==2):?><span class="cOrg">【PU活动】</span><?php endif;?>
+                        <a href="{:U('/Author/index', array('id'=>$vo['id']))}" target="_blank">{$vo['title']}</a> <span class="cGray2 type_{$vo.id}">[{$type_list[$vo['typeId']]}]</span>
+                        <?php if($vo['onlineTime']):?><br/>定时上线：<span class="cRed">{$vo['onlineTime']|friendlyDate}</span><?php endif;?>
+                    </td>
+                    <td>{$vo.tag}</td>
+                    <td>{$series[$vo['es_type']]}</td>
+                    <td>{$vo.uid|getUserRealName}</td>
+                    <td>{$vo['joinCount']}</td>
+                    <td>{$vo['credit']}</td>
+                    <td>{$vo['score']}</td>
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <td id="deadline{$vo['id']}">
+                        <?php if($vo['school_audit'] == 0): ?>
+                        <span class="cBlue">待初级审核</span>
+                        <?php elseif($vo['school_audit'] == 1): ?>
+                        <span class="cRed">待终极审核</span>
+                        <?php elseif($vo['school_audit'] == 2): ?>
+                            <?php if($vo['status']): ?>
+                                <span class="cGreen">进行中...</span>
+                            <?php else: ?>
+                                <span class="cRed">未上线</span>
+                            <?php endif;?>
+                        <?php elseif($vo['school_audit'] == 3): ?>
+                        <span class="cRed">完结待审核</span>
+                        <?php elseif($vo['school_audit'] == 4): ?>
+                        <span class="cGreen">完结被驳回</span>
+                        <?php elseif($vo['school_audit'] == 5): ?>
+                        <span class="cGray2">已完结</span>
+                        <?php elseif($vo['school_audit'] == 6): ?>
+                        <span class="cGray2">活动被驳回</span>
+                        <?php endif;?>
+                    </td>
+                    <td>{$vo.audit_uid|getUserRealName}</td>
+                    <td>{$vo.audit_uid2|getUserRealName}</td>
+                 <?php if($rights['can_admin'] == 1||$rights['can_event2']==1): ?>
+                    <td>
+                        <?php if($vo['status'] == 1): ?>
+                <php>
+                    if( $vo['isTop'] ){
+                    $button = '取消推荐';
+                    $act    = 'cancel';
+                    }else{
+                    $button = '推荐';
+                    $act    = 'top';
+                    }
+                </php>
+                <span id="top{$vo['id']}" ><a href="javascript:void(0);" onclick="c.top({$vo['id']},'{$act}')">{$button}</a></span>
+                <?php endif; ?>
+                </td>
+                <td>
+                    <?php if($vo['status'] == 1): ?>
+                <php>
+                    if( $vo['isHot'] ){
+                    $button = '取消幻灯';
+                    $act    = 'cancel';
+                    }else{
+                    $button = '幻灯';
+                    $act    = 'recommend';
+                    }
+                </php>
+                <span id="button{$vo['id']}" ><a href="javascript:void(0);" onclick="c.edit({$vo['id']},'{$act}')">{$button}</a></span>
+                <?php endif; ?>
+                </td>
+                <?php endif; ?>
+<?php if($canPuRecomm): ?>
+                <td>
+                    <?php if($vo['status'] == 1): ?>
+                <php>
+                    if( $vo['puRecomm'] ){
+                    $button = '取消推荐';
+                    $act    = 'cancel';
+                    }else{
+                    $button = '推荐';
+                    $act    = 'top';
+                    }
+                </php>
+                <span id="pu{$vo['id']}" ><a href="javascript:void(0);" onclick="c.pu({$vo['id']},'{$act}')">{$button}</a></span>
+                    <?php endif; ?>
+                </td>
+<?php endif; ?>
+                <td>
+                    <?php if($vo['is_prov_event'] || $vo['is_school_event']==0):?>
+                    <a href="{:U('/Author/editProv', array('id'=>$vo['id']))}" target="_blank">编辑活动</a>
+                    <?php else: ?>
+                        <?php if($rights['can_admin'] || $vo['school_audit'] != 5):?>
+                        <a href="{:U('/Event/editEvent', array('id'=>$vo['id']))}">编辑</a>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+                    <?php if($school['id']==659 && $_SESSION['ThinkSNSAdmin'] == '1'):?>
+                        <a href="javascript:void(0);" onclick="joinAll({$vo['id']})">全体报名</a>
+                    <?php endif; ?>
+                    <?php if($vo['school_audit'] == 5): ?>
+                        <a href="javascript:void(0)" onclick="bufa({$vo['id']})">补发积分</a>
+                    <?php endif; ?>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+</div>
+<include file="../Teacher/_footer" />
+<script type="text/javascript">
+    $( function(){
+        $( "select[name='typeId']" ).val("{$typeId}");
+        $( "select[name='sorder']" ).val("{$sorder}");
+        $( "select[name='eorder']" ).val("{$eorder}");
+        $( "select[name='limit']" ).val("{$limit}");
+    });
+    c = new ctrl();
+    var sid = {$editSid};
+    function selectSchool(){
+        var typevalue = $("#current").val();
+        ui.box.load(U('event/School/school')+'&selected='+typevalue+'&sid='+sid,{title:'选择学校',noCheck:'yes'});
+    }
+    function joinAll(id){
+        if( confirm( '是否给本校全体成员报名该活动？' ) ){
+            ui.box.show('处理中。。。请勿关闭浏览器 ',{title:'处理中...',closeable:false});
+            $.post('__URL__&act=allJoin',{id:id},function( text ){
+                var json=$.parseJSON(text);
+                ui.box.close();
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+    function bufa(id){
+        if( confirm( '是否补发积分学分？已发放的不会重复发放' ) ){
+            $.post('__URL__&act=bufa',{id:id},function( text ){
+                var json=$.parseJSON(text);
+                if( json.status == 1 ){
+                    ui.success(json.info);
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+</script>

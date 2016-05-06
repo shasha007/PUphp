@@ -1,0 +1,74 @@
+<include file="_header" />
+
+<div class="so_main">
+  <include file="_tab" />
+  <div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>选手</div>
+  <div class="form2">
+<form action="{:U('/Admin/doEditUser')}" enctype="multipart/form-data" method="post">
+    <table cellpadding=3 cellspacing=3>
+    <tr>
+        <td align="right"><span style="color: #F00">*</span>编号：</td>
+        <td align="left"><input type="text" name="num" value="{$holdUser.num}" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right"><span style="color: #F00">*</span>姓名：</td>
+        <td align="left"><input type="text" name="realname" value="{$holdUser.realname}" />
+        </td>
+    </tr>
+    <if condition="$holdUser">
+    <tr>
+        <td align="right">照片：</td>
+        <td align="left">
+            <img width="100" height="100" src="{$holdUser.path|realityImageURL}">
+        	<input name="id" value="{$holdUser.id}" type="hidden">
+        </td>
+    </tr>
+    </if>
+    <tr>
+        <td align="right">上传图片：</td>
+        <td align="left">
+        <input name="files[]" id="face" type="file"><br />
+        <span style="color:#666;font-size:10px;"> 建议图片大小：160像素x200像素</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">性别：</td>
+        <td align="left">
+        <label><input name="sex" type="radio" value="1" <eq name="user['sex']" value="1">checked</eq> >男</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><input name="sex" type="radio" value="0" <php>if(!isset($holdUser) || $holdUser['sex']==0){</php>checked<php>}</php> >女</label>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">票数：</td>
+        <td align="left"><input type="text" name="ticket" value="{$holdUser.ticket}" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">成绩：</td>
+        <td align="left"><input type="text" name="note" value="{$holdUser.note}" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">学校：</td>
+        <td align="left"><input type="text" name="school" value="{$holdUser.school}" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">学院：</td>
+        <td align="left"><input type="text" name="college" value="{$holdUser.college}" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">评委点评：</td>
+        <td align="left"><textarea rows="3" cols="80" name="comment">{$holdUser.comment}</textarea>
+        </td>
+    </tr>
+    </table>
+    <div class="page_btm">
+        <input type="submit" class="btn_b" value="确定">
+    </div>
+</form>
+  </div>
+  </div>
+<include file="_footer" />

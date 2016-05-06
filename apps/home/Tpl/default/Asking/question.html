@@ -1,0 +1,112 @@
+        <div class="layer_vote">
+            <ul id="list_vote" class="list_vote lineS_btm">
+                <li>
+                    <label>问答问题:</label>
+                    <div class="c1"><input id="title" name="" type="text" class="txt_vote"/></div>
+                </li>
+                <!--候选项-->
+                <div id="opt_list"  class="lineS_top pt10 mt10">
+                    <php>for($i=1;$i<=4;$i++){</php>
+                    <dl>
+                        <label class="vote_num">选项:</label>
+                        <div class="c1">
+                        <input name="" type="text" class="txt_vote vote_opt"/>
+                            <!--<a href="javascript:void(0)" class="vote_delete hover del" onclick="delList(this)"></a>-->
+                        </div>
+                        <div class="c"></div>
+                    </dl>
+                    <php>}</php>
+                </div>
+                <li>
+                    <label><font color="red">问答答案:</font></label>
+                    <div class="c1"><input id="answer" name="answer" type="text" class="txt_vote"/></div>
+                </li>
+            </ul>
+            <div class="c"></div>
+        <!--begin设置新选项-->
+        <!--end设置新选项-->
+            </div>
+        <div class="page_btm">
+            <input type="button" class="btn_b" value="提交" onclick="check_vote()"/>
+        </div>
+<script>
+    function delList(o){
+        $(o).parent().parent().remove();
+    }
+    var num_limit = 20;
+    function moreList(){
+        var new_vote = $($('#opt_list').children().get(0)).clone();
+        var flag = $('#opt_list').children('dl').size();
+        if( num_limit <= flag ){
+            $(obj).parent().parent().hide();
+            return;
+        }
+
+        new_vote.children( 'span' ).html( "op"+flag+":" );
+        new_vote.find( 'input' ).val( '' );
+        new_vote.show();
+        $( '#opt_list' ).append( new_vote );
+    }
+    function check_vote(){
+        var title = $.trim($("#title").val());
+        var answer = $.trim($("#answer").val());
+        var data ={};
+        data.id = "<?php echo($id);?>";
+        if(!title){
+            ui.error("问卷问题不能为空！");
+            return false;
+        }
+        if(getLength(title) >255){
+            ui.error("问卷问题长度不大于255个字符");
+            return false;
+        }
+        var flag = 0;
+        $(".vote_opt").each(function (i) {
+            if($.trim($(this).val())) flag++;
+        })
+        if(flag<4){
+            ui.error("最少填写4个选项");
+            return false;
+        }
+        var type = 0;
+        if( type > flag-1 ){
+            var optLimit = parseInt(type)+1;
+            ui.error("最少填写"+optLimit+"个选项") ;
+            return false;
+        }
+        data.opt =[];
+        data.title = $('#title').val();
+        if(answer == '')
+        {
+            ui.error("答案必须输入");
+            return false;
+        }
+        data.answer = answer;
+        var mustReturn = false;
+        $(".vote_opt").each(function(i){
+            data.opt[i] = $.trim($(this).val());
+            if(getLength(data.opt[i]) > 100){
+                ui.error("候选项名称不能大于100个字符");//选项最多20个字符
+                mustReturn = true;
+                return false;
+            }
+            if(data.opt[i] == '' || getLength(data.opt[i].replace(/\s+/g,"")) == 0){
+                ui.error("请填写完整候选项内容");
+                mustReturn = true;
+                return false;
+            }
+        });
+
+        if(mustReturn) return;
+        $.post(U('home/Asking/doAddQuestion'),data,function(res){
+            var json =$.parseJSON(res);
+            if (json.status ==0) {
+                ui.error(json.info);
+            }else{
+                ui.success('添加成功');
+                ui.box.close();
+                window.location.reload();
+            }
+        });
+    }
+</script>

@@ -1,0 +1,109 @@
+<include file="_header" />
+<div class="hd_c">
+<div class="hd_c_left">
+    <?php if($jyrcOut):?>
+        <include file="_searchSimp" />
+    <?php else:?>
+        <include file="_search" />
+    <?php endif;?>
+    <ul>
+        <volist name="data" id="vo">
+        <li>
+            <div class="hd_c_left_thumb">
+                <a href="{:U('/Front/index', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}" target="_blank"><img src="{$vo['cover']}" /></a>
+            </div>
+            <div class="hd_c_left_infor">
+                <div class="hd_c_left_title b<?php if($vo['isTop'])echo' up'?>">
+                    <a href="{:U('/Front/index', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}" target="_blank">{$vo['title']}</a>
+                </div>
+                <div class="hd_c_left_class"><a href="{:U('/School/board', array('cid'=>$vo['typeId']) )}">[{$vo['type']}]</a></div>
+                <div class="hd_c_left_time"><span class="black">活动时间：</span>{$vo['time']}</div>
+                <div class="hd_c_left_author"><span class="black">归属组织：</span>{$vo.sid|getEventOrga}
+                    <?php if($vo['gid']):?> &nbsp;&nbsp;发起组织：{$vo.gid|getGroupName}<?php endif;?>
+                </div>
+                <div class="hd_c_left_school">参加并签到可得 {$webconfig.cradit_name}：{$vo.credit} 活动积分：{$vo.score}</div>
+                <div class="hd_c_left_count">
+                    <?php if($vo['uid'] == $mid) echo "待审人数（".$vo['verifyCount']."）";?> 参加人数（{$vo['joinCount']}）
+                </div>
+                <div class="hd_c_left_jf">
+                    评分:<span class="jf_note" id="note{$vo['id']}"><?php if($vo['noteUser'] == 0):?>暂无<?php else:?>{$vo['note']}<?php endif;?></span>
+                    (已有<span id="noteNum{$vo['id']}">{$vo['noteUser']}</span>人评分)
+                    <?php if($vo['school_audit']!=0 && $vo['school_audit']!=1 && $vo['school_audit']!=5 && !$vo['hasNoted']):?>
+                    <span class="hd_c_left_select" id="noteSelect{$vo['id']}">
+                        <select onchange="doNote({$vo['id']},this)">
+                            <option selected="" value="0">请评分</option>
+                            <option value="5">5分，非常好</option>
+                            <option value="4">4分，挺好</option>
+                            <option value="3">3分，还行</option>
+                            <option value="2">2分，一般</option>
+                            <option value="1">1分，太烂了</option>
+                        </select>
+                    </span>
+                    <?php endif;?>
+                 </div>
+            </div>
+            <div class="hd_c_left_btn">
+                <ul>
+                    <?php if($vo['status']==0): ?>
+                        <?php if($vo['school_audit']==1): ?>
+                            <li class="i3">等待终审</li>
+                        <?php elseif($vo['school_audit']==6):?>
+                            <li class="i3">被驳回</li>
+                        <?php else:?>
+                            <li class="i3">等待初审</li>
+                        <?php endif;?>
+                    <?php elseif($vo['school_audit']==5): ?>
+                        <li class="i4">活动已完结</li>
+                    <?php elseif($vo['eTime']<=time()): ?>
+                        <li class="i4">活动已结束</li>
+                    <?php elseif($vo['startline']>time()): ?>
+                        <li class="i4">报名未开始</li>
+                    <?php elseif($vo['deadline']<time()): ?>
+                        <li class="i4">报名已结束</li>
+                    <?php else: ?>
+                        <span class="list_joinIn_{$vo['id']}">
+                            <?php if( $vo['canJoin'] || !$mid): ?>
+                                <?php if( $vo['limitCount'] >0 ): ?>
+                                    <?php if($smid): ?>
+                                    <li><a href="{:U('/Front/join',array('id'=>$vo['id']))}" target="_blank">我要参加</a></li>
+                                    <?php else: ?>
+                                    <li><a href="javascript:void(0);" onclick="ui.error('请先登录!')">我要参加</a></li>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                <li class="i3">名额已满</li>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <?php if($vo['hasMember'] != 1): ?>
+                                    <li class="i3"><a href="javascript:EventDelAction( {$vo['id']} )">取消申请</a></li>
+                                <?php else: ?>
+                                    <li class="i3"><a href="javascript:EventDelAction( {$vo['id']} )">取消参加</a></li>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </span>
+                    <?php endif; ?>
+
+                    <?php if($vo['admin']){ ?>
+                        <li class="i5"><a href="{:U('/Author/index', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">管理活动</a></li>
+                    <?php } ?>
+                    <?php if($vo['admin']): ?>
+                        <?php if($vo['school_audit']==2 && $vo['eTime']<=time()): ?>
+                            <li class="i5"><a href="{:U('/Author/finish', array('id'=>$vo['id']))}">申请完结</a></li>
+                        <?php elseif($vo['school_audit']==3): ?>
+                            <li class="i3">完结审核中</li>
+                        <?php elseif($vo['school_audit']==4): ?>
+                            <li class="i5"><a href="{:U('/Author/finish', array('id'=>$vo['id']))}">完结被驳回</a></li>
+                        <?php elseif($vo['school_audit']==5): ?>
+                            <li class="i3">完结通过</li>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </li>
+        </volist>
+    </ul>
+    <div class="page">{$html}</div>
+</div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

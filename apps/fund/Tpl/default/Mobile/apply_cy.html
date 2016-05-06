@@ -1,0 +1,84 @@
+<include file="_header" />
+<div class="bg">
+    <div class="main mt10">
+        <div class="f_bidcon_title b mt10">创业基金申请表</div>
+        <div class="rule_enter"><a href="http://pocketuni.net/apps/zt/fund_rule_c.html">申请规则</a></div>
+        <?php if($msg):?>
+        <div class="f_bidcon_title b mt10 fund_key i2">（{$msg}）</div>
+        <?php endif;?>
+        <form onsubmit="return fund_apply();" ENCTYPE="multipart/form-data" method="POST" action="__URL__&act=doapplyCy">
+            <div class="mb50">
+            <div class="fund_key">申请部落<span class="fund_red">*</span></div>
+            <div class="fund_key">
+                <select id="gid" name="gid" class="fund_select">
+                    <option value="0">-请选择部落-</option>
+                    <?php foreach($group as $v): ?>
+                    <option value="{$v.id}">{$v.name}</option>
+                    <?php endforeach; ?>
+                </select></div>
+            <div class="fund_key">项目名称<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" class="fund_input" id="title" name="title" /></div>
+            <div class="fund_key">负责人联系方式<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" class="fund_input" id="mobile" name="mobile" /></div>
+            <div class="fund_key">合伙人姓名（可填多个）<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" class="fund_input" id="partner" name="partner" /></div>
+            <div class="fund_key">合伙人联系方式（可填多个）<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" class="fund_input" id="partnerContact" name="partnerContact" /></div>
+            <div class="fund_key">需求资金（1-50000元）<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" class="fund_input" id="needMoney" name="needMoney" onkeyup="clearNoNum2(this)" /></div>
+            <div class="fund_key">资金使用周期（1-12月）<span class="fund_red">*</span></div>
+            <div class="fund_key"><input type="text" class="fund_input" id="period" name="period" onkeyup="clearNoNum2(this)" /></div>
+            <div class="fund_key">上传附件（项目计划书）</div>
+            <div class="fund_key"><input type="file" class="fund_upload" id="attach" name="attach" /></div>
+            <div class="fund_key i2"></div>
+            </div>
+            <div class="fund_btnline">
+                <input name="tj1" type="submit" class="fund_fullbtn b f14" value="确认申请" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    //提交JS验证
+    function fund_apply(){
+        var isTrue = true;
+        var formId = ['#gid','#title','#mobile','#partner','#partnerContact','#needMoney','#period'];
+        var formError = ['请选择申请部落','请填写项目名称','请填写负责人联系方式','请填写合伙人姓名','请填写合伙人联系方式','请填写需求资金','请填写资金使用周期'];
+        $.each(formId,function(i,v) {
+            var checkInput = $(v).val();
+            if(v=='#needMoney'){
+                if(checkInput<1 || checkInput>50000){
+                    isTrue = false;
+                    alert('需求资金（1 - 50000元）');
+                    $(v).focus();
+                    return false;
+               }
+            }
+            if(v=='#period'){
+                if(checkInput<1 || checkInput>12){
+                    isTrue = false;
+                    alert('资金使用周期（1 - 12月）');
+                    $(v).focus();
+                    return false;
+               }
+            }
+            if(v!='#gid'){
+                checkInput = checkInput.length;
+            }
+            if(checkInput ==0){
+                isTrue = false;
+                alert(formError[i]);
+                $(v).focus();
+                return false;
+            }
+        });
+        if(isTrue){
+            return true;
+        }
+        return false;
+    }
+    function clearNoNum2(obj){
+        obj.value = obj.value.replace(/[^\d]/g,"");  //清除“数字”以外的字符
+     }
+</script>
+<include file="_footer" />

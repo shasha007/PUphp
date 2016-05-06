@@ -1,0 +1,28 @@
+<include file="_header" />
+<div class="so_main"><include file="_tab" />
+<div class="form2">
+<form method="post" action="{:U('group/Admin/android')}">
+
+	<dl class="uploadFile">
+		<dt>最新Android客户端版本：</dt>
+		<dd><input type="text" name="androidVersion"
+			value="{$setting['androidVersion']}"> </dd>
+	</dl>
+	<dl class="uploadFile">
+		<dt>客户端下载地址：</dt>
+		<dd><input type="text" name="androidUrl"
+                           value="{$setting['androidUrl']}" size="50"> </dd>
+	</dl>
+	<dl>
+		<dt>更新信息：</dt>
+		<dd><textarea name="info" cols="50" rows="10">{$setting['info']}</textarea> </dd>
+	</dl>
+
+
+<div class="page_btm"><input type="hidden" name="editSubmit"
+	value="1"> <input type="submit" class="btn_b" value="确定" /></div>
+</form>
+</div>
+</div>
+
+<include file="_footer" />

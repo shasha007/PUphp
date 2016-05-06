@@ -1,0 +1,108 @@
+<include file="_header" />
+<script>
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+    function playFlash(vid){
+        ui.box.load(U('show/index/playFlash')+'&id='+vid,{title:'播放视频'});
+    }
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要删除的视频");
+                return false;
+            }
+            if( confirm("是否删除视频？") ){
+                $.post( '__URL__&act=deleteFlash',{gid:id},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个视频成功" );
+                        var id_list = id.split( ',' );   
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove(); 
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        },
+        edit_tab:function(id){
+            ui.box.load('__URL__&act=addFlash&id='+id,{title:'添加视频'});
+	}
+    }
+    var c = null;
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit">选手：{$showUser.realname} , 编号：{$showUser.num}</div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.edit_tab('{$uid}')"><span>添加视频</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除视频</span></a>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>视频预览图</th>
+                <th>标题</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><a href="javascript:playFlash('{$vo.id}');" title=""><img width="80" height="80" src="{$vo.path|noContentImg}"></a></td>
+                    <td>{$vo.title|getShort=###,70,'…'}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.edit_tab('{$uid}')"><span>添加视频</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除视频</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+    var c = new ctrl();
+</script>
+<include file="_footer" />

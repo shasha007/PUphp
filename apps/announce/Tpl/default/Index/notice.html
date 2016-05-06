@@ -1,0 +1,26 @@
+<include file="_header1" />
+<div class="pu_gg">
+    <div class="pu_gg_title b f16 red">公告活动</div>
+    <div id="pu_gg">
+        <div class="pu_gg_list1">
+            <ul>
+                <li <eq name="k" value=""> class='hover' </eq> ><a href="{:U('announce/Index/notice')}">全 部</a></li>
+                <li  <eq name="k" value="1"> class='hover' </eq> ><a href="{:U('announce/Index/notice', array('k'=>1))}">公 告</a></li>
+                <li <eq name="k" value="2">  class='hover'</eq> ><a href="{:U('announce/Index/notice', array('k'=>2))}">活 动</a></li>
+            </ul>
+        </div>
+        <div id="con_pu_gg_1" class="pu_gg_list">
+            <ul class="link">
+                <volist name='data' id="vo">
+                    <li>
+                        <div class="pu_gg_f">[ {$vo.front} ]</div>
+                        <div class="pu_gg_t"><a href="{:U('announce/Index/noticeDetail', array('id'=>$vo['id']))}"> {$vo.title|getShort=###,70,'…'}</a></div>
+                        <div class="pu_gg_date c9">{$vo.cTime}</div>
+                    </li>
+                </volist>
+            </ul>
+            <div class="page right">{$html}</div>
+        </div>
+    </div>
+</div>
+<include file="../Public/_footer" />

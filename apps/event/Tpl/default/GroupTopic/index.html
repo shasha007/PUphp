@@ -1,0 +1,124 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<script>
+    var get_checked_id = function()
+    {
+        var ids = new Array();
+        $.each($('#posts_list input:checked'), function(i, n){
+            var id = $(n).val();
+            if (id > 0) {
+                ids.push( id );
+            }
+        });
+        return ids;
+    }
+
+    var check_all_post = function(e)
+    {
+        var $post_list_input = $('#posts_list input[name="topic_id[]"]');
+        if( e.checked == true ){
+            $post_list_input.attr('checked','true');
+        }else{
+            $post_list_input.removeAttr('checked');
+        }
+    }
+
+    var admin_set = function(op)
+    {
+        var tids = get_checked_id();
+        if (tids == '') {
+            ui.error('请选择帖子');
+            return false;
+        }
+        if (op == 'del' && !confirm('删除后无法恢复, 确认删除?'))
+            return false;
+
+        $.ajax({
+            type: "POST",
+            url:  "__URL__&{:C('VAR_ACTION')}="+op,
+            data: 'gid=<?php echo $gid; ?>&tid=' + tids + '&type=thread&ajax=1',
+            dataType:"json",
+            success: function(data)
+            {
+                // 取消勾选
+                $.each($('#posts_list input:checked'), function(i, n){
+                    $(n).removeAttr('checked');
+                });
+
+                if (data.flag == 1) {
+                    ui.success(data.msg);
+                    tids = tids.toString().split(',');
+                    switch (op) {
+                        case 'del':
+                            for (i = 0 ; i < tids.length ; i++) {
+                                $('#posts_list input[name="topic_id[]"][value="' + tids[i] + '"]').parent().parent().remove();
+                            }
+                            break;
+                        default:
+                            setTimeout(function(){location.reload();},1000);
+                            break;
+                    }
+                } else {
+                    ui.error(data.msg);
+                }
+            }
+        });
+    }
+</script>
+<div class="clear"></div>
+<div class="clear"></div>
+
+<div class="st_s_submenu ml10 mt10 b c3 f14">帖子列表</div>
+<div class="st_search mt10">
+    <form method="post">
+        <input name="k"  value="{$search_key}" type="text" class="st_s_input" placeholder="输入关键字" />
+        <input name="st_s_search" type="submit" class="st_s_btn b f14" value="搜 索" />
+    </form>
+</div>
+
+<div class="clear"></div>
+ <if condition="$search_key">
+  <div class="st_s_count mt10 ml20 h30">找到 <span style="color:red;">{$search_key}</span> 相关结果约：({$count})条</div>
+<else/>
+  <div class="st_s_count mt10 ml20 h30">共{$count}条帖子</div>
+ </if>
+<div class="st_s_fb h30 b f14 mt10 mr20"><a href="{:U('event/GroupTopic/add', array('gid'=>$gid))}"">发 帖</a></div>
+<div class="st_list1 ml10 mt10">
+    <ul  id="posts_list">
+        <php>if ($data) {</php>
+        <li class="h24 ce8 st_b2">
+            <div class="st_ls1_t ml10">标题</div>
+            <div class="st_ls1_la">浏览</div>
+            <div class="st_ls1_la">回复</div>
+            <div class="st_ls1_zz">作者</div>
+            <div class="st_ls1_time">回复时间</div>
+        </li>
+        <volist name='data' id='vo'>
+            <li class="h30 mt5">
+                <div class="st_ls1_t ml10 st_link">
+                    <input name="topic_id[]" type="checkbox" value="{$vo.id}" />
+                        <php>if($vo['top']){</php><span style="padding:0 3px;" title="置顶"><img src="../Public/images/icon_top.png" /></span><php>}</php>
+                    <a href="{:U('event/GroupTopic/topic', array('gid'=>$gid,'tid'=>$vo['id']))}">{$vo.title}</a>
+                </div>
+                <div class="st_ls1_la">{$vo.viewcount}</div>
+                <div class="st_ls1_la">{$vo.replycount}</div>
+                <div class="st_ls1_zz st_link"><a href="{:U('home/Space/index', array('uid'=>$vo['uid']))}" target="blank">{$vo.uid|getUserRealName}</a></div>
+                <div class="st_ls1_time">{$vo['replytime']|friendlyDate}</div>
+            </li>
+        </volist>
+
+    </ul>
+    <if condition="$isadmin">
+        <div class="st_select ml10 mt10 st_link h30">
+            <label> <input type="checkbox" value="" onclick="check_all_post(this)" />全选</label>&nbsp;&nbsp;
+            <a href="javascript:;" onclick="admin_set('del');">删除</a>&nbsp;&nbsp;
+            <a href="javascript:;" onclick="admin_set('top');">置顶</a> /
+            <a href="javascript:;" onclick="admin_set('untop');">取消置顶</a>&nbsp;&nbsp;
+        </div>
+    </if>
+    <div class="page">{$html}</div>
+    <php>}</php>
+</div>
+</div>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

@@ -1,0 +1,15 @@
+   <div class="fund_left">
+       <div class="fund_left_menu b f14 lh26 c1">申请/审核动态 </div>
+       <div class="fund_left_back"><a href="{:U('fund/Index/index')}"/>返回&gt;&gt;</a></div>
+    <div class="fund_newslist mt10">
+     <ul>
+       <volist name="data" id="vo">
+       <li>
+        <div class="fund_newslist_title1 f14">{$vo.stateName}{$vo.fund}元，用于活动（“{$vo.eventName}”）</div>
+        <div class="fund_newslist_date c9">{$vo['cTime'] | friendlyDate}</div>
+       </li>
+       </volist>
+     </ul>
+     <div class="fund_page">{$html}</div>
+    </div>
+   </div>

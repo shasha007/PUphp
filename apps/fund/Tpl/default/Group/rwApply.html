@@ -1,0 +1,50 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <include file="_rw_tab" />
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <include file="_rwApply_tab" />
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>ID</th>
+                <th>任务名称</th>
+                <th>投放企业</th>
+                <th>部落</th>
+                <th>学校</th>
+                <th>申领人</th>
+                <th>状态</th>
+                <th>申请日期</th>
+                <th>附件</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.company}</td>
+                    <td>{$vo.gname}</td>
+                    <td>{$vo.sid|tsGetSchoolName}</td>
+                    <td>{$vo.uid|getUserRealname}</td>
+                    <td>{$vo.statusName}</td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td>{$vo.attachId|getAttachHtml2}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="rwDetail({$vo.id});">详情</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+<include file="_footer" />
+
+<script>
+    function rwDetail(id){
+        ui.box.load('__URL__&act=rwDetail&id='+id,{title:'申请详情'});
+    }
+</script>

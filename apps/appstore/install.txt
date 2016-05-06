@@ -1,0 +1,10 @@
+#
+# ThinkSNS - 应用市场 安装说明
+#
+
+
+
+access.inc.php中增加
+'document/Index/index'		=> true, // 文库首页
+'appstore/Index/index'		=> true, // 应用首页		
+'newcomer/Index/*'		=> true, // 迎新首页

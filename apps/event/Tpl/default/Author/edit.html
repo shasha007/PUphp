@@ -1,0 +1,347 @@
+<include file="_header" />
+<include file="__THEME__/comm/_datepicker" />
+<div class="intro_c">
+    <div class="news_add">
+        <lt name="school_audit" value="1">
+        <form method="post" action="{:U('/Author/doEditEvent',array('id'=>$id))}" onsubmit="return check();">
+            <table width="800" border="0" cellspacing="0" cellpadding="0" class="editEvent">
+                <tr>
+                    <td width="15"><span class="red">*</span></td>
+                    <td width="80">活动名称：</td>
+                    <td width="10"></td>
+                    <td width="495"><input name="title" id="title" type="text" class="p_input1" maxlength="30" value="{$title}"/></td>
+                </tr>
+                <tr>
+                    <td width="15"><span class="red">*</span></td>
+                    <td width="80">活动简介：</td>
+                    <td width="10"></td>
+                    <td width="495">
+                        <textarea id='textarea' name="description" style="width:300px;height:100px;border:1px solid #ccc;" onKeyDown="gbcount(this,250);" onKeyUp="gbcount(this.form.description,200);">{$description}</textarea>
+                        <span  id='remain' style='color:green;'>250</span><span style='color:green;'>/250字</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动地点：</td>
+                    <td></td>
+                    <td><input name="address" id="address" type="text" class="p_input2"  maxlength="30" value='{$address}'/></td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动分类：</td>
+                    <td></td>
+                    <td>
+                        <select name="typeId" id="type" class="text" onchange="changeType(this)">
+                            <option value="0">请选择活动分类</option>
+                            <?php foreach($type as $k=>$cate): ?>
+                            <option value="{$k}" pid="<?php if($cate['pid']>0):?>{$cate.pid}<?php else:?>{$k}<?php endif?>"
+                                    banner="{$cate.banner}">{$cate.name}</option>
+                            <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>参加费用：</td>
+                <td></td>
+                <td>
+                    <select name="cost" id="cost" class="text">
+                        <option value="0">免费</option>
+                        <option value="1">AA制</option>
+                        <option value="2">50元以下</option>
+                        <option value="3">50-200元</option>
+                        <option value="4">200-500元</option>
+                        <option value="5">500-1000元</option>
+                        <option value="6">1000元以上</option>
+                    </select>
+                    费用说明：<input name="costExplain" type="text" class="p_input2"  maxlength="30" value="{$costExplain}"/>
+                    <script type="text/javascript" charset="utf-8">
+                        $( "#cost option[value='{$cost}']" ).attr( 'selected',true );
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>活动时间</td>
+                <td></td>
+                <td>
+                    <input name="sTime" id="sTime" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly value="<?php echo date( 'Y-m-d H:i:s',$sTime ); ?>"/>
+                    --
+                    <input name="eTime" id="eTime" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly value="<?php echo date( 'Y-m-d H:i:s',$eTime ); ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>报名起止：</td>
+                <td></td>
+                <td>
+                    <input name="startline" id="startline" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly value="<?php if($startline>0){echo date( 'Y-m-d H:i:s',$startline );}?>"/>
+                    --
+                    <input name="deadline" id="deadline" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly value="<?php echo date( 'Y-m-d H:i:s',$deadline );?>"/>
+                    小时分钟在弹出时间框底部选择
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>剩余名额：</td>
+                <td></td>
+                <td><input name="limitCount" id="limitCount" type="text" class="p_input3" maxlength="5"
+                           value="<?php echo 5000000 < $limitCount ? 无限制 : $limitCount ?>"/>
+                    剩余名额上限, 填整数或无限制</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>联系方式</td>
+                <td></td>
+                <td><input name="contact" id="contact" type="text" class="p_input1" value="{$contact}" maxlength="30"/>
+                    填写联系人电话，如：张小姐，1346665XXXX</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>活动选项：</td>
+                <td></td>
+                <td>
+                    <label><input  name="allow" id="allow" type="checkbox" value="1" <?php if($allow)echo 'checked'?>/> 报名活动需要审批</label>
+                    <label><input  name="need_tel" id="need_tel" type="checkbox" value="1" <?php if($need_tel)echo 'checked'?>/> 报名活动需填写联系电话</label>
+                    <label><input  name="free_attend" id="need_tel" type="checkbox" value="1" <?php if($free_attend)echo 'checked'?>/>不报名也可签到</label>
+                    <label><input  name="isTicket" id="isTicket" type="checkbox" value="1" <?php if($isTicket)echo 'checked'?>/> 打开投票功能</label>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>活动图标：</td>
+                <td></td>
+                <td>
+                    <div class="prov_thumblist"><ul id="uploaded_photos1">
+                            <li id="img1" class="prov_link">
+                                <div class="prov_thumb">
+                                    <img style="width:100px;height:100px;" alt="" src="{$coverId|getCover}">
+                                </div><br>
+                                <span><a onclick="delImg(1,1)" href="javascript:void(0)">删除</a></span>
+                            </li>
+                        </ul></div>
+                        <input type="button" value="上传图标" onclick="openUploadImg(1);">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>（尺寸为125*125，支持格式jpg,jpeg,png,gif。用于活动列表图片）</td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>活动海报：</td>
+                <td></td>
+                <td>
+                    <div class="prov_thumblist"><ul id="uploaded_photos2">
+                            <li id="img2" class="prov_link">
+                                <div class="prov_thumb">
+                                    <img style="width:440px;height:100px;" alt="" src="{$logoId|tsGetLogo=###,$typeId,$default_banner}">
+                                </div><br>
+                                <span><a onclick="delImg(2,2)" href="javascript:void(0)">删除</a></span>
+                            </li>
+                        </ul></div>
+                        <input type="button" value="上传海报" onclick="openUploadImg(2);">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>（尺寸为1500*357，支持格式jpg,jpeg,png,gif。活动首页顶部。如果没有，可根据活动分类选择下面一款推荐的默认海报）</td>
+            </tr>
+            <tr>
+                <td height="10"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>推荐海报：<br/><input type="button" value="取消选择" onclick="clearRadio()"/></td>
+                <td></td>
+                <td id="bannerImg">请先选择【活动分类】</td>
+            </tr>
+              <tr>
+                <td height="10"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                 <tr>
+                    <td valign="top"></td>
+                    <td valign="top">上传附件：</td>
+                    <td></td>
+                    <td>
+                        <div id="uploaded_files1">
+                            <neq name="$attachId" value="0">
+                            <div id="attach3" class="attach_span">
+                                <span class="attach_title">{$attach.name}</span>
+                                <a href="javascript:void(0)" onclick="delFile(3,1)">删除</a>
+                            </div>
+                            </neq>
+                        </div>
+                        <input type="button" onclick="openUploadFile(1);" value="上传附件"/>
+                </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="submit" class="p_btn2" value="提交" /></td>
+            </tr>
+        </table>
+<script>
+var imgCount = [0,1,1];
+var imgMax = [0,1,1];
+var fileCount = [0,<?php if($attachId):?>1<?php else:?>0<?php endif;?>];
+var fileMax = [0,1];
+var thumbSizeW = [0,125,1500];
+var thumbSizeH = [0,125,357];
+var showW = [0,100,440];
+var showH = [0,100,100];
+var imgId = 3;
+var attach_type = 'event';
+</script>
+<include file="__THEME__/comm/_upload_file" />
+            <input name="hidden"  type="hidden" value="1"/>
+    </form>
+
+       <else/>
+       <form method="post" action="{:U('/Author/doEditEvent',array('id'=>$id))}" onsubmit="return newCheck();" enctype="multipart/form-data">
+            <table width="800" border="0" cellspacing="0" cellpadding="0" class="editEvent">
+                <tr>
+                    <td width="15"><span class="red">*</span></td>
+                    <td width="80">活动名称：</td>
+                    <td width="10"></td>
+                    <td width="495">{$title}</td>
+                </tr>
+                <tr>
+                    <td width="15"><span class="red">*</span></td>
+                    <td width="80">活动简介：</td>
+                    <td width="10"></td>
+                    <td width="495">
+                      {$description}
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动地点：</td>
+                    <td></td>
+                    <td><input name="address" id="address" type="text" class="p_input2"  maxlength="30" value='{$address}'/></td>
+                </tr>
+                <tr>
+                    <td><span class="red">*</span></td>
+                    <td>活动分类：</td>
+                    <td></td>
+                    <td>
+                        <?php foreach($type as $k=>$cate){ ?>
+                <php>if( $k == $typeId ) {echo $cate['name'];}</php>
+                <?php } ?>
+            </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>参加费用：</td>
+                <td></td>
+                <td>
+                       <if condition="$cost eq 0">免费
+                      <elseif condition="$cost eq 1"/>AA制
+                      <elseif condition="$cost eq 2"/>50元以下
+                      <elseif condition="$cost eq 3"/>50-200元
+                       <elseif condition="$cost eq 4 "/>>200-500元
+                        <elseif condition="$cost eq 5 "/>500-1000元
+                         <elseif condition="$cost eq 6" />1000元以上
+                        </if>
+            &nbsp;  &nbsp;  &nbsp;  &nbsp;
+                    费用说明：{$costExplain}
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>活动时间</td>
+                <td></td>
+                <td>
+                    <input name="sTime" id="sTime" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly value="<?php echo
+date( 'Y-m-d H:i:s',$sTime ); ?>"/>
+                    --
+                    <input name="eTime" id="eTime" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly value="<?php echo
+date( 'Y-m-d H:i:s',$eTime ); ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>报名起止：</td>
+                <td></td>
+                <td><input name="startline" id="startline" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly value="<?php if($startline>0){echo date( 'Y-m-d H:i:s',$startline );}?>"/>
+                    --
+                    <input name="deadline" id="deadline" type="text" class="p_input2" onfocus="rcalendar(this,'full');" readonly value="<?php echo date( 'Y-m-d H:i:s',$deadline );?>"/>
+                    小时分钟在弹出时间框底部选择
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>剩余名额：</td>
+                <td></td>
+                <td><input name="limitCount" id="limitCount" type="text" class="p_input3" onKeyUp="this.value=this.value.replace(/\D/g,'')" maxlength="5"
+                           value="{$limitCount}"/>
+                    剩余名额上限</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>联系方式</td>
+                <td></td>
+                <td>{$contact}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>活动选项：</td>
+                <td></td>
+                <td>
+                    <label><input  name="allow" id="allow" type="checkbox" value="1" <?php if($allow)echo 'checked'?>/> 报名活动需要审批</label>
+                    <label><input  name="need_tel" id="need_tel" type="checkbox" value="1" <?php if($need_tel)echo 'checked'?>/> 报名活动需填写联系电话</label>
+                    <label><input  name="free_attend" id="need_tel" type="checkbox" value="1" <?php if($free_attend)echo 'checked'?>/>不报名也可签到</label>
+                    <label><input  name="isTicket" id="isTicket" type="checkbox" value="1" <?php if($isTicket)echo 'checked'?>/> 打开投票功能</label>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>活动图标：</td>
+                <td></td>
+                <td><img src="{$coverId|getCover}" style="width:100px;height:100px;" alt="" />
+                </td>
+            </tr>
+            <tr>
+                <td><span class="red">*</span></td>
+                <td>活动海报：</td>
+                <td></td>
+                <td>
+            <img src="{$logoId|tsGetLogo=###,$typeId,$default_banner}" style="width:440px;height:100px;" />
+            </td>
+            </tr>
+            <tr>
+                <td height="10"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="submit" class="p_btn2" value="提交" /></td>
+            </tr>
+        </table>
+    </form>
+       </lt>
+</div>
+</div>
+<script>
+    $(function(){
+        gbcount('#textarea',200);
+        changeType('#type');
+    });
+</script>
+<script  type="text/javascript" src="../Public/js/editEvent.js?20151211" ></script>
+<include file="_footer" />

@@ -1,0 +1,16 @@
+<include file="../School/_header" />
+<script type="text/javascript" src="../Public/js/group.js?20130928"></script>
+<div class="hd_c">
+<div class="st_c_left">
+    <div class="st_m ml10 mt10">
+        <div class="st_m_menu b f14 c3 h30">校园部落管理</div>
+        <div class="st_m_thumb mt10 ml20"><a href="{:U('event/GroupAnnounce/index', array('gid'=>$gid))}" ><img src="{$groupinfo['logo']|getGroupThumb}" /></a></div>
+        <div class="st_m_t b f14 ml20 c3"><a href="{:U('event/GroupAnnounce/index', array('gid'=>$gid))}" >{$groupinfo['name']}</a></div>
+    </div>
+    <div class="st_m_menu1 ml20 mt20">
+        <ul>
+            <li <eq name="current" value="basic">class='s_cur1'</eq>><a  href="{:U('event/GroupManage/index', array('gid'=>$gid))}">基本信息</a></li>
+            <li <eq name="current" value="memberManage">class='s_cur1'</eq>><a  href="{:U('event/GroupManage/memberManage', array('gid'=>$gid,type=>'manage'))}">成员管理</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>

@@ -1,0 +1,38 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <include file="_act_tab" />
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>活动名称</th>
+                <th>学校</th>
+                <th>承办人</th>
+                <th>承办部落</th>
+                <th>参与人数</th>
+                <th>附件下载</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td>{$vo.eventName}</td>
+                    <td>{$vo.sid|tsGetSchoolName}</td>
+                    <td><a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" target="_blank">{$vo.uid|getUserField=###,'realname'}</a></td>
+                    <td>{$vo.gname}</td>
+                    <td>{$vo.joinCount}</td>
+                    <td>{$vo.endattach|getAttachHtml2}</td>
+                    <td><a href="javascript:void(0);" onclick="finish({$vo.id},{$vo.applyId});">详情</a></td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+<include file="_footer" />
+<script>
+    function finish(id,applyId){
+        ui.box.load("__URL__&act=activityFinish&id="+id+'&applyId='+applyId, {title:'详情'});
+    }
+</script>

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>{$ts['app']['app_alias']} - {$ts['site']['site_name']}管理后台</title>
+<include file="__THEME__/comm/_appadmin" />
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	var $CONFIG = {};
+		$CONFIG['uid'] = _UID_;
+		$CONFIG['mid'] = _MID_;
+		$CONFIG['root_path'] =_ROOT_;
+		$CONFIG['theme_path'] = _THEME_;
+		$CONFIG['public_path'] = _PUBLIC_;
+		$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+		$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+    var bgerr;
+    try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+</script>
+
+</head>
+<body>

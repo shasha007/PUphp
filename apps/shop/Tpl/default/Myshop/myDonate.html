@@ -1,0 +1,83 @@
+<include file="_header" />
+<div class="m_mycon mt10">
+    <include file="left_menu" />
+    <div class="m_myright">
+        <div class="user_yg_r">
+            <div class="user_yg_r_title b f14 c_r_link">我的捐赠</div>
+            <div class="consumer_records1">
+                <div class="good_menu1 center">
+                    <ul>
+                        <li class="g260">爱心商品</li>
+                        <li>分类</li>
+                        <li>价格</li>
+                        <li>状态</li>
+                        <li>操作</li>
+                    </ul>
+                </div>
+                <div class="good_list2">
+                    <ul>
+                        <?php if(empty($data)):?>
+                        <li class="notFound">亲，还没有捐赠记录</li>
+                        <?php else:?>
+                        <volist name="data" id='vo'>
+                            <li>
+                                <div class="good_list2_infor c_r_link">
+                                    <ul class="center">
+                                        <li class="g260">
+                                            <div class="good_list2_thumb"><a href="{:U('shop/Donate/detail',array('id'=>$vo['id']))}"><img src="{$vo['pic']|tsMakeThumbUp=###,70,70}" alt="" /></a></div>
+                                            <div class="good_list2_name">
+                                                <a href="{:U('shop/Donate/detail',array('id'=>$vo['id']))}">{$vo['title']}</a></div>
+                                        </li>
+                                        <li>
+                                        <php>echo $cat[$vo['catId']]['name'];</php>
+                                        </li>
+                                        <li>{$vo.price}元</li>
+                                        <li>
+                                        <if condition="$vo['status'] eq 0">
+                                            <font color="blue">待审核</font>
+                                            <elseif condition="$vo['status'] eq 1"/>
+                                             <font color="red">被驳回</font>
+                                            <else/>
+                                               <font color="green">通过</font>
+                                        </if>
+
+                                        </li>
+                                        <li>
+                                            <neq name="vo['status']" value="2"><a href="{:U('shop/Donate/editDonate',array('id'=>$vo['id']))}">编辑</a><br/></neq>
+                                            <lt name="vo['buyer']" value="1">
+                                            <a href="javascript:void(0)" onClick="del({$vo['id']})">删除</a>
+                                        <else/>
+                                        <?php $buyer=getUserInfo($vo['buyer']);?>
+<a href="{:U('home/Space/index',array('uid'=>$vo['buyer']))}">{$buyer.school}<br/>{$buyer.realname}</a> 购买
+<?php if(!empty($buyer['mobile'])): ?><br/>手机：{$buyer.mobile}<?php endif;?>
+                                        </lt>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </volist>
+                        <?php endif;?>
+                    </ul>
+                    <div class="page">{$html}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function del(id){
+        if(confirm('确定要删除该物品')) {
+            $.post("{:U('shop/Myshop/myDonateDel')}",{id:id},function(res){
+                var json = $.parseJSON(res);
+                if(json.status==1) {
+                    ui.success('删除成功');
+                    location.reload();
+                }else {
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+
+</script>
+<include file="../Public/_footer" />

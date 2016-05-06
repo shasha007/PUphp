@@ -1,0 +1,97 @@
+
+<div class="hd_c_right">
+<div class="g_rank_menu f16 fw">部落排行榜</div>
+<div class="g_rank_submenu1 tcenter f14">
+ <ul>
+  <li class="cur"><a href="#">全省排行</a></li>
+  <li class="ml1"><a href="#">全校排行</a></li>
+ </ul>
+</div>
+<div class="g_rank_submenu2 tcenter f14">
+ <ul>
+  <li class="cur"><a href="#">学生部门</a></li>
+  <li class="ml1"><a href="#">团支部</a></li>
+  <li class="ml1 w99"><a href="#">学生社团</a></li>
+ </ul>
+</div>
+ <div class="g_rank_list">
+  <ul>
+   <li>
+    <div class="g_rank_list_thumb1"><img src="../Public/images/thumb.jpg" /></div>
+    <div class="g_rank_list_title1 fw">创意diy吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>
+   <li>
+    <div class="g_rank_list_thumb2"><img src="../Public/images/thumb.jpg" /></div>
+    <div class="g_rank_list_title2 fw">创意diy吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>
+   <li>
+    <div class="g_rank_list_thumb2"><img src="../Public/images/thumb.jpg" /></div>
+    <div class="g_rank_list_title2 fw">创意diy吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>
+   <li>
+    <div class="g_rank_list_title3">创意diy吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>
+   <li>
+    <div class="g_rank_list_title3">创意diy吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>
+   <li>
+    <div class="g_rank_list_title3">创意diy吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>
+   <li>
+    <div class="g_rank_list_title3">苏州创意diy吧创意大展会吧苏州创意diy吧创意大展会吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>
+   <li>
+    <div class="g_rank_list_title3">创意diy吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>
+ <!--  <li>
+    <div class="g_rank_list_title3">创意diy吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>
+   <li>
+    <div class="g_rank_list_title3">创意diy吧</div>
+    <div class="g_rank_list_school">苏州大学</div>
+   </li>-->
+  </ul>
+  <div class="g_rank_num"></div>
+ </div>
+
+    <div class="hd_c_right_menu i2">最新校园部落</div>
+    <div class="st_r_list1">
+        <ul>
+            <volist  name="new_group_list" id='vo'>
+                <li >
+                    <div class="st_r_l_thumb1"><a href="{:U('/GroupAnnounce/index', array('gid'=>$vo['id']))}" title="{$vo['name']}  |  {$vo['intro']|getShort=###,30,'…'}"><img src="{$vo['logo']|getGroupThumb}" alt="" /></a></div>
+                    <div class="st_r_l_t1 h30"><a href="{:U('/GroupAnnounce/index', array('gid'=>$vo['id']))}" >{$vo.name}</a></div>
+                </li>
+            </volist>
+        </ul>
+    </div>
+  <?php if($smid) :?>
+    <div class="hd_c_right_menu i2">更多应用</div>
+    <div class="c1_list2_sublist">
+        <ul>
+            <volist name="install_app" id="vo">
+                <?php if($vo['app_name'] != 'group'):?>
+                <li>
+                    <a href="{$vo.app_entry}" title="{$vo.description}" class="user_app_link" target="_blank">
+                        <div class="c1_list2_sublist_thumb">
+                            <img width="44px;" height="44px;" src="{$vo.large_icon_url}" alt="" />
+                        </div>
+                        <div class="c1_list2_sublist_title">{$vo.app_alias}</div>
+                    </a>
+                </li>
+                <?php endif;?>
+            </volist>
+        </ul>
+    </div>
+   <?php endif;?>
+</div>
+</div>

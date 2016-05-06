@@ -1,0 +1,50 @@
+<include file="_header" />
+<script type="text/javascript" src="../Public/Js/json2select.js"></script>
+<div class="so_main">
+	
+	<include file="_tab" />
+	
+  <div id="editTpl_div">
+  	<div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>导航</div>
+	
+	<div class="form2">
+	<form method="post" action="{:U('/Admin/doEditDitus')}">
+	<input type="hidden" name="id" value="{$id}">
+    <dl class="lineD">
+      <dt>标题：</dt>
+      <dd>
+        <input name="title" type="text" value="{$title}">
+	  </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>描述：</dt>
+      <dd>
+        <input name="desc" type="text" value="{$desc}">
+	  </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>学校：</dt>
+      <dd id="school">        
+	  </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>排序：</dt>
+      <dd>
+        <input name="sort" type="text" value="{$sort}">
+	  </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+</div>
+<script>
+
+$(document).ready(function(){
+		var category_json = {:getSchoolSelect()};
+		$("#school").json2select(category_json,'{$school}','school');
+});
+</script>
+<include file="_footer" />

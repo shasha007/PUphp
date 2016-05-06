@@ -1,0 +1,25 @@
+<?php foreach($result as $k=>$v){ ?>
+    <li>
+        <div class="container">
+   <img class="img-responsive jiaobiao" src="../Public/images/jiaobiao.png">
+
+            <div class="star-person"  onclick="gouserhome('{$v.uid}')" data-userid="{$v.uid}">
+                <img class="img-responsive " src="<?php echo $v['face']; ?>">
+            </div>
+            <div class="star-school" onclick="gouserhome('{$v.uid}')" data-userid="{$v.uid}">
+                <p><?php echo $v['uname']; ?></p>
+
+                <p class="pull-left"><?php echo $v['title']; ?></p>
+
+                <p class="pull-right"><?php echo $v['year'] ?>级</p>
+            </div>
+
+            <?php if($v['is_friend']>0){ ?>
+                <div class="add-friend-star"style="color: #ccc;border: 1px solid #ccc;" >已添加</div>
+            <?php }elseif($user_id != $v['uid']){ ?>
+                <div id="<?php echo $v['uid']; ?>" class="add-friend-star" style="display:none ;color: #ccc;border: 1px solid #ccc;">已添加</div>
+                <div class="add-friend-star" onclick="mkfriend(<?php echo $v['uid']; ?>)">+好友</div>
+            <?php } ?>
+        </div>
+    </li>
+<?php } ?>

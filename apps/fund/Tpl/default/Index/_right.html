@@ -1,0 +1,55 @@
+<div class="fund_right">
+    <div class="fund_r_menu"></div>
+    <div class="fund_r_c">
+        <div class="fund_r_cmoney tcenter fw b mt20 c1">￥<span id="last_money">{$sponsorRest.last}</span></div>
+        <div class="fund_r_cbtn tcenter mt20 f14"><a href="javascript:void(0)" onclick="select_event()">我要申请</a></div>
+    </div>
+    <div class="fund_r_area mt10">
+        <div class="fund_r_title f14 b c3 lh26">赞助动态</div>
+        <div class="fund_r_more"><a href="{:U('fund/Index/moreDynamic')}&cid=s">更多</a></div>
+        <div class="fund_r_list" id="scrollDiv1">
+            <ul>
+                <volist name="sponsor" id="vo">
+                    <li>
+                        <div class="fund_r_list_thumb"><img src="{$vo.attachId|getImgAttach=###,100,100}" alt="" /></div>
+                        <div class="fund_r_list_desc1">{$vo.company}赞助活动，活动基金<span class="c1">{$vo.actualFund}元</span></div>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+    <div class="fund_r_area mt10">
+        <div class="fund_r_title f14 b c3 lh26">申请/审核动态</div>
+        <div class="fund_r_more"><a href="{:U('fund/Index/moreDynamic')}&cid=c">更多</a></div>
+        <div class="fund_r_list" id="scrollDiv2">
+            <ul>
+                <volist name="applys" id="vo">
+                    <li>
+                        <!--<div class="fund_r_list_desc c2"></div>-->
+                        <div class="fund_r_list_desc">{$vo.stateName}<span class="c1">{$vo.fund}元</span>，{$vo.eventName}</div>
+                    </li>
+                </volist>
+
+            </ul>
+        </div>
+    </div>
+    <div class="fund_r_area mt10">
+        <div class="fund_r_title f14 b c3 lh26">发放动态</div>
+        <div class="fund_r_more"><a href="{:U('fund/Index/moreDynamic')}&cid=f">更多</a></div>
+        <div class="fund_r_list" id="scrollDiv3">
+            <ul>
+                <volist name="sends" id="vo">
+                    <li>
+                        <div class="fund_r_list_desc">【{$vo.eventName}】获得赞助，活动基金<span class="c1">{$vo.audltFund}</span></div>
+                    </li>
+                </volist>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    function select_event(){
+        ui.box.load("__URL__&act=fund_apply", {title:'基金申请'});
+    }
+</script>

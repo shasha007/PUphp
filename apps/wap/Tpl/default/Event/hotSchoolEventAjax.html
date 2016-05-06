@@ -1,0 +1,20 @@
+<foreach name="list" item="vo">
+    <li class="to-event-d" data-eventid="{$vo.id}" >
+        <a class="container" >
+            <div class="event-more-list-l">
+                <img class="img-responsive"
+                     src="{$vo.cover}">
+            </div>
+            <div class="event-more-list-r to-event" data-eventid="">
+                <div class="event-more-flag">
+                    <?php if(!empty($vo['isTop'])){echo '<span>'.$vo['isTop'].'</span>';} ?><?php if(!empty($vo['cName'])){echo '<span>'.$vo['cName'].'</span>';} ?><?php if(!empty($vo['isCredit'])){echo '<span>'.$vo['isCredit'].'</span>';} ?>
+                </div>
+                <p class="event-more-name">{$vo.title|trim=###}</p>
+
+                <p class="event-more-school"><i class="glyphicon glyphicon-user">&emsp13;</i>{$vo.address}</p>
+
+                <p class="event-more-time"><span class="glyphicon glyphicon-time">&emsp13;</span>{$vo.duration}</p>
+            </div>
+        </a>
+    </li>
+</foreach>

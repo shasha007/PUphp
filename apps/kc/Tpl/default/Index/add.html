@@ -1,0 +1,113 @@
+<include file="../Public/_header" />
+
+<form id="newkcFrm">
+    <div class="add">
+    <div class="add_name"><input id="courseName" class="add_input" type="text" placeholder="请输入课程名" name="courseName" maxlength="20"></div>
+    <div class="add_teacher"><input type="text" class="add_input" id="teacher" name="teacher" placeholder="请输入授课老师姓名" maxlength="20"> 可选</div>
+    <div class="add_week">
+        起始周
+        <select onchange="if(parseInt(jQuery(this).next().val())<this.value)jQuery(this).next().val(this.value);"  name="begin" id="begin" class="sr2">
+            <?php for($i=1;$i<=25;$i++):?>
+            <option value="{$i}">{$i}</option>
+            <?php endfor;?>
+        </select>
+        结束周
+        <select onchange="if(parseInt(jQuery(this).next().val())<this.value)jQuery(this).next().val(this.value);"  name="end" id="end" class="sr2">
+            <?php for($i=1;$i<=25;$i++):?>
+            <option value="{$i}" <?php if($i==18)echo 'selected'?>>{$i}</option>
+            <?php endfor;?>
+        </select>
+    </div>
+    <div class="add_title">上课时间  <input type="button" value="添加时间" class="add_btn" onclick="addTime();" /></div>
+    <div id="addTime">
+        <div class="courseTimes">
+        <div class="add_week">
+            <select name="occurs[]" class="sr2 fl">
+                <option value="0">单周</option>
+                <option selected value="1">每周</option>
+                <option value="2">双周</option>
+            </select>
+            <select name="weekdays[]" class="sr2 fl">
+                <option value="1">周一</option>
+                <option value="2">周二</option>
+                <option value="3">周三</option>
+                <option value="4">周四</option>
+                <option value="5">周五</option>
+                <option value="6">周六</option>
+                <option value="0">周日</option>
+            </select>
+            <select name="froms[]" onchange="if(parseInt(jQuery(this).next().next().val())<this.value)jQuery(this).next().next().val(this.value);" class="sr2 fl">
+                <option value="0">第1节</option>
+                <option value="1">第2节</option>
+                <option value="2">第3节</option>
+                <option value="3">第4节</option>
+                <option value="4">第5节</option>
+                <option value="5">第6节</option>
+                <option value="6">第7节</option>
+                <option value="7">第8节</option>
+                <option value="8">第9节</option>
+                <option value="9">第10节</option>
+                <option value="10">第11节</option>
+                <option value="11">第12节</option>
+                <option value="12">第13节</option>
+                <option value="13">第14节</option>
+                <option value="14">第15节</option>
+                <option value="15">第16节</option>
+            </select>
+            <span class="fl">到</span>
+            <select name="tos[]" onchange="if(parseInt(jQuery(this).prev().prev().val())>this.value)jQuery(this).val(jQuery(this).prev().prev().val());" class="sr2 fl">
+                <option value="0">第1节</option>
+                <option value="1">第2节</option>
+                <option value="2">第3节</option>
+                <option value="3">第4节</option>
+                <option value="4">第5节</option>
+                <option value="5">第6节</option>
+                <option value="6">第7节</option>
+                <option value="7">第8节</option>
+                <option value="8">第9节</option>
+                <option value="9">第10节</option>
+                <option value="10">第11节</option>
+                <option value="11">第12节</option>
+                <option value="12">第13节</option>
+                <option value="13">第14节</option>
+                <option value="14">第15节</option>
+                <option value="15">第16节</option>
+            </select>
+            <span class="red"><a href="javascript:;" onclick="removeTime(this);">删除</a></span>
+        </div>
+        <div class="add_place"><input type="text" name="addrs[]" class="add_input" placeholder="请输入上课地点" maxlength="50"> 可选</div>
+    </div>
+</div>
+<div class="add_save"><input name="submit" type="button" value="保存" class="add_btn" onclick="saveCourse();" /></div>
+</div>
+</form>
+<script type="text/javascript">
+    function addTime(){
+        jQuery.get("{:U('kc/Index/timeAjax')}",function(data){
+            jQuery('#addTime').append(data);
+        });
+    }
+    function removeTime(o){
+        jQuery(o).parents(".courseTimes").eq(0).remove();
+    }
+    function saveCourse(){
+        if(jQuery("#courseName").val().replace(/^\s*|\s*$/g, "") == ""){
+            ui.error("请输入课程名");
+            return;
+        }
+        var data=jQuery('#newkcFrm').serialize();
+
+        jQuery.post("{:U('kc/Index/doEdit')}",data,function(d){
+            var json=eval('('+d+')');
+            if( json.status == 1 ){
+                ui.success(json.info);
+                setTimeout(function(){
+                    location.href=" {:U('kc/Index/index')}"},1500);
+            }else{
+                ui.error( json.info );
+            }
+        });
+    }
+</script>
+
+<include file="../Public/_footer" />

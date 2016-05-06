@@ -1,0 +1,263 @@
+<include file="_header" />
+<include file="__THEME__/comm/kindeditor" />
+<div class="so_main">
+    <div id="editTpl_div">
+        <div class="page_tit">添加活动</div>
+        <div class="form2">
+            <form method="post" action="{:U('home/Activity/addActivity')}" enctype="multipart/form-data">
+                <input type='hidden' name='id' value='{$id}'>
+                <dl class="lineD">
+                    <dt>选择活动：</dt>
+                    <dd>
+                        <select name="type">
+                            <option value="turntable" <php>if($data['type']=='turntable')echo 'selected'</php>>大转盘</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>活动标题：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="title" type="text" value="{$data.title}">
+                    </dd>
+                </dl>
+				<php>if($id==''){</php>
+
+                <dl class="lineD  adx" id="jun">
+                    <dt>地区学校：</dt>
+                    <dd>
+                        <select name="area[]" onChange="getSchools(this)">
+                            <option value="0" >全部</option>
+                            <volist name="citys" id="vo">
+                                <option value="{$vo['id']}" >{$vo.city}</option>
+                            </volist>
+                        </select>
+                        <span style="display:none;">
+                            学校
+                        </span>
+                    </dd>
+                </dl>
+                <php>}else{</php>
+	                <neq name='area' value="">
+	                <volist name="area" id="area">
+	                    <dl class="lineD  adx" id="jun">
+	                        <dt>投放地区：</dt>
+	                        <dd>
+	                            <select name="area[]" onChange="getSchools(this)">
+	                                <option value="0" >全部</option>
+	                                <volist name="citys" id="vo">
+	                                    <option value="{$vo['id']}" <eq name="vo['id']" value="$area['areaId']">selected</eq> >{$vo.city}</option>
+	                                </volist>
+	                            </select>
+	                            <span >
+	                                学校
+	                                <input  type='checkbox' onclick="checkAll(this,{$area['areaId']})" value=''/>全部
+	                                <volist name="area['school']" id="school">
+	                                    <input name="schools{$area['areaId']}[]" type='checkbox' value="{$school['id']}" <php>if(in_array($school['id'],$sids))echo 'checked' </php>>{$school.title}
+	                                </volist>
+	                            </span>
+	                        </dd>
+	                    </dl>
+	                </volist>
+	                <else/>
+	                <dl class="lineD  adx" id="jun">
+	                    <dt>添加投放地区：</dt>
+	                    <dd>
+	                        <select name="area[]" onChange="getSchools(this)">
+	                            <option value="0" >全部</option>
+	                            <volist name="citys" id="vo">
+	                                <option value="{$vo['id']}" >{$vo.city}</option>
+	                            </volist>
+	                        </select>
+	                        <span style="display:none;">
+	                            学校
+	                        </span>
+	                    </dd>
+	                </dl>
+	                </neq>
+	                <php>}</php>
+                
+                <dl class="lineD adx">
+                    <dt>添加学校：</dt>
+                    <dd>
+                        <a href="javascript:void(0);" onclick="add();">添加</a>
+                    </dd>
+                </dl>
+                
+                
+                
+                
+                
+			<dl class="lineD">
+                <dt>活动规则：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <textarea id='content' name="content" style="width:300px;height:100px;border:1px solid #ccc;">{$data.rule}</textarea>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                    <dt>活动时间：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="sTime" type="text" id="sTime" onfocus="rcalendar(this,'full');" size="20" value="{$data.stime}" readonly/>  -
+                        <input name="eTime" type="text" id="eTime" onfocus="rcalendar(this,'full');" size="20" value="{$data.etime}" readonly />
+                    </dd>
+                </dl>
+            <dl class="lineD">
+                <dt>封面图片：<span style="color: #F00">*</span></dt>
+                <dd><input type="file" name="image1"><img src="{$data.cover}" width="100" height="100"></dd>
+            </dl>
+
+            <dl class="lineD">
+                <dt>结束图片：<span style="color: #F00">*</span></dt>
+                <dd><input type="file" name="image2"><img src="{$data.over_cover}" width="100" height="100"></dd>
+            </dl>
+
+                <dl class="lineD">
+                    <dt>中奖提示：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="wintips" type="text" value="{$data.wintips}">
+                    </dd>
+                </dl>
+                
+                <dl class="lineD">
+                    <dt>未中奖提示：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="nowintips" type="text" value="{$data.nowintips}">
+                    </dd>
+                </dl>
+                
+                <dl class="lineD">
+                    <dt>每人每日可参与次数：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="person_day_join_count" type="text" value="{$data.person_day_join_count}">
+                    </dd>
+                </dl>
+                
+                <dl class="lineD">
+                    <dt>每日可参加活动总次数：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="day_join_count" type="text" value="{$data.day_join_count}">
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>每日最多出奖数量：<span class="red">*</span></dt>
+                    <dd>
+                        <input name="day_win_count" type="text" value="{$data.day_win_count}">
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>是否设置每人只能中一次奖：</dt>
+                    <dd>
+                        <input name="wincount" type="checkbox" <php>if($data['wincount']==1)echo 'checked'</php> value='1' value="{$data.wincount}">
+                    </dd>
+                </dl>
+
+            <dl class="lineD">
+                <dt>分享内容：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <textarea id='desc' name="desc" style="width:300px;height:100px;border:1px solid #ccc;" onKeyUp="gbcount(this,100);">{$data.desc}</textarea>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>分享图片：<span style="color: #F00">*</span></dt>
+                <dd><input type="file" name="image3"><img src="{$data.share_img}" width="100" height="100"></dd>
+            </dl>
+            
+            <!-- 奖品设置 -->
+            <dl class="lineD">
+                <dt>选择奖品：<span style="color: #F00">*</span></dt>
+                <dd>
+                <table border='0' width='100%'>
+	                <tr><td>奖项</td><td>奖品名称</td><td>概率</td><td colspan='4'>奖品剩余总数</td></tr>
+	                <tr><td>中奖基数</td><td colspan='7'><input name="winraterange" type="text" value="{$data.winraterange}"></td></tr>
+	                <volist id="vo" name="prize">
+	                <tr>
+	                	<td>{$vo.sort}等奖<input name="prize[{$vo.id}][id]" type="hidden" value="{$vo.id}" readonly></td>
+	                	<td>
+	                	<select name="prize[{$vo.id}][prize_id]">
+                            <volist name="prizelist" id="pl">
+                                <option value="{$pl['id']}" <php>if($vo['prize_id']==$pl['id'])echo 'selected'</php> >{$pl.name}--{$pl.price}</option>
+                            </volist>
+                        </select>
+	                	</td>
+	                	<td><input name="prize[{$vo.id}][rate]" type="text" value="{$vo.rate}"></td>
+	                	<td><input name="prize[{$vo.id}][total]" type="text" value="{$vo.surp}"></td>
+	                	<td>用户填写信息</td>
+	                	<td><input name="prize[{$vo.id}][info][]" type="checkbox" <php>if(in_array('tel',$vo['info']))echo 'checked'</php> value='tel'>手机号</td>
+	                	<td><input name="prize[{$vo.id}][info][]" type="checkbox" <php>if(in_array('realname',$vo['info']))echo 'checked'</php> value='realname'>姓名</td>
+	                	<td><input name="prize[{$vo.id}][info][]" type="checkbox" <php>if(in_array('address',$vo['info']))echo 'checked'</php> value='address'>联系地址</td>
+	                </tr>
+	                </volist>
+                </table>
+                </dd>
+            </dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getSchools(obj){
+        var span = $(obj).siblings('span');
+        if($(obj).val()==0){
+            span.hide();
+            return false;
+        }
+        span.show();
+        span.empty();
+        var cityId=$(obj).val();
+        $.get( U('home/Activity/school') ,{cityId:cityId},function(data) {
+            var json=  $.parseJSON(data);
+            var string = "<input  type='checkbox' onclick='checkAll(this,"+cityId+")' value=''/>全部";
+            $.each(json, function(k,v)
+            {
+                string += "&nbsp;&nbsp;<input name='schools"+cityId+"[]' type='checkbox' value='"+v.id+"'>"+v.title;
+            });
+            span.append(string);
+
+        });
+    }
+
+    function add(){
+        var obj = $('#jun').clone(true).insertAfter("#jun");
+        $(obj).find('span').hide();
+    }
+
+
+    function checkAll(o,cityId){
+        if( o.checked == true ){
+            $('input[name="schools'+cityId+'[]"]').attr('checked','true');
+        }else{
+            $('input[name="schools'+cityId+'[]"]').removeAttr('checked');
+        }
+    }
+
+    $(function(){
+        if($("select[name='type']").val()==1){
+            $('.jun').show();
+        }else{
+            $('.jun').hide();
+        }
+        if($("select[name='place']").val()==1||$("select[name='place']").val()==0){
+            $('.adx').hide();
+            $('input[name="years[]"]').attr('checked','true');
+        }else{
+            $('.adx').show();
+            $('input[name="years[]"]').removeAttr('checked');
+        }
+
+        if($("select[name='place']").val()<5){
+            $('.jump').hide();
+        }else{
+            $('.jump').show();
+        }
+    });
+
+function selPrize()
+{
+    ui.box.load('__URL__&act=selPrize',{title:'选择奖品'});
+}
+</script>
+<include file="__THEME__/comm/_datepicker" />
+<include file="_footer" />

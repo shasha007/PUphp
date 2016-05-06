@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="../Public/css/reset.css" />
+    <link href="../Public/css/pay.css" rel="stylesheet">
+    <title>流量购买</title>
+</head>
+<body>
+<header class="h-unknown-Cpay-header">
+    <img src="../Public/img/gif.png">
+</header>
+<div class="h-unknown-Cpay-input">
+    <div>
+        <input placeholder="请输入手机号" type="tel" id="tel" autocomplete="off">
+    </div>
+    <div>
+        <span id="operator"></span> <i id="clear_tel">x</i>
+    </div>
+    <div>
+        <img src="../Public/img/yiyuan.png">
+    </div>
+</div>
+<div class="h-unknown-Cpay-1">
+    <header><span>全国加油包</span> <span>30&emsp13;分钟内生效,月底失效</span></header>
+    <ul id="tlist"></ul>
+</div>
+<script src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+function isMobileNo(tel){
+	if(/^1\d{10}$/.test(tel)){
+		return true;
+	}
+	return false;
+}
+$(function(){
+	$('#tel').keyup(function(){
+		var tel = $(this).val();
+		var len = $(this).val().length;
+		if(len === 11){
+			if(isMobileNo(tel) === false){
+				alert('输入的手机号格式不正确！');
+				return false;
+			}
+			$.post('<?php echo U('pufinance/Traffic/checkTel');?>',{tel:tel},function(res){
+				console.log(res);
+				if(res.code === 1){
+					$('#operator').html(res.msg);
+					var str = '';
+					var url = '<?php echo U('pufinance/Traffic/detail');?>';
+					for(var i=0,len=res.lists.length;i<len;i++){
+						str += '<li><a href="'+url+'&id='+res.lists[i].id+'">'+res.lists[i].flow_value+'&emsp;\/ <span>'+res.lists[i].price+'元<i>'+res.lists[i].face_value+'元</i></span><div class="arrow-up"><\/div><\/a><\/li>';
+					}
+					$('#tlist').html(str);
+				}else if(res.code < 0){
+					alert(res.msg);
+				}
+			},'json');
+		}else{
+			$('#operator').html('');
+			$('#tlist').html('');
+		}
+	});
+	
+	$('#clear_tel').click(function(){
+		$('#tel').val('');
+		$('#operator').html('');
+		$('#tlist').html('');
+	});
+});
+</script>
+<script type="text/javascript" src="../Public/js/mainScript.js" ></script>
+<script type="text/javascript">
+    setActionBar('流量购买', '', '');
+</script>
+</body>
+</html>

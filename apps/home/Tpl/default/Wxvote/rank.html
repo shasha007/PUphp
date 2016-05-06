@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"/>
+<title>莫文蔚全球演唱会</title>
+<link href="__PUBLIC__/wxvote/css/pu_card.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+<div class="bg">
+ <div class="main ">
+  <div class="card_search mt20">
+  <form method = 'get' action="{:U('home/Wxvote/rank')}">
+  	<input name="realname" type="text" value = "{$realname}" class="card_input" placeholder="请按姓名搜索">
+  	<input type="hidden" name="app" value="home" />
+    <input type="hidden" name="mod" value="Wxvote"/>
+    <input type="hidden" name="act" value="rank"/>
+  	<input class="card_btn" type="submit" value = '搜索'>
+  </form>
+  </div>
+  <div class="card_menu f16">
+   <ul>
+    <li><div id = "votesort">人气排行</div></li>
+    <li class="cur"><div id = "rank">全员榜</div></li>
+   </ul>
+  </div>
+  <div class="card_list">
+   <ul>
+   
+   
+   <volist id = 'vo' name = 'list'>
+   		<li>
+   		<if condition = "$i lt 4">
+   			<div class="card_list_num i{$i}"></div>
+   		<else />
+   			<div class="card_list_num">{$i}</div>
+   		</if>
+   		<div class="card_list_infor"><span class="card_list_name">{$vo['realname']}</span><br/><span class="card_list_school">{$vo['school']}</span></div>
+   		<div class="card_list_votenum">{$vo['vote_num']}票</div>
+   		<if condition="$vo['status'] eq '1'">
+      		<div class="card_list_vote sort_{$vo['id']} vote" data-info = "{$vo['id']}">投TA一票</div>
+      	<else />
+      		<div class="card_list_voteover vote" data-info = "{$vo['id']}">已投完</div>
+      	</if>
+   		
+   		</li>
+   </volist>
+   </ul>
+  </div>
+  <div class="card_page">
+  {$page}</div>
+  <div class="footer">
+   <div class="footer_thumb"><img src="{$img}"/></div>
+   <div class="footer_text f16 b">我的排名：{$rank} &nbsp;&nbsp;&nbsp;&nbsp; 票数：{$myvote}</div>
+  </div>
+ </div>
+</div>
+</body>
+
+<script>
+	$('#votesort').click(function(){
+		window.location.href="{:U('home/Wxvote/votesort')}";
+	})
+	
+	$('.vote').click(function(){
+		var $eid = $(this).attr('data-info');
+		var $num = $(this).siblings('.card_list_votenum').html();
+		$.post("{:U('home/Wxvote/vote')}",{eid:$eid},function(data){
+			if(data.data == 'success'){
+				$num = parseInt($num);
+				$num = $num + 1;
+				alert('投票成功');
+				$(".sort_"+$eid+"").removeClass('card_list_vote');
+				$(".sort_"+$eid+"").addClass('card_list_voteover');
+				$(".sort_"+$eid+"").siblings('.card_list_votenum').html($num);
+				$(".sort_"+$eid+"").html('已投完');
+			}else{
+				alert(data.data);
+			}
+			
+		},'json')
+	})
+	
+	$('input:hidden:last').remove();
+	
+</script>
+
+
+
+
+
+
+</html>

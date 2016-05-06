@@ -1,0 +1,26 @@
+<div class="coupon_class">
+    <div class="coupon_class_list">
+        <ul>
+            <li>分类：
+                <?php if($cid == 0):?><span class="cur"><?php endif;?>
+                    <a href="{:U('coupon/Index/couponList', array('cid'=>0,'sid'=>$sid))}">全部</a>
+                <?php if($cid == 0):?></span><?php endif;?>（{$total}）
+            <volist name="category" id="vo">
+                &nbsp;&nbsp;<?php if($cid == $vo['id']):?><span class="cur"><?php endif;?>
+                <a href="{:U('coupon/Index/couponList', array('cid'=>$vo['id'],'sid'=>$sid))}">{$vo.title}</a>
+                <?php if($cid == $vo['id']):?></span><?php endif;?>（{$vo.total}）
+            </volist>
+            </li>
+            <li class="i">区域：
+                <?php if($sid == 0):?><span class="cur"><?php endif;?>
+                    <a href="{:U('coupon/Index/couponList', array('cid'=>$cid,'sid'=>0))}">全部</a>
+                <?php if($sid == 0):?></span><?php endif;?>（{$total}）
+            <volist name="school" id="vo">
+                &nbsp;&nbsp;<?php if($sid == $vo['id']):?><span class="cur"><?php endif;?>
+                    <a href="{:U('coupon/Index/couponList', array('cid'=>$cid,'sid'=>$vo['id']))}">{$vo.title}</a>
+                <?php if($sid == $vo['id']):?></span><?php endif;?>（{$vo.total}）
+            </volist>
+            </li>
+        </ul>
+    </div>
+</div>

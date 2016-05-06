@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>登录</title>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<link href="__PUBLIC__/login/css/reg.css?20150901" type="text/css" rel="stylesheet" />
+<script>
+$(".reg_slist").attr("z-index",999);
+</script>
+</head>
+
+<body>
+<div class="bg">
+ <div class="reg_title f16 b tcenter">PU口袋校园</div>
+ <div class="clear"></div>
+ <div class="main">
+  <div class="reg_con">
+  <form method="post" action="{:U('job/Company/dologin')}">
+  <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>学校</div>
+   <div class="reg_fill"><input name="user_school" id = 'user_school' type="text" class="reg_input" placeholder="请输入学校" /><input id="sid" type="hidden" name="sid" value="">
+   <div class="reg_error" id ='school_error' style="display:none;">学校填写有误</div>
+   </div>
+  </div>
+  <div class="clear"></div>
+  <div class="reg_slist">
+   </div>
+   <div class="clear"></div>
+  <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>学号</div>
+   <div class="reg_fill"><input name="user_no" type="text" class="reg_input" placeholder="请输入学号" /></div>
+  </div>
+  <div class="clear"></div>
+   <div class="reg_infor f14">
+   <div class="reg_key"><span class="red">*</span>密码</div>
+   <div class="reg_fill"><input name="user_password" type="password" class="reg_input" placeholder="请输入密码" /></div>
+  </div>
+  <div class="clear"></div>
+  <div class="reg_infor i1 f14">
+   <input name="注册" type="submit" class="reg_btn" value="登录" />
+  </div>
+  </form>
+  </div>
+ </div>
+</div>
+</body>
+<script type = 'text/javascript'>
+	//设置一个全局标识变量
+	$flag = '0';
+
+    //用户输入时动态匹配学校
+	$('#user_school').on('input onchange',function(){
+		var html = '';
+		var $val = $(this).val();
+		$.get("{:U('job/Company/getSchool')}",{school:$val},function(data){
+			$('.reg_slist').html('');
+			html += '<ul>';
+			$.each(data.data,function(i,row){
+				var vo = row['title'];
+				var id = row['id'];
+				html += "<li data_id = '"+id+"' data_name = '"+vo+"'>"+vo+"</li>";
+			})
+			html += '</ul>';
+			$('.reg_slist').html(html);
+		},'json');
+	})
+
+	//用户点击匹配内容时，自动更新到input表单中，同时更新学院内容
+	$('.reg_slist').on('click','li',function(){
+		var $title = $(this).attr('data_name');
+		var $id = $(this).attr('data_id');
+		$('#user_school').val($title);
+		$('#sid').val($id);
+		$('.reg_slist').html('');
+		$flag = '1';
+	})
+	
+	
+	
+	//用户输入时获取焦点,自动匹配
+	$('#user_school').on('focus',function(){
+		var html = '';
+		var $val = $(this).val();
+		$('#school_error').hide();     //关闭提示信息
+		$.get("{:U('job/Company/getSchool')}",{school:$val},function(data){
+			$('.reg_slist').html('');
+			html += '<ul>';
+			$.each(data.data,function(i,row){
+				var vo = row['title'];
+				var id = row['id'];
+				html += "<li data_id = '"+id+"' data_name = '"+vo+"'>"+vo+"</li>";
+			})
+			html += '</ul>';
+			$('.reg_slist').html(html);
+		},'json');
+	})
+	
+	
+	//用户输入时失去焦点，将匹配内容清除，再做判断
+	$('#user_school').on('blur',function(){
+		
+		var $val = $(this).val();
+		setTimeout(function(){
+			if($flag == '0'){                                 //判断有没有执行点击事件
+				$('.reg_slist').html('');
+				$.get("{:U('job/Company/judgeSchool')}",{title:$val},function(data){
+					if(data.data == 'error'){
+						$('#school_error').show();             //显示提示信息
+					}else{
+						var $title = data.data.title;
+						var $id = data.data.id;
+						$('#user_school').val($title);
+						$('#sid').val($id);
+					}
+				},'json')
+			}else{
+				$flag = '0';                           //恢复标识值
+			}
+		},500)
+	}) 
+
+
+</script>
+</html>

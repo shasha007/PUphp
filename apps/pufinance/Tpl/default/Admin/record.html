@@ -1,0 +1,49 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+	<include file="userTab" />
+	<hr>
+    <div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=record">
+			姓名：<input name="realname" type="text" value="{$Think.post.realname}">&nbsp;&nbsp;
+			身份证号：<input type="text" value="{$Think.post.ctfid}" name="ctfid" />&nbsp;&nbsp;
+			类型：<select name="type" id="">
+				<option value="all">--选择类型--</option>
+				<?php foreach($types as $k=>$type):?>
+				<option value="<?php echo $k;?>" <?php if($k == $_POST['type']):?>selected<?php endif;?>><?php echo $type;?></option>
+				<?php endforeach;?>
+			</select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+		<span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>用户ID</th>
+                <th>姓名</th>
+                <th>身份证号</th>
+				<th>金额</th>
+				<th>类型</th>
+				<th>时间</th>
+            </tr>
+			<?php foreach($data as $item):?>
+			<tr overstyle='on' id="list_<?php echo $item['uid'];?>">
+					<td><?php echo $item['uid'];?></td>
+					<td><?php echo $item['realname'];?></td>
+					<td><?php echo $item['ctfid'];?></td>
+					<td>￥<?php echo number_format($item['amount'],2);?></td>
+					<td><?php echo get_credit_log_type($item['type']);?></td>
+					<td><?php echo date('Y-m-d H:i:s',$item['ctime']);?></td>
+			</tr> 
+			<?php endforeach;?>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="../Public/footer" />

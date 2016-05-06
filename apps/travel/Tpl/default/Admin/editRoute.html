@@ -1,0 +1,121 @@
+<include file="_header" />
+<div class="so_main">
+  <include file="_tab" />
+  <div class="page_tit">编辑景点</div>
+  <div class="form2">
+<form action="{:U('/Admin/doEditRoute')}" enctype="multipart/form-data" method="post" onsubmit="return check();">
+    <input type="hidden" name="id" value="{$route['id']}" />
+    <table cellpadding=3 cellspacing=3>
+    <tr>
+        <td align="right">景点名称：<span style="color: #F00">*</span></td>
+        <td align="left"><input type="text" id="title" name="title" value="{$route['title']}" size="40" maxlength="20"/>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">景点简介：<span style="color: #F00">*</span></td>
+        <td align="left">
+            <textarea id='textarea' name="description" style="width:300px;height:100px;border:1px solid #ccc;" onKeyDown="gbcount(this,200);" onKeyUp="gbcount(this.form.description,200);">{$route['description']}</textarea>
+            <span  id='remain' style='color:green;'>200</span><span style='color:green;'>/200字</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">报名费用：<span style="color: #F00">*</span></td>
+        <td align="left">
+              <input name="cost" type="text" id="textfield2" size="30" maxlength="30" value="{$route['cost']}"/>
+              
+                费用说明：<input name="costExplain" type="text" class="p_input2"  size="50" maxlength="60" value="{$route['costExplain']}"/>(60个字内)
+        </td>
+    </tr>
+    
+      <tr>
+        <td align="right">报名费用：</td>
+        <td align="left">
+              <input name="cost2" type="text" id="textfield2" size="30" maxlength="30" value="{$route['cost2']}"/>
+              
+                费用说明：<input name="costExplain2" type="text" class="p_input2" size="50" maxlength="60" value="{$route['costExplain2']}"/>(60个字内)
+        </td>
+    </tr>
+    
+    <tr>
+        <td align="right">景点地点：<span style="color: #F00">*</span></td>
+        <td align="left">
+              <input name="address" type="text" id="textfield2" size="30" maxlength="30" value="{$route['address']}"/>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">景点城市：<span style="color: #F00">*</span></td>
+        <td align="left">
+             <select name="area" id="type" class="text" >
+                <option value="0">请选择地点</option>
+                <volist name="area" id='vo'>
+                    <option value="{$vo['id']}" <if condition="$route['areaId'] eq $vo['id']"> selected </if>>{$vo.name}</option>
+                </volist>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">景点类别：<span style="color: #F00">*</span></td>
+        <td align="left">
+            <select name="cat" id="type" class="text" >
+                <option value="0">请选择分类</option>
+                <volist name="cat" id='vo'>
+                <option value="{$vo['id']}" <if condition="$route['catId'] eq $vo['id']"> selected </if> >{$vo.name}</option>
+                </volist>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">景点时间：<span style="color: #F00">*</span></td>
+        <td align="left">
+            <input name="sTime" type="text" id="sTime" onfocus="rcalendar(this,'full');" size="20" value="<?php echo date( 'Y-m-d H:i:s',$route['sTime'] ); ?>" readonly/>
+            -
+            <input name="eTime" type="text" id="eTime" onfocus="rcalendar(this,'full');" size="20" value="<?php echo date( 'Y-m-d H:i:s',$route['eTime'] ); ?>" readonly />
+
+        </td>
+    </tr>
+    <tr>
+        <td align="right">截止报名：<span style="color: #F00">*</span></td>
+        <td align="left">
+            <input name="deadline" type="text" id="deadline" onfocus="rcalendar(this,'full');" size="20" value="<?php echo date( 'Y-m-d H:i:s',$route['deadline']); ?>" readonly />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">景点人数：</td>
+        <td align="left">
+            <input name="limitCount" type="text" class="text" id="limitCount" size="5"
+               value="<?php echo 5000000 < $route['limitCount'] ? 0 : $route['limitCount'] ?>"/>
+            <span class="cGray2"> 景点人数上限，设0表示无限制</span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">联系方式：</td>
+        <td align="left">
+            <input name="contact" type="text" class="text" id="contact" onfocus="this.className='text2'" onblur="this.className='text'" size="40" maxlength="30" value="{$route['contact']}" />
+            <br />
+            <span class="cGray2">填写联系人电话，如：张小姐  1346665XXXX </span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">景点图标：<span style="color: #F00">*</span></td>
+        <td align="left">
+            <if condition="$route['coverId']">
+                <img src="{$route['coverId']|getImgAttach=###,100,100,'f'}">
+            </if>
+            <input name="cover" type="file" /><span class="cGray2">（尺寸为300*200，用于景点列表图片）</span>
+        </td>
+    </tr>
+    </table>
+    <div class="page_btm">
+        <input type="submit" class="btn_b" value="确定">
+    </div>
+</form>
+  </div>
+  </div>
+<script>
+    $(function(){
+        gbcount('#textarea',200);
+    });
+</script>
+<include file="_footer" />
+<include file="__THEME__/comm/_datepicker" />
+<script  type="text/javascript" src="../Public/js/travel.js" ></script>

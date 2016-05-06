@@ -1,0 +1,89 @@
+<include file="_header" />
+
+<script>
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要删除的机构");
+                return false;
+            }
+            if( confirm("是否删除机构？") ){
+                $.post( '__URL__&act=delOrg',{gid:id},function(text ){
+                    var json =$.parseJSON(text);
+                    if (json.status ==0) {
+                        ui.error(json.info);
+                    }else{
+                        ui.success(json.info);
+                        var id_list = id.split( ',' );
+                        if(id_list.length>1){
+                            for (var j=0 ; j< id_list.length ; j++   ){
+                                $('#list_'+id_list[j]).remove();
+                            }
+                        }else{
+                            $('#list_'+id).remove();
+                        }
+                    }
+                });
+            }
+        },
+        edit_tab:function(id){
+            ui.box.load('__URL__&act=editOrgTab&id='+id,{title:'机构信息'});
+        }
+    }
+    var c = null;
+</script>
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" onclick="c.edit_tab()" class="btn_a"><span>添加机构</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除机构</span></a>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>机构名称</th>
+                <th>机构logo</th>
+                <th>机构网站</th>
+                <th>签约到期时间</th>
+                <th>操作</th>
+            </tr>
+            <?php $today=date('Y-m-d',time());?>
+            <volist name="orgList" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td id='name{$vo['id']}'>{$vo.name}</td>
+                    <td>   <img src="{$vo.logo|tsMakeThumbUp=###,60,60,'f'}"></td>
+                    <td>{$vo.link}</td>
+                    <td>{$vo['eday']} <?php if($vo['eday']<$today):?><span class="cRed">已到期</span><?php endif;?></td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="c.edit_tab({$vo['id']})">编辑</a>
+                        <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+       <a href="javascript:void(0);" onclick="c.edit_tab()" class="btn_a"><span>添加机构</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除机构</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+    var c = new ctrl();
+</script>
+<include file="_footer" />

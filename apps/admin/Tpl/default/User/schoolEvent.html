@@ -1,0 +1,213 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <div class="page_tit">开通学校官方活动</div>
+  <include file="../Public/_school_tab" />
+  <form method="post" action="__URL__&act=schoolEvent">
+          <span class="b">学校ID：</span><input name="sid" type="text" value="{$_POST['sid']}">
+          &nbsp;&nbsp;<span class="b">学校：</span><input name="title" type="text" value="{$_POST['title']}">
+          &nbsp;&nbsp;<span class="b">几年制：</span><input name="tj_year" type="text" value="{$_POST['tj_year']}" size='2'>
+          &nbsp;&nbsp;<span class="b">城市：</span><input name="cityName" type="text" value="{$_POST['cityName']}" size='8'>
+          <br/>
+          <span class="b">注册状态：</span><input name="canRegister" type="radio" value="3" <?php if(!isset($_POST['canRegister']) || $_POST['canRegister']==3):?>checked<?php endif;?>>全部
+        <input name="canRegister" type="radio" value="2" <?php if($_POST['canRegister']==2):?>checked<?php endif;?>>开通
+        <input name="canRegister" type="radio" value="1" <?php if($_POST['canRegister']==1):?>checked<?php endif;?>>关闭
+          <br/><span class="b">校方官网：</span><input name="eTime" type="radio" value="3" <?php if(!isset($_POST['eTime']) || $_POST['eTime']==3):?>checked<?php endif;?>>全部
+        <input name="eTime" type="radio" value="2" <?php if($_POST['eTime']==2):?>checked<?php endif;?>>开通
+        <input name="eTime" type="radio" value="1" <?php if($_POST['eTime']==1):?>checked<?php endif;?>>关闭
+          <br/><span class="b">第二课堂成绩单：</span><input name="isCjdV2" type="radio" value="3" <?php if(!isset($_POST['isCjdV2']) || $_POST['isCjdV2']==3):?>checked<?php endif;?>>全部
+        <input name="isCjdV2" type="radio" value="2" <?php if($_POST['isCjdV2']==2):?>checked<?php endif;?>>开通
+        <input name="isCjdV2" type="radio" value="1" <?php if($_POST['isCjdV2']==1):?>checked<?php endif;?>>关闭
+          &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+      </form>
+  <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+  </div>
+  <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th class="line_l">ID</th>
+            <th class="line_l">学校</th>
+            <th class="line_l">几年制</th>
+            <th class="line_l">首拼</th>
+            <th class="line_l">城市</th>
+            <th class="line_l">注册状态</th>
+            <th class="line_l">校方官网状态</th>
+            <th class="line_l">第二课堂成绩单</th>
+            <th class="line_l">个性域名</th>
+            <th class="line_l">团省委</th>
+            <th class="line_l">邮箱</th>
+            <th class="line_l">开通时间</th>
+        </tr>
+        <volist id="vo" name="data">
+            <tr overstyle='on'>
+                <td><strong>{$vo['id']}</strong></td>
+                <td>{$vo['title']}</td>
+                <td>{$vo['tj_year']} <a href="javascript:changeYear({$vo['id']},'{$vo['title']}');" >修改</a></td>
+                <td>{$vo['display_order']}</td>
+                <td>{$city[$vo['cityId']]['city']} <a href="javascript:changeCity({$vo['id']},{$vo['cityId']});" >修改</a></td>
+                <td>
+                    <php>
+                    if( !$vo['canRegister'] ){
+                      $button = "关闭";
+                      $act    = 'open';
+                    }else{
+                      $button = "已开通";
+                      $act    = 'close';
+                    }
+                    </php>
+                    <span id="register{$vo['id']}" ><a href="javascript:changeRegister({$vo['id']},'{$act}');" >{$button}</a></span>
+                </td>
+                <td>
+                    <php>
+                    if( !$vo['eTime'] ){
+                      $button = "关闭";
+                      $act    = 'open';
+                    }else{
+                      $button = "已开通";
+                      $act    = 'close';
+                    }
+                    </php>
+                    <span id="vote{$vo['id']}" ><a href="javascript:changeEvent({$vo['id']},'{$act}');" >{$button}</a></span>
+                </td>
+                <td>
+                    <php>
+                    if( !$vo['isCjdV2'] ){
+                      $button = "关闭";
+                      $act    = 'open';
+                    }else{
+                      $button = "已开通";
+                      $act    = 'close';
+                    }
+                    </php>
+                    <span id="cjd{$vo['id']}" ><a href="javascript:changeCjd({$vo['id']},'{$act}');" >{$button}</a></span>
+                </td>
+                <td><a href="http://{$vo['domain']}.pocketuni.net" target="_blank">{$vo['domain']}</a></td>
+                <td>
+                    <php>
+                    if( $vo['is_tuan'] != 0  ){
+                      $button = "是";
+                      $act    = 'close';
+                    }else{
+                      $button = "不是";
+                      $act    = 'open';
+                    }
+                    </php>
+                    <span id="tuan{$vo['id']}" ><a href="javascript:changeTuan({$vo['id']},'{$act}');" >{$button}</a></span>
+                </td>
+                <td>{$vo['email']}</td>
+                <td id="time{$vo['id']}"><?php if($vo['eTime']):?>{$vo['eTime']|date="Y-m-d H:i:s",###}<?php endif;?></td>
+            </tr>
+        </volist>
+    </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+  </div>
+<script>
+    function changeEvent(id,act){
+        if( act == 'open' ){
+            var url = U('admin/User/editSchoolEvent')+'&id='+id;
+            ui.box.load(url,{title:'开通学校官方活动'});
+        }else{
+            v2 = "关闭";
+            act2 = 'open';
+            $.post(U('admin/User/closeSchoolEvent'),{id:id},function( text ){
+                json = eval('('+text+')');
+                if( json.status == 1 ){
+                    ui.success( json.info );
+                    $('#vote'+id).html('<a href="javascript:changeEvent('+id+',\''+act2+'\');" >'+v2+'</a>');
+                    $('#time'+id).html('');
+                }else{
+                    ui.error( json.info );
+                }
+            });
+        }
+    }
+    function changeCjd(id,act){
+        if( act == 'open' ){
+            v= "开通";
+            v2 = "已开通";
+            act2 = 'close';
+        }else{
+            v = "关闭";
+            v2 = "关闭";
+            act2 = 'open';
+        }
+        if( confirm( v+'第二课堂成绩单？' ) ){
+            $.post('__URL__&act=doChangeCjd',{id:id,type:act},function( text ){
+                if( text == 1 ){
+                    ui.success( "操作成功" );
+                    $('#cjd'+id).html('<a href="javascript:changeCjd('+id+',\''+act2+'\');" >'+v2+'</a>');
+                }else{
+                    ui.error( "设置失败" );
+                }
+            });
+        }
+    }
+    
+    //新增是否为团省委特殊团体设置
+    function changeTuan(id,act)
+    {
+        if(act == 'open')
+        {
+            v= "是";
+            v2 = "是";
+            act2 = 'close';
+        }
+        else
+        {
+            v = "不是";
+            v2 = "不是";
+            act2 = 'open';
+        }
+        if(confirm(v+'团省委?'))
+        {
+            $.post('__URL__&act=doChangeTuan',{id:id,type:act},function( text )
+            {
+                if( text == 1 )
+                {
+                    ui.success( "操作成功" );
+                    $('#tuan'+id).html('<a href="javascript:changeTuan('+id+',\''+act2+'\');" >'+v2+'</a>');
+                }
+                else
+                {
+                    ui.error( "设置失败" );
+                }
+            });
+        }
+    }
+    
+    function changeRegister(id,act){
+        if( act == 'open' ){
+            v= "开通";
+            v2 = "已开通";
+            act2 = 'close';
+        }else{
+            v = "关闭";
+            v2 = "关闭";
+            act2 = 'open';
+        }
+        if( confirm( '是否'+v+'注册？' ) ){
+            $.post('__URL__&act=doChangeRegister',{id:id,type:act},function( text ){
+                if( text == 1 ){
+                    ui.success( "操作成功" );
+                    $('#register'+id).html('<a href="javascript:changeRegister('+id+',\''+act2+'\');" >'+v2+'</a>');
+                }else{
+                    ui.error( "设置失败" );
+                }
+            });
+        }
+    }
+
+    function changeCity(id,cid){
+        var url = U('admin/User/changeCity')+'&id='+id+'&cid='+cid;
+        ui.box.load(url,{title:'修改学校城市'});
+    }
+    function changeYear(id,title){
+        var url = U('admin/User/changeYear')+'&id='+id;
+        ui.box.load(url,{title:title});
+    }
+</script>
+<include file="../Public/_footer" />

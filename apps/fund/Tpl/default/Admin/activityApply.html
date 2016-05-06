@@ -1,0 +1,77 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+        <form action="" method="post">
+            活动名称：<input name="ename" type="text" value="{$_POST.ename}">
+            &nbsp;学校：
+            <select name="sid" >
+                <?php $school=model('Schools')->makeLevel0Tree();?>
+                <option value=''>---全部---</option>
+                <foreach name="school" item="vo">
+                <option value="{$vo.id}"<?php if($_POST['sid'] && $_POST['sid']==$vo['id']):?>selected<?php endif;?>>
+                        {$vo.display_order} {$vo.title}</option>
+                </foreach>
+            </select>
+            &nbsp;合作企业：<input name="company" type="text" value="{$_POST.company}">
+            &nbsp;状态：
+            <select name="state">
+                <option value="100">-全部-</option>
+                <option value="0" <?php if(isset($_POST['state']) && $_POST['state']==0):?> selected="selected" <?php endif;?> >待审核</option>
+                <option value="1" <?php if(isset($_POST['state']) && $_POST['state']==1):?> selected="selected" <?php endif;?>>已通过</option>
+                <option value="-1" <?php if(isset($_POST['state']) && $_POST['state']==-1):?> selected="selected" <?php endif;?>>被驳回</option>
+            </select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <include file="_act_tab" />
+    </div>
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>活动名称</th>
+                <th>合作企业</th>
+                <th>学校</th>
+                <th><?php if(!isset($_POST['state'])):?>承办
+                    <?php else:?>
+                        <?php if($_POST['state']==0):?>待审核
+                        <?php elseif($_POST['state']==1):?>已通过
+                        <?php elseif($_POST['state']==-1):?>被驳回
+                        <?php endif;?>
+                    <?php endif;?>
+                    部落数</th>
+                <th>承办部落</th>
+                <th>状态</th>
+                <th>截止时间</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td>{$vo.eventName}</td>
+                    <td>{$vo.company}</td>
+                    <td>{$vo.sid|tsGetSchoolName}</td>
+                    <td>{$vo.groups} </td>
+                    <td>{$vo.group} <?php if($vo['eid']):?>
+                        <a href="{:U('event/Front/index',array('id'=>$vo['eid']))}" target="_blank">[活动页]</a>
+                        <?php endif;?></td>
+                    <td><?php if($vo['state']==1):?><span class="cGreen">已通过</span>
+                        <a href="__URL__&act=activityCheck&eid={$vo.eventId}&sid={$vo.sid}">[详情]</a>
+                        <?php elseif($vo['state']==-1):?><span class="cGray2">被驳回</span>
+                        <a href="__URL__&act=activityCheck&eid={$vo.eventId}&sid={$vo.sid}">[详情]</a>
+                        <?php else:?><span class="cRed">待审核</span>
+                        <a href="__URL__&act=activityCheck&eid={$vo.eventId}&sid={$vo.sid}">[审核]</a>
+                        <?php endif;?>
+                    </td>
+                    <td>{$vo['byTime']|friendlyDate}</td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+<include file="_footer" />
+<script>
+    function detail(id){
+        ui.box.load("__URL__&act=activityCheckDetail&id="+id, {title:'承办详情'});
+    }
+</script>

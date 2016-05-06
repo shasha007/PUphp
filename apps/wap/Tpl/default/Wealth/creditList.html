@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <link href="../Public/css/integrity.css" rel="stylesheet">
+    <link href="../Public/css/point.css" rel="stylesheet">
+    <script src="../Public/js/jquery-2.1.1.min.js"></script>
+    <script src="../Public/js/bootstrap.min.js"></script>
+    <!--<script src="../Public/js/publicjs.js"></script>-->
+    <title>活动学分</title>
+    <script>
+        $(function () {
+            var uid = Android.getUid();
+            $.get('{:U("wap/Base/appLogin")}',{uid:uid},function(data){
+                if(data.status == 2)
+                {
+                    window.location.reload();
+                }
+            },'json');
+        });
+        function setheight() {
+            var nameh = parseInt($(".event-name").height() + "");
+            var pointh = parseInt($(".event-point").height() + "");
+            var imgh = parseInt($(".event-img img").height() + "");
+            if ((imgh >= pointh) && (imgh >= nameh)) {
+                $(".event-name").css("padding-top", ((imgh - nameh) / 2) + "px");
+                $(".event-point").css("padding-top", ((imgh - pointh) / 2) + "px");
+            }
+        }
+    </script>
+</head>
+
+<body>
+<header class="integrity-header">
+    <p>
+        当前活动学分
+    </p>
+
+    <p>{$pocket_credit}<span>&emsp13;分</span></p>
+
+    <p>注意：学分、积分只在活动完结后才会发放，以下显示的活动为完结的活动，不包括申请的实践学分，未完结的活动请咨询活动发起人。</p>
+</header>
+<div class="integrity-num clearfix">
+    <div class="integrity-total" id="point-active">
+        <p class="integrity-title">活动学分</p>
+
+        <p class="event-num">{$credit}</p>
+    </div>
+    <div class="integrity-signed" style="width: 50%;margin: 0">
+        <p class="integrity-title">申请学分</p>
+        <p class="event-num">{$ec_credit}</p>
+    </div>
+</div>
+
+<div class="integrity-list">
+    <!--活动学分-->
+    <ul id="hd-xuefen" data-xftype = "0">
+        <foreach name="list" item="vo" key="i">
+            <li class="to-event" data-eventid="{$vo.eventId}">
+                <a class="row ">
+                    <div class="col-xs-3 event-img">
+                        <img class="img-responsive" src="{$vo.imgurl}">
+                    </div>
+                    <div class="col-xs-6 event-name">
+                        <p>{$vo.title}</p>
+
+                        <p class="small color-eee">{$vo.cTime|date="Y-m-d",###}</p>
+                    </div>
+                    <div class="col-xs-3 event-point pull-right">
+                        <p class="is-sign">{$vo.credit}<span>分</span></p>
+                    </div>
+                </a>
+            </li>
+        </foreach>
+    </ul>
+<!--申请学分-->
+    <ul id="sq-xuefen" data-xftype = "1">
+        <foreach name="list1" item="vo" key="i">
+            <li>
+                <a class="row ">
+                    <div class="col-xs-3 event-img">
+                        <img class="img-responsive" src="../Public/images/sqxuefen.png">
+                    </div>
+                    <div class="col-xs-6 event-name">
+                        <p>{$vo.title}</p>
+
+                        <p class="small color-eee">{$vo.cTime|date="Y-m-d",###}</p>
+                    </div>
+                    <div class="col-xs-3 event-point pull-right">
+                        <p class="is-sign">{$vo.credit}<span>分</span></p>
+                    </div>
+                </a>
+            </li>
+        </foreach>
+    </ul>
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        var ready = false;
+        var loadingShow = false;
+        var page = 2;
+        var ctype = '0';
+        var loadingStr = '<div class="spinner"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
+        var noneStr = '<div class="nonestr">没有记录</div>';
+        $(window).scroll(function () {
+            var document = window.document;
+            var top = document.body.scrollTop || document.documentElement.scrollTop
+                    || 0;
+            top += document.documentElement.clientHeight;
+            var height = document.documentElement.scrollHeight;
+            if (height - top < 100) {
+                console.log(ctype);
+                if (!loadingShow) {
+                    $(".integrity-list ul").append(loadingStr);
+                    loadingShow = true;
+                    getAjaxNews();
+                }
+            }
+        });
+
+        function getAjaxNews() {
+
+            setTimeout(function () {
+                //删除loading提示
+                $.ajax({
+                    url: 'index.php?app=wap&mod=Wealth&act=ajaxList',
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        type: 'c',
+                        page: page,
+                        ctype:ctype
+                    },
+                    error: function () {
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.status == '1') {
+                            if (ctype == 1) {
+                                var htmlstr = buildHtml1(data.data) ;
+                                $(".spinner").hide();
+                                $(".integrity-list ul").append(htmlstr);
+                                $(".spinner").remove();
+                                page++;
+                                loadingShow = false;
+                                //处理图片
+                                dopicerror();                                 
+                            }else{
+                                var htmlstr = buildHtml(data.data) ;  
+                                $(".spinner").hide();
+                                $(".integrity-list ul").append(htmlstr);
+                                $(".spinner").remove();
+                                page++;
+                                loadingShow = false;
+                                //处理图片
+                                dopicerror();                                
+                            }
+
+                        } else {
+                            $(".spinner").remove();
+                            $(".integrity-list ul").append(noneStr);
+                        }
+                    }
+                });
+            }, 1000);
+        }
+
+        function buildHtml(items) {
+            if (items.length > 0) {
+                var html = '';
+                for (i = 0; i < items.length; i++) {
+                    html += '<li class="to-event" data-eventid="' + items[i].eventId + '">';
+                    html += '<a class="row ">';
+                    html += '<div class="col-xs-3 event-img">';
+                    html += '<img class="img-responsive" src="' + items[i].imgurl + '">';
+                    html += '</div>';
+                    html += '<div class="col-xs-6 event-name">';
+                    html += '<p>' + items[i].title + '</p>';
+                    html += '<p class="small color-eee">' + items[i].cTime + '</p>';
+                    html += '</div>';
+                    html += '<div class="col-xs-3 event-point pull-right">';
+                    html += '<p class="is-sign">' + items[i].credit + '<span>分</span></p>';
+                    html += '</div>';
+                    html += '</a>';
+                    html += '</li>';
+                }
+                return html;
+            }
+
+        }
+        //申请积分加载
+        function buildHtml1(items) {
+            if (items.length > 0) {
+                var html = '';
+                for (i = 0; i < items.length; i++) {
+                    html += '<li>';
+                    html += '<a class="row ">';
+                    html += '<div class="col-xs-3 event-img">';
+                    html += '<img class="img-responsive" src="../Public/images/sqxuefen.png">';
+                    html += '</div>';
+                    html += '<div class="col-xs-6 event-name">';
+                    html += '<p>' + items[i].title + '</p>';
+                    html += '<p class="small color-eee">' + items[i].cTime + '</p>';
+                    html += '</div>';
+                    html += '<div class="col-xs-3 event-point pull-right">';
+                    html += '<p class="is-sign">' + items[i].credit + '<span>分</span></p>';
+                    html += '</div>';
+                    html += '</a>';
+                    html += '</li>';
+                }
+                return html;
+            }
+
+        }
+        //
+        $(".to-event").click(function () {
+            var id = $(this).data("eventid") + "";
+            try {
+                Android.openInternalPage("eventDetails", "", "", id, "", "", "");
+            } catch (e) {
+                setTimeout(function () {
+                    Android.openInternalPage("eventDetails", "", "", id, "", "", "");
+                }, 50);
+            }
+        });
+        $(".integrity-total").click(function () {
+            if($(this).attr("id")!="point-active"){
+                $(this).attr("id","point-active");
+                $(this).siblings().attr("id","");
+                $("#hd-xuefen").show();
+                $("#sq-xuefen").hide();
+                ctype = '0' ;
+            }
+        });
+        $(".integrity-signed").click(function () {
+            if($(this).attr("id")!="point-active"){
+                $(this).attr("id","point-active");
+                $(this).siblings().attr("id","");
+                $("#hd-xuefen").hide();
+                $("#sq-xuefen").show();
+                ctype = '1';
+            }
+        });
+
+    })
+</script>

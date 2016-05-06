@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>银行卡详情</title>
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/style.css?v=001" rel="stylesheet">
+    <link href="../Public/css/reset.css?v=001" rel="stylesheet">
+</head>
+<body>
+<header class="h-public-header container">
+    <div>
+        选择银行卡
+    </div>
+</header>
+<div class="h-repayGeneral h-set" >
+    <p class="h-person-p">请输入支付密码,以验证身份</p>
+
+    <ul data-pw="" ontouchstart="setPassword(this)" data-inputable="true" id="password">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+
+<!--虚拟键盘-->
+<table class="keyboard" id="keyboard">
+    <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>0</td>
+        <td data-delete="true">删除</td>
+    </tr>
+</table>
+
+
+</body>
+<script src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+<script src="../Public/js/bootstrap.min.js"></script>
+<script src="../Public/js/h-password.js"></script>
+<script type="text/javascript">
+	var URL = '<?php echo U('pufinance/withdraw/newBankCheck');?>';
+	var SUCCESS_URL = '<?php echo U('pufinance/Bankcard/bindBankcard');?>';
+</script>
+</html>
+<script type="text/javascript" src="../Public/js/mainScript.js" ></script>
+<script type="text/javascript">
+    setActionBar('验证身份', '', '');
+</script>

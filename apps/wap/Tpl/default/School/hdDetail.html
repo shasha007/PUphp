@@ -1,0 +1,34 @@
+<include file="header" />
+<div name="top">PocketUni课程规划</div>
+<div class="pl5 m5">
+    <a href="{:U('wap/School/kc')}">课 程</a>
+    <a href="{:U('wap/School/hd')}">课程活动</a>
+    &nbsp;{$user.uname|getShort=###,4,''}
+    <a href="{:U('wap/SchoolPublic/logout')}">退出</a>
+</div>
+<div class="desc">
+    {$title}<br />
+    分类：{$category[$typeId]}<br />
+    上课时间：<?php echo date('Y-m-d H:i', $sTime) . " 至 " . date('Y-m-d H:i', $eTime) ?><br />
+    报名时间：<?php echo date('Y-m-d H:i', $deadline) ?> 截止<br />
+    课程地点：{$address}<br />
+    课时：{$credit} <br />
+    参加人参加人数（{$joinCount}） 剩余名额：{$limitCount}<br />
+    <?php if($joined): ?>
+    <div class="m5">您已报名</div>
+    <?php elseif($deadline<time()): ?>
+    <div class="m5">报名已截止</div>
+    <?php elseif($limitCount< 1): ?>
+    <div class="m5">名额已满</div>
+    <?php elseif($smid): ?>
+    <div class="m5">
+        <a href="{:U('wap/School/joinHd', array('id'=>$id))}">我要报名</a>
+    </div>
+    <?php endif; ?>
+    简述：{$description}
+</div>
+<div class="nav mt5">
+    <a href="{:U('wap/SchoolPublic/logout')}">退出</a> |
+    <a href="#top">回到顶部</a> |
+</div>
+<include file="footer" />

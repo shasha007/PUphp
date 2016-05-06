@@ -1,0 +1,80 @@
+<include file="../Public/_header" />
+<style>
+    .answer{color: red;display: none}
+</style>
+<div class="">
+    <div class="">
+        填空题：
+        <ul>
+            <volist name="tk" id="vo">
+                <li>
+                    <div>{$i}.{$vo.title}</div>
+                    <div id="tk_answer{$i-1}" class="answer">正确答案：{$vo.answer}</div>
+                    <input id="tk{$i-1}" type="text" />
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="">
+        判断题：
+        <ul>
+            <volist name="pd" id="vo">
+                <li>
+                    <div>{$i}.{$vo.title}</div>
+                    <div id="pd_answer{$i-1}" class="answer">正确答案：<?php if($vo['answer']==1){echo'对';}else{echo'错';}?></div>
+                    <label><input type="radio" name="pd{$i-1}" value="1" />对</label>
+                    <label><input type="radio" name="pd{$i-1}" value="0" />错</label>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="">
+        选择题：
+        <ul>
+            <volist name="xz" id="vo">
+                <li>
+                    <div>{$i}.{$vo.title}</div>
+                    <div id="xz_answer{$i-1}" class="answer">正确答案：<?php echo(strtoupper(chr(96+$vo['answer'])))?></div>
+                    <?php $select=unserialize($vo['select'])?>
+                    <volist name="select" key="k" id="vos">
+                        <label><input type="radio" name="xz{$i-1}" value="{$k}" /> <?php echo(strtoupper(chr(96+$k)))?>. {$vos}</label>&nbsp;&nbsp;
+                    </volist>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="">
+        <a href="javascript:void(0)" onclick="showAnswer()">提交</a>
+        <a href="{:U('exercise/Index/index')}">返回</a>
+    </div>
+</div>
+<script>
+    var goSum = <?php echo($goSum);?>;
+    var tk = <?php echo(json_encode($tk));?>;
+    var pd = <?php echo(json_encode($pd));?>;
+    var xz = <?php echo(json_encode($xz));?>;
+    function showAnswer(){
+        var wrong = 0;
+        $('.answer').hide();
+        $.each(tk,function(i,line) {
+            if(line.answer != $('#tk'+i).val()){
+                $('#tk_answer'+i).show();
+                wrong = wrong+1;
+            }
+        });
+        $.each(pd,function(i,line) {
+            if(line.answer != $('input[name="pd'+i+'"]:checked').val()){
+                $('#pd_answer'+i).show();
+                wrong = wrong+1;
+            }
+        });
+        $.each(xz,function(i,line) {
+            if(line.answer != $('input[name="xz'+i+'"]:checked').val()){
+                $('#xz_answer'+i).show();
+                wrong = wrong+1;
+            }
+        });
+        alert('共'+goSum+'题，答错'+wrong+'题');
+    }
+</script>
+<include file="../Public/_footer" />

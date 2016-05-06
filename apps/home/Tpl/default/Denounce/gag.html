@@ -1,0 +1,55 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="__URL__&act=addGag" class="btn_a"><span>添加禁言</span></a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l"></th>
+                <th class="line_l">姓名</th>
+                <th class="line_l">UID</th>
+                <th class="line_l">禁言种类</th>
+                <th class="line_l">被禁时间</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' id="gag_{$vo.uid}_{$vo.type}">
+                    <td></td>
+                    <td><space uid="vo.uid" >{realname}</space></td>
+                    <td>{$vo.uid}</td>
+                    <td>吐泡泡</td>
+                    <td>{$vo.ctime|friendlyDate}</td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="freeGag({$vo.uid},{$vo.type})">解禁</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="__URL__&act=addGag" class="btn_a"><span>添加禁言</span></a>
+    </div>
+</div>
+<script>
+    function freeGag(uid,type){
+        if(confirm("确定解除该禁言?")){
+            $.post('__URL__&act=freeGag',{uid:uid,type:type},function(res){
+                var json =$.parseJSON(res);
+                if (json.status ==0) {
+                    ui.error(json.info);
+                }else{
+                    ui.success(json.info);
+                    $('#gag_'+uid+'_'+type).remove();
+                }
+            });
+        }
+    }
+</script>
+
+<include file="_footer" />

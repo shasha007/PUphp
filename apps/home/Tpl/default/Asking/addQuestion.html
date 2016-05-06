@@ -1,0 +1,67 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+    <div class="Toolbar_inbox">
+        <span><a href="javascript:history.back( -1 )">&lt;&lt;返回上一页</a>
+        <span>问答问题编辑</span>
+    </div>
+        <center>
+        <div class="page_tit" id="title0">{$name}</div>
+        <div id="deadline0">截止时间：{$eTime|friendlyDate}</div>
+        </center>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$cnt}条问题</span>
+        <span class="edit_span" onclick="addVote()">[添加问题]</span>
+    </div>
+    <div class="list">
+        <table id="vote_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="line_l">ID</th>
+                <th class="line_l">问题</th>
+                <th class="line_l">选项</th>
+                <th class="line_l">答案</th>
+                <th class="line_l" style="width:50px;">操作</th>
+            </tr>
+            <volist name="vote" id='vo'>
+                <tr overstyle="on" id="vote_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>
+                        A:{$vo.A}
+                        B:{$vo.B}
+                        C:{$vo.C}
+                        D:{$vo.D}
+                    </td>
+                    <td>
+                        {$vo.answer}
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="deleteObj({$vo.id});">删除</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+<script>
+    var id = "{$id}";
+    function deleteObj(id){
+        if( confirm('删除成功后将无法恢复，确认继续？') ){
+            $.post( U('home/Asking/deleteQuestion'),{id:id},function(res){
+                if (res == 1) {
+                    ui.success('操作成功');
+                    $('#vote_'+id).remove();
+                    window.location.reload();
+                }else{
+                    ui.error('操作失败，请稍后再试');
+                }
+            });
+        }
+    }
+    function addVote(){
+        ui.box.load("{:U('home/Asking/question',array('id'=>$id))}",{title:'添加问题'});
+    }
+</script>
+<include file="_footer" />

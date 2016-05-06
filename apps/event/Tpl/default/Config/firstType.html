@@ -1,0 +1,55 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+  <include file="_tab" />
+    首次自定义分类，需完成【步骤2】后方可生效<br/>
+    <div class="Toolbar_inbox">
+        <a href="javascript:add_tab()" class="btn_a"><span class="cRed">步骤1.添加分类</span></a> >>
+        <a href="__URL__&act=moveOldType" class="btn_a"><span>步骤2.整合旧分类</span></a> >> 完成！
+    </div>
+    <div class="list">
+        <table id="event_list" width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+          <tr>
+            <th class="line_l"> </th>
+            <th class="line_l">活动类别</th>
+            <th class="line_l">归属于</th>
+            <th class="line_l">状态</th>
+            <th class="line_l">操作</th>
+          </tr>
+          <volist name="list" id='vo'>
+          <tr id="{$vo.id}">
+            <td> </td>
+            <td>{$vo.name}</td>
+            <td>【{$type_list[$vo['pid']]}】</td>
+            <td><span class="cRed">未激活</span></td>
+            <td><a href="javascript:edit_tab({$vo['id']})">编辑</a> <a href="javascript:del({$vo['id']})">删除</a></td>
+          </tr>
+          </volist>
+         </table>
+    </div>
+</div>
+<include file="../Teacher/_footer" />
+<script>
+    function add_tab(){
+        ui.box.load('__URL__&act=editType',{title:'添加分类'});
+    }
+    function edit_tab(id){
+        ui.box.load('__URL__&act=editType&id='+id,{title:'编辑分类'});
+    }
+    function del(id){
+        if(id=='' || id==0){
+            alert('请选择要删除的分类！');return false;
+        }
+        if( confirm("是否删除分类？") ){
+            $.post( '__URL__&act=doDelType',{id:id},function(res ){
+                var json =$.parseJSON(res);
+                if( json.status ==1 ){
+                    ui.success(json.info);
+                    $('#'+id).remove();
+                }else{
+                    ui.error(json.info);
+                }
+            });
+        }
+    }
+</script>

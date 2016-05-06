@@ -1,0 +1,58 @@
+<include file="_header" />
+<script>
+    function delImg(id){
+        delList(U('event/Admin/deleteImg'),id);
+    }
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <form action="__URL__&act=imgList" method="post">
+        <div class="page right">{$html}</div>
+        <a href="javascript:delImg();" class="btn_a"><span>删除图片</span></a>
+            图片标题：<input name="title" type="text" value="{$title}">
+            &nbsp;活动ID：<input name="eventId" type="text" value="{$eventId}">
+            &nbsp;发布者ID：<input name="eventUid" type="text" value="{$eventUid}">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>图片预览图</th>
+                <th>标题</th>
+                <th>所属活动ID</th>
+                <th>发布者</th>
+                <th>发布时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><a href="{:U('/Front/details',array('id'=>$vo['eventId'],'img'=>$vo['id'],'uid'=>$vo['imgUid']))}" target="_blank" title="{$vo.title}">
+                        <img src="{$vo.path|getThumb=###,80,80}"></a></td>
+                    <td>{$vo.title|getShort=###,50,'…'}</td>
+                    <td>{$vo.eventId}</td>
+                    <td><space uid="vo.uid" target="_blank">{uname}</space></td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td>
+                        <a href="javascript:delImg({$vo['id']});" >删除</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:delImg();" class="btn_a"><span>删除图片</span></a>
+    </div>
+</div>
+<include file="_footer" />

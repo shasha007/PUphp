@@ -1,0 +1,103 @@
+<include file="../Teacher/_header" />
+<script>
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要删除的资讯");
+                return false;
+            }
+            if( confirm("是否删除资讯？") ){
+                $.post( '__URL__&act=put_info_to_recycle',{gid:id},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个资讯成功" );
+                        var id_list = id.split( ',' );
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove();
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        }
+    }
+    var c = null;
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+        <form action="__URL__&act=index" method="post">
+            资讯标题：<input name="title" type="text" value="{$title}">
+            &nbsp;分类：
+            <select name="category0" id="categoryId" >
+                <option value="" selected="selected">全部</option>
+                <option value="1" <eq name="category0" value="1"> selected="selected" </eq> >报道须知</option>
+                <option value="2" <eq name="category0" value="2"> selected="selected" </eq>  >交通指南</option>
+                <option value="3" <eq name="category0" value="3"> selected="selected" </eq>  >户籍知识</option>
+                <option value="4" <eq name="category0" value="4"> selected="selected" </eq>  >医疗卫生</option>
+                <option value="5" <eq name="category0" value="5"> selected="selected" </eq>  >就餐指南</option>
+                <option value="6" <eq name="category0" value="6"> selected="selected" </eq>  >住宿指南</option>
+                <option value="7" <eq name="category0" value="7"> selected="selected" </eq>  >帮困助学</option>
+                <option value="8" <eq name="category0" value="8"> selected="selected" </eq>  >财政管理</option>
+            </select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="{:U('event/NewComer/addDocument')}" class="btn_a"><span>添加资讯</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除资讯</span></a>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th class="line_l">ID</th>
+                <th class="line_l">标题</th>
+                <th class="line_l">分类</th>
+                <th class="line_l">发布人</th>
+                <th class="line_l">发布时间</th>
+                <th class="line_l">是否推荐</th>
+                <th class="line_l">是否有效</th>
+                <th class="line_l">操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.document_id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.document_id}"></td>
+                    <td>{$vo.document_id}</td>
+                    <td><a href="{:U('newcomer/Index/news',array('id'=>$vo['document_id']))}" target="_blank">{$vo.title}</a></td>
+                    <td>{$vo.category0|getDocCategoryName}</td>
+                    <td>{$vo.author_id|getUserName}</td>
+                    <td>{$vo.mtime|friendlyDate}</td>
+                    <td><eq name="vo.isrecom" value="1">是<else/>否</eq></td>
+                <td><eq name="vo.is_active" value="1">是<else/>否</eq></td>
+                <td>
+                    <a href="{:U('event/NewComer/editDocument',array('id'=>$vo['document_id']))}">编辑</a>
+                    <a href="javascript:void(0);" onclick="c.del('{$vo.document_id}')">删除</a>
+                </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+         <a href="{:U('event/NewComer/addDocument')}" class="btn_a"><span>添加资讯</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除资讯</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+    var c = new ctrl();
+</script>
+<include file="../Teacher/_footer" />

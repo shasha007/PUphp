@@ -1,0 +1,89 @@
+<include file="../Teacher/_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<include file="__THEME__/editor" />
+<div class="so_main">
+  <include file="_tab" />
+  <div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>通知</div>
+  <div class="form2">
+<form action="{:U('/AnnounceAdmin/doEditInfo')}" enctype="multipart/form-data" method="post">
+    <if condition="$obj">
+        <input name="id" value="{$obj.id}" type="hidden">
+    </if>
+    <table cellpadding=3 cellspacing=3>
+    <tr>
+        <td align="right"><span style="color: #F00">*</span>标题：</td>
+        <td align="left"><input type="text" size="50" name="title" maxlength="50" value="{$obj.title}" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">通知分类：</td>
+        <td align="left">
+          <select name="cid" id="categoryId" onchange="selectCat();">
+          <volist name='categorys' key='cId' id='cName'>
+          <php>if($obj['cid']==$key) { </php>
+          <option value="{$key}" selected="selected">{$cName}</option>
+          <php> } else { </php>
+            <option value="{$key}">{$cName}</option>
+          <php> }</php>
+          </volist>
+          </select>
+            <?php if($school['id']==659):?>13届挑战杯：会晤信息（院系通知/其它院系）、通知公告（学校发文）、新闻简报（学校通知）<?php endif;?>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">所属学院：</td>
+        <td align="left">
+
+          <select name="sid1" id="sid1" <?php if($obj.cid != 3):?>style="display:none;"<?php endif;?>>
+            <option value="0">请选择</option>
+            <volist name='subSchool' id='vo'>
+                <php>if($obj['sid1']==$vo['id']) { </php>
+                    <option value="{$vo.id}" selected="selected">{$vo.title}</option>
+                <php> } else { </php>
+                    <option value="{$vo.id}">{$vo.title}</option>
+                <php> }</php>
+            </volist>
+          </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">详细：</td>
+        <td align="left"><textarea name="content" id="content" style="width:780px;height:200px">{$obj.content}</textarea></td>
+    </tr>
+    <tr>
+        <td align="right">是否广播站消息：</td>
+        <td align="left">
+        	<input name="putstatus" value="1" <php>if($obj['putstatus'] == 1){</php>checked="checked"<php>}</php> type="radio" />是
+        	<input name="putstatus" value="0" <php>if($obj['putstatus'] == 0){</php>checked="checked"<php>}</php> type="radio" />否 &nbsp;(用来推送到安卓、IOS客户端首页广播站显示，默认不推送)
+        </td>
+    </tr>
+    </table>
+    <div class="page_btm">
+        <input type="submit" class="btn_b" value="确定">
+    </div>
+</form>
+  </div>
+  </div>
+<script>
+$(document).ready(function(){
+    loadEditor("content");
+    selectCat();
+});
+function selectCat(){
+    if($('#categoryId').val() == 3){
+        $('#sid1').show();
+    }else{
+        $('#sid1').hide();
+    }
+}
+
+</script>
+<include file="../Teacher/_footer" />

@@ -1,0 +1,35 @@
+<include file="_header" />
+
+<div class="hd_c">
+    <div class="hd_task">
+        <div class="hd_t_list">
+            <ul>
+                <li class="b f14 hd_black" style="border-bottom:1px solid #dedede;">
+                    <div class="hd_t_title center">作业标题</div>
+                    <div class="hd_t_date">截止时间</div>
+                    <div class="hd_t_fettle black">状态</div>
+                    <div class="hd_t_score">评分</div>
+                </li>
+                <volist name="data" id='vo'>
+                <?php $back = $workBack[$vo['id']];?>
+                <li <?php if($back||$vo['eTime']<=time()):?>class="gray"<?php endif;?>>
+                    <div class="hd_t_title b">
+                        <a href="{:U('event/School/work', array('id'=>$vo['id']))}" title="{$vo.title}">{$vo.title}</a></div>
+                    <div class="hd_t_date">{$vo.eTime|friendlyDate}</div>
+                    <?php if($back):?>
+                        <div class="hd_t_fettle">已做</div>
+                    <?php else:?>
+                        <div class="hd_t_fettle y">未做<?php if($vo['eTime']<=time()):?>/已截止<?php endif;?>
+                        </div>
+                    <?php endif;?>
+                    <div class="hd_t_score"><?php if($back['status']==2):?>{$back.note}分<?php else:?>未评分<?php endif;?></div>
+                </li>
+                </volist>
+            </ul>
+            <div class="page">{$html}</div>
+        </div>
+    </div>
+<div class="hd_c_right">
+    <include file="_right" />
+</div>
+<include file="_footer" />

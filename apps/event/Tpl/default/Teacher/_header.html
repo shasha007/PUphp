@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>{$school.title} - 校方活动管理后台</title>
+<link href="../Public/css/sadmin.css?130726" rel="stylesheet" type="text/css" />
+<include file="__THEME__/comm/_appadmin" />
+<script type="text/javascript" src="__PUBLIC__/js/check.js"></script>
+<script>
+    var _ROOT_  = '__ROOT__';
+    var _URL_   = '__URL__';
+    var _PIC_URL_   = '{:PIC_URL}';
+    $(document).ready(function(){
+        $('.submenu').css('display', 'block');
+    });
+</script>
+</head>
+<body>
+    <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td colspan="3">
+                <div class="header"><!-- 头部 begin -->
+                    <div><a href="{:U('event/Readme/index')}" >校方活动后台</a></div>
+                    <div class="nav_sub">
+                        您好,<a href="{:U('event/User/editUser',array('uid'=>$mid))}">{$mid|getUserName}</a>&nbsp; | <a href="{:U('event/School/index')}">返回前台</a> | <a href="{:U('event/School/logoutAdmin')}">退出</a><br/>
+                        <div id="TopTime"></div>
+                    </div>
+                    <div class="main_nav">
+                        <a href="{:U('event/Readme/index')}" >校方后台</a>
+                    </div>
+                </div>
+                <div class="header_line"><span>&nbsp;</span></div>
+            </td>
+        </tr>
+        <tr>
+            <td width="200px" height="100%" valign="top" id="FrameTitle" background="__PUBLIC__/admin/images/left_bg.gif">
+                <div class="LeftMenu">
+                    <ul class="teacherList">
+                        <li><a <eq name="MODULE_NAME" value="Readme">class="on"</eq> href="{:U('event/Readme/index')}">首页</a></li>
+                        <?php if($rights['can_admin']):?>
+                        <li><a <eq name="MODULE_NAME" value="Config">class="on"</eq> href="{:U('event/Config/webconfig')}">全局配置</a></li>
+                        <?php endif;?>
+                        <?php if($rights['can_user']):?>
+                        <li><a <eq name="MODULE_NAME" value="User">class="on"</eq> href="{:U('event/User/index')}">用户管理</a></li>
+                        <?php endif;?>
+                        <?php if($rights['can_event']||$rights['can_event2']):?>
+                        <li><a <eq name="MODULE_NAME" value="Event">class="on"</eq> href="{:U('event/Event/index')}">活动管理</a></li>
+                        <?php endif;?>
+                        <?php if(isTuanRole($school['id'])):?>
+                        <?php if($rights['can_prov_news']):?>
+                        <li><a <eq name="MODULE_NAME" value="AdminNews">class="on"</eq> href="{:U('event/AdminNews/index')}">新闻管理</a></li>
+                        <?php endif;?>
+                        <?php if($rights['can_prov_work']):?>
+                        <li><a <eq name="MODULE_NAME" value="AdminWork">class="on"</eq> href="{:U('event/AdminWork/index')}">作业管理</a></li>
+                        <?php endif;?>
+                        <?php endif;?>
+                        <?php if($rights['can_gift']):?>
+                        <li><a <eq name="MODULE_NAME" value="Jf">class="on"</eq> href="{:U('event/Jf/index')}">兑换管理</a></li>
+                        <?php endif;?>
+                        <?php if($rights['can_print']):?>
+                        <li><a <eq name="MODULE_NAME" value="Certi">class="on"</eq> href="{:U('event/Certi/index')}">打印证书</a></li>
+                        <?php endif;?>
+                        <?php if($school['id'] == 473):?>
+                        <?php if($rights['can_admin']):?>
+                        <li><a <eq name="MODULE_NAME" value="Analyse">class="on"</eq> href="{:U('event/Analyse/index')}">统计分析</a></li>
+                        <?php endif;?>
+                        <?php endif;?>
+                        <?php if($rights['can_admin']):?>
+                        <li><a <eq name="MODULE_NAME" value="Statistics">class="on"</eq> href="{:U('event/Statistics/index')}">数据统计</a></li>
+                        <?php endif;?>
+                        <?php if($rights['can_group']):?>
+                        <li><a <eq name="MODULE_NAME" value="Validate">class="on"</eq> href="{:U('event/Validate/index')}">部落管理</a></li>
+                        <?php endif;?>
+                        <?php if(isTuanRole($school['id'])):?>
+                        <?php if($rights['can_admin']):?>
+                        <li><a <eq name="MODULE_NAME" value="Weibo">class="on"</eq> href="{:U('event/Weibo/index')}">微博管理</a></li>
+                        <?php endif;?>
+                        <?php endif;?>
+                        <?php if($rights['can_admin']):?>
+                        <li><a <eq name="MODULE_NAME" value="AdminSurvey">class="on"</eq> href="{:U('event/AdminSurvey/index')}">问卷调查</a></li>
+                        <?php endif;?>
+                        <?php if($rights['can_announce']):?>
+                        <li><a <eq name="MODULE_NAME" value="AnnounceAdmin">class="on"</eq> href="{:U('event/AnnounceAdmin/index')}">校内通知</a></li>
+                        <?php endif;?>
+                        <!--<?php if($rights['can_available']):?>-->
+                        <!--<li><a <eq name="MODULE_NAME" value="Available">class="on"</eq> href="{:U('event/Available/index')}">文件分发</a></li>-->
+                        <!--<?php endif;?>-->
+                        <?php if($rights['can_credit']):?>
+                            <?php if(isEcApplyV2($school['id'])):?>
+                            <li><a <eq name="MODULE_NAME" value="AdminCredit2">class="on"</eq> href="{:U('event/AdminCredit2/index')}">{$webconfig.cradit_name}认定</a></li>
+                            <?php elseif(isEcApplySchool($school['id'])):?>
+                            <li><a <eq name="MODULE_NAME" value="AdminCredit">class="on"</eq> href="{:U('event/AdminCredit/index')}">{$webconfig.cradit_name}认定</a></li>
+                            <?php endif;?>
+                        <?php endif;?>
+                        <?php if($rights['can_admin']):?>
+                        <li><a <eq name="MODULE_NAME" value="NewComer">class="on"</eq> href="{:U('event/NewComer/index')}">迎新管理</a></li>
+                        <?php endif;?>
+                        <?php if($rights['can_admin'] && showSjBack($school['id'])):?>
+                        <li><a <eq name="MODULE_NAME" value="Sj">class="on"</eq> href="{:U('event/Sj/index')}"><?php echo(C('SJ_YEAR'));?>暑期活动申报</a></li>
+                        <?php endif;?>
+                    </ul>
+                </div>
+            </td>
+            <td valign="top">
+

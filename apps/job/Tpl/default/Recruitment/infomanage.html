@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form ENCTYPE="multipart/form-data" action="{:U('job/Recruitment/doinfomanage')}" method='POST'>
+		公司名称<input type="text"><br>
+		公司类型<input type="text" name="type"><br>
+		行业类别1<input type="text" name='industrycategory_a'><br>
+		行业类别2<input type="text" name='industrycategory_b'><br>
+		公司规模<input type="text" name='scale'><br>
+		地址<input type="text" name='address'><br>
+		主页<input type="text" name='homepage'><br>
+		城市<input type="text" name='city'><br>
+                <hr>
+		联系人<input type="text" name='contact'><br>
+		电话<input type="text" name="telephone_areacode"><input type="text" name='telephone'><input type="text"><br>
+		Email<input type="text" name='contact_email'>
+                <hr>
+                公司简介<textarea name='introduction'></textarea><br>
+                创始人<input type="text" name='founder_name'><br>
+                上传照片<input type="hidden" name="MAX_FILE_SIZE"  value="100000000">
+                 <input NAME="founder_pic" TYPE="file" ><br>
+                <textarea></textarea><br>
+                选取产品<input NAME="product_pic[]" TYPE="file">选取产品<input NAME="product_pic[]" TYPE="file">
+                    <br><input type='submit' value='确认'>
+	</form>
+</body>
+</html>

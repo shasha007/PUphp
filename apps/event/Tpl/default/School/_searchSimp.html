@@ -1,0 +1,15 @@
+<div class="hd_fl color4 link">
+    <span class="b">分类：</span>
+    <a<?php if(!$_SESSION['schoo_searchCat']['cid'])echo' class="f_s b"';?>
+        href="{:U('event/School/board', array('cid'=>'all'))}">全部</a>&nbsp;
+    <?php foreach($category as $k=>$vo):?>
+    <a<?php if($_SESSION['schoo_searchCat']['cid']==$k)echo' class="f_s b"';?>
+        href="{:U('event/School/board', array('cid'=>$k))}">{$vo}</a>&nbsp;
+    <?php endforeach;?>
+</div>
+<div class="hd_search">
+    <form method="post" action="{:U('/School/board')}">
+    <input name="title"  value="{$searchTitle}" type="text" class="hd_s_input f14 f_wr" placeholder="搜索活动" />
+    <input name="submit" type="submit" class="hd_s_b f_wr" value="找活动" />
+    </form>
+</div>

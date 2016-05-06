@@ -1,0 +1,215 @@
+body {
+  background-color: #fff;
+}
+.h-unknown-pay-header {
+  display: -webkit-box;
+  display: flex;
+  margin: 0px 15px;
+  height: 40px;
+  border-bottom: 1px solid #ddd;
+}
+.h-unknown-pay-header > div:nth-child(1) {
+  text-align: left;
+}
+.h-unknown-pay-header > div:nth-child(1) span {
+  font-size: 30px;
+  color: #ea5504;
+}
+.h-unknown-pay-header > div:nth-child(2) {
+  text-align: right;
+}
+.h-unknown-pay-header div {
+  -webkit-box-flex: 1;
+          flex: 1;
+  line-height: 40px;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+              -ms-grid-row-align: center;
+          align-items: center;
+}
+.h-unknown-pay-art {
+  margin: 15px 15px 0;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+.h-unknown-pay-art > header {
+  padding: 0px 0 10px;
+}
+.h-unknown-pay-art > ul {
+  list-style: disc inside;
+}
+.h-unknown-pay-sec1,
+.h-unknown-pay-sec2 {
+  display: -webkit-box;
+  display: flex;
+  margin: 0px 15px;
+  padding: 15px 0 15px 0;
+  border-bottom: 1px solid #ddd;
+}
+.h-unknown-pay-sec1 > div,
+.h-unknown-pay-sec2 > div {
+  -webkit-box-flex: 1;
+          flex: 1;
+}
+.h-unknown-pay-sec1 > div:nth-child(1),
+.h-unknown-pay-sec2 > div:nth-child(1) {
+  text-align: left;
+}
+.h-unknown-pay-sec1 > div:nth-child(2),
+.h-unknown-pay-sec2 > div:nth-child(2) {
+  text-align: right;
+}
+.h-unknown-pay-sec2 {
+  color: #efefef;
+}
+.h-unknown-pay-sec2 > div:nth-child(1) {
+  text-align: left;
+  -webkit-box-flex: 1;
+          flex: 1;
+}
+.h-unknown-pay-sec2 > div:nth-child(2) {
+  text-align: right;
+  -webkit-box-flex: 2;
+          flex: 2;
+}
+.h-unknown-pay-sec2 > div:nth-child(3) {
+  text-align: right;
+  -webkit-box-flex: 0.3;
+          flex: 0.3;
+}
+.h-unknown-pay-sec2 > div:nth-child(3) img {
+  height: 30px;
+  margin-top: -5px;
+}
+.h-unknown-pay-sec2 > div {
+  height: 20px;
+  line-height: 20px;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+              -ms-grid-row-align: center;
+          align-items: center;
+}
+.h-unknown-pay-sec3 {
+  margin: 5px 15px;
+  text-align: right;
+}
+.h-unknown-pay-sec3 span {
+  color: #ea5504;
+}
+.h-unknown-pay-footer {
+  position: absolute;
+  left: 10%;
+  bottom: 10px;
+  width: 80%;
+}
+.h-unknown-pay-footer button {
+  width: 100%;
+  height: 30px;
+  background: #ea5504;
+  color: #fff;
+  font-size: 18px;
+  line-height: 30px;
+  border: none;
+  border-radius: 5px;
+}
+.h-unknown-Cpay-header {
+  margin: 15px;
+}
+.h-unknown-Cpay-header img {
+  width: 100%;
+}
+.h-unknown-Cpay-1 {
+  margin: 0px 15px;
+  clear: both;
+}
+.h-unknown-Cpay-1 > header span:nth-child(1) {
+  padding-right: 5px;
+  border-right: 1px solid #ddd;
+}
+.h-unknown-Cpay-1 > header span:nth-child(2) {
+  font-size: 14px;
+  color: #ccc;
+}
+.h-unknown-Cpay-1 i {
+  text-decoration: line-through;
+}
+.h-unknown-Cpay-1 ul {
+  margin-top: 10px;
+}
+.h-unknown-Cpay-1 li {
+  width: 48%;
+  height: 40px;
+  margin-bottom: 5px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.h-unknown-Cpay-1 li span {
+  font-size: 14px;
+  color: #ccc;
+}
+.h-unknown-Cpay-1 li span i {
+  padding-left: 5px;
+  font-size: 12px;
+}
+.h-unknown-Cpay-1 li:nth-child(even) {
+  float: right;
+}
+.h-unknown-Cpay-1 li:nth-child(odd) {
+  float: left;
+}
+.h-unknown-Cpay-input {
+  display: -webkit-box;
+  display: flex;
+  height: 40px;
+  margin: 15px 15px;
+  line-height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.h-unknown-Cpay-input div {
+  height: 40px;
+  line-height: 40px;
+}
+.h-unknown-Cpay-input div:nth-child(1) {
+  -webkit-box-flex: 1.5;
+          flex: 1.5;
+}
+.h-unknown-Cpay-input div:nth-child(1) input[type="tel"] {
+  width: 100%;
+  height: 40px;
+  margin: 0 5px;
+  border: none;
+}
+.h-unknown-Cpay-input div:nth-child(2) {
+  -webkit-box-flex: 1;
+          flex: 1;
+  margin: 0 5px;
+}
+.h-unknown-Cpay-input div:nth-child(2) > i {
+  display: block;
+  width: 20px;
+  height: 20px;
+  float: right;
+  margin-top: 10px;
+  color: #fff;
+  line-height: 19px;
+  text-align: center;
+  background: #000;
+  border-radius: 100%;
+}
+.h-unknown-Cpay-input div:nth-child(3) {
+  -webkit-box-flex: 0.4;
+          flex: 0.4;
+  text-align: center;
+  border-left: 1px solid #ddd;
+}
+.h-unknown-Cpay-input div:nth-child(3) img {
+  width: 30px;
+  height: 30px;
+  margin: 5px auto;
+}

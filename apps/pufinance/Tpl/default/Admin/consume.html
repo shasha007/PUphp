@@ -1,0 +1,49 @@
+<include file="../Public/header" />
+<div class="so_main">
+    <include file="../Public/tabs" />
+	<include file="userTab" />
+	<hr>
+    <div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=transaction">
+			姓名：<input name="realname" type="text" value="{$Think.post.realname}">&nbsp;&nbsp;
+			身份证号：<input type="text" value="{$Think.post.ctfid}" name="ctfid" />&nbsp;&nbsp;
+			类型：<select name="t">
+				<option value="all">--请选择--</option>
+				<?php foreach($types as $k=>$item):?>
+				<option value="<?php echo $k;?>" <?php if($k == $type):?>selected<?php endif;?>><?php echo $item;?></option>
+				<?php endforeach;?>
+			</select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+		<span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>用户ID</th>
+                <th>姓名</th>
+                <th>身份证号</th>
+				<th>PU币</th>
+				<th>备注</th>
+				<th>时间</th>
+            </tr>
+			<?php foreach($data as $item):?>
+			<tr overstyle='on' id="list_<?php echo $item['out_uid'];?>">
+					<td><?php echo $item['out_uid'];?></td>
+					<td><?php echo $item['realname'];?></td>
+					<td><?php echo $item['ctfid'];?></td>
+					<td><?php echo $item['out_money'];?></td>
+					<td><?php echo $item['out_title'];?></td>
+					<td><?php echo date('Y-m-d H:i:s',$item['out_ctime']);?></td>
+			</tr> 
+			<?php endforeach;?>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="../Public/footer" />

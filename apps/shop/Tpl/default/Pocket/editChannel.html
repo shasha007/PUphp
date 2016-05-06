@@ -1,0 +1,35 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="page_tit"></div>
+    <form action="{:U('shop/Pocket/doEditChannel')}" method="post">
+        <input type="hidden" name="id" value="{$list.id}">
+        <div class="form2">
+            <dl class="lineD">
+                <dt>类别：<span style="color: #F00">*</span></dt>
+                <dd>
+                    <select name="mark">
+                        <option value="1">个人</option>
+                        <option value="2">平台</option>
+                    </select>
+                    <span class="cGray2">（类别为平台是无需填写渠道名称）</span>
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>渠道名称：</dt>
+                <dd>
+                    <input name="real" type="text" value="{$list.real}" size="130">
+                </dd>
+            </dl>
+
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="提 交" />
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+
+</script>
+<include file="_footer" />

@@ -1,0 +1,96 @@
+<include file="../Teacher/_header" />
+
+<div class="so_main">
+  <include file="_tab" />
+    发起活动时，活动会归类于某校方组织或院系。例如校团委，校学生会。。。添加初级审核人时，也会要求选择校方组织。
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="add_tab()"><span>添加组织</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="del()"><span>删除组织</span></a>
+    </div>
+
+    <div class="list">
+        <input type="hidden" id="cat1" value="【<?php echo(getSchoolOrgaCat(1));?>】"/>
+        <input type="hidden" id="cat2" value="【<?php echo(getSchoolOrgaCat(2));?>】"/>
+      <form action="{:U('/Admin/doEditType')}" method="POST">
+        <table id="event_list" width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th class="line_l">ID</th>
+            <th class="line_l">组织名</th>
+            <th class="line_l">归类</th>
+            <th class="line_l">排序</th>
+            <th class="line_l">操作</th>
+          </tr>
+          <volist name="list" id='vo'>
+          <tr id="{$vo.id}">
+            <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+            <td>{$vo.id}</td>
+            <td id="title_{$vo.id}">{$vo.title}</td>
+            <td id="cat_{$vo.id}">【{$vo.cat|getSchoolOrgaCat}】</td>
+            <td>
+                <a href="javascript:void(0)" class="ico_top" onclick="move('{$vo['id']}','up');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>&nbsp;&nbsp;
+                <a href="javascript:void(0)" class="ico_btm" onclick="move('{$vo['id']}','down');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>
+            </td>
+            <td><a href="javascript:edit_tab({$vo['id']})">编辑</a> <a href="javascript:del({$vo['id']})">删除</a></td>
+          </tr>
+          </volist>
+        </table>
+      </form>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="add_tab()"><span>添加组织</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="del()"><span>删除组织</span></a>
+    </div>
+
+</div>
+<include file="../Teacher/_footer" />
+<script>
+    function add_tab(id){
+        ui.box.load('__URL__&act=editOrga&id='+id,{title:'增加组织'});
+    }
+    function edit_tab(id){
+        ui.box.load('__URL__&act=editOrga&id='+id,{title:'编辑组织'});
+    }
+    function del(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            alert('请选择要删除的组织！');return false;
+        }
+        if( confirm("是否删除组织？") ){
+            $.post( '__URL__&act=doDeleteOrga',{id:id},function(text ){
+                if( text == 1 ){
+                    ui.success( "删除多个组织成功" );
+                    var id_list = id.split( ',' );
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#'+id_list[j]).remove();
+                    }
+                }else if( text == 2 ){
+                    ui.success( "删除成功" );
+                    $('#'+id).remove();
+                }else{
+                    ui.error( "删除失败" );
+                }
+            });
+        }
+    }
+    function move(app_id, direction) {
+	var baseid  = direction == 'up' ? $('#'+app_id).prev().attr('id') : $('#'+app_id).next().attr('id');
+        if(!baseid) {
+            direction == 'up' ? ui.error('已经是最前面了') : ui.error('已经是最后面了');
+        }else {
+            $.post("{:U('event/Config/doOrgaOrder')}", {id:app_id, baseid:baseid}, function(res){
+                if(res == '1') {
+                    //交换位置
+                    direction == 'up' ? $('#'+app_id).insertBefore('#'+baseid) : $("#"+app_id).insertAfter('#'+baseid);
+                }else {
+                    ui.error('保存失败');
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,100 @@
+<include file="_header" />
+
+<script>
+    
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要删除的泡泡");
+                return false;
+            }
+            if( confirm("是否删除泡泡？删除后无法恢复") ){
+                $.post( '__URL__&act=put_course_to_recycle',{gid:id},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个泡泡成功" );
+                        var id_list = id.split( ',' );
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove();
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        }
+    }
+    var c = null;
+</script>
+
+<div class="so_main">
+    <include file="_tab" />
+    <div class="form2" style="padding-bottom: 10px">
+        <form action="__URL__&act=index" method="post">
+            内容：<input name="title" type="text" value="{$_POST['title']}">
+
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除泡泡</span></a>
+    </div>
+
+    <div class="list">
+        <table id="document_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="-1">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>泡泡</th>
+                <th>评论数</th>
+                <th>发布者</th>
+                <th>所属学校</th>
+                <th>发布时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><a href="__URL__&act=detail&id={$vo.id}">{$vo.content|getShort=###,15,'…'}</a></td>
+                    <td>{$vo.backCount}</td>
+                    <td>{$vo['uid']|getUserRealName}</td>
+                    <td>{$vo.sid|getSchoolTitle}</td>
+                    <td>{$vo['cTime']|friendlyDate}</td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+                        <?php if($vo['recommend'] != 1){echo "<a href=".U('forum/Admin/recommendToWeibo','id='.$vo['id']).'&uid='.$vo['uid'].">推荐到微博</a>" ;}?>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除泡泡</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+    var c = new ctrl();
+</script>
+<include file="_footer" />

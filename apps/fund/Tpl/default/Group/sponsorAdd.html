@@ -1,0 +1,227 @@
+<link href="../Public/css/fund_admin.css" rel="stylesheet" type="text/css" />
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <include file="_act_tab" />
+    </div>
+    <div class="list">
+        <form ENCTYPE="multipart/form-data" action="__URL__&act=doAddSponsor" method="post" id='form' onsubmit="return check();">
+            <input type="hidden" name='id' value="{$id}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="200px;">*公司名称：</td>
+                    <td><input type="text" id='company' name='company' value="{$company}"></td>
+                </tr>
+                <tr>
+                    <td>*投资类型：</td>
+                    <td><input type="text" id='type' name='type' value="{$type}"> 目标投资类型，如：互联网类</td>
+                </tr>
+                <tr>
+                    <td>*投资金额范围：</td>
+                    <td><input type="text" id='money' name='money' value="{$money}"> 如：1000-50万</td>
+                </tr>
+                <tr>
+                    <td>*所需材料：</td>
+                    <td><input type="text" id='stuff' name='stuff' value="{$stuff}"> 需要的文案资料，如：商业计划书</td>
+                </tr>
+                <?php if($areas):?>
+                    <?php foreach($areas as $k=>$v):?>
+                        <tr id="area">
+                            <?php if($k==0):?>
+                            <td id="areaAdd">投资地区：<a href="javascript:void(0);" onclick="add();">[增加投资地区]</a></td>
+                            <?php else:?>
+                            <td id="areaAdd"><a href="javascript:void(0);" onclick="delArea(this);">[删除此地区]</a></td>
+                            <?php endif;?>
+                            <td>
+                                <select name="prov[]" onChange="changeProv(this)">
+                                    <option value="0" >-所有学校-</option>
+                                    <volist name="provs" id="vo">
+                                        <option value="{$vo['id']}" <?php if($v['prov']==$vo['id']):?>selected<?php endif;?>>{$vo.title}</option>
+                                    </volist>
+                                </select>
+                                <?php if($v['citys']):?>
+                                <select name="city[]" onChange="getSchools(this)">
+                                    <option value="0" >-全部-</option>
+                                    <volist name="v.citys" id="citys">
+                                        <option value="{$citys['id']}" <?php if($v['city']==$citys['id']):?>selected<?php endif;?>>{$citys.city}</option>
+                                    </volist>
+                                </select>
+                                <?php else:?>
+                                    <select name="city[]" onChange="getSchools(this)" style="display:none;"></select>
+                                <?php endif;?>
+                                <?php if($v['schools']):?>
+                                <span>
+                                    <input name="schools{$v['city']}[]"  type='checkbox' onclick="checkAll(this,{$v['city']})" value='0'
+                                           <?php if(in_array(0,$v['sids'])):?> checked<?php endif;?> />全部
+                                    <volist name="v['schools']" id="schools">
+                                        &nbsp;&nbsp;<input name="schools{$v['city']}[]" type='checkbox' value="{$schools.id}" 
+                                        <?php if(in_array($schools['id'],$v['sids'])):?> checked<?php endif;?> />{$schools.title}
+                                    </volist>
+                                </span>
+                                <?php else:?>
+                                <span style="display:none;"></span>
+                                <?php endif;?>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                <?php else:?>
+                <tr id="area">
+                    <td id="areaAdd">投资地区：<a href="javascript:void(0);" onclick="add();">[增加投资地区]</a></td>
+                    <td>
+                        <select name="prov[]" onChange="changeProv(this)">
+                            <option value="0" >-所有学校-</option>
+                            <volist name="provs" id="vo">
+                                <option value="{$vo['id']}" >{$vo.title}</option>
+                            </volist>
+                        </select>
+                        <select name="city[]" onChange="getSchools(this)" style="display:none;">
+                        </select>
+                        <span style="display:none;"></span>
+                    </td>
+                </tr>
+                <?php endif;?>
+                <tr id="addArea">
+                    <td>*投资收益要求：</td>
+                    <td><input type="text" id='win' name='win' value="{$win}"> 如：30%</td>
+                </tr>
+                <tr>
+                    <td>*投资期限：</td>
+                    <td><input type="text" id='month' name='month' value="{$month}"> 如：2-12个月</td>
+                </tr>
+                <tr>
+                    <td>详情附件：（不必填）</td>
+                    <td>
+                        <div id="uploaded_files1">
+                            <?php if(isset($attachId) && $attachId>0):?>
+                            <div id="attach1" class="attach_span">
+                                <span class="attach_title">{$attach.name}</span>
+                                <a href="javascript:void(0)" onclick="delFile(1,1)">删除</a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                        <input type="button" onclick="openUploadFile(1);" value="上传文件"/>
+                        <br /><span class="cGray2">（支持格式jpg,gif,png,jpeg,bmp,zip,rar,doc,xls,ppt,docx,xlsx,pptx,pdf）</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>描述</td>
+                    <td>规则与要求：<textarea id="content" name="content" style="width:700px;height:350px">{$content}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="page_btm"><input class="btn_b" type="submit" value='确认'></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<include file="_footer" />
+<include file="__THEME__/comm/kindeditor" />
+<include file="__THEME__/comm/_upload_file" />
+<script type="text/javascript">
+    var fileCount = [0,<?php if($attachId):?>1<?php else:?>0<?php endif;?>];
+    var fileMax = [0, 1];
+    var attach_type = 'fund_group';
+    function getSchools(obj) {
+        var span = $(obj).siblings('span');
+        if ($(obj).val() == 0) {
+            span.hide();
+            return false;
+        }
+        span.show();
+        span.empty();
+        var cityId = $(obj).val();
+        $.get(U('home/Ad/school'), {cityId: cityId}, function (data) {
+            var json = $.parseJSON(data);
+            var string = "<input name='schools" + cityId + "[]'  type='checkbox' onclick='checkAll(this," + cityId + ")' value='0' checked />全部";
+            $.each(json, function (k, v)
+            {
+                string += "&nbsp;&nbsp;<input name='schools" + cityId + "[]' type='checkbox' value='" + v.id + "' checked />" + v.title;
+            });
+            span.append(string);
+
+        });
+    }
+    function changeProv(obj) {
+        var sid = $(obj).siblings('span');
+        var city = $(obj).siblings('select');
+        var provId = $(obj).val();
+        city.empty();
+        sid.empty();
+        if (provId == 0) {
+            city.hide();
+            return false;
+        }
+        city.show();
+        $.get('__URL__&act=getCitys', {provId: provId}, function (data) {
+            var json = $.parseJSON(data);
+            var option = '<option value="0" >-全部-</option>';
+            $.each(json, function (k, v){
+                option += "<option value=\"" + v['id'] + "\">" + v['city'] + "</option>";
+            });
+            city.append(option);
+        });
+    }
+    function add(){
+        var obj = $('#area').clone(true).insertBefore("#addArea");
+        $(obj).find('span').empty();
+        $(obj).find('#areaAdd').html('<a href="javascript:void(0);" onclick="delArea(this);">[删除此地区]</a>');
+        $(obj).find('select').eq(1).empty().hide();
+    }
+    function delArea(obj){
+        $(obj).parent().parent().remove();
+    }
+    function checkAll(o,cityId){
+        if( o.checked == true ){
+            $('input[name="schools'+cityId+'[]"]').attr('checked','true');
+        }else{
+            $('input[name="schools'+cityId+'[]"]').removeAttr('checked');
+        }
+    }
+    function check() {
+        return true;
+        if (!$('#company').val()) {
+            ui.error("申请公司不能为空");
+            return false;
+        }
+        if (!$('#eventName').val()) {
+            ui.error("活动名称不能为空");
+            return false;
+        }
+        var ctime = $('#ctime').val();
+        if (!ctime) {
+            ui.error("活动开始时间不能为空");
+            return false;
+        }
+        var endtime = $('#endtime').val();
+        if (!endtime) {
+            ui.error("活动结束时间不能为空");
+            return false;
+        }
+        if (endtime < ctime) {
+            ui.error("活动结束时间不能小于开始时间");
+            return false;
+        }
+        var bytime = $('#bytime').val();
+        if (!bytime) {
+            ui.error("申办截止时间不能为空");
+            return false;
+        }
+        if (bytime > ctime) {
+            ui.error("申办截止日期不能大于活动开始日期");
+            return false;
+        }
+        return true;
+    }
+    var imgCount = [0, 0, 0];
+    var imgMax = [0, 1, 1];
+    var thumbSizeW = [0, 100, 600];
+    var thumbSizeH = [0, 100, 300];
+    var showW = [0, 60, 120];
+    var showH = [0, 60, 60];
+    var imgId = 0;
+    var attach_type = 'fund';
+</script>
+<include file="__THEME__/comm/_upload_file" />

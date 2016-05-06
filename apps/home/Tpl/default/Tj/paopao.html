@@ -1,0 +1,43 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="javascript:history.back(-1)"><<返回<<</a></li></ul>
+    </div>
+    <div class="page_tit">3. 吐泡泡统计</div>
+    <div class="list">
+        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+            <form method='post' action="{:U('home/Tj/paopao1')}" onsubmit="return checkMon(1);">
+                <td>1. <input type="submit" value='导出'></td>
+                <td>发布时间 | 所属学校 | 回复数 | 阅读数 | 赞 &nbsp;&nbsp;&nbsp;&nbsp;
+                月份<input size="10"  type='text' id='mon1' name='mon' value="">格式2014-12</td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/taShowPhoto')}" onsubmit="return checkMon(2);">
+                <td>2. <input type="submit" value='导出'></td>
+                <td>TA秀发布照片信息
+                月份<input size="10"  type='text' id='mon2' name='mon' value="">格式2014-12</td>
+            </form>
+            </tr>
+            <tr>
+            <form method='post' action="{:U('home/Tj/taShowGift')}" onsubmit="return checkMon(3);">
+                <td>3. <input type="submit" value='导出'></td>
+                <td>TA秀礼物信息
+                月份<input size="10"  type='text' id='mon3' name='mon' value="">格式2014-12</td>
+            </form>
+            </tr>
+        </table>
+    </div>
+    </div>
+<script type="text/javascript">
+    function checkMon(i){
+        if($('#mon'+i).val() == ''){
+            alert('请输入月份');
+            $('#mon'+i).focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<include file="_footer" />

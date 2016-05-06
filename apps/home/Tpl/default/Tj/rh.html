@@ -1,0 +1,43 @@
+<include file="_header" />
+<div class="so_main">
+    <div class="tit_tab">
+        <ul><li><a href="__URL__&act=userActive"><<返回<<</a></li></ul>
+    </div>
+    <include file="_rhtab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="text-align:right;">日期</th>
+                <th style="text-align:right;">日活 (在校)<br/>日登陆/总人数</th>
+                <th style="text-align:right;">月活 (在校)本月累计<br/>月累计登陆/总人数</th>
+                <th style="text-align:right;">日登陆 (在校/总数)</th>
+                <th style="text-align:right;">月累计登陆 (在校/总数)</th>
+                <th style="text-align:right;">总人数 (在校/总数)</th>
+                <th style="text-align:right;">初始化人数 (在校/总数)</th>
+                <th style="text-align:right;"> </th>
+            </tr>
+            <volist id="vo" name="data">
+                <tr overstyle='on' style="text-align:right;">
+                    <td>{$vo.day}</td>
+                    <td><?php echo(money2xs($vo['tj_dlogin']/$vo['tj_user']*10000));?>%</td>
+                    <td><?php echo(money2xs($vo['tj_mlogin']/$vo['tj_user']*10000));?>%</td>
+                    <td>{$vo.tj_dlogin}<br/>{$vo.all_dlogin}</td>
+                    <td>{$vo.tj_mlogin}<br/>{$vo.all_mlogin}</td>
+                    <td>{$vo.tj_user}<br/>{$vo.all_user}</td>
+                    <td>{$vo.tj_init}<br/>{$vo.all_init}</td>
+                    <td> </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录 </span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="_footer" />

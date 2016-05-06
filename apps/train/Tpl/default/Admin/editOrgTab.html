@@ -1,0 +1,57 @@
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<include file="__THEME__/comm/_datepicker" />
+<div style="height:380px;width:600px;margin:10px auto 30px auto;overflow-y:scroll;">
+    <form id="org" method="post" enctype="multipart/form-data"    <if condition="$id"> action="__URL__&act=doEditOrg" <else/> action="__URL__&act=doAddOrg" </if>>
+        机构名称：<input id="name"  name ="name" class="txt" value ="{$name}" /></br> </br>
+        签约到期时间：<input id="eday" name="eday" type="text" value="{$eday}" onfocus="rcalendar(this,'dateonly');" /></br> </br>
+        机构链接地址：<input id="link"  name ="link" class="txt" value ="{$link}" size="45"/>
+        <if condition="$id"><input type="hidden"  name='id' id="id" class="txt" value ="{$id}" /></if> </br> </br>
+        机构简介：<textarea id='description' name="description" style="width:450px;height:100px;border:1px solid #ccc;">{$description}</textarea> </br> </br>
+        机构logo：<if condition="$logo">
+            <img src="{$logo|tsMakeThumbUp=###,100,100,'f'}">
+        </if>
+        <input name="logo" id="logo" name="logo" type="file" />
+        <br/><span class="cGray2">（尺寸为300*200）</span>
+    </form>
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="editType()" value="确定" />
+</div>
+<script>
+    function editType( ){
+        var name = $( '#name' ).val();
+        if(getLength(name.replace(/\s+/g,"")) == 0){
+            alert("机构名称不能为空");
+            return false;
+        }
+        if($( '#name' ).val().length >20) {
+            alert("机构名称不能超过19个字");
+            return false;
+        }
+        var eday = $( '#eday' ).val();
+        if(!eday || eday=='0000-00-00') {
+            alert("签约到期时间不能为空");
+            return false;
+        }
+        if($( '#description' ).val().length <=0) {
+            alert("机构简介不能为空");
+            return false;
+        }
+
+        var options = {
+            success:function(txt){
+                var json = $.parseJSON(txt);
+                if(json.status ==0){
+                    ui.error(json.info);
+                    return ;
+                }else{
+                    ui.box.close();
+                    ui.success(json.info);
+                    window.location.reload(true);
+                }
+            }
+        };
+
+        $("#org").ajaxSubmit( options );
+    }
+</script>

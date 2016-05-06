@@ -1,0 +1,31 @@
+<include file="../GroupPublic/_mhead" />
+<script>
+    function clearnotice() {
+        if(confirm('你确定要清空群的公告吗？')){
+            document.noticeform.announce.value = '';
+            document.noticeform.submit();
+        }
+    }
+    function checknotice() {
+        var length = getLength(document.noticeform.announce.value);
+        if (length > 60) {
+            ui.error('公告不能超过60个字')
+            return false;
+        }
+        return true;
+    }
+</script>
+<div class="st_m_t ml50 b f14">发布公告</div>
+<div class="clear"></div>
+<form action="{:U('event/GroupManage/announce',array('gid'=>$gid))}" method="post" name="noticeform" onSubmit="return checknotice();">
+    <div class="st_m3_text mt10 ml50">
+        <textarea name="announce" cols="" rows="" class="st_textarea1" placeholder="请输入文字">{$groupinfo['announce']}</textarea>
+    </div>
+    <div class="mt20 ml50 st_fl">
+        <input type="hidden" name="gid" value="{$gid}">
+        <input type="hidden" name="editsubmit" value="1">
+        <input name="gg_tj" type="submit" value="发 布" id="button" class="st_f_btn" />
+        <input name="gg_c" type="reset" value="清 除"  id="button2" class="st_f_btn ml10"  onClick="clearnotice();" /></div>
+</div>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

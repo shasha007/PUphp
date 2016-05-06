@@ -1,0 +1,181 @@
+@charset "utf-8";
+/* CSS Document */
+*{ padding:0;margin:0;list-style:none;}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+table,td{margin:auto;padding:inherit;}
+select, input, img{ vertical-align:middle;}
+a{ text-decoration:none;}
+a:link {color:#666;}
+a:visited{ color:#666;}
+a:hover,a:active, a:focus {color:#999; text-decoration:underline;}
+body {
+	font-family: "宋体","MingLiu","Lucida Sans Unicode", "Lucida Grande", "sans-serif",;
+	font-size: 12px;
+	line-height:160%;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	color: #666;
+	text-decoration: none;
+	background-color: #f5f5f5;
+	background-image: none;
+	background-repeat: no-repeat;
+	letter-spacing: normal;
+	text-align: left;
+	word-spacing: normal;
+	white-space: normal;
+	display: block;
+	clear: both;
+	float: none;
+	width: auto;
+	position: static;
+	height: auto;
+	top: auto;
+	clip: rect(auto,auto,auto,auto);
+}
+.clear{ clear:both;}
+/*公用*/
+.b{ font-weight:bold;}
+.f14{ font-size:14px;}
+.f16{ font-size:16px;}
+.f18{ font-size:18px;}
+.f20{ font-size:20px;}
+.f24{ font-size:22px; font-family:Arial, Helvetica, sans-serif;}
+.fw{ font-family:"微软雅黑";}
+.fh{ font-family:"黑体";}
+.mt5{ margin-top:5px;}
+.mt10{ margin-top:10px;}
+.mt20{ margin-top:20px;}
+.mt50{ margin-top:50px;}
+.ml10{ margin-left:10px; display:inline;}
+.ml20{ margin-left:20px; display:inline;}
+.pt50{ padding-top:50px;}
+.c1{color:#F16241;}
+.c3{ color:#333;}
+.c3 a{ color:#333;}
+.c3 a:hover{ color:#555;}
+.c9{ color:#999;}
+.lh20{line-height:20px;}
+.lh22{line-height:22px;}
+.lh24{ line-height:24px; }
+.lh26{ line-height:26px; }
+.tcenter{ text-align:center;}
+.fl{ float:left;}
+.bg{ float:left; width:100%;}
+.main{ width:1000px; margin:auto;}
+.content_fund{ float:left; width:1000px;background:#fff; padding-bottom:10px; }
+/*活动基金列表页*/
+.fund_menu{ float:left; width:980px; margin:20px auto auto 10px; display:inline; border-bottom:1px solid #dedede; padding-bottom:5px;text-indent:10px;}
+.fund_list{ float:left; width:970px; margin-left:20px; display:inline;}
+.fund_list ul{ float:left; width:100%;}
+.fund_list li{ float:left; width:220px; margin:10px; display:inline; padding-bottom:10px;}
+.fund_list li:hover,.fund_list1 li:hover{ background:#f1f1f1;}
+.fund_list_thumb{ height:220px; float:left; width:220px;}
+.fund_list_thumb img{ width:220px; height:220px;}
+.fund_list_title{ float:left; width:200px; padding:0 5px; height:26px; line-height:26px; overflow:hidden;text-overflow: ellipsis;white-space: nowrap;}
+.fund_list_org{ float:left; width:200px; line-height:24px; padding:0 5px;}
+.fund_list_status{ float:left; height:36px; background:url(../images/fund_icon.png) no-repeat left -121px; line-height:36px; width:140px; margin-left:10px; display:inline;}
+.fund_list_status.fund1{ background:url(../images/fund_icon.png) no-repeat left -63px; color:#fff;}
+.fund_list_status.fund2{ background:url(../images/fund_icon.png) no-repeat left -121px; opacity:0.6; color:#f00;}
+.fund_list_status a{ color:#fff; width:140px; height:36px; display:block;}
+.fund_list_status a:hover,.fund_list_status a:link,.fund_r_cbtn a:hover,.fund_r_cbtn a:link,.fund_list_edit a:hover,.fund_list_edit a:link,.fund_list_status1 a:hover,.fund_list_status1 a:link{ text-decoration:none;}
+.fund_list_edit{ float:left; height:36px; background:url(../images/fund_icon.png) no-repeat -148px -63px;  color:#666; line-height:36px; width:50px; margin-left:10px; display:inline;}
+.fund_list_edit.fund3{background:url(../images/fund_icon.png) no-repeat -148px -121px;opacity:0.6; }
+.fund_list_edit a{ color:#fff; width:50px; height:36px; display:block;}
+.fund_list_status1{ float:left; height:36px; background:url(../images/fund_icon.png) no-repeat -199px -294px; line-height:36px; width:180px; margin-left:20px; display:inline;}
+.fund_list_status1.fund4{ background:url(../images/fund_icon.png) no-repeat left -294px; color:#fff;}
+.fund_list_status1 a{ color:#fff; width:180px; height:36px; display:block; text-decoration:none;}
+/*申办基金列表*/
+.fund_left{ float:left; width:760px;}
+.fund_left_menu{ float:left; border-bottom:1px solid #dedede; padding-bottom:5px;text-indent:10px; width:740px; margin:20px auto auto 10px; display:inline;}
+.fund_left_back{ float:right; margin:-22px 15px 0 0; display:inline;}
+.fund_left_back a{ color:#f16241;}
+.fund_left_back a:hover{}
+.fund_list1{ float:left; width:720px; margin-left:20px; display:inline;}
+.fund_list1 ul{ float:left; width:100%;}
+.fund_list1 li{ float:left; width:220px; margin:20px 10px auto 10px; display:inline; padding-bottom:10px; position:relative;}
+.fund_list1_end{ float:left; background:url(../images/fund_icon.png) no-repeat left -179px; width:150px; height:96px; position:absolute; top:210px; left:65px; opacity:0.6;}
+.fund_right{ float:right; width:220px; margin:15px 10px auto auto; display:inline;}
+.fund_r_menu{ float:left; width:220px; background:url(../images/fund_icon.png) no-repeat left top; height:45px;}
+.fund_r_c{ float:left; border-bottom:1px solid #eee; border-left:1px solid #eee; border-right:1px solid #eee; width:218px; padding-bottom:10px;}
+.fund_r_cmoney{ float:left; width:200px; margin-left:9px; display:inline; font-size:30px; line-height:30px;}
+.fund_r_cbtn{ float:left; width:180px; margin-left:19px; display:inline;background:url(../images/fund_icon.png) no-repeat left -294px; height:36px; line-height:33px;}
+.fund_r_cbtn a{ width:180px; display:block; height:36px; color:#fff;}
+.fund_r_area{ float:left; border:1px solid #eee; width:218px;}
+.fund_r_title{ float:left; width:200px; margin-left:9px; display:inline; border-bottom:1px solid #dedede; text-indent:5px; margin-top:5px;}
+.fund_r_more{ float:right; width:50px; margin-top:-20px; text-align:right; margin-right:10px; display:inline;}
+.fund_r_more a{ color:#ff704d;}
+.fund_r_more a:hover{ color:#ff704d;}
+.fund_r_list{ float:left; width:200px; margin:5px 0;}
+.fund_r_list ul{ float:left; width:100%;}
+.fund_r_list li{ float:left; width:200px; margin:5px auto auto 9px; display:inline; border-bottom:1px dotted #ddd; padding-bottom:5px;}
+.fund_r_list_thumb{ float:left; width:38px; border:1px solid #dedede; padding:1px; background:#fff;}
+.fund_r_list_thumb img{ width:38px; height:38px;}
+.fund_r_list_desc{float:left; width:190px; padding:0 5px;line-height:18px;}
+.fund_r_list_desc1{float:left; width:148px; padding:0 5px;line-height:18px;}
+
+.c2{color:#1aadeb;}
+/*上下滚动区域*/
+#scrollDiv1{width:218px;max-height:120px;min-height:40px;line-height:20px;overflow:hidden;}
+#scrollDiv2{width:218px;max-height:120px;min-height:40px;line-height:20px;overflow:hidden}
+#scrollDiv3{width:218px;max-height:120px;min-height:40px;line-height:20px;overflow:hidden}
+/*动态列表*/
+.fund_newslist{ float:left; width:720px;}
+.fund_newslist ul{ float:left; width:100%;}
+.fund_newslist li{ float:left; width:700px; border-bottom:1px dotted #eee; margin:10px auto auto 20px; display:inline; padding-bottom:5px; padding-left:5px;}
+.fund_newslist_thumb{ float:left; width:48px;  border:1px solid #eee; padding:1px; background:#fff;}
+.fund_newslist_thumb img{ width:48px; height:48px;}
+.fund_newslist_title{ float:left; width:500px; display:inline;line-height:24px; margin-left:10px; display:inline;}
+.fund_newslist_title1{ float:left; width:500px; display:inline;line-height:24px;}
+.fund_newslist_date{ float:right; width:100px; text-align:right;}
+/*申请内容弹出框*/
+.fund_pop {width:710px; min-height:300px; background:#fff;overflow-y:scroll;height:600px;}
+.fund_poptitle{ float:left; height:40px; line-height:40px; background:#eb6848; color:#fff; width:700px; padding-left:10px; }
+.fund_popclose{ float:right; width:30px; margin:-34px auto auto auto; display:inline;}
+.fund_popclose img{ width:30px; height:30px;}
+.fund_popcon{ float:left; width:670px; margin:15px auto auto 20px; display:inline; padding-bottom:30px;}
+.fund_popcon_title{ float:left; width:670px;}
+.fund_popcon_note{ float:left; width:670px;}
+.fund_popcon_pic{ float:left; width:670px;}
+
+.fund_popcon_text{ float:left; width:650px; margin:15px auto auto 10px; display:inline; line-height:22px;}
+.fund_popcon_h{ float:left; width:650px;}
+.fund_popcon_desc{ float:left; width:650px;}
+.fund_popcon_text p{ text-indent:25px;}
+.fund_popcon_btn{ float:left; margin:20px auto auto 227px; background:url(../images/fund_icon.png) no-repeat left -294px; line-height:36px; width:180px;}
+.fund_popcon_btn a{ color:#fff; width:180px; height:36px; display:block;}
+.fund_popcon_btn a:hover,.fund_popcon_btn a:link{ color:#fff; text-decoration:none;}
+.fund_popcon_select{ float:left; line-height:36px; margin:30px auto 30px 20px; display:inline;}
+
+.fund_popcon_btn1{ border:none;background:url(../images/fund_icon.png) no-repeat left -294px; cursor:pointer; height: 36px; line-height: 36px; width: 180px;color: #fff; font-weight: bold;}
+
+/*填写申请内容*/
+.fund_popcon_fill{ float:left; width:550px; margin:20px auto auto 60px; display:inline; line-height:36px;}
+.fund_popcon_input{ border:1px solid #dedede; padding:0 3px; border-radius:3px; width:400px; height:28px; line-height:28px;}
+.fund_popcon_input1{ border:1px solid #dedede; padding:0 6px; border-radius:3px; height:28px; line-height:28px;}
+
+.tright{ text-align:right;}
+.fund_popcon_file{ background:url(../images/fund_icon.png) no-repeat left -321px; border:1px solid #dedede;}
+.fund_popcon_text1{ float:left; width:550px; }
+.fund_popcon_table{ float:left; border-top:1px solid #ccc; margin-top:20px; padding-top:10px;}
+
+
+/*申请完成*/
+.fund_popcon_success{border:1px solid #bf2817; width:450px;height:160px;position: absolute;top:50%;left: 50%;margin-top: -80px;margin-left: -225px; }
+.fund_popcon_successbg{ float:left;background:url(../images/fund_icon.png) no-repeat left -342px; height:139px; width:136px; margin:-150px auto auto -80px; display:inline;}
+.fund_success_title{ float:left; width:390px;height:40px; line-height:40px; background:#eb6848; color:#fff; padding-left:60px;}
+.fund_success_con{float:left; width:440px;}
+.fund_success_btn{ border:1px solid #dedede; border-radius:3px; height:34px; line-height:34px; cursor:pointer; width:150px; margin-left:145px; display:block;}
+.pl100{ padding-left:100px;}
+/*翻页*/
+.fund_page{clear:both;padding:20px 10px 15px 0;text-align:right}
+.fund_page.plist{ padding-top:25px; padding-bottom:20px;}
+.fund_page a,.fund_page a:visited{background-color:#F6F6F6;border:1px solid #D7D7D7;color:#333;margin-right:10px;padding:5px 10px;line-height:15px;text-decoration:none}
+.fund_page a:hover {margin-right: 10px;border: 1px solid #5ba9d4;color: #033D5A;	background: #6fb9e2;padding: 5px 10px;text-decoration:none; color:#fff;}
+.fund_page a:active{margin-right: 10px;padding: 5px 10px;line-height:15px}
+.fund_page span.current {FONT-WEIGHT: bold;	color: #000;margin-right: 10px;padding: 5px 10px}
+.fund_page span.disabled{color: #333;margin-right: 10px;padding: 5px 10px}
+.fund_page span.quantity{color: #333;margin-right: 10px;padding: 5px 10px}
+/*蒙板*/
+.back{width: 100%;background:#000;height: 100%;position: fixed;z-index: 50;display: none; opacity: 0.5;}

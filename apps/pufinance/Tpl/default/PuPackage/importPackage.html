@@ -1,0 +1,37 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="../Public/excel.js"></script>
+<div class="so_main">
+     <include file="../Public/tabs" />
+    <include file="packageTab" />
+    <div class="form2">
+        <dl class="lineD">
+            <dt>提示：</dt>
+            <dd class="cRed">请上传excel表格，格式【用户uid，金额，类型】，其中类型（1-免息额度 0-总额度）。第一行必须是【用户uid，金额，类型】这3格</dd>
+        </dl>
+        <form id="check" method="post" action="__URL__&act=checkImport" enctype="multipart/form-data">
+            <dl class="lineD">
+                <dt>第一步上传附件：</dt>
+                <dd>
+                    <input type="file" id="file" name="file"/>
+                    <input type="button" class="btn_b" onclick="checkExcel()" value="检查" />
+
+                </dd>
+            </dl>
+        </form>
+        <form id="doit" method="post" action="__URL__&act=doImportPackage">
+        <dl class="lineD" style="display:none" id='step2'>
+            <dt>第二步：</dt>
+            <dd>
+                <input type="hidden" id="reason"  value="1"/>
+                <input type="hidden" id="tmpFile" name="filePath" value=""/>
+                <input type="button" class="btn_b" onclick="doit()" value="提交" />
+            </dd>
+        </dl>
+        </form>
+        <dl class="lineD">
+            <dt>结果：</dt>
+            <dd id="res"></dd>
+        </dl>
+    </div>
+</div>
+<include file="../Public/footer" />

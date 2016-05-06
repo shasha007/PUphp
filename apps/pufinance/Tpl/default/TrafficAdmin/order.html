@@ -1,0 +1,55 @@
+<include file="../Public/header" />
+<script type="text/javascript" src="../Public/js/laydate/laydate.js"></script>
+<div class="so_main">
+    <include file="../Public/trafficTabs" />
+	<div class="Toolbar_inbox">
+        <form method="post" action="__URL__&act=order">
+			用户uid：<input type="number" value="<?php echo $_POST['uid'];?>" name="uid" /><br/>
+			运营商：<select name="opid" id="opid">
+				<option value="all">--请选择运营商--</option>
+				<?php foreach($ops as $item):?>
+				<option value="<?php echo $item['id'];?>" <?php if($item['id'] == $_POST['opid']):?>selected<?php endif;?>><?php echo $item['name'];?></option>
+				<?php endforeach;?>
+			</select><br/>
+			手机号：<input type="text" value="<?php echo $_POST['mobile'];?>" name="mobile" /><br/>
+			状态：<select name="status" id="">
+				<option value="all">--请选择状态--</option>
+				<?php foreach($status as $k=>$item):?>
+				<option value="<?php echo $k;?>" <?php if($k == $_POST['status']):?>selected<?php endif;?>><?php echo $item;?></option>
+				<?php endforeach;?>
+			</select>
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+	<div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>用户uid</th>
+                <th>运营商</th>
+                <th>手机号</th>
+				<th>流量</th>
+				<th>价格</th>
+				<th>创建时间</th>
+				<th>成功时间</th>
+				<th>状态</th>
+            </tr>
+			<?php foreach($data as $item):?>
+			<tr>
+				<td><?php echo $item['uid'];?></td>
+				<td><?php echo $item['name'];?></td>
+				<td><?php echo $item['mobile'];?></td>
+				<td><?php echo $item['flow_value'];?></td>
+				<td>￥<?php echo $item['money'];?></td>
+				<td><?php echo date('Y-m-d H:i:s', $item['ctime']);?></td>
+				<td><?php if($item['etime']):?><?php echo date('Y-m-d H:i:s', $item['etime']);?><?php endif;?></td>
+				<td><?php if($item['status'] == 1):?>充值成功<?php else:?>充值中<?php endif;?></td>
+			</tr>
+			<?php endforeach;?>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+<include file="../Public/footer" />

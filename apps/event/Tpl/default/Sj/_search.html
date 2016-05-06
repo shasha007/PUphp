@@ -1,0 +1,25 @@
+<form action="{$searchUrl}" method="post">
+<div class="Toolbar_inbox">
+    <span>共{$totalRows}条记录</span>
+    <?php if($school['id']==505): ?>
+    学校:<input type="text" id="selectarea" value="{$_POST['sid']|tsGetSchoolName}" readonly="true" OnFocus="$('#_login_school_label').hide();selectSchool()" />
+    <input type="hidden" id="current" name="sid" value="{$_POST['sid']}"/>
+    <?php endif; ?>
+    &nbsp;&nbsp;<select name="type">
+        <option value="0">--请选择申请类别--</option>
+        <?php $types=sjType(); ?>
+        <?php foreach($types as $k=>$vo): ?>
+        <option value="{$k}" <?php if($_POST['type']&&$_POST['type']==$k):?>selected<?php endif;?>>{$vo}</option>
+        <?php endforeach; ?>
+    </select>
+    &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+    <div class="page right">{$html}</div>
+</div>
+</form>
+<?php if($school['id']==505): ?>
+<script>
+    function selectSchool(){
+        ui.box.load(U('home/Public/citys'),{title:'选择学校',noCheck:'yes'});
+    }
+</script>
+<?php endif; ?>

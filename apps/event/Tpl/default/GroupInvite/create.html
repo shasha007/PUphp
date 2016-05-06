@@ -1,0 +1,35 @@
+<include file="../School/_header" />
+<include file="../GroupPublic/_head" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+
+<script>
+	var checkFriend = function(){
+		if($('#ui_fri_ids').val()!=''){
+			return true;
+		}else{
+			ui.error('请选择好友');
+			return false;
+		}
+
+	}
+</script>
+<div class="st_invite f14 ml20">部落只限本校人员加入，请邀请本校好友加入>>
+</div>
+<div class="st_in_desc">
+
+      <form action="{:U('event/GroupInvite/create',array('gid'=>$groupinfo['id']))}" method="post" name="group_invite" id="group_invite" onsubmit="return checkFriend(this)">
+	              <!-- 添加好友-->
+	              <div class="left w300">{:W('SelectFriends')}</div>
+	              <div class="left">
+		              <input type="hidden" value="1" name="sendsubmit" />
+		              <input type="submit" class="st_f_btn" value="发送邀请" />
+	              </div>
+              </form>
+<!--    <form>
+        <input name="st_invite" type="text" class="st_f_input" placeholder="输入好友" />
+        <input name="st_invite1" type="submit" value="发送邀请" class="st_f_btn" />
+    </form>-->
+</div>
+</div>
+<include file="../GroupPublic/_right" />
+<include file="../School/_footer" />

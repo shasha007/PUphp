@@ -1,0 +1,60 @@
+<include file="_header" />
+<div class="so_main">
+    <include file="_tab" />
+    <div class="list">
+<h1>用户注册审核</h1>
+<div style="float:left;padding:20px;text-align:left;">
+    <table width="100%;" border="1" cellspacing="0" cellpadding="10">
+        <tr>
+            <td>部落名称：</td>
+            <td>{$list.name}</td>
+        </tr>
+        <tr>
+            <td>部落头像：</td>
+            <td>{$list.img}</td>
+        </tr>
+        <tr>
+            <td>申请人：</td>
+            <td>{$list.uname}</td>
+        </tr>
+        <tr>
+            <td>学校：</td>
+            <td>{$list.school}</td>
+        </tr>
+        <tr>
+            <td>院系：</td>
+            <td>{$list.yxName}</td>
+        </tr>
+        <tr>
+            <td>申请时间：</td>
+            <td>{$list.ctime|friendlyDate}</td>
+        </tr>
+        <tr>
+            <td>类别：</td>
+            <td>{$list.categroy}</td>
+        </tr>
+        <tr>
+            <td>部门：</td>
+            <td><?php if($list['department']==1){echo '学生部门';}elseif($list['department']==2){echo '团支部';}else{echo '学生社团';}?></td>
+        </tr>
+        <tr>
+            <td>介绍：</td>
+            <td>{$list.explain}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><a href="__URL__&act=doAudit&id={$list.id}&nowpage={$nowPage}">审核通过</a></td>
+        </tr>
+    </table>
+    <br/>
+    
+    <form method="post" action="__URL__&act=doReject&id={$list.id}">
+        <input type="hidden" name="nowpage" value="{$nowpage}"/>
+        驳回原因：<textarea  style='width:200px;height:100px;' name='reason'></textarea>
+        <input type="submit" class="btn_b" value="驳 回"/>
+    </form>
+</div>
+</div>
+</div>
+<script>
+</script>
+<include file="_footer" />

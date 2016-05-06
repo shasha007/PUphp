@@ -1,0 +1,42 @@
+<include file="_header" />
+<div class="intro_c">
+    <div class="intro_c_thumb"><img src="{$coverId|getCover}" alt="" /></div>
+    <div class="intro_c_infor">
+        <img src="{$logoId|tsGetLogo=###,$typeId,$default_banner}" style="width:440px;height:100px;" />
+        <div class="intro_c_font"> <strong>活动名称：</strong><span class="b red">{$title}</span><br />
+            <strong>活动简介：</strong>{$description}<br />
+            <strong>学校：</strong>{$sid|tsGetSchoolTitle}<br />
+            <strong>显示于学校：</strong>
+            <volist name="showInSchool" id="vo">{$vo.sid|tsGetSchoolName}&nbsp;</volist><br />
+            <strong>分类：</strong>{$category[$typeId]}<br />
+            <strong>活动地点：</strong>{$address}<br />
+            <strong>活动时间：</strong><?php echo date('Y-m-d H:i:s', $sTime) . " 至 " . date('Y-m-d H:i:s', $eTime) ?><br />
+            <strong>报名起止：</strong><?php if($startline>0){echo date( 'Y-m-d H:i',$startline );}?> 至<?php echo date('Y-m-d H:i:s', $deadline) ?><br />
+            <strong>参加费用：</strong>{$cost|getCost}<br />
+            <strong>费用说明：</strong>{$costExplain}<br />
+            <strong>剩余名额：</strong><?php echo 5000000 < $limitCount ? "无限制" : $limitCount ?><br />
+            <strong>联系方式：</strong>{$contact}<br />
+            <strong>需要审核：</strong><?php if( $allow ) {echo'是';}else{echo'否';}?><br />
+            <strong>需要联系电话：</strong><?php if( $need_tel ) {echo'是';}else{echo'否';}?><br />
+            <strong>投票功能：</strong><?php if( $isTicket ) {echo'是';}else{echo'否';}?><br />
+            参加人数（<a href="{:U('/Backend/member', array('id'=>$id))}">{$joinCount}</a>） <if condition="$verifyCount">待审人数（<a href="{:U('/Backend/memberAudit', array('id'=>$id))}">{$verifyCount}</a>）</if>
+        </div>
+        <?php if( $deadline>time()){ ?>
+            <div class="intro_c_zt green b" id="event_satus">此活动正在进行中……</div>
+        <?php }else { ?>
+            <div class="intro_c_zt red b">报名已结束</div>
+        <?php } ?>
+        <div class="intro_c_btn">
+            <ul>
+                <?php if( $deadline>time()){ ?>
+                    <li class="i11" id="endDeadline">
+                        <a href="javascript:endEvent( '{$id}' )">结束报名</a>
+                    </li>
+                <?php } ?>
+                <li class="i12"><a href="{:U('/Backend/edit',array('id'=>$id))}">编辑活动</a></li>
+                <li class="i12"><a href="javascript:delEvent( '{$id}' ,true)">删除活动</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<include file="_footer" />

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} <neq name="ts['app']['app_alias']" value="">- {$ts['app']['app_alias']} </neq>- {$ts['site']['site_name']}
+<else/>
+    {$ts['site']['site_name']} <neq name="ts['site']['site_slogan']" value=""> - {$ts['site']['site_slogan']}</neq>
+</neq>
+</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<link href="../Public/css/x_hd.css" type="text/css" rel="stylesheet" />
+<link href="../Public/event.css" rel="stylesheet" type="text/css" />
+<include file="__THEME__/comm/_app" />
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/check.js"></script>
+<script type="text/javascript" src="../Public/js/event.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#menu li').hover(function(){
+		$(this).children('ul').stop(true,true).show('fast');
+	},function(){
+		$(this).children('ul').stop(true,true).hide('fast');
+	});
+});
+</script>
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$mid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = {$GLOBALS['ts']['site']['length']};
+    var _LANG_SET_ = '{:LANG_SET}';
+	var $CONFIG = {};
+	$CONFIG['uid'] = '{$uid}';
+	$CONFIG['mid'] = '{$mid}';
+	$CONFIG['root_path'] = '__ROOT__';
+	$CONFIG['theme_path'] = '__THEME__';
+	$CONFIG['public_path'] = '__PUBLIC__';
+    $CONFIG['weibo_length'] = {$GLOBALS['ts']['site']['length']};
+    $CONFIG['lang'] = '{:LANG_SET}';
+	document.execCommand("BackgroundImageCache", false, true);
+</script>
+</head>
+
+<body>
+<include file="__THEME__/_holder" />
+    <div class="bg">
+        <div class="main">
+            <div class="hd_header">
+                <div class="hd_logo"><a href="{:U('/Index/index')}"><img src="../Public/images/logo.gif" alt="活动" /></a></div>
+                <div class="clear"></div>
+                <div class="hd_content">
+                    <div class="hd_c_top">
+                        <div class="menu">
+                            <ul class="first-menu" id="menu">
+                                <li class="first-menu-li"><a href="{:U('/Index/index')}">活动首页</a></li>
+                                <li class="first-menu-li i8"><a href="{:U('/Index/index',array('action'=>'launch'))}">我的活动</a>
+                                    <ul class="second-menu">
+                                        <li class="second-menu-li i9"><a href="{:U('/Index/index',array('action'=>'launch'))}" target="_self">我发起的活动</a></li>
+                                        <li class="second-menu-li i9"><a href="{:U('/Index/index',array('action'=>'join'))}" target="_self">我参与的活动</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="hd_c1">
+                        <div class="intro_title b"><a href="{:U('/Front/index',array('id'=>$eventId))}" target="_blank">{$title}</a></div>
+                        <include file="_nav" />

@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width; initial-scale=1.0">
+            <title>PU最“强”班</title>
+            <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+            <script>
+                var _UID_   = '{$uid}';
+                var _MID_   = '{$mid}';
+                var _ROOT_  = '__ROOT__';
+                var _THEME_ = '__THEME__';
+                var _PUBLIC_ = '__PUBLIC__';
+            </script>
+    </head>
+    <style>
+        *{ padding:0;margin:0;list-style:none;}
+        body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+        table,td{margin:auto;padding:inherit;}
+        select, input, img{ vertical-align:middle;}
+        a{ text-decoration:none;}
+        a:link {color:#666;}
+        a:visited{ color:#666;}
+        a:hover,a:active, a:focus {color:#999; text-decoration:underline;}
+        body {
+            font-family: "宋体","MingLiu","Lucida Sans Unicode", "Lucida Grande", "sans-serif",;
+            font-size: 12px;
+            line-height:160%;
+            font-style: normal;
+            font-weight: 400;
+            font-variant: normal;
+            text-transform: none;
+            color: #666;
+            text-decoration: none;
+            background-color:#fff;
+            background-image: none;
+            background-repeat: no-repeat;
+            letter-spacing: normal;
+            text-align: left;
+            word-spacing: normal;
+            white-space: normal;
+            display: block;
+            clear: both;
+            float: none;
+            width: auto;
+            position: static;
+            height: auto;
+            top: auto;
+            clip: rect(auto,auto,auto,auto);
+        }
+        input{outline:none;}
+        .clear{ clear:both;}
+        .bg{ float:left; width:100%; background:#fff;}
+        .main{ width:100%; margin:auto;}
+        .vote_list{ float:left; width:94%; margin:10px auto; padding:0 3%;}
+        .vote_list ul{ float:left; width:100%;}
+        .vote_list li{ float:left; width:98%; margin-top:10px; padding:5px 1%;line-height:24px; border-bottom:1px solid #eee;}
+        .vote_list_thumb{ width:20%; padding:0 1%; float:left;}
+        .vote_list_thumb img{ width:50px; height:50px; border-radius:50px;}
+        .vote_list_text{float:left;  width:57%; line-height:20px;}
+        .vote_list_title{ font-size:14px; font-weight:bold; height:20px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;  color:#494949;}
+        .vote_list_school{ color:#a7a7a7; height:20px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis; }
+        .vote_list_count{ color:#ef5026;}
+        .vote_list_btn{ float:right; background:#ef5026; border:2px solid #fcdcd4; border-radius:50px; color:#fff; width:50px; height:45px; text-align:center; line-height:20px; padding-top:5px;}
+		.vote_search_bg{ width:100%; background:#f9f9f9; padding:10px 0;}
+        .vote_search{ width:84%; margin:0 7%; border:1px solid #dedfe0; border-radius:5px; background:#fff; height:38px; line-height:38px; padding:0 1%;}
+        .v_input{ border:none; margin:0 10px 0 0;  height:38px; line-height:38px; width:85%;padding-left:35px; background:url(../Public/images/m_icon2.png) no-repeat 10px -45px;}
+        img {max-width: 100%; height: auto; width: auto\9; /* ie8 */}
+        .video embed, .video object, .video iframe {width: 100%;height: auto;}
+        @media screen and (max-width: 980px) {
+        }
+    </style>
+    <body>
+        <div class="bg">
+            <div class="main">
+            <div class="vote_search_bg">
+            <div class="vote_search">
+      <form method="post" action="">
+      <input name="searchKey" id="searchKey" class="v_input" type="text" value="" placeholder="搜索投票">
+      </form>
+    </div></div>
+                <div class="vote_list">
+                    <ul id="uilist">
+                        <?php foreach($list as $v):?>
+                        <li class="list_item">
+                            <div class="vote_list_thumb"><img src="{$v.path}" /></div>
+                            <div class="vote_list_text">
+                                <div class="vote_list_title">{$v.realname}</div>
+                                <div class="clear"></div>
+                                <div class="vote_list_school">{$v.school}</div>
+                                <div class="vote_list_count"><span id="ticket{$v.id}">{$v.ticket}</span>票</div>
+                            </div>
+                            <?php if($v['canVote']):?><a href="javascript:vote({$v.id},'{$v.realname}')"><div class="vote_list_btn">投TA<br />一票</div></a><?php endif;?>
+                        </li>
+                        <?php endforeach;?>
+                    </ul>
+                    <div id="loading" style="font-size:16px;height:40px;text-align: center;display: none">加载中 ...</div>
+                    <div id="last" style="font-size:16px;height:40px;text-align: center;display: none">已是最后一页</div>
+                </div>
+            </div>
+        </div>
+<script>
+    function vote(pid,realname){
+        if(confirm("确定把票投给【"+realname+"】?")){
+            $.post('__URL__&act=doMvote',{pid:pid},function(data){
+                var json=$.parseJSON(data);
+                if(json.status==1){
+                    alert(json.info);
+                    var oldTicket = $("#ticket"+pid).html();
+                    var newTicket = oldTicket*1+1;
+                    $("#ticket"+pid).html(newTicket);
+                }else{
+                    alert(json.info);
+                }
+            });
+        }
+    }
+    $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        if (scrollTop + windowHeight == scrollHeight) {
+            $("#last").hide();
+            var m = $('.list_item').length;
+            if(m % 2 != 0){
+                $("#last").show();
+                return;
+            }
+            $("#loading").show();
+            var searchKey = $('#searchKey').val();
+            $.post('__URL__&act=ajaxMvote',{n:m,searchKey:searchKey},function(data){
+                $("#loading").hide();
+                if(data==0){
+                    $("#last").show();
+                }else{
+                    var html = '';
+                    for(var i=0;i<data.length;i++){
+			html += '<li class="list_item"><div class="vote_list_thumb"><img src="'+data[i]['path']+'" /></div>';
+                        html += '<div class="vote_list_text">';
+                        html += '<div class="vote_list_title">'+data[i]['realname']+'</div>';
+                        html += '<div class="clear"></div>';
+                        html += '<div class="vote_list_school">'+ data[i]['school']+'</div>';
+                        html += '<div class="vote_list_count"><span id="ticket'+data[i]['id']+'">'+data[i]['ticket']+'</span>票</div></div>';
+                        if(data[i]['canVote']){
+                            html += '<a href="javascript:vote('+data[i]['id']+",'"+data[i]['realname']+"'"+')"><div class="vote_list_btn">投TA<br />一票</div></a>';
+                        }
+                        html += '</li>';
+                    }
+                }
+                $("#uilist").append(html);
+            },'json');
+        }
+    });
+</script>
+    </body>
+</html>

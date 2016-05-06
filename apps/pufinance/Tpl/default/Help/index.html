@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>帮助</title>
+		<link rel="stylesheet" href="../Public/css/mui.min.css" />
+		<link rel="stylesheet" href="../Public/css/style.css" />
+		<script type="text/javascript" src="../Public/js/mui.min.js" ></script>
+	</head>
+	<body bgcolor="#F3F1EE">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell mui-collapse">
+				<a class="mui-navigate-right" href="#">{$Think.lang.finance_name}是什么？</a>
+				<div class="mui-collapse-content">
+					 <p>{$Think.lang.finance_name}是跟PU口袋校园合作推出的引导大学生理性消费在校大成年学生虚拟信贷卡</p>
+				</div>
+			</li>
+			<li class="mui-table-view-cell mui-collapse">
+				<a class="mui-navigate-right" href="#">自助服务是什么？</a>
+				<div class="mui-collapse-content">
+					<p>你可以通过自助服务指引进行密码和个人信息的修改以及查看服务合同</p>
+				</div>
+			</li>
+			<li class="mui-table-view-cell mui-collapse">
+				<a class="mui-navigate-right" href="#">人工服务是什么？</a>
+				<div class="mui-collapse-content">
+					<p>您可以通过和{$Think.lang.finance_name}机器人的交流获得您想要的帮助，如果未能帮助您，请转人工客服</p>
+				</div>
+			</li>
+			<li class="mui-table-view-cell mui-collapse">
+				<a class="mui-navigate-right" href="#">新手指引</a>
+				<div class="mui-collapse-content">
+					<p>【登陆PU】-【我的】-【{$Think.lang.finance_name}】-【我要借款】-填写【借款金额】-选择【期数】-【选择收款方式(PU币/银行卡)】-【银行卡认证】-设置支付密码-完善【个人信息】-【提交订单】</p>
+				</div>
+			</li>
+		</ul>
+		<div class="L-helpType">
+			<button onclick="javascript:window.location.href='<?php echo U('pufinance/service/self');?>'">自助服务</button>
+			<button onclick="javascript:window.location.href='http://www.sobot.com/chat/h5/index.html?sysNum=4e4ccd5c188e463c8165401a32830b38&source=2'">人工服务</button>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../Public/js/mainScript.js" ></script>
+<script type="text/javascript">
+    setActionBar('帮助', '', '');
+</script>
+<script type="text/javascript" src="../Public/js/script.js" ></script>

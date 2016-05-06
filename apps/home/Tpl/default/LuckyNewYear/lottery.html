@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <link href="../Public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Public/css/reset.css" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="../Public/js/jquery-2.1.1.min.js"></script>
+    <script src="../Public/js/bootstrap.min.js"></script>
+    <title>猴子拜年</title>
+    <style>
+        html {
+            font-size: 62.5%;
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+        #colse,#colses{
+            position: relative;
+            float: right;
+            top:0;
+            width: 25px;
+            height:25px;
+
+        }
+        .lotter-button, .fill-button{
+            width:115px;
+            height:40px;
+            margin: 10px auto;
+            font-size: 18px;
+            color: #e0af1d;
+            background-color: #c30e2e;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px #000;
+            line-height: 40px;
+        }
+        .lottery-go{
+            display:none;
+            position: absolute;
+            top: 42%;
+            left: 30%;
+            width: 40%;
+            height: 40px;
+            margin: 10px auto;
+            font-size: 18px;
+            color: #000;
+            background-color: #ff0000;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px #000;
+            line-height: 40px;
+        }
+        .fill-button{
+            padding-bottom: 10px;
+        }
+        .modal-dialog{
+            width:96%;
+            position: absolute;
+            bottom: 10px;
+            margin: 5px 2%;
+        }
+        .modal-content {
+            position: relative;
+            background-color: inherit;
+            border:none;
+            box-shadow:none;
+        }
+        .loading{
+            text-align: center;
+            font-size: 18px;
+        }
+        .loading-content{
+            position: absolute;
+            bottom: 20px;
+            margin: 5px;
+        }
+        #lottery{
+            display: none;
+        }
+        .fill{
+            display: none;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #d20830;
+            box-shadow: 2px 2px 5px #000;
+        }
+        .fill-infor{
+            margin: 5px;
+            color: #fff;
+        }
+        .fill p{
+            text-align: center;
+            color: #000;
+            font-size: 12px;
+            padding: 8px 0;
+        }
+        .fill p:nth-child(1){
+            padding: 10px 0;
+            font-size: 20px;
+        }
+        .fill-infor input{
+            width: 100%;
+            color: #000;
+            background-color: #d2b3b3;
+            height: 35px;
+            line-height: 35px;
+            border-radius: 5px;
+        }
+        .fill-infor div{
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="lottery-header">
+    <img class="img-responsive" src="http://pic.pocketuni.net/data/sys_pic/lottery/could1.png">
+    </header>
+<div class="lottery-monkey">
+    <img class="img-responsive" src="http://pic.pocketuni.net/data/sys_pic/lottery/monkey.gif">
+</div>
+
+    <div class="modal fade " id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="showlottery">
+                    <img id="colse" class="img-responsive" data-dismiss="modal" aria-hidden="true" src="http://pic.pocketuni.net/data/sys_pic/lottery/close.png">
+                    <img class="img-responsive" id="showpic" src="http://pic.pocketuni.net/data/sys_pic/lottery/first.png" >
+                 <!--<img class="img-responsive" src="http://pic.pocketuni.net/data/sys_pic/blessing/1.png">-->
+                     <div class="lotter-button" id="lottery" data-type="-1" data-award="0">
+                     开始游戏
+                     </div>
+                    <div class="lottery-go">
+                        去商场
+                    </div>
+                </div>
+                <div class="fill">
+                    <p>收件人信息</p>
+                    <div class="fill-infor row">
+
+                        <div class="col-xs-3">
+                            姓名
+                        </div>
+                        <div class="col-xs-9">
+                            <input type="text"  id="name"
+                                   placeholder="请输入姓名"   data-trigger="manual"
+                                   data-container="body" data-toggle="popover" data-placement="top"
+                                   data-content="姓名不正确" >
+                        </div>
+                        <div class="col-xs-3">
+                            电话
+                        </div>
+                        <div class="col-xs-9">
+                            <input type="text"  id="phone"
+                                   placeholder="请输入电话" data-trigger="manual"
+                                   data-container="body" data-toggle="popover" data-placement="top"
+                                   data-content="电话不正确">
+                        </div>
+                        <div class="col-xs-3">
+                           地址
+                        </div>
+                        <div class="col-xs-9">
+                            <input type="text"  id="address"
+                                   placeholder="请输入地址" data-trigger="manual"
+                                   data-container="body" data-toggle="popover" data-placement="top"
+                                   data-content="地址不正确">
+                        </div>
+                    </div>
+                    <div class="fill-button">
+                        确认提交
+                    </div>
+                    <p>ps:奖品将在活动结束后的15个工作日内寄出</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade " id="myModa2" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog loading-content">
+            <div class="modal-content" style="background-color: #fff">
+                    <img class="img-responsive" src="http://pic.pocketuni.net/data/sys_pic/lottery/asd-loading.gif" style="margin: 0 auto;">
+            </div>
+        </div>
+    </div>
+    <div class="modal fade " id="myModa3" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog loading-content">
+            <div class="modal-content" style="background-color: #fff">
+                <div class="modal-body" style=" padding: 10px;text-align: center;">
+                    操作成功
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            data-dismiss="modal" style="padding: 5px;text-align: center;border-top: none;">
+                        确认
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+
+   $(function () {
+       //错误提示
+       $("[data-toggle='popover']").popover();
+       //alert({$isFirstOpen});
+       <?php if ($isFirstOpen=='0'):?>
+       $('#myModal').modal('show');
+       <?php endif; ?>
+       //点击猴子
+       $(".lottery-monkey").click(function () {
+           $(".lottery-go").hide();
+           $(".showlottery").show();
+           $(".fill").hide();
+           //随机
+           $.ajax({
+               url: '<?php echo U("home/LuckyNewYear/ajaxLottery") ?>',
+               type: 'post',
+               dataType: 'JSON',
+               data: {
+               },
+               error: function() {
+               },
+               success: function(data) {
+                   try{
+                       dolottery(data.data.type,data.data.id,data.data.response.data.id);
+                   }catch(e){
+                       dolottery(data.data.type,data.data.id);
+                   }
+               }
+           });
+       });
+
+       function dolottery(rand,id,name){
+           switch (rand){
+               case 0://祝福
+                   dolottery0(id);
+                   break;
+               case 1://pu币
+                   dolottery1(id);
+                   break;
+               case 2://实物
+                   dolottery2(id,name);
+                   break;
+               case 3://次数用完
+                   dolottery3();
+                   break;
+           }
+       }
+       //祝福
+      function dolottery0(id){
+          //随机祝福语
+//          var random = Math.floor(Math.random()*27)+1;
+          var random = id;
+          $(".lotter-button").data("type","0");
+          $(".lotter-button").html("再抽一次");
+          $(".lotter-button").show();
+          $("#showpic").attr("src","http://pic.pocketuni.net/data/sys_pic/blessing/"+random+".png");
+          loading();
+          setTimeout(function (){
+              $('#myModal').modal('show');
+          },2000);
+
+
+       }
+       //pu币
+       function dolottery1(id){
+//           var random = Math.floor(Math.random()*5);
+           var random = id;
+           $("#showpic").attr("src","http://pic.pocketuni.net/data/sys_pic/lottery/"+random+"pu.png");
+           $(".lotter-button").html("去领取");
+           $(".lotter-button").data("type","1");
+           //保存中奖id
+           $(".lotter-button").data("award",id);
+           $(".lotter-button").show();
+           loading();
+           setTimeout(function (){
+               $('#myModal').modal('show');
+           },2000);
+       }
+       //实物
+       function dolottery2(id,name){
+           //var name = name.replace('【pu和你一起迎猴年】','');
+           $("#showpic").attr("src","http://pic.pocketuni.net/data/sys_pic/lottery/"+name+".png");
+           $(".lotter-button").html("去领取");
+           $(".lotter-button").data("type","2");
+           //保存中奖id
+           $(".lotter-button").data("award",id);
+           $(".lotter-button").show();
+           loading();
+           setTimeout(function (){
+               $('#myModal').modal('show');
+           },2000);
+       }
+
+       //次数
+       function dolottery3(){
+           $('#myModal').modal('hide');
+           $("#showpic").attr("src","http://pic.pocketuni.net/data/sys_pic/lottery/over.png");
+           $(".lotter-button").hide();
+           $('#myModal').modal('show');
+       }
+
+       function loading(){
+           $('#myModa2').modal('show');
+           $('#myModal').modal('hide');
+           setTimeout(function () {
+               $('#myModa2').modal('hide');
+           },1500);
+       }
+
+       //再来一次和去商场
+       $(".lotter-button").click(function () {
+           var type = $(".lotter-button").data("type");
+           var award = $(".lotter-button").data("award");
+           if(type==0){
+               $('#myModal').modal('hide');
+               setTimeout(function (){
+                   //再来一次
+                   $.ajax({
+                       url: '<?php echo U("home/LuckyNewYear/ajaxLottery") ?>',
+                       type: 'post',
+                       dataType: 'JSON',
+                       data: {
+                       },
+                       error: function() {
+                       },
+                       success: function(data) {
+                           try{
+                               dolottery(data.data.type,data.data.id,data.data.response.data.id);
+                           }catch(e){
+                               dolottery(data.data.type,data.data.id);
+                           }
+                       }
+                   });
+
+               },200);
+           }else if(type==1){
+               $("#showpic").attr("src","http://pic.pocketuni.net/data/sys_pic/lottery/jok.png");
+               $(".lottery-go").show();
+               $(".lotter-button").hide();
+
+               $(".lottery-go").click(function () {
+                           window.location.href="<?php echo U('shop/PocketShop/index') ?>";
+               });
+           }else if(type==2){
+               $(".showlottery").hide();
+               $(".fill").show();
+               $(":input").focus(function () {
+                   $(this).popover("hide");
+               });
+               $(".fill-button").click(function () {
+                   var name = $("#name").val();
+                   var phone = $("#phone").val();
+                   var address = $("#address").val();
+                   if(name==""){
+                       $('#name').popover("show");
+                   }else if(phone==""){
+                       $('#phone').popover("show");
+                   }else if(address==""){
+                       $('#address').popover("show");
+                   }else{
+                       //确认
+                       $.ajax({
+                           url: '<?php echo U("home/LuckyNewYear/award") ?>',
+                           type: 'post',
+                           dataType: 'JSON',
+                           data: {
+                               name:name,
+                               phone:phone,
+                               address:address,
+                               award:award
+                           },
+                           error: function() {
+                           },
+                           success: function(data) {
+                               $('#myModal').modal('hide');
+                               $("#myModa3").modal('show');
+                           }
+                       });
+
+
+                   }
+
+               });
+           }
+       });
+   });
+
+</script>

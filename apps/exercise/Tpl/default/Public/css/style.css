@@ -1,0 +1,98 @@
+@charset "utf-8";
+/* CSS Document */
+*{ padding:0;margin:0;list-style:none;}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, img, div, dl, dt, dd, blockquote{ border:none 0; }
+table,td{
+	margin:auto;
+	padding:inherit;
+}
+select, input, img{ vertical-align:middle;}
+a{ text-decoration:none;}
+a:link {
+color:#666;
+}
+a:visited{ color:#666;}
+a:hover,a:active, a:focus {
+color:#999; text-decoration:underline;
+}
+body {
+	font-family: "宋体","MingLiu","Lucida Sans Unicode", "Lucida Grande", "sans-serif",;
+	font-size: 12px;
+	line-height:160%;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #666666;
+	text-decoration: none;
+	background-color: #f5f5f5;
+	background-image: none;
+	background-repeat: no-repeat;
+	letter-spacing: normal;
+	text-align: left;
+	word-spacing: normal;
+	white-space: normal;
+	display: block;
+	clear: both;
+	float: none;
+	width: auto;
+	position: static;
+	height: auto;
+	top: auto;
+	clip: rect(auto,auto,auto,auto);
+}
+.clear{ clear:both;}
+
+/*公用*/
+.b{ font-weight:bold;}
+
+.bg{ float:left; width:100%;}
+.main{ width:980px; margin:auto;}
+.kc_header{ float:left; width:980px; margin-top:25px;}
+.header_logo{ float:left; width:260px; height:54px;}
+.header_link{ float:left; width:450px; margin-left:25px; display:inline;}
+.header_link ul{ float:left; width:100%;}
+.header_link li{ float:left; height:66px; width:127px; margin-right:20px; display:inline;}
+.header_menu{ float:left; background:#ff8d12; width:978px; height:45px; line-height:45px; color:#FFF; border-left:1px solid #e2e2e2;border-top:1px solid #e2e2e2;border-right:1px solid #e2e2e2; margin-top:12px; }
+.header_menu ul{ float:left;}
+.header_menu li{ float:left; font-size:16px; font-family:"微软雅黑"; background:url(../images/bg_line.gif) no-repeat right 10px; width:120px; text-align:center; padding-right:1px; }
+.header_menu li a{ color:#FFF;}
+.header_menu li a:hover,.header_menu li.i a:hover{ color:#FFF; text-decoration:none; background:#ff7200; width:120px; height:45px; display:block; }
+.header_menu li.i{background:#ff7200; padding-right:1px; width:120px;background:url(../images/bg_line.gif) no-repeat right 10px;}
+.header_menu li.i a{ color:#FFF; background:#ff7200; width:120px; height:45px; display:block;}
+.header_date{ float:right; color:#FFF; line-height:45px; margin:-45px 25px auto auto; display:inline; width:250px; text-align:right;}
+
+.content{ float:left; width:978px; border-left:1px solid #e2e2e2;border-right:1px solid #e2e2e2;border-bottom:1px solid #e2e2e2; background:#fff; margin-bottom:5px;}
+.c_top{ float:left; width:978px; background:url(../images/icon.gif) no-repeat 24px 16px #f4efea; height:60px; color:#fd627b; font-size:16px; font-family:"微软雅黑";}
+.c_left{ float:left; width:75px; background:#eaece8;}
+.c_left td{ height:60px; text-align:center; vertical-align:middle; font-size:14px;}
+.c_right{ float:left; width:903px; }
+.c_right td{ text-align:center; width:129px; height:59px; vertical-align:middle; line-height:20px; border-bottom:1px solid #eeeeee;}
+.c_right td:hover{ color:#FFF; background:url(../images/bg_hover.gif) no-repeat; cursor:pointer;}
+
+/*弹出框*/
+.tip_box{ float:left; width:220px; background:#FFF; padding:10px 15px; border:1px solid #eee;line-height:24px;}
+.tip_box_title{ float:left; color:#ff8d12; font-size:14px; font-family:"微软雅黑"; height:24px;  width:220px; overflow:hidden; border-bottom:1px solid #ff8d12; padding-bottom:5px;}
+.tip_box_teacher{ float:left; width:150px; background:url(../images/icon_2.gif) no-repeat left 1px; padding-left:30px; margin-top:5px;}
+.tip_box_time{ float:left; background:url(../images/icon_3.gif) no-repeat left 3px; padding-left:25px; margin-top:5px;}
+.tip_box_list{ float:left; width:220px; margin-top:5px;}
+.tip_box_list ul{ float:left; width:100%;}
+.tip_box_list li{ float:left; line-height:24px; width:220px; }
+.tip_box_list_time{ float:left; width:195px; background:url(../images/icon_3.gif) no-repeat left 3px; padding-left:25px;}
+.tip_box_list_add{ float:left; width:195px; background:url(../images/icon_4.gif) no-repeat; padding-left:25px; margin-top:5px;}
+.tip_box_btn{ float:left; width:220px; border-top:1px solid #ff8d12; padding-top:5px; padding-bottom:10px; margin-top:8px; }
+.tip_box_btn a{ color:#333;}
+.tip_box_btn a:hover{ color:#555;}
+/*添加课程*/
+.add{ float:left; width:400px; margin:20px auto auto 30px; display:inline; padding-bottom:100px;}
+.add_name{ float:left; background:url(../images/icon_1.gif) no-repeat left; padding-left:35px; width:300px;}
+.add_teacher{ float:left; background:url(../images/icon_2.gif) no-repeat left 3px; padding-left:35px; width:300px; margin-top:12px;}
+.add_title{ float:left; font-size:14px; font-weight:bold; color:#333; width:300px; margin-top:15px;}
+.add_week{ float:left;background:url(../images/icon_3.gif) no-repeat left 4px; padding-left:35px; width:300px; margin-top:12px; line-height:30px;}
+.add_place{float:left;background:url(../images/icon_4.gif) no-repeat left 2px; padding-left:35px; width:300px; margin-top:12px; line-height:30px;}
+.add_save{ float:left; margin:20px auto auto 50px; display:inline;}
+.add_input{ background:#fff; padding:0px 5px; width:240px; height:28px; line-height:26px; border:1px solid #d4d4d4;}
+.add_btn{ background:#86ba04; width:72px; height:26px; color:#FFF; line-height:26px; border:none; cursor:pointer; font-weight:bold; font-size:14px; text-align:center;}
+.red{ color:#F00;}
+.red a{ color:#F00; text-decoration:underline;}
+.red a:hover{ color:#F00;}

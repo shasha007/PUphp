@@ -1,0 +1,84 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Pocket/addRate')}" class="btn_a"><span>添加利率</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>借款金额</th>
+                <th>还款期数</th>
+                <th>利率</th>
+                <th>操作</th>
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.staging}</td>
+                    <td><span id="rate_{$vo.id}" edit="on">{$vo.rate}</span> <a href="javascript:editRate({$vo.id});">[修改]</a></td>
+
+                    <td>
+                        <a href="__URL__&act=addRate&id={$vo.id}">编辑</a>
+                        <a href="__URL__&act=delRate&id={$vo.id}" onclick="return confirm('确认删除该利率？')">删除</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+        <a href="{:U('shop/Pocket/addLogo')}" class="btn_a"><span>添加广告</span></a>
+    </div>
+</div>
+<script>
+     function editRate(id){
+        var obj = $('#rate_'+id);
+        if($(obj).attr('edit')=='on'){
+            var inval=$(obj).html();
+            inval =inval.replace(/(^\s*)|(\s*$)/g, "");
+            if(!$('#edit'+id).val()){
+                $(obj).html("<input style='width:30px;' id='edit"+id+"'name='' value='"+inval+"'>");
+                $(obj).attr('edit','off');
+            }
+            $('#edit'+id).die().live("blur",function(){
+            });
+            $('#edit'+id).select();
+            $('#edit'+id).focus().live("blur",function(){
+                var editval=$(this).val();
+                var r = /^\d+$/;
+                $(obj).html(editval);
+                $(obj).attr('edit','on');
+                if(!r.test(editval)){
+                    ui.error('请输入数字');
+                    $(obj).html(inval);
+                    return false;
+                }
+                $.post('__URL__&act=changeRate',{id:id,newRate:editval},function(data){
+                    var json=$.parseJSON(data);
+                    if(json.status==0){
+                        ui.error(json.info)
+                        $(obj).html(inval);
+                    }else{
+                        ui.success(json.info);
+                    }
+                });
+            });
+        }
+    }
+</script>
+<include file="_footer" />

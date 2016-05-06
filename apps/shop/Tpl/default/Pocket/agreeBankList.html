@@ -1,0 +1,79 @@
+<include file="_header" />
+<script>
+</script>
+<div class="so_main">
+    <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+
+        <form method="post" action="__URL__&act=agreeBankList">
+            身份证号码：<input name="ctf_id" type="text" value="{$_POST.ctf_id}">
+            &nbsp;&nbsp;姓名：<input name="realname" type="text" value="{$_POST.realname}">
+            &nbsp;&nbsp;<input type="submit" class="btn_b" value="搜索" />
+        </form>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>银行卡号</th>
+                <th>身份证</th>
+                <th>联系电话</th>            
+                <th>订单详情</th>
+                <th>状态</th>
+                <th>附件</th>
+                <th>操作</th>
+
+            </tr>
+            <volist name="data" id='vo'>
+                <tr overstyle='on' id="{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.realname}</td>
+                    <td>{$vo.card_no}</td>
+                    <td>{$vo.ctf_id}</td>
+                    <td>{$vo.mobile}</td>
+
+                    <td><a href="javascript:;" onclick="edit('{$vo['id']}')">查看</a></td>
+                    <td>{$vo.status_detail}</td>
+                    <td><a href="javascript:;" onclick="lookPic('{$vo['id']}')">查看附件</a></td>
+                    <td>
+                        <if condition="$vo['allow_risk'] eq 2">
+                            <a href="javascript:;" onclick="reason('{$vo['id']}')">查看驳回原因</a>
+                        </if>
+                        <a href="__URL__&act=editBankCard&id={$vo.id}">驳回/修改用户信息</a>
+                        <a href="__URL__&act=studentInfo&id={$vo.id}">用户信息</a>
+                    </td>
+
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <span>共{$totalRows}条记录</span>
+        <div class="page right">{$html}</div>
+
+    </div>
+</div>
+<script type="text/javascript">
+function edit(id){
+    ui.box.load('__URL__&act=lookFinance&id='+id,{title:'详情'});
+}
+
+function lookPic(id){
+    ui.box.load('__URL__&act=lookBankPic&id='+id,{title:'附件'});
+}
+
+function reason(id){
+    ui.box.load('__URL__&act=lookBackReason&id='+id,{title:'驳回原因'});
+}
+</script>
+<include file="_footer" />

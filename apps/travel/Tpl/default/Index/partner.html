@@ -1,0 +1,23 @@
+<include file="_header" />
+<div class="tour_left">
+    <div class="t_my mt10">
+        <div class="t_bm_title b f14">合作网站</div>
+        <div class="t_linklist mt5">
+            <ul>
+                <volist name='withPic' id='vo'>
+                <li><a href="{$vo.url}" target="_blank" title="{$vo.title}">
+                        <img src="{$vo.pic|tsMakeThumbUp=###,150,50,'f'}" alt="{$vo.title}" /></a></li>
+                </volist>
+            </ul>
+        </div>
+        <div class="t_linklist1 mt5">
+            <ul>
+                <volist name='noPic' id='vo'>
+                <li><a href="{$vo.url}" target="_blank">{$vo.title}</a></li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+<include file="_right" />
+<include file="_footer" />
